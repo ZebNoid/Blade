@@ -11,7 +11,7 @@ class WindowManager
 public:
     WindowManager(AppContext& ctx);
 
-    auto createWindow(const WindowBuilder& builder) -> Window&;
+    auto createWindow(WindowBuilder&& builder) -> Window&;
 
     auto destroyWindow(Window* target) -> void;
 

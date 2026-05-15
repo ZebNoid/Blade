@@ -7,7 +7,7 @@ WindowManager::WindowManager(AppContext& ctx)
 {
 }
 
-auto WindowManager::createWindow(const WindowBuilder& builder) -> Window&
+auto WindowManager::createWindow(WindowBuilder&& builder) -> Window&
 {
     auto window = std::unique_ptr<Window>(
         new Window(
@@ -17,9 +17,7 @@ auto WindowManager::createWindow(const WindowBuilder& builder) -> Window&
     );
 
     window->set(builder.m_props);
-
-    window->setRoot(std::move(builder.m_root)); // TODO проблема
-    // window->setRoot(std::forward(builder.m_root));
+    window->setRoot(std::move(builder.takeRoot()));
     window->create();
 
     auto& ref = *window;

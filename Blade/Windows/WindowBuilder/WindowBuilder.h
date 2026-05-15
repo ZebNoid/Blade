@@ -8,12 +8,19 @@
 class WindowBuilder
 {
 public:
+    WindowBuilder(WindowBuilder&&) noexcept = default;
+    auto operator=(WindowBuilder&&) noexcept -> WindowBuilder& = default;
+
+    WindowBuilder(const WindowBuilder&) = delete;
+    auto operator=(const WindowBuilder&) -> WindowBuilder& = delete;
+
+public:
     template <typename T>
     WindowBuilder(T&& root)
     {
         using WidgetType = std::decay_t<T>;
 
-        m_root = std::make_unique<WidgetType>(
+        m_root = std::make_unique<WidgetType>( // проблема
             std::forward<T>(root)
         );
     }
@@ -24,6 +31,10 @@ public:
         return *this;
     }
 
+    auto takeRoot() -> std::unique_ptr<Widget>&
+    {
+        return m_root;
+    }
 
 private:
     WindowProps m_props;

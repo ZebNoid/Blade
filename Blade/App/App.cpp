@@ -23,8 +23,7 @@ auto App::build() -> void
 {
     for (auto& builder : m_windowBuilders)
     {
-        m_wm.createWindow(*builder);
-        // builder.materialize(...);
+        m_wm.createWindow(std::move(builder));
     }
 }
 
