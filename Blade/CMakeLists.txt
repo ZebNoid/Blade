@@ -51,6 +51,11 @@ add_library(${PROJECT_NAME} STATIC
         Native/Utils/WinApiUtils.h
         Native/Registry/ResourceRegistry/ResourceRegistry.cpp
         Native/Registry/ResourceRegistry/ResourceRegistry.h
+        Props/Common/Alignment.h
+        Props/Widget/ColumnProps.h
+        Props/Widget/LabelProps.h
+        Props/Window/WindowProps.h
+        Props/Common/SizeProps.h
 )
 
 # use Unicode

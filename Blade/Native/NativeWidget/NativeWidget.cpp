@@ -3,6 +3,7 @@
 
 NativeWidget::~NativeWidget()
 {
+    // TODO if child hwnd
     m_hwnd = nullptr;
 }
 
