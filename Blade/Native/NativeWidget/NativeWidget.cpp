@@ -3,10 +3,7 @@
 
 NativeWidget::~NativeWidget()
 {
-    if (m_hwnd && IsWindow(m_hwnd))
-    {
-        DestroyWindow(m_hwnd);
-    }
+    m_hwnd = nullptr;
 }
 
 auto NativeWidget::handle() const -> HWND

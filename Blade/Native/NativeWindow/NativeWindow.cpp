@@ -156,9 +156,23 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
     //     }
     //     break;
 
+    case WM_CLOSE:
+        {
+            DestroyWindow(hwnd);
+            std::cerr << "[Error] " << "NativeWindow WM_CLOSE" << std::endl;
+            return 0;
+        }
+
     case WM_DESTROY:
         m_owner->onDestroy();
         return 0;
+
+    case WM_NCDESTROY:
+        {
+            SetWindowLongPtr(hwnd, GWLP_USERDATA, 0);
+            m_hwnd = nullptr;
+            return 0;
+        }
     }
 
     return NativeWidget::handleMessage(hwnd, msg, wParam, lParam);
