@@ -7,7 +7,7 @@ WindowManager::WindowManager(AppContext& ctx)
 {
 }
 
-auto WindowManager::NewWindow(const std::string& title) -> Window&
+auto WindowManager::newWindow(const std::string& title) -> Window&
 {
     auto window = std::unique_ptr<Window>(
         new Window(
@@ -15,7 +15,7 @@ auto WindowManager::NewWindow(const std::string& title) -> Window&
             *this
         )
     );
-    window->Create(title);
+    window->create(title);
     Window& ref = *window;
     m_windows.push_back(
         std::move(window)
@@ -23,7 +23,7 @@ auto WindowManager::NewWindow(const std::string& title) -> Window&
     return ref;
 }
 
-auto WindowManager::DestroyWindow(Window* target) -> void
+auto WindowManager::destroyWindow(Window* target) -> void
 {
     std::erase_if(
         m_windows,
@@ -41,7 +41,7 @@ auto WindowManager::DestroyWindow(Window* target) -> void
     }
 }
 
-auto WindowManager::Empty() const -> bool
+auto WindowManager::empty() const -> bool
 {
     return m_windows.empty();
 }

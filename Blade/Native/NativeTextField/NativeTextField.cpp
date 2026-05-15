@@ -3,18 +3,18 @@
 #include "../Registry/ResourceRegistry/ResourceRegistry.h"
 
 
-auto NativeTextField::Create(const WidgetContext& ctx, const WidgetId id) -> void
+auto NativeTextField::create(const WidgetContext& ctx, const WidgetId id) -> void
 {
     m_ctx = ctx;
     m_id = id;
 
     // TODO native size?
     // size are ignoring and recalculated in
-    CreateNative(Rect{0, 0, 140, 32});
-    ApplyFont(ResourceRegistry::GetFont("system"));
+    createNative(Rect{0, 0, 140, 32});
+    applyFont(ResourceRegistry::get_font("system"));
 }
 
-auto NativeTextField::CreateNative(const Rect rect) -> HWND
+auto NativeTextField::createNative(const Rect rect) -> HWND
 {
     m_hwnd = CreateWindowEx(
         0,
@@ -40,8 +40,8 @@ auto NativeTextField::CreateNative(const Rect rect) -> HWND
 }
 
 
-auto NativeTextField::SetRect(const Rect rect) -> void
+auto NativeTextField::setRect(const Rect rect) -> void
 {
     SetWindowPos(m_hwnd, nullptr, rect.x, rect.y, rect.width, rect.height, SWP_NOZORDER);
-    verticalAlignCenter(m_hwnd);
+    VerticalAlignCenter(m_hwnd);
 }

@@ -5,7 +5,7 @@
 #include "../Registry/ResourceRegistry/ResourceRegistry.h"
 
 
-auto NativeButton::Create(const WidgetContext& ctx, const WidgetId id, const std::string& text) -> void
+auto NativeButton::create(const WidgetContext& ctx, const WidgetId id, const std::string& text) -> void
 {
     m_text = text;
     m_id = id;
@@ -13,11 +13,11 @@ auto NativeButton::Create(const WidgetContext& ctx, const WidgetId id, const std
 
     // TODO native size?
     // size are ignoring and recalculated in Widget->Measure
-    CreateNative(Rect{0, 0, 140, 32});
-    ApplyFont(ResourceRegistry::GetFont("system"));
+    createNative(Rect{0, 0, 140, 32});
+    applyFont(ResourceRegistry::get_font("system"));
 }
 
-auto NativeButton::CreateNative(const Rect rect) -> HWND
+auto NativeButton::createNative(const Rect rect) -> HWND
 {
     m_hwnd = CreateWindowEx(
         0,
@@ -38,7 +38,7 @@ auto NativeButton::CreateNative(const Rect rect) -> HWND
     return m_hwnd;
 }
 
-auto NativeButton::SetRect(const Rect rect) -> void
+auto NativeButton::setRect(const Rect rect) -> void
 {
     MoveWindow(m_hwnd, rect.x, rect.y, rect.width, rect.height, TRUE);
 }

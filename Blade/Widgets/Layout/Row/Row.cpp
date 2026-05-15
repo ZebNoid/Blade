@@ -1,13 +1,13 @@
 #include "Row.h"
 
-auto Row::Measure(const Size available) -> Size
+auto Row::measure(const Size available) -> Size
 {
     int totalHeight = 0;
     int maxWidth = 0;
 
     for (const auto& child : m_children)
     {
-        auto [width, height] = child->Measure(available);
+        auto [width, height] = child->measure(available);
         totalHeight += height;
         maxWidth = max(maxWidth, width);
     }
@@ -18,16 +18,16 @@ auto Row::Measure(const Size available) -> Size
     };
 }
 
-auto Row::Arrange(const Rect rect) -> void
+auto Row::arrange(const Rect rect) -> void
 {
-    Widget::Arrange(rect);
+    Widget::arrange(rect);
     int x = rect.x;
 
     for (const auto& child : m_children)
     {
-        auto [width, height] = child->Measure({rect.width, rect.height});
+        auto [width, height] = child->measure({rect.width, rect.height});
 
-        child->Arrange({
+        child->arrange({
             x,
             rect.y,
             width,

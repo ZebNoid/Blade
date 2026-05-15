@@ -17,14 +17,14 @@ public:
         ), ...);
     }
 
-    auto Mount(Materializer& m, WidgetContext& ctx) -> void override
+    auto mount(Materializer& m, WidgetContext& ctx) -> void override
     {
         for (const auto& child : m_children)
         {
-            child->Mount(m, ctx);
+            child->mount(m, ctx);
         }
     }
 
-    auto Measure(Size available) -> Size override;
-    auto Arrange(Rect rect) -> void override;
+    auto measure(Size available) -> Size override;
+    auto arrange(Rect rect) -> void override;
 };

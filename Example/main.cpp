@@ -46,7 +46,7 @@ auto main() -> int
     std::cout << "Welcome to a WinAPI Hell! " << "\n";
 
     Sandbox app;
-    app.Run();
+    app.run();
 
     return 0;
 }

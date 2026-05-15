@@ -10,11 +10,11 @@ class WindowManager
 public:
     WindowManager(AppContext& ctx);
 
-    auto NewWindow(const std::string& title) -> Window&;
+    auto newWindow(const std::string& title) -> Window&;
 
-    auto DestroyWindow(Window* target) -> void;
+    auto destroyWindow(Window* target) -> void;
 
-    auto Empty() const -> bool;
+    auto empty() const -> bool;
 
 private:
     AppContext& m_ctx;

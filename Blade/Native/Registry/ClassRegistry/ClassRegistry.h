@@ -28,6 +28,6 @@ public:
     static auto Register(const std::string& key, const ClassDesc& desc) -> void;
 
 private:
-    static inline HINSTANCE s_hInstance = nullptr;
-    static inline std::unordered_map<std::string, std::wstring> s_names;
+    static inline HINSTANCE m_hInstance = nullptr;
+    static inline std::unordered_map<std::string, std::wstring> m_names;
 };

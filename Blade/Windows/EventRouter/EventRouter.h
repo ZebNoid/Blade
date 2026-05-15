@@ -9,12 +9,12 @@
 class EventRouter
 {
 public:
-    auto AllocateId() -> WidgetId
+    auto allocateId() -> WidgetId
     {
         return m_nextId++;
     }
 
-    auto BindEvent(
+    auto bindEvent(
         const WidgetId id,
         const WidgetEvent event,
         EventHandler fn
@@ -23,7 +23,7 @@ public:
         m_events[{id, event}] = std::move(fn);
     }
 
-    auto DispatchCommand(
+    auto dispatchCommand(
         const WidgetId id,
         const WidgetEvent event,
         const EventValue& value = {}

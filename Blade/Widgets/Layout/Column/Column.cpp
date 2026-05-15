@@ -1,13 +1,13 @@
 #include "Column.h"
 
-auto Column::Measure(const Size available) -> Size
+auto Column::measure(const Size available) -> Size
 {
     int totalHeight = 0;
     int maxWidth = 0;
 
     for (const auto& child : m_children)
     {
-        Size s = child->Measure(available);
+        Size s = child->measure(available);
         totalHeight += s.height;
         maxWidth = max(maxWidth, s.width);
     }
@@ -18,17 +18,17 @@ auto Column::Measure(const Size available) -> Size
     };
 }
 
-auto Column::Arrange(const Rect rect) -> void
+auto Column::arrange(const Rect rect) -> void
 {
-    Widget::Arrange(rect);
+    Widget::arrange(rect);
 
     int y = rect.y;
 
     for (const auto& child : m_children)
     {
-        Size size = child->Measure({rect.width, rect.height});
+        Size size = child->measure({rect.width, rect.height});
 
-        child->Arrange({
+        child->arrange({
             rect.x,
             y,
             rect.width,

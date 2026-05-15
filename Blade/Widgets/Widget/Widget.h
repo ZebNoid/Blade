@@ -11,18 +11,18 @@ class Widget
 public:
     virtual ~Widget() = default;
 
-    virtual auto Mount(class Materializer& m, struct WidgetContext& ctx) -> void = 0;
+    virtual auto mount(class Materializer& m, struct WidgetContext& ctx) -> void = 0;
 
-    virtual auto Measure(Size available) -> Size = 0;
+    virtual auto measure(Size available) -> Size = 0;
 
-    virtual auto Arrange(const Rect rect) -> void
+    virtual auto arrange(const Rect rect) -> void
     {
         m_rect = rect;
     }
 
 protected:
-    static auto AllocateId(const WidgetContext& ctx) -> WidgetId;
-    auto BindEvent(const WidgetContext& ctx, WidgetEvent event, const EventHandler& fn) const -> void;
+    static auto allocateId(const WidgetContext& ctx) -> WidgetId;
+    auto bindEvent(const WidgetContext& ctx, WidgetEvent event, const EventHandler& fn) const -> void;
 
 protected:
     WidgetId m_id = -1;

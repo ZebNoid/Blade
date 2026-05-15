@@ -24,6 +24,6 @@ target_link_libraries(${PROJECT_NAME}
 # use Unicode
 with_unicode(${PROJECT_NAME})
 # Hide console window
-#with_console(${PROJECT_NAME} FALSE)
-with_console(${PROJECT_NAME} TRUE)
+with_console(${PROJECT_NAME} FALSE)
+#with_console(${PROJECT_NAME} TRUE)
 

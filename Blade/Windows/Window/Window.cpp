@@ -4,34 +4,34 @@
 #include "../../Native/NativeWindow/NativeWindow.h"
 
 Window::Window(AppContext& appCtx, WindowManager& manager)
-    : m_manager(manager), m_app_ctx(appCtx)
+    : m_manager(manager), m_appCtx(appCtx)
 {
 }
 
-auto Window::Create(const std::string& title) -> void
+auto Window::create(const std::string& title) -> void
 {
     WidgetContext w_ctx{
         nullptr, // TODO change for child windows
-        &m_app_ctx,
+        &m_appCtx,
         this
     };
 
-    m_native.Create(w_ctx, this, title);
+    m_native.create(w_ctx, this, title);
+}
+
+auto Window::onDestroy() -> void
+{
+    m_manager.destroyWindow(this);
+}
+
+auto Window::onResize(Size size) -> void
+{
+    if (!m_root) return;
+
+    m_root->arrange({0,0,size.width, size.height});
 }
 
 auto Window::show() -> void
 {
-    m_native.Show();
-}
-
-auto Window::OnDestroy() -> void
-{
-    m_manager.DestroyWindow(this);
-}
-
-auto Window::OnResize(Size size) -> void
-{
-    if (!m_root) return;
-
-    m_root->Arrange({0,0,size.width, size.height});
+    m_native.show();
 }

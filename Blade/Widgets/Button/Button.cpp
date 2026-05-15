@@ -6,11 +6,11 @@ Button::Button(std::string text) : m_text(std::move(text))
 {
 }
 
-auto Button::Mount(Materializer& m, WidgetContext& ctx) -> void
+auto Button::mount(Materializer& m, WidgetContext& ctx) -> void
 {
-    m_id = AllocateId(ctx);
-    m_native.Create(ctx, m_id, m_text.c_str());
-    BindEvent(ctx, WidgetEvent::Click, [this](const EventValue&)
+    m_id = allocateId(ctx);
+    m_native.create(ctx, m_id, m_text.c_str());
+    bindEvent(ctx, WidgetEvent::Click, [this](const EventValue&)
     {
         if (m_onClick == nullptr) return;
         m_onClick();

@@ -1,16 +1,16 @@
 #include "ResourceRegistry.h"
 
-auto ResourceRegistry::Init() -> void
+auto ResourceRegistry::init() -> void
 {
-    if (s_initialized) return;
-    s_initialized = true;
+    if (m_sInitialized) return;
+    m_sInitialized = true;
 
-    RegisterFont("system", CreateSystemUIFont());
+    register_font("system", create_system_ui_font());
 }
 
-auto ResourceRegistry::Shutdown() -> void
+auto ResourceRegistry::shutdown() -> void
 {
-    for (auto& [key, font] : s_fonts)
+    for (auto& [key, font] : m_sFonts)
     {
         if (font)
         {
@@ -18,29 +18,29 @@ auto ResourceRegistry::Shutdown() -> void
         }
     }
 
-    s_fonts.clear();
+    m_sFonts.clear();
 }
 
-auto ResourceRegistry::RegisterFont(const std::string& key, HFONT font) -> void
+auto ResourceRegistry::register_font(const std::string& key, HFONT font) -> void
 {
     if (!font) return;
 
     // already exists
-    const auto it = s_fonts.find(key);
+    const auto it = m_sFonts.find(key);
 
-    if (it != s_fonts.end())
+    if (it != m_sFonts.end())
     {
         DeleteObject(it->second);
     }
 
-    s_fonts[key] = font;
+    m_sFonts[key] = font;
 }
 
-auto ResourceRegistry::GetFont(const std::string& key) -> HFONT
+auto ResourceRegistry::get_font(const std::string& key) -> HFONT
 {
-    auto it = s_fonts.find(key);
+    auto it = m_sFonts.find(key);
 
-    if (it == s_fonts.end())
+    if (it == m_sFonts.end())
     {
         return nullptr;
     }
@@ -48,7 +48,7 @@ auto ResourceRegistry::GetFont(const std::string& key) -> HFONT
     return it->second;
 }
 
-auto ResourceRegistry::CreateSystemUIFont() -> HFONT
+auto ResourceRegistry::create_system_ui_font() -> HFONT
 {
     NONCLIENTMETRICSW ncm{};
     ncm.cbSize = sizeof(ncm);

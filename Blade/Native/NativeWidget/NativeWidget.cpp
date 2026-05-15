@@ -9,19 +9,30 @@ NativeWidget::~NativeWidget()
     }
 }
 
-auto NativeWidget::Handle() const -> HWND
+auto NativeWidget::handle() const -> HWND
 {
     return m_hwnd;
 }
 
-auto NativeWidget::Style() const -> DWORD
+auto NativeWidget::style() const -> DWORD
 {
     return WS_CHILD | WS_VISIBLE;
 }
 
-auto NativeWidget::ExStyle() const -> DWORD
+auto NativeWidget::exStyle() const -> DWORD
 {
     return 0;
+}
+
+auto NativeWidget::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
+{
+    return DefWindowProc(hwnd, msg, wParam, lParam);
+}
+
+auto NativeWidget::applyFont(HFONT font) const -> void
+{
+    // auto font = GetSystemUIFont();
+    SendMessageW(m_hwnd, WM_SETFONT, (WPARAM)font, TRUE);
 }
 
 auto CALLBACK NativeWidget::WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
@@ -48,19 +59,8 @@ auto CALLBACK NativeWidget::WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARA
 
     if (widget)
     {
-        return widget->HandleMessage(hwnd, msg, wParam, lParam);
+        return widget->handleMessage(hwnd, msg, wParam, lParam);
     }
 
     return DefWindowProc(hwnd, msg, wParam, lParam);
-}
-
-auto NativeWidget::HandleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
-{
-    return DefWindowProc(hwnd, msg, wParam, lParam);
-}
-
-auto NativeWidget::ApplyFont(HFONT font) const -> void
-{
-    // auto font = GetSystemUIFont();
-    SendMessageW(m_hwnd, WM_SETFONT, (WPARAM)font, TRUE);
 }

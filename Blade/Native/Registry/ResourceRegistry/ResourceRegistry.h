@@ -8,21 +8,21 @@
 class ResourceRegistry
 {
 public:
-    static auto Init() -> void;
+    static auto init() -> void;
 
-    static auto Shutdown() -> void;
+    static auto shutdown() -> void;
 
 public:
-    static auto RegisterFont(
+    static auto register_font(
         const std::string& key,
         HFONT font
     ) -> void;
 
-    static auto GetFont(const std::string& key) -> HFONT;
+    static auto get_font(const std::string& key) -> HFONT;
 
-    static auto CreateSystemUIFont() -> HFONT;
+    static auto create_system_ui_font() -> HFONT;
 
 private:
-    static inline bool s_initialized = false;
-    static inline std::unordered_map<std::string, HFONT> s_fonts;
+    static inline bool m_sInitialized = false;
+    static inline std::unordered_map<std::string, HFONT> m_sFonts;
 };

@@ -4,7 +4,7 @@
 #include "../Registry/ResourceRegistry/ResourceRegistry.h"
 
 
-auto NativeLabel::Create(const WidgetContext& ctx, const std::string& text) -> void
+auto NativeLabel::create(const WidgetContext& ctx, const std::string& text) -> void
 {
     m_ctx = ctx;
     m_text = text;
@@ -20,12 +20,12 @@ auto NativeLabel::Create(const WidgetContext& ctx, const std::string& text) -> v
 
     // TODO native size?
     // size are ignoring and recalculated in
-    CreateNative(Rect{0, 0, 140, 32});
-    m_font = ResourceRegistry::GetFont("system");
-    ApplyFont(m_font);
+    createNative(Rect{0, 0, 140, 32});
+    m_font = ResourceRegistry::get_font("system");
+    applyFont(m_font);
 }
 
-auto NativeLabel::CreateNative(const Rect rect) -> HWND
+auto NativeLabel::createNative(const Rect rect) -> HWND
 {
     m_hwnd = CreateWindowEx(
         0,
@@ -65,7 +65,7 @@ auto NativeLabel::CreateNative(const Rect rect) -> HWND
     return m_hwnd;
 }
 
-auto NativeLabel::HandleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
+auto NativeLabel::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
 {
     switch (msg)
     {
@@ -118,10 +118,10 @@ auto NativeLabel::HandleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
         return HTTRANSPARENT; // All hits pass through
     }
 
-    return NativeWidget::HandleMessage(hwnd, msg, wParam, lParam);
+    return NativeWidget::handleMessage(hwnd, msg, wParam, lParam);
 }
 
-auto NativeLabel::SetRect(const Rect rect) -> void
+auto NativeLabel::setRect(const Rect rect) -> void
 {
     SetWindowPos(m_hwnd, nullptr, rect.x, rect.y, rect.width, rect.height, SWP_NOZORDER);
 }

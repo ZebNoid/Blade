@@ -10,6 +10,21 @@
 
 class Window
 {
+protected:
+    Window(AppContext& appCtx, class WindowManager& manager);
+
+    auto create(const std::string& title) -> void;
+
+    auto onDestroy() -> void;
+    auto onResize(Size size) -> void;
+
+    auto router() -> EventRouter& { return m_router; }
+
+    auto dispatchCommand(const WidgetId id, WidgetEvent event, const EventValue& value = {}) -> void
+    {
+        m_router.dispatchCommand(id, event, value);
+    }
+
 public:
     Window(const Window&) = delete;
 
@@ -17,34 +32,19 @@ public:
 
     auto title(const std::string& title) -> Window&
     {
-        m_native.SetTitle(title);
+        m_native.setTitle(title);
         return *this;
     }
 
     auto size(const Size size) -> Window&
     {
-        m_native.SetSize(size);
+        m_native.setSize(size);
         return *this;
-    }
-
-protected:
-    Window(AppContext& appCtx, class WindowManager& manager);
-
-    auto Create(const std::string& title) -> void;
-
-    auto OnDestroy() -> void;
-    auto OnResize(Size size) -> void;
-
-    auto Router() -> EventRouter& { return m_router; }
-
-    auto DispatchCommand(const WidgetId id, WidgetEvent event, const EventValue& value = {}) -> void
-    {
-        m_router.DispatchCommand(id, event, value);
     }
 
 private:
     template <typename T>
-    auto SetRoot(T&& widget) -> Window&
+    auto setRoot(T&& widget) -> Window&
     {
         using WidgetType = std::decay_t<T>;
         m_root = std::make_unique<WidgetType>(
@@ -52,18 +52,18 @@ private:
         );
 
         WidgetContext ctx{
-            m_native.Handle(), // Set NativeWidget HWND
-            &m_app_ctx,
+            m_native.handle(), // Set NativeWidget HWND
+            &m_appCtx,
             this
         };
 
-        m_materializer.Mount(*m_root, ctx);
+        m_materializer.mount(*m_root, ctx);
 
         if (m_root != nullptr)
         {
-            const auto [width, height] = m_native.ClientSize();
+            const auto [width, height] = m_native.clientSize();
             // First Arrange
-            m_root->Arrange({0, 0, width, height});
+            m_root->arrange({0, 0, width, height});
         }
 
         return *this;
@@ -71,7 +71,7 @@ private:
 
 private:
     WindowManager& m_manager;
-    AppContext& m_app_ctx;
+    AppContext& m_appCtx;
 
     NativeWindow m_native;
     Materializer m_materializer;

@@ -24,23 +24,23 @@ protected:
 public:
     virtual ~NativeWidget();
 
-    auto Handle() const -> HWND;
+    auto handle() const -> HWND;
 
 protected:
     NativeWidget() = default;
 
-    virtual auto Style() const -> DWORD;
+    virtual auto style() const -> DWORD;
 
-    virtual auto ExStyle() const -> DWORD;
+    virtual auto exStyle() const -> DWORD;
 
-    virtual auto HandleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT;
+    virtual auto handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT;
 
-    virtual auto CreateNative(Rect rect) -> HWND = 0;
+    virtual auto createNative(Rect rect) -> HWND = 0;
 
-    auto ApplyFont(HFONT font) const -> void;
+    auto applyFont(HFONT font) const -> void;
 
 public:
-    auto ClientSize() const -> Size
+    auto clientSize() const -> Size
     {
         return m_size;
     }

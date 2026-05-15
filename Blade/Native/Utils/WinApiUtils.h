@@ -4,7 +4,7 @@
 #include <cstdio>
 
 // EDIT text verticel align
-inline auto verticalAlignCenter(const HWND hwnd) -> void
+inline auto VerticalAlignCenter(const HWND hwnd) -> void
 {
     RECT rc;
     GetClientRect(hwnd, &rc);

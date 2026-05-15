@@ -8,18 +8,18 @@ class Label : public Widget
 public:
     Label(std::string text);
 
-    auto Mount(Materializer& m, WidgetContext& ctx) -> void override;
+    auto mount(Materializer& m, WidgetContext& ctx) -> void override;
 
-    auto Measure(Size available) -> Size override
+    auto measure(Size available) -> Size override
     {
         return {140, 40};
     }
 
-    auto Arrange(Rect rect) -> void override
+    auto arrange(Rect rect) -> void override
     {
-        Widget::Arrange(rect);
+        Widget::arrange(rect);
 
-        m_native.SetRect(rect);
+        m_native.setRect(rect);
     }
 
 private:

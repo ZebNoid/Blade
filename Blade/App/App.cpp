@@ -1,23 +1,23 @@
 #include "App.h"
 
 
-App::App() : wm(ctx)
+App::App() : m_wm(m_ctx)
 {
-    ctx.hInstance = GetModuleHandle(nullptr);
-    Init();
+    m_ctx.hInstance = GetModuleHandle(nullptr);
+    init();
 }
 
-auto App::Run() -> int
+auto App::run() -> int
 {
-    while (GetMessage(&msg, nullptr, 0, 0))
+    while (GetMessage(&m_msg, nullptr, 0, 0))
     {
-        TranslateMessage(&msg);
-        DispatchMessage(&msg);
+        TranslateMessage(&m_msg);
+        DispatchMessage(&m_msg);
     }
-    return static_cast<int>(msg.wParam);
+    return static_cast<int>(m_msg.wParam);
 }
 
-auto App::Init() -> void
+auto App::init() -> void
 {
     // TODO Native App
 

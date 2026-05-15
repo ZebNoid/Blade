@@ -10,10 +10,10 @@ NativeWindow::NativeWindow()
 {
     m_size = {800, 600};
     // TODO move to app cycle
-    ResourceRegistry::Init();
+    ResourceRegistry::init();
 }
 
-auto NativeWindow::Create(const WidgetContext& ctx, Window* owner, const std::string& title) -> void
+auto NativeWindow::create(const WidgetContext& ctx, Window* owner, const std::string& title) -> void
 {
     m_title = title;
     m_owner = owner;
@@ -33,28 +33,28 @@ auto NativeWindow::Create(const WidgetContext& ctx, Window* owner, const std::st
         }
     );
 
-    CreateNative(Rect{CW_USEDEFAULT, CW_USEDEFAULT, m_size.width, m_size.height});
+    createNative(Rect{CW_USEDEFAULT, CW_USEDEFAULT, m_size.width, m_size.height});
 }
 
-auto NativeWindow::ExStyle() const -> DWORD
+auto NativeWindow::exStyle() const -> DWORD
 {
     // return WS_EX_LAYERED;
     return 0;
 }
 
 
-auto NativeWindow::Style() const -> DWORD
+auto NativeWindow::style() const -> DWORD
 {
     return WS_OVERLAPPEDWINDOW | WS_VISIBLE;
 }
 
-auto NativeWindow::CreateNative(const Rect rect) -> HWND
+auto NativeWindow::createNative(const Rect rect) -> HWND
 {
     m_hwnd = CreateWindowEx(
-        ExStyle(),
+        exStyle(),
         ClassRegistry::Get("NativeWindow"),
         toNativeString(m_title).c_str(),
-        Style(),
+        style(),
         rect.x, rect.y,
         rect.width, rect.height,
         // for root window it always m_ctx.hwnd = nullptr
@@ -76,7 +76,7 @@ auto NativeWindow::CreateNative(const Rect rect) -> HWND
     return m_hwnd;
 }
 
-auto NativeWindow::HandleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
+auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
 {
     switch (msg)
     {
@@ -91,7 +91,7 @@ auto NativeWindow::HandleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
         }
 
     case WM_COMMAND:
-        return HandleCommandMessage(hwnd, msg, wParam, lParam);
+        return handleCommandMessage(hwnd, msg, wParam, lParam);
 
     case WM_ACTIVATE:
         // Detect if the user switched to a different application.
@@ -118,7 +118,7 @@ auto NativeWindow::HandleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
             m_size.width = LOWORD(lParam);
             m_size.height = HIWORD(lParam);
 
-            m_owner->OnResize(m_size);
+            m_owner->onResize(m_size);
             return 0;
         }
 
@@ -157,14 +157,14 @@ auto NativeWindow::HandleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
     //     break;
 
     case WM_DESTROY:
-        m_owner->OnDestroy();
+        m_owner->onDestroy();
         return 0;
     }
 
-    return NativeWidget::HandleMessage(hwnd, msg, wParam, lParam);
+    return NativeWidget::handleMessage(hwnd, msg, wParam, lParam);
 }
 
-inline auto NativeWindow::HandleCommandMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
+inline auto NativeWindow::handleCommandMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
 {
     const int id = LOWORD(wParam);
     const int event = HIWORD(wParam);
@@ -180,21 +180,21 @@ inline auto NativeWindow::HandleCommandMessage(HWND hwnd, UINT msg, WPARAM wPara
             std::wstring buffer(len + 1, L'\0');
             GetWindowText(hEdit, &buffer[0], len + 1);
             // GetWindowText(hEdit, buffer.data(), len + 1);
-            m_owner->DispatchCommand(id, WidgetEvent::Change, Utf16ToUtf8(buffer));
-            verticalAlignCenter(hEdit); // TODO dev
+            m_owner->dispatchCommand(id, WidgetEvent::Change, Utf16ToUtf8(buffer));
+            VerticalAlignCenter(hEdit); // TODO dev
         }
         break;
 
     case EN_SETFOCUS:
-        m_owner->DispatchCommand(id, WidgetEvent::Focus, true);
+        m_owner->dispatchCommand(id, WidgetEvent::Focus, true);
         break;
 
     case EN_KILLFOCUS:
-        m_owner->DispatchCommand(id, WidgetEvent::Focus, false);
+        m_owner->dispatchCommand(id, WidgetEvent::Focus, false);
         break;
 
     case BN_CLICKED:
-        m_owner->DispatchCommand(id, WidgetEvent::Click);
+        m_owner->dispatchCommand(id, WidgetEvent::Click);
         break;
 
     default: ;
@@ -202,25 +202,25 @@ inline auto NativeWindow::HandleCommandMessage(HWND hwnd, UINT msg, WPARAM wPara
     return 0;
 }
 
-auto NativeWindow::SetRect(Rect rect) -> void
+auto NativeWindow::setRect(Rect rect) -> void
 {
     // MoveWindow(m_hwnd, rect.x, rect.y, rect.width, rect.height, TRUE);
     // SetWindowPos(m_hwnd, nullptr, rect.x, rect.y, rect.width, rect.height,  SWP_NONE);
 }
 
-auto NativeWindow::SetTitle(const std::string& title) -> void
+auto NativeWindow::setTitle(const std::string& title) -> void
 {
     m_title = title;
     SetWindowText(m_hwnd, toNativeString(title).c_str());
 }
 
-auto NativeWindow::SetSize(const Size size) -> void
+auto NativeWindow::setSize(const Size size) -> void
 {
     m_size = size;
     SetWindowPos(m_hwnd, nullptr, 0, 0, size.width, size.height, SWP_NOMOVE);
 }
 
-auto NativeWindow::Show() -> void
+auto NativeWindow::show() -> void
 {
     ShowWindow(m_hwnd, SW_SHOW);
 }

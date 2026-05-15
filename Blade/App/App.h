@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../Windows/WindowManager/WindowManager.h"
 #include "../Windows/Window/Window.h"
+#include "../Windows/WindowManager/WindowManager.h"
 
 
 class App
@@ -10,14 +10,14 @@ public:
     App();
     virtual ~App() = default;
 
-    auto Run() -> int;
+    auto run() -> int;
 
     template <typename T>
     auto window(T&& widget) -> Window&
     {
         // TODO name is sate after window created this is placeholder name
-        auto& window = wm.NewWindow("Blade Window");
-        return window.SetRoot(std::forward<T>(widget));
+        auto& window = m_wm.newWindow("Blade Window");
+        return window.setRoot(std::forward<T>(widget));
     }
 
     // TODO Alert / Popup
@@ -28,13 +28,13 @@ public:
     }
 
 private:
-    MSG msg = {};
+    MSG m_msg = {};
 
 protected:
-    AppContext ctx{};
+    AppContext m_ctx{};
 
-    WindowManager wm;
+    WindowManager m_wm;
 
 private:
-    auto Init() -> void;
+    auto init() -> void;
 };

@@ -2,12 +2,12 @@
 
 #include "../../Windows/Window/Window.h"
 
-auto Widget::AllocateId(const WidgetContext& ctx) -> WidgetId
+auto Widget::allocateId(const WidgetContext& ctx) -> WidgetId
 {
-    return static_cast<Window*>(ctx.window)->Router().AllocateId();
+    return static_cast<Window*>(ctx.window)->router().allocateId();
 }
 
-auto Widget::BindEvent(const WidgetContext& ctx, const WidgetEvent event, const EventHandler& fn) const -> void
+auto Widget::bindEvent(const WidgetContext& ctx, const WidgetEvent event, const EventHandler& fn) const -> void
 {
-    static_cast<Window*>(ctx.window)->Router().BindEvent(m_id, event, fn);
+    static_cast<Window*>(ctx.window)->router().bindEvent(m_id, event, fn);
 }
