@@ -13,9 +13,9 @@ NativeWindow::NativeWindow()
     ResourceRegistry::init();
 }
 
-auto NativeWindow::create(const WidgetContext& ctx, Window* owner, const std::string& title) -> void
+auto NativeWindow::create(const WidgetContext& ctx, Window* owner, const WindowProps& props) -> void
 {
-    m_title = title;
+    m_props = props;
     m_owner = owner;
     m_ctx = ctx;
 
@@ -33,7 +33,7 @@ auto NativeWindow::create(const WidgetContext& ctx, Window* owner, const std::st
         }
     );
 
-    createNative(Rect{CW_USEDEFAULT, CW_USEDEFAULT, m_size.width, m_size.height});
+    createNative({});
 }
 
 auto NativeWindow::exStyle() const -> DWORD
@@ -45,7 +45,24 @@ auto NativeWindow::exStyle() const -> DWORD
 
 auto NativeWindow::style() const -> DWORD
 {
-    return WS_OVERLAPPEDWINDOW | WS_VISIBLE;
+    auto style = WS_OVERLAPPEDWINDOW | WS_VISIBLE;
+
+    if (!m_props.resizable)
+    {
+        style &= ~WS_THICKFRAME;
+    }
+
+    if (!m_props.maximizable)
+    {
+        style &= ~WS_MAXIMIZEBOX;
+    }
+
+    if (!m_props.minimizable)
+    {
+        style &= ~WS_MINIMIZEBOX;
+    }
+
+    return style;
 }
 
 auto NativeWindow::createNative(const Rect rect) -> HWND
@@ -53,10 +70,10 @@ auto NativeWindow::createNative(const Rect rect) -> HWND
     m_hwnd = CreateWindowEx(
         exStyle(),
         ClassRegistry::Get("NativeWindow"),
-        toNativeString(m_title).c_str(),
+        toNativeString(m_props.title).c_str(),
         style(),
-        rect.x, rect.y,
-        rect.width, rect.height,
+        CW_USEDEFAULT, CW_USEDEFAULT,
+        m_props.size.width, m_props.size.height,
         // for root window it always m_ctx.hwnd = nullptr
         // m_ctx.hwnd != nullptr ? m_ctx.hwnd : HWND_DESKTOP,
         m_ctx.hwnd,
@@ -158,6 +175,7 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
 
     case WM_CLOSE:
         {
+            // TODO check multiple windows
             DestroyWindow(hwnd);
             std::cerr << "[Error] " << "NativeWindow WM_CLOSE" << std::endl;
             return 0;
@@ -224,8 +242,8 @@ auto NativeWindow::setRect(Rect rect) -> void
 
 auto NativeWindow::setTitle(const std::string& title) -> void
 {
-    m_title = title;
-    SetWindowText(m_hwnd, toNativeString(title).c_str());
+    m_props.title = title;
+    SetWindowText(m_hwnd, toNativeString(m_props.title).c_str());
 }
 
 auto NativeWindow::setSize(const Size size) -> void

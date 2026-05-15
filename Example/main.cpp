@@ -20,7 +20,10 @@ public:
                     Label("Label           Long           Test"),
                     TextField().onChange([&](const std::string& value)
                     {
-                        mainWindow->title(value);
+                        // mainWindow->title(value);
+                        mainWindow->set({
+                            .title = value
+                        });
                         // std::cout << "TextField::text " << value << "\n";
                     }).onFocus([](auto focus)
                     {
@@ -33,10 +36,18 @@ public:
                         Alert("No, don't do it!");
                     })
                 )
-            ).title("Blade Example ")
-             .size({800, 600})
-            // .show()
-            ;
+            )
+            .set({
+                 .title = "Blade Example",
+                 .size = {600, 600}
+             });
+
+        window(Label("Test"));
+    }
+
+    auto build() -> void override
+    {
+        // возможно стоит создавать UI сдесь
     }
 };
 

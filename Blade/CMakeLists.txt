@@ -55,7 +55,8 @@ add_library(${PROJECT_NAME} STATIC
         Props/Widget/ColumnProps.h
         Props/Widget/LabelProps.h
         Props/Window/WindowProps.h
-        Props/Common/SizeProps.h
+        Props/Common/Size.h
+        Props/Common/Thickness.h
 )
 
 # use Unicode

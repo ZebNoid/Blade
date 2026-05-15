@@ -6,6 +6,7 @@
 #include "../../Widgets/Widget/Widget.h"
 #include "../../Native/NativeWindow/NativeWindow.h"
 #include "../EventRouter/EventRouter.h"
+#include "Props/Window/WindowProps.h"
 
 
 class Window
@@ -30,15 +31,16 @@ public:
 
     auto show() -> void;
 
-    auto title(const std::string& title) -> Window&
+    auto set(WindowProps props) -> Window&
     {
-        m_native.setTitle(title);
+        m_props = std::move(props);
         return *this;
     }
 
-    auto size(const Size size) -> Window&
+    // TODO
+    auto title(const std::string& title) -> Window&
     {
-        m_native.setSize(size);
+        m_native.setTitle(title);
         return *this;
     }
 
@@ -78,6 +80,8 @@ private:
     EventRouter m_router;
 
     std::unique_ptr<Widget> m_root;
+
+    WindowProps m_props{};
 
     friend class App; // App::Window возвращает ссылку на Window чтобы использовать метод Window::Title()
     friend class WindowManager;

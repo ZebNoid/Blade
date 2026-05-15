@@ -3,8 +3,12 @@
 
 NativeWidget::~NativeWidget()
 {
-    // TODO if child hwnd
-    m_hwnd = nullptr;
+    // TODO check for windows and children
+    if (m_hwnd && IsWindow(m_hwnd))
+    {
+        DestroyWindow(m_hwnd);
+        m_hwnd = nullptr;
+    }
 }
 
 auto NativeWidget::handle() const -> HWND

@@ -3,6 +3,7 @@
 #include "../../Core/Core.h"
 #include "../../Context/WidgetContext.h"
 #include "../../Events/WidgetEvent/WidgetEvent.h"
+#include "Props/Common/Size.h"
 
 enum class WidgetEvent;
 

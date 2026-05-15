@@ -16,7 +16,7 @@ auto Window::create(const std::string& title) -> void
         this
     };
 
-    m_native.create(w_ctx, this, title);
+    m_native.create(w_ctx, this, m_props);
 }
 
 auto Window::onDestroy() -> void

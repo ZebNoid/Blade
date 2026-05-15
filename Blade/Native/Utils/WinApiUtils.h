@@ -2,6 +2,7 @@
 
 #include <windows.h>
 #include <cstdio>
+#include "Props/Common/Size.h"
 
 // EDIT text verticel align
 inline auto VerticalAlignCenter(const HWND hwnd) -> void

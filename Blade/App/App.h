@@ -26,6 +26,7 @@ public:
         // TODO Native alert builder
         MessageBox(nullptr, Utf8ToUtf16(text).c_str(), L"Help!", MB_OK);
     }
+    virtual auto build() -> void {}
 
 private:
     MSG m_msg = {};

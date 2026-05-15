@@ -9,11 +9,6 @@ struct Point
     int y;
 };
 
-struct Size
-{
-    int width{};
-    int height{};
-};
 
 struct Rect
 {
