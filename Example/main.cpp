@@ -20,10 +20,10 @@ public:
                     Label("Label           Long           Test"),
                     TextField().onChange([&](const std::string& value)
                     {
-                        // mainWindow->title(value);
-                        mainWindow->set({
-                            .title = value
-                        });
+                        // TODO setState
+                        // mainWindow->set({
+                        //     .title = value
+                        // });
                         // std::cout << "TextField::text " << value << "\n";
                     }).onFocus([](auto focus)
                     {

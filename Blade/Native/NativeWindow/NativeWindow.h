@@ -28,9 +28,6 @@ protected:
     auto handleCommandMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT;
 
 public:
-    auto setTitle(const std::string& title) -> void;
-    auto setSize(Size size) -> void;
-
     auto show() -> void;
 
 protected:

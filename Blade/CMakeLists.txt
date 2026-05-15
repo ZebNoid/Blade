@@ -57,6 +57,8 @@ add_library(${PROJECT_NAME} STATIC
         Props/Window/WindowProps.h
         Props/Common/Size.h
         Props/Common/Thickness.h
+        Windows/WindowBuilder/WindowBuilder.cpp
+        Windows/WindowBuilder/WindowBuilder.h
 )
 
 # use Unicode

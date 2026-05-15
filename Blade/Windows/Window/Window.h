@@ -37,13 +37,6 @@ public:
         return *this;
     }
 
-    // TODO
-    auto title(const std::string& title) -> Window&
-    {
-        m_native.setTitle(title);
-        return *this;
-    }
-
 private:
     template <typename T>
     auto setRoot(T&& widget) -> Window&

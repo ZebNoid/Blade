@@ -240,17 +240,16 @@ auto NativeWindow::setRect(Rect rect) -> void
     // SetWindowPos(m_hwnd, nullptr, rect.x, rect.y, rect.width, rect.height,  SWP_NONE);
 }
 
-auto NativeWindow::setTitle(const std::string& title) -> void
-{
-    m_props.title = title;
-    SetWindowText(m_hwnd, toNativeString(m_props.title).c_str());
-}
-
-auto NativeWindow::setSize(const Size size) -> void
-{
-    m_size = size;
-    SetWindowPos(m_hwnd, nullptr, 0, 0, size.width, size.height, SWP_NOMOVE);
-}
+// auto NativeWindow::setTitle(const std::string& title) -> void
+// {
+//     SetWindowText(m_hwnd, toNativeString(m_props.title).c_str());
+// }
+//
+// auto NativeWindow::setSize(const Size size) -> void
+// {
+//     m_size = size;
+//     SetWindowPos(m_hwnd, nullptr, 0, 0, size.width, size.height, SWP_NOMOVE);
+// }
 
 auto NativeWindow::show() -> void
 {
