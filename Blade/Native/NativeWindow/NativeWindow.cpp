@@ -1,0 +1,226 @@
+#include "NativeWindow.h"
+
+#include "../../Core/Encoding.h"
+#include "../../Context/WidgetContext.h"
+#include "../Registry/ClassRegistry/ClassRegistry.h"
+#include "../Registry/ResourceRegistry/ResourceRegistry.h"
+
+
+NativeWindow::NativeWindow()
+{
+    m_size = {800, 600};
+    // TODO move to app cycle
+    ResourceRegistry::Init();
+}
+
+auto NativeWindow::Create(const WidgetContext& ctx, Window* owner, const std::string& title) -> void
+{
+    m_title = title;
+    m_owner = owner;
+    m_ctx = ctx;
+
+    ClassRegistry::Init(ctx.app->hInstance);
+
+    ClassRegistry::Register(
+        "NativeWindow",
+        {
+            .name = L"NativeWindowClass",
+            .proc = WindowProc,
+            // .background = (HBRUSH)COLOR_HIGHLIGHTTEXT,
+            // TODO set window icon
+            .icon = LoadIcon(ctx.app->hInstance, MAKEINTRESOURCE(101)),
+            // .icon = LoadIcon(ctx.app->hInstance, MAKEINTRESOURCE(IDI_APP_ICON)),
+        }
+    );
+
+    CreateNative(Rect{CW_USEDEFAULT, CW_USEDEFAULT, m_size.width, m_size.height});
+}
+
+auto NativeWindow::ExStyle() const -> DWORD
+{
+    // return WS_EX_LAYERED;
+    return 0;
+}
+
+
+auto NativeWindow::Style() const -> DWORD
+{
+    return WS_OVERLAPPEDWINDOW | WS_VISIBLE;
+}
+
+auto NativeWindow::CreateNative(const Rect rect) -> HWND
+{
+    m_hwnd = CreateWindowEx(
+        ExStyle(),
+        ClassRegistry::Get("NativeWindow"),
+        toNativeString(m_title).c_str(),
+        Style(),
+        rect.x, rect.y,
+        rect.width, rect.height,
+        // for root window it always m_ctx.hwnd = nullptr
+        // m_ctx.hwnd != nullptr ? m_ctx.hwnd : HWND_DESKTOP,
+        m_ctx.hwnd,
+        nullptr,
+        m_ctx.app->hInstance,
+        this);
+
+    if (!m_hwnd)
+    {
+        std::cerr << "[Error] " << NAME_OF(NativeWindow::CreateNative) << GetLastError() << std::endl;
+    }
+
+    // SetLayeredWindowAttributes(m_hwnd, 0, (255 * 70) / 100, LWA_ALPHA);
+    // SetLayeredWindowAttributes(m_hwnd, 0, 128, LWA_ALPHA);
+    // SetLayeredWindowAttributes(m_hwnd, RGB(255, 0, 0), 128, LWA_COLORKEY);
+
+    return m_hwnd;
+}
+
+auto NativeWindow::HandleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
+{
+    switch (msg)
+    {
+    case WM_CREATE:
+        {
+            // CREATESTRUCT *pCreate = reinterpret_cast<CREATESTRUCT*>(lParam);
+            // m_size.width = pCreate->cx;
+            // m_size.height = pCreate->cy;
+            // int x = pCreate->x;
+            // int y = pCreate->y;
+            return 0;
+        }
+
+    case WM_COMMAND:
+        return HandleCommandMessage(hwnd, msg, wParam, lParam);
+
+    case WM_ACTIVATE:
+        // Detect if the user switched to a different application.
+        break;
+
+    // case WM_LBUTTONDOWN:
+    case WM_NCLBUTTONDOWN:
+        SetFocus(hwnd);
+        break;
+
+    case WM_NCHITTEST:
+        {
+            LRESULT hit = DefWindowProc(hwnd, msg, wParam, lParam);
+            // If the click is in the client area, tell Windows it's the caption
+            if (hit == HTCLIENT)
+            {
+                return HTCAPTION;
+            }
+            return hit;
+        }
+
+    case WM_SIZE:
+        {
+            m_size.width = LOWORD(lParam);
+            m_size.height = HIWORD(lParam);
+
+            m_owner->OnResize(m_size);
+            return 0;
+        }
+
+    // case WM_CTLCOLOREDIT :
+    //     // set a custom background or text color
+    //     break;
+
+    // case WM_NCMOUSEMOVE:
+    // // case WM_MOUSEMOVE:
+    //     {
+    //         int x = GET_X_LPARAM(lParam);
+    //         int y = GET_Y_LPARAM(lParam);
+    //     }
+    //     break;
+
+    // // default STATIC label background transparency
+    // case WM_CTLCOLORSTATIC:
+    //     {
+    //         const auto hdc = (HDC)wParam;
+    //         // auto hwnd = (HWND)lParam;
+    //
+    //         SetBkMode(hdc, TRANSPARENT);
+    //
+    //         // если хочешь прозрачный фон
+    //         return (LRESULT)GetStockObject(NULL_BRUSH);
+    //     }
+
+    // case WM_SETCURSOR:
+    //     // Check if the cursor is in the client area (not the title bar)
+    //     if (LOWORD(lParam) == HTCLIENT) {
+    //         // Load a standard system cursor (e.g., Crosshair)
+    //         HCURSOR hCursor = LoadCursor(NULL, IDC_WAIT);
+    //         SetCursor(hCursor);
+    //         return TRUE; // Tell Windows we handled it
+    //     }
+    //     break;
+
+    case WM_DESTROY:
+        m_owner->OnDestroy();
+        return 0;
+    }
+
+    return NativeWidget::HandleMessage(hwnd, msg, wParam, lParam);
+}
+
+inline auto NativeWindow::HandleCommandMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
+{
+    const int id = LOWORD(wParam);
+    const int event = HIWORD(wParam);
+
+    switch (event)
+    {
+    case EN_CHANGE:
+        {
+            const auto hEdit = (HWND)lParam;
+            const int len = GetWindowTextLength(hEdit);
+            if (len <= 0) break;
+
+            std::wstring buffer(len + 1, L'\0');
+            GetWindowText(hEdit, &buffer[0], len + 1);
+            // GetWindowText(hEdit, buffer.data(), len + 1);
+            m_owner->DispatchCommand(id, WidgetEvent::Change, Utf16ToUtf8(buffer));
+            verticalAlignCenter(hEdit); // TODO dev
+        }
+        break;
+
+    case EN_SETFOCUS:
+        m_owner->DispatchCommand(id, WidgetEvent::Focus, true);
+        break;
+
+    case EN_KILLFOCUS:
+        m_owner->DispatchCommand(id, WidgetEvent::Focus, false);
+        break;
+
+    case BN_CLICKED:
+        m_owner->DispatchCommand(id, WidgetEvent::Click);
+        break;
+
+    default: ;
+    }
+    return 0;
+}
+
+auto NativeWindow::SetRect(Rect rect) -> void
+{
+    // MoveWindow(m_hwnd, rect.x, rect.y, rect.width, rect.height, TRUE);
+    // SetWindowPos(m_hwnd, nullptr, rect.x, rect.y, rect.width, rect.height,  SWP_NONE);
+}
+
+auto NativeWindow::SetTitle(const std::string& title) -> void
+{
+    m_title = title;
+    SetWindowText(m_hwnd, toNativeString(title).c_str());
+}
+
+auto NativeWindow::SetSize(const Size size) -> void
+{
+    m_size = size;
+    SetWindowPos(m_hwnd, nullptr, 0, 0, size.width, size.height, SWP_NOMOVE);
+}
+
+auto NativeWindow::Show() -> void
+{
+    ShowWindow(m_hwnd, SW_SHOW);
+}
