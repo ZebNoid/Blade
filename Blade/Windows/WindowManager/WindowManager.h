@@ -13,7 +13,7 @@ public:
 
     auto createWindow(const WindowBuilder& builder) -> Window&;
 
-    auto newWindow(const std::string& title) -> Window&;
+    // auto newWindow(const std::string& title) -> Window&;
 
     auto destroyWindow(Window* target) -> void;
 

@@ -31,21 +31,21 @@ auto WindowManager::createWindow(const WindowBuilder& builder) -> Window&
     return ref;
 }
 
-auto WindowManager::newWindow(const std::string& title) -> Window&
-{
-    auto window = std::unique_ptr<Window>(
-        new Window(
-            m_appCtx,
-            *this
-        )
-    );
-    window->create();
-    Window& ref = *window;
-    m_windows.push_back(
-        std::move(window)
-    );
-    return ref;
-}
+// auto WindowManager::newWindow(const std::string& title) -> Window&
+// {
+//     auto window = std::unique_ptr<Window>(
+//         new Window(
+//             m_appCtx,
+//             *this
+//         )
+//     );
+//     window->create();
+//     Window& ref = *window;
+//     m_windows.push_back(
+//         std::move(window)
+//     );
+//     return ref;
+// }
 
 auto WindowManager::destroyWindow(Window* target) -> void
 {
