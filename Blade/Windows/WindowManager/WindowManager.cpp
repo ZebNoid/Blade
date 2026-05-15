@@ -3,19 +3,43 @@
 #include "../Window/Window.h"
 
 WindowManager::WindowManager(AppContext& ctx)
-    : m_ctx(ctx)
+    : m_appCtx(ctx)
 {
+}
+
+auto WindowManager::createWindow(const WindowBuilder& builder) -> Window&
+{
+    auto window = std::unique_ptr<Window>(
+        new Window(
+            m_appCtx,
+            *this
+        )
+    );
+
+    window->set(builder.m_props);
+
+    window->setRoot(std::move(builder.m_root));
+    // window->setRoot(std::forward(builder.m_root));
+    window->create();
+
+    auto& ref = *window;
+
+    m_windows.push_back(
+        std::move(window)
+    );
+
+    return ref;
 }
 
 auto WindowManager::newWindow(const std::string& title) -> Window&
 {
     auto window = std::unique_ptr<Window>(
         new Window(
-            m_ctx,
+            m_appCtx,
             *this
         )
     );
-    window->create(title);
+    window->create();
     Window& ref = *window;
     m_windows.push_back(
         std::move(window)

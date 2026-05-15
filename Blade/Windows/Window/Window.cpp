@@ -8,7 +8,7 @@ Window::Window(AppContext& appCtx, WindowManager& manager)
 {
 }
 
-auto Window::create(const std::string& title) -> void
+auto Window::create() -> void
 {
     WidgetContext w_ctx{
         nullptr, // TODO change for child windows

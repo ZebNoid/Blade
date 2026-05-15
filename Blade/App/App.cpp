@@ -9,12 +9,23 @@ App::App() : m_wm(m_ctx)
 
 auto App::run() -> int
 {
+    build();
+
     while (GetMessage(&m_msg, nullptr, 0, 0))
     {
         TranslateMessage(&m_msg);
         DispatchMessage(&m_msg);
     }
     return static_cast<int>(m_msg.wParam);
+}
+
+auto App::build() -> void
+{
+    for (auto& builder : m_windowBuilders)
+    {
+        m_wm.createWindow(*builder);
+        // builder.materialize(...);
+    }
 }
 
 auto App::init() -> void

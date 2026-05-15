@@ -4,11 +4,14 @@
 #include <memory>
 
 #include "../Window/Window.h"
+#include "Windows/WindowBuilder/WindowBuilder.h"
 
 class WindowManager
 {
 public:
     WindowManager(AppContext& ctx);
+
+    auto createWindow(const WindowBuilder& builder) -> Window&;
 
     auto newWindow(const std::string& title) -> Window&;
 
@@ -17,8 +20,9 @@ public:
     auto empty() const -> bool;
 
 private:
-    AppContext& m_ctx;
+    AppContext& m_appCtx;
 
     std::vector<std::unique_ptr<Window>> m_windows;
-};
 
+    friend class Window;
+};

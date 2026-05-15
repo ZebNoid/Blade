@@ -14,7 +14,7 @@ class Window
 protected:
     Window(AppContext& appCtx, class WindowManager& manager);
 
-    auto create(const std::string& title) -> void;
+    auto create() -> void;
 
     auto onDestroy() -> void;
     auto onResize(Size size) -> void;
@@ -37,32 +37,38 @@ public:
         return *this;
     }
 
-private:
-    template <typename T>
-    auto setRoot(T&& widget) -> Window&
+protected:
+    auto setRoot(std::unique_ptr<Widget> root) -> Window&
     {
-        using WidgetType = std::decay_t<T>;
-        m_root = std::make_unique<WidgetType>(
-            std::forward<T>(widget)
-        );
 
-        WidgetContext ctx{
-            m_native.handle(), // Set NativeWidget HWND
-            &m_appCtx,
-            this
-        };
-
-        m_materializer.mount(*m_root, ctx);
-
-        if (m_root != nullptr)
-        {
-            const auto [width, height] = m_native.clientSize();
-            // First Arrange
-            m_root->arrange({0, 0, width, height});
-        }
-
-        return *this;
     }
+
+    // // TODO?
+    // template <typename T>
+    // auto _setRoot(T&& widget) -> Window&
+    // {
+    //     using WidgetType = std::decay_t<T>;
+    //     m_root = std::make_unique<WidgetType>(
+    //         std::forward<T>(widget)
+    //     );
+    //
+    //     WidgetContext ctx{
+    //         m_native.handle(), // Set NativeWidget HWND
+    //         &m_appCtx,
+    //         this
+    //     };
+    //
+    //     m_materializer.mount(*m_root, ctx);
+    //
+    //     if (m_root != nullptr)
+    //     {
+    //         const auto [width, height] = m_native.clientSize();
+    //         // First Arrange
+    //         m_root->arrange({0, 0, width, height});
+    //     }
+    //
+    //     return *this;
+    // }
 
 private:
     WindowManager& m_manager;
