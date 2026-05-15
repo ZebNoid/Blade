@@ -244,12 +244,12 @@ auto NativeWindow::setRect(Rect rect) -> void
 // {
 //     SetWindowText(m_hwnd, toNativeString(m_props.title).c_str());
 // }
-//
-// auto NativeWindow::setSize(const Size size) -> void
-// {
-//     m_size = size;
-//     SetWindowPos(m_hwnd, nullptr, 0, 0, size.width, size.height, SWP_NOMOVE);
-// }
+
+auto NativeWindow::setSize(const Size size) -> void
+{
+    m_size = size;
+    SetWindowPos(m_hwnd, nullptr, 0, 0, size.width, size.height, SWP_NOMOVE);
+}
 
 auto NativeWindow::show() -> void
 {

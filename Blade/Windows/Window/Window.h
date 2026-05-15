@@ -14,7 +14,16 @@ class Window
 protected:
     Window(AppContext& appCtx, class WindowManager& manager);
 
-    auto create() -> void;
+    auto create() -> void
+    {
+        WidgetContext w_ctx{
+            nullptr,
+            &m_appCtx,
+            this
+        };
+
+        m_native.create(w_ctx, this, m_props);
+    }
 
     auto onDestroy() -> void;
     auto onResize(Size size) -> void;
@@ -40,7 +49,6 @@ public:
 protected:
     auto setRoot(std::unique_ptr<Widget> root) -> Window&
     {
-
     }
 
     // // TODO?

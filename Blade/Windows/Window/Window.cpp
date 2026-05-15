@@ -8,16 +8,6 @@ Window::Window(AppContext& appCtx, WindowManager& manager)
 {
 }
 
-auto Window::create() -> void
-{
-    WidgetContext w_ctx{
-        nullptr, // TODO change for child windows
-        &m_appCtx,
-        this
-    };
-
-    m_native.create(w_ctx, this, m_props);
-}
 
 auto Window::onDestroy() -> void
 {
@@ -28,7 +18,7 @@ auto Window::onResize(Size size) -> void
 {
     if (!m_root) return;
 
-    m_root->arrange({0,0,size.width, size.height});
+    m_root->arrange({0, 0, size.width, size.height});
 }
 
 auto Window::show() -> void
