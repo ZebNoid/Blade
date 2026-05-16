@@ -34,6 +34,12 @@ public:
         return *this;
     }
 
+    auto id(WidgetId& id) -> Label&
+    {
+        id = m_id;
+        return *this;
+    }
+
 private:
     NativeLabel m_native;
     LabelProps m_props;

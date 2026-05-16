@@ -10,6 +10,7 @@ struct CheckboxProps
 {
     // TODO CheckboxProps
     LayoutProps layout;
+    bool ltr = false;
 };
 
 

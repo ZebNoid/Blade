@@ -18,9 +18,10 @@ NativeWindow::NativeWindow()
 
 auto NativeWindow::create(const WidgetContext& ctx, Window* owner, const WindowProps& props) -> void
 {
+    m_ctx = ctx;
+    // TODO id
     m_props = props;
     m_owner = owner;
-    m_ctx = ctx;
 
     ClassRegistry::Init(ctx.app->hInstance);
 
@@ -41,8 +42,8 @@ auto NativeWindow::create(const WidgetContext& ctx, Window* owner, const WindowP
 
 auto NativeWindow::exStyle() const -> DWORD
 {
-    // return WS_EX_LAYERED;
-    return 0;
+    auto exStyle = 0; //  WS_EX_LAYERED | WS_EX_ACCEPTFILES
+    return exStyle;
 }
 
 
@@ -218,8 +219,6 @@ inline auto NativeWindow::handleCommandMessage(HWND hwnd, UINT msg, WPARAM wPara
             // GetWindowText(hEdit, buffer.data(), len + 1);
             m_owner->dispatchCommand(id, WidgetEvent::Change, Utf16ToUtf8(buffer));
             VerticalAlignCenter(currentHwnd); // TODO dev
-
-            std::cout << m_id << "\n";
         }
         break;
 
@@ -236,15 +235,19 @@ inline auto NativeWindow::handleCommandMessage(HWND hwnd, UINT msg, WPARAM wPara
             LONG_PTR style = GetWindowLongPtr(currentHwnd, GWL_STYLE);
             LONG_PTR type = style & BS_TYPEMASK;
 
-            if (type == BS_AUTOCHECKBOX) {
+            if (type == BS_AUTOCHECKBOX)
+            {
                 LRESULT state = SendMessage(currentHwnd, BM_GETCHECK, 0, 0);
                 auto isChecked = state == BST_CHECKED;
                 m_owner->dispatchCommand(id, WidgetEvent::Change, isChecked);
-            } else if (type == BS_AUTORADIOBUTTON) {
+            }
+            else if (type == BS_AUTORADIOBUTTON)
+            {
                 LRESULT state = SendMessage(currentHwnd, BM_GETCHECK, 0, 0);
                 auto isChecked = state == BST_CHECKED;
                 m_owner->dispatchCommand(id, WidgetEvent::Change, isChecked);
-            } else
+            }
+            else
             {
                 m_owner->dispatchCommand(id, WidgetEvent::Click);
             }

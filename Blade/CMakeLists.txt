@@ -73,6 +73,7 @@ add_library(${PROJECT_NAME} STATIC
         Widgets/RadioButton/RadioButton.cpp
         Widgets/RadioButton/RadioButton.h
         Props/Widget/RadioButtonProps.h
+        Props/Widget/TextFieldProps.h
 )
 
 # use Unicode

@@ -8,16 +8,32 @@
 namespace Blade {
 
 
-auto NativeButton::create(const WidgetContext& ctx, const WidgetId id, const std::string& text) -> void
+auto NativeButton::create(const WidgetContext& ctx, const WidgetId id, const ButtonProps& props, const std::string& text) -> void
 {
     m_ctx = ctx;
     m_id = id;
+    m_props = props;
     m_text = text;
 
     // TODO native size?
     // size are ignoring and recalculated in Widget->Measure
     createNative(Rect{0, 0, 140, 32});
     applyFont(ResourceRegistry::get_font("system"));
+}
+
+DWORD NativeButton::style() const
+{
+    auto style = WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON;
+
+    if (m_props.defaultButton)
+    {
+        style |= BS_DEFPUSHBUTTON;
+    }
+
+    // TODO
+    // BS_NOTIFY to send BN_DBLCLK, BN_SETFOCUS, BN_KILLFOCUS
+
+    return style;
 }
 
 auto NativeButton::createNative(const Rect rect) -> HWND
@@ -29,7 +45,7 @@ auto NativeButton::createNative(const Rect rect) -> HWND
         0,
         L"BUTTON",
         toNativeString(m_text).c_str(),
-        WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+        style(),
         rect.x, rect.y,
         rect.width, rect.height,
         m_ctx.hwnd,

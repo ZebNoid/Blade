@@ -10,7 +10,8 @@ namespace Blade {
 struct LabelProps
 {
     LayoutProps layout;
-    TextAlign textAlign = TextAlign::Start;
+    // bit mask?
+    TextAlign textAlign = TextAlign::Center;
     int maxLines = 1;
 };
 

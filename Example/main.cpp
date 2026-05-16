@@ -7,33 +7,53 @@ using namespace Blade;
 
 class Sandbox : public App
 {
+public:
+    const int gap = 8;
+
+    const LayoutProps layoutMarginH = {
+        .margin = {gap, 0}
+    };
+
+    const LabelProps labelStyle = {
+        .layout = {
+            .margin = {gap, 0},
+        },
+        .textAlign = TextAlign::Start,
+    };
+
+    WidgetId windowId;
+    WidgetId textFieldId;
+    WidgetId labelId;
+
 protected:
     auto ui() -> void override
     {
         window(
             Column(
-                Label("Blade Example"),
-                Label("Radio Buttons"),
+                Label("Blade Example").id(labelId),
+                TextField("Default text").set({
+                    .layout = layoutMarginH,
+                    .textAlign = TextAlign::Start,
+                }).id(textFieldId),
+                Label("Radio Buttons").set(labelStyle),
                 Row(
                     RadioButton("RadioButton"),
                     RadioButton("RadioButton"),
                     RadioButton("RadioButton")
                 ).set({
-                    .spacing = 8,
-                    .layout = {
-                        .margin = {8, 0},
-                    }
+                    .spacing = gap,
+                    .layout = layoutMarginH
                 }),
-                Label("Row Buttons"),
+                Label("Row Buttons").set(labelStyle),
                 Row(
-                    Button("Button"),
+                    Button("Default Button").set({
+                        .defaultButton = true,
+                    }),
                     Button("Button"),
                     Button("Button")
                 ).set({
-                    .spacing = 8,
-                    .layout = {
-                        .margin = {8, 0},
-                    }
+                    .spacing = gap,
+                    .layout = layoutMarginH
                 }),
                 Label("Checkboxes"),
                 Row(
@@ -41,23 +61,19 @@ protected:
                     Checkbox("Checkbox"),
                     Checkbox("Checkbox")
                 ).set({
-                    .layout = {
-                        .margin = {8, 0},
-                    }
+                    .layout = layoutMarginH
                 }),
                 Button("Button"),
                 Button("Button"),
-                Button("Button h margin").set({
-                    .layout = {
-                        .margin = {8,0},
-                    }
+                Button("Button margin").set({
+                    .layout = layoutMarginH
                 }),
                 Button("Button")
             )
             .set({
-                .spacing = 8
+                .spacing = gap
             })
-        ).set({
+        ).id(windowId).set({
             .title = "Blade",
             .size = {800, 600},
             .padding = 16

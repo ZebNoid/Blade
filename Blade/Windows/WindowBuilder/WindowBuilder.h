@@ -28,6 +28,13 @@ public:
         return *this;
     }
 
+    auto id(WidgetId& id) -> WindowBuilder&
+    {
+        // TODO get id
+        // id = m_id;
+        return *this;
+    }
+
     auto takeRoot() -> std::unique_ptr<Widget>
     {
         return std::move(m_root);

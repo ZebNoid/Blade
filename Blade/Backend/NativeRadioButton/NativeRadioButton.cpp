@@ -6,14 +6,30 @@
 namespace Blade {
 
 
-auto NativeRadioButton::create(const WidgetContext& ctx, const WidgetId id, const std::string& text) -> void
+auto NativeRadioButton::create(const WidgetContext& ctx, const WidgetId id, const RadioButtonProps& props, const std::string& text) -> void
 {
     m_ctx = ctx;
     m_id = id;
+    m_props = props;
     m_text = text;
 
     createNative(Rect{0, 0, 140, 32});
     applyFont(ResourceRegistry::get_font("system"));
+}
+
+DWORD NativeRadioButton::style() const
+{
+    // TODO Start of group WS_GROUP
+
+    auto style = WS_CHILD | WS_VISIBLE | BS_AUTORADIOBUTTON;
+
+    if (m_props.ltr)
+    {
+        // Left-To-Right
+        style |= (BS_RIGHTBUTTON | BS_RIGHT);
+    }
+
+    return style;
 }
 
 auto NativeRadioButton::createNative(Rect rect) -> HWND
@@ -27,8 +43,7 @@ auto NativeRadioButton::createNative(Rect rect) -> HWND
         0,
         L"BUTTON", // Predefined class
         toNativeString(m_text).c_str(), // Label
-        // TODO Start of group WS_GROUP
-        WS_CHILD | WS_VISIBLE | BS_AUTORADIOBUTTON,
+        style(),
         rect.x,
         rect.y,
         rect.width,

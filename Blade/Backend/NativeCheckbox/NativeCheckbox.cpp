@@ -6,14 +6,29 @@
 namespace Blade {
 
 
-auto NativeCheckbox::create(const WidgetContext& ctx, const WidgetId id, const std::string& text) -> void
+auto NativeCheckbox::create(const WidgetContext& ctx, const WidgetId id, const CheckboxProps& props,
+                            const std::string& text) -> void
 {
     m_ctx = ctx;
     m_id = id;
+    m_props = props;
     m_text = text;
 
     createNative(Rect{0, 0, 140, 32});
     applyFont(ResourceRegistry::get_font("system"));
+}
+
+DWORD NativeCheckbox::style() const
+{
+    auto style = WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX;
+
+    if (m_props.ltr)
+    {
+        // Left-To-Right
+        style |= (BS_RIGHTBUTTON | BS_RIGHT);
+    }
+
+    return style;
 }
 
 auto NativeCheckbox::createNative(Rect rect) -> HWND
@@ -25,7 +40,7 @@ auto NativeCheckbox::createNative(Rect rect) -> HWND
         0,
         L"BUTTON", // Predefined class
         toNativeString(m_text).c_str(), // Label
-        WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX,
+        style(),
         rect.x,
         rect.y,
         rect.width,

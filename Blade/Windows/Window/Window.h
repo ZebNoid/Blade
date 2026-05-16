@@ -50,6 +50,13 @@ public:
         return *this;
     }
 
+    auto id(WidgetId& id) -> Window&
+    {
+        // TODO get id
+        // id = m_id;
+        return *this;
+    }
+
 protected:
     auto setRoot(std::unique_ptr<Widget> root) -> Window&
     {

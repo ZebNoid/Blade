@@ -34,6 +34,12 @@ public:
         return *this;
     }
 
+    auto id(WidgetId& id) -> RadioButton&
+    {
+        id = m_id;
+        return *this;
+    }
+
 private:
     NativeRadioButton m_native;
     RadioButtonProps m_props;

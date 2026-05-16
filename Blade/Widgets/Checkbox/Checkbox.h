@@ -34,6 +34,12 @@ public:
         return *this;
     }
 
+    auto id(WidgetId& id) -> Checkbox&
+    {
+        id = m_id;
+        return *this;
+    }
+
 private:
     NativeCheckbox m_native;
     CheckboxProps m_props;

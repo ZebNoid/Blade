@@ -10,6 +10,7 @@ struct RadioButtonProps
 {
     // TODO RadioButtonProps
     LayoutProps layout;
+    bool ltr = false;
 };
 
 
