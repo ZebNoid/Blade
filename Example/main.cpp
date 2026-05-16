@@ -15,31 +15,12 @@ protected:
                 Button("Button"),
                 Row(
                     Button("Button"),
-                    Button("Button").set({
-                        .layout = {
-                            .margin = 20,
-                        }
-                    }),
-                    Button("Button")
-                ).set({
-                    .layout = {
-                        .margin = 20,
-                    }
-                }),
-                Button("Button"),
-                Column(
-                    Button("Button"),
-                    Button("Button"),
-                    Button("Button").set({
-                        .layout = {
-                            .margin = 20,
-                        }
-                    }),
                     Button("Button"),
                     Button("Button")
                 ).set({
+                    .spacing = 5,
                     .layout = {
-                        .margin = 20,
+                        .margin = {5, 0},
                     }
                 }),
                 Button("Button"),
@@ -49,25 +30,15 @@ protected:
                         .margin = 20,
                     }
                 }),
-                Button("Button"),
                 Button("Button")
             )
             .set({
                 .spacing = 10
-                // .layout = {
-                //     .padding = 10
-                // }
             })
         ).set({
             .title = "Blade",
             .size = {800, 600},
-            .position = {3400, 400}
         });
-
-        // window(
-        //     Label("Hello")
-        // ).set({
-        // });
     }
 };
 

@@ -9,55 +9,59 @@
 
 ```c++
 #include <iostream>
+
 #include "blade.h"
 
 
 class Sandbox : public App
 {
-    Window* mainWindow;
-
-public:
-    Sandbox()
+protected:
+    auto ui() -> void override
     {
-        mainWindow = &window(
-                Column(
-                    Row(
-                        Button("Test 1"),
-                        Button("Test 1"),
-                        TextField()
-                    ),
-                    Label("Label           Long           Test"),
-                    TextField().onChange([&](const std::string& value)
-                    {
-                        mainWindow->title(value);
-                    }).onFocus([](auto focus)
-                    {
-                        // std::cout << "TextField::focus " << focus << "\n";
-                    }),
-                    Button("Hello"),
-                    Button("Привет"),
-                    Button("你好").onClick([&]
-                    {
-                        Alert("No, don't do it!");
-                    })
-                )
+        window(
+            Column(
+                Label("Label"),
+                Button("Button"),
+                Button("Button"),
+                Row(
+                    Button("Button"),
+                    Button("Button"),
+                    Button("Button")
+                ).set({
+                    .spacing = 5,
+                    .layout = {
+                        .margin = {5, 0},
+                    }
+                }),
+                Button("Button"),
+                Button("Button"),
+                Button("Button").set({
+                    .layout = {
+                        .margin = 20,
+                    }
+                }),
+                Button("Button")
             )
-            .title("Blade Example ")
-            .size({800, 600});
+            .set({
+                .spacing = 10
+            })
+        ).set({
+            .title = "Blade",
+            .size = {800, 600},
+        });
     }
 };
 
 
 auto main() -> int
 {
-    std::cout << "Welcome to a WinAPI Hell! " << "\n";
+    std::cout << "Welcome to a Blade! " << "\n";
 
     Sandbox app;
-    app.Run();
+    app.run();
 
     return 0;
 }
-
 ```
 
 
