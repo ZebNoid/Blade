@@ -28,13 +28,19 @@ auto Column::arrange(const Rect rect) -> void
     {
         Size size = child->measure({rect.width, rect.height});
 
+        const auto& margin = child->layout().margin;
+
+        y += margin.top; // TODO
+
         child->arrange({
-            rect.x,
+            rect.x + margin.left,
             y,
-            rect.width,
+            rect.width - margin.left - margin.right,
             size.height
         });
 
         y += size.height;
+
+        y += margin.bottom;
     }
 }

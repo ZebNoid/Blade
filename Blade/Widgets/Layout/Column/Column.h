@@ -1,8 +1,8 @@
 #pragma once
 
 
-#include "../../Widget/Widget.h"
-#include "../Container/Container.h"
+#include "Props/Widget/ColumnProps.h"
+#include "Widgets/Layout/Container/Container.h"
 
 class Column : public Container
 {
@@ -25,4 +25,14 @@ public:
 
     auto measure(Size available) -> Size override;
     auto arrange(Rect rect) -> void override;
+
+    auto set(ColumnProps props) -> Column&
+    {
+        m_layout = props.layout;
+        m_props = std::move(props);
+        return *this;
+    }
+
+protected:
+    ColumnProps m_props;
 };

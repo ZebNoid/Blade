@@ -1,6 +1,5 @@
 #include "Button.h"
 
-#include "../../Native/NativeButton/NativeButton.h"
 
 Button::Button(std::string text) : m_text(std::move(text))
 {

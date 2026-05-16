@@ -3,6 +3,7 @@
 #include "Core/Core.h"
 #include "Context/WidgetContext.h"
 #include "Events/WidgetEvent/WidgetEvent.h"
+#include "Props/Common/LayoutProps.h"
 #include "Props/Common/Size.h"
 
 enum class WidgetEvent;
@@ -21,11 +22,19 @@ public:
         m_rect = rect;
     }
 
+    auto layout() const -> const LayoutProps&
+    {
+        return m_layout;
+    }
+
 protected:
     static auto allocateId(const WidgetContext& ctx) -> WidgetId;
     auto bindEvent(const WidgetContext& ctx, WidgetEvent event, const EventHandler& fn) const -> void;
 
+
+
 protected:
     WidgetId m_id = -1;
     Rect m_rect{};
+    LayoutProps m_layout;
 };

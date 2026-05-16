@@ -60,6 +60,8 @@ add_library(${PROJECT_NAME} STATIC
         Windows/WindowBuilder/WindowBuilder.cpp
         Windows/WindowBuilder/WindowBuilder.h
         Props/Common/Point.h
+        Props/Common/TextAlign.h
+        Props/Widget/ButtonProps.h
 )
 
 # use Unicode

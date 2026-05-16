@@ -8,11 +8,39 @@ class Sandbox : public App
 protected:
     auto ui() -> void override
     {
-        window(
+         window(
             Column(
-                Label("Hello"),
-                Button("Test 1")
+                Label("Label"),
+                Label("Label"),
+                Button("Button"),
+                Button("Button"),
+                Button("Button").set({
+                    .layout = {
+                        .margin = 20,
+                    }
+                }),
+                Button("Button"),
+                Button("Button"),
+                Button("Button").set({
+                    .layout = {
+                        .margin = 40,
+                    }
+                }),
+                Button("Button"),
+                Button("Button"),
+                Label("Label").set({
+                    .layout = {
+                        .margin = 10,
+                    }
+                }),
+                Button("Button"),
+                Button("Button")
             )
+            // .set({
+            //     .layout = {
+            //         .padding = 10
+            //     }
+            // })
         ).set({
             .title = "Blade",
             .size = {800, 600},

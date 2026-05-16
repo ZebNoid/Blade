@@ -1,7 +1,8 @@
 #pragma once
 
-#include "../Widget/Widget.h"
-#include "../../Native/NativeLabel/NativeLabel.h"
+#include "Widgets/Widget/Widget.h"
+#include "Native/NativeLabel/NativeLabel.h"
+#include "Props/Widget/LabelProps.h"
 
 class Label : public Widget
 {
@@ -22,8 +23,17 @@ public:
         m_native.setRect(rect);
     }
 
+    auto set(LabelProps props) -> Label&
+    {
+        m_layout = props.layout;
+        m_props = std::move(props);
+        return *this;
+    }
+
 private:
     NativeLabel m_native;
 
     std::string m_text;
+
+    LabelProps m_props;
 };
