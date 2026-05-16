@@ -218,6 +218,8 @@ inline auto NativeWindow::handleCommandMessage(HWND hwnd, UINT msg, WPARAM wPara
             // GetWindowText(hEdit, buffer.data(), len + 1);
             m_owner->dispatchCommand(id, WidgetEvent::Change, Utf16ToUtf8(buffer));
             VerticalAlignCenter(currentHwnd); // TODO dev
+
+            std::cout << m_id << "\n";
         }
         break;
 

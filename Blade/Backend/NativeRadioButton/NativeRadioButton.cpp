@@ -21,10 +21,13 @@ auto NativeRadioButton::createNative(Rect rect) -> HWND
     NativeWidget::createNative(rect);
     if (m_ctx.hwnd == nullptr) return nullptr;
 
+    // TODO grouping? CheckRadioButton(hwndDlg, IDC_FIRST_RADIO, IDC_LAST_RADIO, IDC_RADIO_ONE);
+
     m_hwnd = CreateWindowEx(
         0,
         L"BUTTON", // Predefined class
         toNativeString(m_text).c_str(), // Label
+        // TODO Start of group WS_GROUP
         WS_CHILD | WS_VISIBLE | BS_AUTORADIOBUTTON,
         rect.x,
         rect.y,
