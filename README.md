@@ -12,6 +12,8 @@
 
 #include "blade.h"
 
+using namespace Blade;
+
 
 class Sandbox : public App
 {
@@ -20,42 +22,61 @@ protected:
     {
         window(
             Column(
-                Label("Label"),
+                Label("Blade Example"),
+                rowRadioButtons(),
+                rowButtons(),
+                rowCheckboxes().set({.layout = {.margin = {8, 0}}}),
                 Button("Button"),
                 Button("Button"),
-                Row(
-                    Button("Button"),
-                    Button("Button"),
-                    Button("Button")
-                ).set({
-                    .spacing = 5,
-                    .layout = {
-                        .margin = {5, 0},
-                    }
-                }),
-                Button("Button"),
-                Button("Button"),
-                Button("Button").set({
-                    .layout = {
-                        .margin = 20,
-                    }
-                }),
+                Label("").set({.layout = {.flex = 1}}),
                 Button("Button")
             )
             .set({
-                .spacing = 10
+                .gap = 8,
+                .mainAxisAlignment = MainAxisAlignment::Start,
+                .crossAxisAlignment = CrossAxisAlignment::Stretch,
             })
         ).set({
             .title = "Blade",
             .size = {800, 600},
         });
     }
+
+    auto rowCheckboxes() -> auto
+    {
+        return Row(
+            Label("Checkboxes:"),
+            Checkbox("Checkbox").set({.layout = {.flex = 1}}),
+            Checkbox("Checkbox").set({.layout = {.flex = 1}}),
+            Checkbox("Checkbox").set({.layout = {.flex = 1}})
+        );
+    }
+
+    auto rowButtons() -> auto
+    {
+        return Row(
+            Button("RadioButton"),
+            Label("Label").set({.layout = {.flex = 1}}),
+            Button("RadioButton").set({.layout = {.flex = 2}}),
+            Button("RadioButton")
+        );
+    }
+
+    auto rowRadioButtons() -> auto
+    {
+        return Row(
+            Label("RadioButtons:").set({.layout = {.flex = 1}}),
+            RadioButton("RadioButton"),
+            RadioButton("RadioButton"),
+            RadioButton("RadioButton")
+        );
+    }
 };
 
 
 auto main() -> int
 {
-    std::cout << "Welcome to a Blade! " << "\n";
+    std::cout << "Welcome to a WinAPI Hell! " << "\n";
 
     Sandbox app;
     app.run();
@@ -74,6 +95,8 @@ App
 Widget
 ├── Label > (NativeLabel)
 ├── Button > (NativeButton)
+├── RadioButton > (NativeRadioButton)
+├── Checkbox > (NativeCheckbox)
 ├── TextField > (NativeTextField)
 |
 └── Container
@@ -84,6 +107,8 @@ Backend
 └── NativeWidget
 	├── NativeWindow
 	├── NativeLabel
-	├── NativeTextField
-	└── NativeButton
+	├── NativeButton
+	├── NativeRadioButton
+	├── NativeCheckbox
+	└── NativeTextField
 ```

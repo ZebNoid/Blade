@@ -7,9 +7,12 @@
 namespace Blade {
 
 
-auto NativeLabel::create(const WidgetContext& ctx, const std::string& text) -> void
+auto NativeLabel::create(const WidgetContext& ctx, WidgetId id, const LabelProps& props,
+                         const std::string& text) -> void
 {
     m_ctx = ctx;
+    m_id = id;
+    m_props = props;
     m_text = text;
 
     ClassRegistry::Register(
@@ -28,6 +31,12 @@ auto NativeLabel::create(const WidgetContext& ctx, const std::string& text) -> v
     applyFont(m_font);
 }
 
+DWORD NativeLabel::style() const
+{
+    auto style = WS_CHILD | WS_VISIBLE;
+    return style;
+}
+
 auto NativeLabel::createNative(const Rect rect) -> HWND
 {
     NativeWidget::createNative(rect);
@@ -36,8 +45,8 @@ auto NativeLabel::createNative(const Rect rect) -> HWND
     m_hwnd = CreateWindowEx(
         0,
         ClassRegistry::Get("BladeLabel"),
-        L"",
-        WS_CHILD | WS_VISIBLE,
+        TEXT(""),
+        style(),
         rect.x,
         rect.y,
         rect.width,
@@ -50,19 +59,17 @@ auto NativeLabel::createNative(const Rect rect) -> HWND
 
     // m_hwnd = CreateWindowEx(
     //     0,
-    //     L"STATIC", // Classic system Label
+    //     TEXT("STATIC"), // Classic system Label
     //     toNativeString(m_text).c_str(),
-    //     // TODO text align
     //     // hAlign SS_LEFT || SS_CENTER ||  SS_RIGHT
-    //     // vAlign SS_CENTERIMAGE
-    //     // ellipsis SS_WORDELLIPSIS || SS_ENDELLIPSIS
-    //     WS_VISIBLE | WS_CHILD | SS_WORDELLIPSIS | SS_CENTERIMAGE | SS_CENTER,
+    //     style() | SS_WORDELLIPSIS | SS_CENTERIMAGE | SS_CENTER,
     //     rect.x, rect.y,
     //     rect.width, rect.height,
     //     m_ctx.hwnd,
     //     nullptr, // ID
     //     m_ctx.app->hInstance,
-    //     nullptr);
+    //     nullptr
+    // );
 
     if (!m_hwnd)
     {
@@ -98,15 +105,28 @@ auto NativeLabel::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
 
             auto text = toNativeString(m_text);
 
+            auto style = DT_VCENTER |
+                DT_SINGLELINE |
+                DT_END_ELLIPSIS;
+
+            switch (m_props.textAlign)
+            {
+            case TextAlign::Start:
+                style |= DT_LEFT;
+                break;
+            case TextAlign::End:
+                style |= DT_RIGHT;
+                break;
+            default:
+                style |= DT_CENTER;
+            }
+
             DrawTextW(
                 hdc,
                 text.c_str(),
                 -1,
                 &rc,
-                DT_CENTER |
-                DT_VCENTER |
-                DT_SINGLELINE |
-                DT_END_ELLIPSIS
+                style
             );
 
             // вернуть старый font

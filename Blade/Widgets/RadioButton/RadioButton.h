@@ -1,23 +1,23 @@
 #pragma once
 
-#include "Backend/NativeLabel/NativeLabel.h"
-#include "Props/Widget/LabelProps.h"
+#include "Backend/NativeRadioButton/NativeRadioButton.h"
+#include "Props/Widget/RadioButtonProps.h"
 #include "Widgets/Widget/Widget.h"
 
 
 namespace Blade {
 
 
-class Label : public Widget
+class RadioButton : public Widget
 {
 public:
-    Label(std::string text);
+    RadioButton(std::string text);
 
     auto mount(Materializer& m, WidgetContext& ctx) -> void override;
 
     auto measure(Size available) -> Size override
     {
-        return {140, 40};
+        return {140, 20};
     }
 
     auto arrange(Rect rect) -> void override
@@ -27,22 +27,22 @@ public:
         m_native.setRect(rect);
     }
 
-    auto set(LabelProps props) -> Label&
+    auto set(RadioButtonProps props) -> RadioButton&
     {
         m_layout = props.layout;
         m_props = std::move(props);
         return *this;
     }
 
-    auto id(WidgetId& id) -> Label&
+    auto id(WidgetId& id) -> RadioButton&
     {
         id = m_id;
         return *this;
     }
 
 private:
-    NativeLabel m_native;
-    LabelProps m_props;
+    NativeRadioButton m_native;
+    RadioButtonProps m_props;
 
     std::string m_text;
 };

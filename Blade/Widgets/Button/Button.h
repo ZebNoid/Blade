@@ -48,6 +48,12 @@ public:
         return *this;
     }
 
+    auto id(WidgetId& id) -> Button&
+    {
+        id = m_id;
+        return *this;
+    }
+
 private:
     NativeButton m_native;
     ButtonProps m_props;

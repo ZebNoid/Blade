@@ -1,4 +1,4 @@
-project(Blade VERSION 0.1.6)
+project(Blade VERSION 0.1.7)
 
 # Use the names to logic check
 if (NOT PROJECT_IS_TOP_LEVEL)
@@ -51,7 +51,6 @@ add_library(${PROJECT_NAME} STATIC
         Backend/Utils/WinApiUtils.h
         Backend/Registry/ResourceRegistry/ResourceRegistry.cpp
         Backend/Registry/ResourceRegistry/ResourceRegistry.h
-        Props/Common/Alignment.h
         Props/Widget/ColumnProps.h
         Props/Widget/LabelProps.h
         Props/Window/WindowProps.h
@@ -63,11 +62,22 @@ add_library(${PROJECT_NAME} STATIC
         Props/Common/TextAlign.h
         Props/Widget/ButtonProps.h
         Props/Common/StyleProps.h
-        Backend/CheckboxNative/NativeCheckbox.cpp
-        Backend/CheckboxNative/NativeCheckbox.h
+        Backend/NativeCheckbox/NativeCheckbox.cpp
+        Backend/NativeCheckbox/NativeCheckbox.h
         Widgets/Checkbox/Checkbox.cpp
         Widgets/Checkbox/Checkbox.h
         Props/Widget/CheckboxProps.h
+        Backend/NativeRadioButton/NativeRadioButton.cpp
+        Backend/NativeRadioButton/NativeRadioButton.h
+        Widgets/RadioButton/RadioButton.cpp
+        Widgets/RadioButton/RadioButton.h
+        Props/Widget/RadioButtonProps.h
+        Props/Widget/TextFieldProps.h
+        Props/Common/MainAxisAlignment.h
+        Props/Common/CrossAxisAlignment.h
+        Layout/Flex/FlexLayout.cpp
+        Layout/Flex/FlexLayout.h
+        Layout/Flex/FlexDirection.h
 )
 
 # use Unicode

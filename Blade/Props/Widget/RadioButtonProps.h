@@ -6,9 +6,9 @@
 namespace Blade {
 
 
-struct CheckboxProps
+struct RadioButtonProps
 {
-    // TODO CheckboxProps
+    // TODO RadioButtonProps
     LayoutProps layout;
     bool ltr = false;
 };

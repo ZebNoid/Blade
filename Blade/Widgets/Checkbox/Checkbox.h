@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Backend/CheckboxNative/NativeCheckbox.h"
+#include "Backend/NativeCheckbox/NativeCheckbox.h"
 #include "Props/Widget/CheckboxProps.h"
 #include "Widgets/Widget/Widget.h"
 
@@ -31,6 +31,12 @@ public:
     {
         m_layout = props.layout;
         m_props = std::move(props);
+        return *this;
+    }
+
+    auto id(WidgetId& id) -> Checkbox&
+    {
+        id = m_id;
         return *this;
     }
 

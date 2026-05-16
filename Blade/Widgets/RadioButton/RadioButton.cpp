@@ -1,14 +1,14 @@
-#include "Checkbox.h"
+#include "RadioButton.h"
 
 
 namespace Blade {
 
 
-Checkbox::Checkbox(std::string text) : m_text(text)
+RadioButton::RadioButton(std::string text) : m_text(text)
 {
 }
 
-auto Checkbox::mount(Materializer& m, WidgetContext& ctx) -> void
+auto RadioButton::mount(Materializer& m, WidgetContext& ctx) -> void
 {
     m_id = allocateId(ctx);
     m_native.create(ctx, m_id, m_props, m_text);
@@ -16,7 +16,7 @@ auto Checkbox::mount(Materializer& m, WidgetContext& ctx) -> void
     bindEvent(ctx, WidgetEvent::Change, [this](const EventValue& value)
     {
         // auto isTrue = std::get<bool>(value);
-        // TODO Checkbox change callback
+        // TODO RadioButton change callback
     });
 }
 

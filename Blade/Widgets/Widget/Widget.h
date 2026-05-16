@@ -32,6 +32,13 @@ public:
         return m_layout;
     }
 
+    // // TODO get id
+    // auto id(WidgetId& id) -> Widget&
+    // {
+    //     id = m_id;
+    //     return *this;
+    // }
+
 protected:
     static auto allocateId(const WidgetContext& ctx) -> WidgetId;
 

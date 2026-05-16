@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Props/Common/Alignment.h"
+#include "Props/Common/CrossAxisAlignment.h"
 #include "Props/Common/LayoutProps.h"
+#include "Props/Common/MainAxisAlignment.h"
 
 
 namespace Blade {
@@ -9,10 +10,10 @@ namespace Blade {
 
 struct ColumnProps
 {
-    int spacing = 0;
-    Alignment mainAxisAlignment = Alignment::Start;
-    CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment::Stretch;
-    LayoutProps layout{};
+    int gap = 0;
+    LayoutProps layout;
+    MainAxisAlignment mainAxisAlignment = MainAxisAlignment::Start;
+    CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment::Start;
 };
 
 

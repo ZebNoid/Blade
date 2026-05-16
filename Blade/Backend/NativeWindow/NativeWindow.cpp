@@ -18,9 +18,10 @@ NativeWindow::NativeWindow()
 
 auto NativeWindow::create(const WidgetContext& ctx, Window* owner, const WindowProps& props) -> void
 {
+    m_ctx = ctx;
+    // TODO id
     m_props = props;
     m_owner = owner;
-    m_ctx = ctx;
 
     ClassRegistry::Init(ctx.app->hInstance);
 
@@ -41,8 +42,8 @@ auto NativeWindow::create(const WidgetContext& ctx, Window* owner, const WindowP
 
 auto NativeWindow::exStyle() const -> DWORD
 {
-    // return WS_EX_LAYERED;
-    return 0;
+    auto exStyle = 0; //  WS_EX_LAYERED | WS_EX_ACCEPTFILES
+    return exStyle;
 }
 
 
@@ -144,10 +145,6 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
             return 0;
         }
 
-    // case WM_CTLCOLOREDIT :
-    //     // set a custom background or text color
-    //     break;
-
     // case WM_NCMOUSEMOVE:
     // // case WM_MOUSEMOVE:
     //     {
@@ -156,17 +153,17 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
     //     }
     //     break;
 
-    // // default STATIC label background transparency
-    // case WM_CTLCOLORSTATIC:
-    //     {
-    //         const auto hdc = (HDC)wParam;
-    //         // auto hwnd = (HWND)lParam;
-    //
-    //         SetBkMode(hdc, TRANSPARENT);
-    //
-    //         // если хочешь прозрачный фон
-    //         return (LRESULT)GetStockObject(NULL_BRUSH);
-    //     }
+    // case WM_CTLCOLORBTN:
+    // case WM_CTLCOLOREDIT:
+    case WM_CTLCOLORSTATIC:
+        {
+            // "STATIC" label background transparency
+            // auto childHwnd = (HWND)lParam;
+            const auto hdc = (HDC)wParam;
+            SetBkMode(hdc, TRANSPARENT);
+            // transparent background
+            return (LRESULT)GetStockObject(NULL_BRUSH); // NULL_BRUSH
+        }
 
     // case WM_SETCURSOR:
     //     // Check if the cursor is in the client area (not the title bar)
@@ -234,11 +231,19 @@ inline auto NativeWindow::handleCommandMessage(HWND hwnd, UINT msg, WPARAM wPara
             LONG_PTR style = GetWindowLongPtr(currentHwnd, GWL_STYLE);
             LONG_PTR type = style & BS_TYPEMASK;
 
-            if (type == BS_AUTOCHECKBOX) {
+            if (type == BS_AUTOCHECKBOX)
+            {
                 LRESULT state = SendMessage(currentHwnd, BM_GETCHECK, 0, 0);
                 auto isChecked = state == BST_CHECKED;
                 m_owner->dispatchCommand(id, WidgetEvent::Change, isChecked);
-            } else
+            }
+            else if (type == BS_AUTORADIOBUTTON)
+            {
+                LRESULT state = SendMessage(currentHwnd, BM_GETCHECK, 0, 0);
+                auto isChecked = state == BST_CHECKED;
+                m_owner->dispatchCommand(id, WidgetEvent::Change, isChecked);
+            }
+            else
             {
                 m_owner->dispatchCommand(id, WidgetEvent::Click);
             }

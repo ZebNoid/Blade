@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Backend/NativeTextField/NativeTextField.h"
+#include "Props/Widget/TextFieldProps.h"
 #include "Widgets/Widget/Widget.h"
 
 
@@ -10,7 +11,7 @@ namespace Blade {
 class TextField : public Widget
 {
 public:
-    TextField();
+    TextField(const std::string& text = "");
 
     // lvalue
     auto onChange(std::function<void(std::string)> fn) & -> TextField&
@@ -55,8 +56,24 @@ public:
         m_native.setRect(rect);
     }
 
+    auto set(TextFieldProps props) -> TextField&
+    {
+        m_layout = props.layout;
+        m_props = std::move(props);
+        return *this;
+    }
+
+    auto id(WidgetId& id) -> TextField&
+    {
+        id = m_id;
+        return *this;
+    }
+
 private:
     NativeTextField m_native;
+    TextFieldProps m_props;
+    std::string m_text;
+
     std::function<void(std::string)> m_onChange;
     std::function<void(bool)> m_onFocus;
 };
