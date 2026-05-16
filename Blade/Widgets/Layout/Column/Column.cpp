@@ -9,7 +9,7 @@ auto Column::measure(const Size available) -> Size
     int totalHeight = 0;
     int maxWidth = 0;
 
-    const int spacing = m_props.spacing;
+    const int gap = m_props.gap;
     bool first = true;
 
     for (const auto& child : m_children)
@@ -20,7 +20,7 @@ auto Column::measure(const Size available) -> Size
         // spacing between items
         if (!first)
         {
-            totalHeight += spacing;
+            totalHeight += gap;
         }
         else
         {
@@ -64,7 +64,7 @@ auto Column::arrange(const Rect rect) -> void
 
         if (!first)
         {
-            y += m_props.spacing;
+            y += m_props.gap;
         }
         else
         {

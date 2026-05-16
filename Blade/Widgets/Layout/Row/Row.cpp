@@ -47,7 +47,7 @@ auto Row::arrange(const Rect rect) -> void
 
         if (!first)
         {
-            x += m_props.spacing;
+            x += m_props.gap;
         }
         else
         {

@@ -41,7 +41,7 @@ protected:
                     RadioButton("RadioButton"),
                     RadioButton("RadioButton")
                 ).set({
-                    .spacing = gap,
+                    .gap = gap,
                     .layout = layoutMarginH
                 }),
                 Label("Row Buttons").set(labelStyle),
@@ -52,7 +52,7 @@ protected:
                     Button("Button"),
                     Button("Button")
                 ).set({
-                    .spacing = gap,
+                    .gap = gap,
                     .layout = layoutMarginH
                 }),
                 Label("Checkboxes"),
@@ -71,7 +71,7 @@ protected:
                 Button("Button")
             )
             .set({
-                .spacing = gap
+                .gap = gap
             })
         ).id(windowId).set({
             .title = "Blade",

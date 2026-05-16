@@ -9,7 +9,7 @@ namespace Blade {
 
 struct RowProps
 {
-    int spacing = 0;
+    int gap = 0;
     // Alignment mainAxisAlignment = Alignment::Start;
     // CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment::Stretch;
     LayoutProps layout{};
