@@ -9,7 +9,7 @@ class Column : public Container
 public:
     Column() = default;
 
-    template<typename... T>
+    template <typename... T>
     Column(T&&... widgets)
     {
         (m_children.push_back(std::make_unique<std::decay_t<T>>(std::forward<T>(widgets))), ...);
@@ -26,11 +26,18 @@ public:
     auto measure(Size available) -> Size override;
     auto arrange(Rect rect) -> void override;
 
-    auto set(ColumnProps props) -> Column&
+    auto set(ColumnProps props) & -> Column&
     {
         m_layout = props.layout;
         m_props = std::move(props);
         return *this;
+    }
+
+    auto set(ColumnProps props) && -> Column&&
+    {
+        m_layout = props.layout;
+        m_props = std::move(props);
+        return std::move(*this);
     }
 
 protected:

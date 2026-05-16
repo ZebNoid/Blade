@@ -29,11 +29,18 @@ public:
     auto measure(Size available) -> Size override;
     auto arrange(Rect rect) -> void override;
 
-    auto set(RowProps props) -> Row&
+    auto set(RowProps props) & -> Row&
     {
         m_layout = props.layout;
         m_props = std::move(props);
         return *this;
+    }
+
+    auto set(RowProps props) && -> Row&&
+    {
+        m_layout = props.layout;
+        m_props = std::move(props);
+        return std::move(*this);
     }
 
 protected:

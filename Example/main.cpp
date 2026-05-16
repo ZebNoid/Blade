@@ -21,14 +21,12 @@ protected:
                         }
                     }),
                     Button("Button")
-                )
-                // // TODO not working
-                // .set({
-                //         .layout = {
-                //             .margin = 20,
-                //         }
-                //     })
-                ,
+                ).set({
+                    .layout = {
+                        .margin = 20,
+                    }
+                }),
+                Button("Button"),
                 Column(
                     Button("Button"),
                     Button("Button"),
@@ -39,14 +37,11 @@ protected:
                     }),
                     Button("Button"),
                     Button("Button")
-                )
-                // // TODO not working
-                // .set({
-                //     .layout = {
-                //         .margin = 20,
-                //     }
-                // })
-                ,
+                ).set({
+                    .layout = {
+                        .margin = 20,
+                    }
+                }),
                 Button("Button"),
                 Button("Button"),
                 Button("Button").set({
@@ -57,11 +52,12 @@ protected:
                 Button("Button"),
                 Button("Button")
             )
-            // .set({
-            //     .layout = {
-            //         .padding = 10
-            //     }
-            // })
+            .set({
+                .spacing = 10
+                // .layout = {
+                //     .padding = 10
+                // }
+            })
         ).set({
             .title = "Blade",
             .size = {800, 600},
