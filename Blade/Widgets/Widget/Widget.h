@@ -32,12 +32,16 @@ public:
         return m_layout;
     }
 
-    // // TODO get id
-    // auto id(WidgetId& id) -> Widget&
-    // {
-    //     id = m_id;
-    //     return *this;
-    // }
+    auto rect() -> Rect
+    {
+        return m_rect;
+    }
+
+    virtual auto children() -> const std::vector<std::unique_ptr<Widget>>&
+    {
+        static std::vector<std::unique_ptr<Widget>> empty; // TODO why?
+        return empty;
+    }
 
 protected:
     static auto allocateId(const WidgetContext& ctx) -> WidgetId;

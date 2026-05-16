@@ -4,6 +4,7 @@
 #include "Backend/Registry/ResourceRegistry/ResourceRegistry.h"
 #include "Context/WidgetContext.h"
 #include "Core/Encoding.h"
+#include "Debug/LayoutDebugRenderer/LayoutDebugRenderer.h"
 
 
 namespace Blade {
@@ -164,6 +165,16 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
             // transparent background
             return (LRESULT)GetStockObject(NULL_BRUSH); // NULL_BRUSH
         }
+
+    case WM_PAINT:
+        {
+            const auto hdc = (HDC)wParam;
+            // LayoutDebugRenderer::Render(
+            //     hdc,
+            //     *window.root() // TODO
+            // );
+        }
+        break;
 
     // case WM_SETCURSOR:
     //     // Check if the cursor is in the client area (not the title bar)

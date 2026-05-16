@@ -78,6 +78,8 @@ add_library(${PROJECT_NAME} STATIC
         Layout/Flex/FlexLayout.cpp
         Layout/Flex/FlexLayout.h
         Layout/Flex/FlexDirection.h
+        Debug/LayoutDebugRenderer/LayoutDebugRenderer.cpp
+        Debug/LayoutDebugRenderer/LayoutDebugRenderer.h
 )
 
 # use Unicode
