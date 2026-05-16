@@ -19,14 +19,15 @@ public:
     static auto DrawFilledRect(
         HDC hdc,
         const RECT& rect,
-        COLORREF color
+        HBRUSH brush
     ) -> void;
 
     static auto DrawOutlineRect(
         HDC hdc,
         const RECT& rect,
-        COLORREF color,
-        int width = 1,
+        HPEN pen,
+        // COLORREF color,
+        // int width = 1,
         int inflate = 0
     ) -> void;
 };

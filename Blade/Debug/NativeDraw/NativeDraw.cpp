@@ -39,29 +39,30 @@ auto NativeDraw::DrawDebugText(
 auto NativeDraw::DrawFilledRect(
     HDC hdc,
     const RECT& rect,
-    COLORREF color
+    HBRUSH brush
+    // COLORREF color
+    // HBRUSH brush = CreateSolidBrush(color);
 ) -> void
 {
-    HBRUSH brush = CreateSolidBrush(color);
-
     FillRect(
         hdc,
         &rect,
         brush
     );
 
-    DeleteObject(brush);
+    // DeleteObject(brush);
 }
 
 auto NativeDraw::DrawOutlineRect(
     HDC hdc,
     const RECT& rect,
-    COLORREF color,
-    int width,
+    HPEN pen,
+    // COLORREF color,
+    // int width,
     int inflate
 ) -> void
 {
-    HPEN pen = CreatePen(PS_SOLID, width, color);
+    // HPEN pen = CreatePen(PS_SOLID, width, color);
 
     auto oldPen =
         static_cast<HPEN>(
@@ -90,7 +91,7 @@ auto NativeDraw::DrawOutlineRect(
     SelectObject(hdc, oldPen);
     SelectObject(hdc, oldBrush);
 
-    DeleteObject(pen);
+    // DeleteObject(g_boundsPen); // TODO
 }
 
 } // namespace

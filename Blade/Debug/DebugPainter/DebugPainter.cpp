@@ -6,6 +6,14 @@
 
 namespace Blade {
 
+namespace {
+    // TODO move to rsource manager
+    HPEN g_boundsPen = nullptr;
+    HPEN g_marginPen = nullptr;
+    HPEN g_paddingPen = nullptr;
+}
+
+
 auto DebugPainter::DrawBounds(HDC hdc, Rect rect) -> void
 {
     // -------------------------------------------------
@@ -19,11 +27,16 @@ auto DebugPainter::DrawBounds(HDC hdc, Rect rect) -> void
         rect.y + rect.height
     };
 
+
+    if (!g_boundsPen)
+    {
+        g_boundsPen = CreatePen(PS_SOLID, LayoutDebugTheme::Width, LayoutDebugTheme::WidgetBounds);
+    }
+
     NativeDraw::DrawOutlineRect(
         hdc,
         widgetRect,
-        LayoutDebugTheme::WidgetBounds,
-        LayoutDebugTheme::Width,
+        g_boundsPen,
         LayoutDebugTheme::Inflate
     );
 }
@@ -43,11 +56,15 @@ auto DebugPainter::DrawMargin(HDC hdc, Rect rect, LayoutProps layout) -> void
         rect.y + rect.height + layout.margin.bottom
     };
 
+    if (!g_marginPen)
+    {
+        g_marginPen = CreatePen(PS_SOLID, LayoutDebugTheme::Width, LayoutDebugTheme::Margin);
+    }
+
     NativeDraw::DrawOutlineRect(
         hdc,
         marginRect,
-        LayoutDebugTheme::Margin,
-        LayoutDebugTheme::Width,
+        g_marginPen,
         LayoutDebugTheme::Inflate
     );
 }
@@ -67,11 +84,15 @@ auto DebugPainter::DrawPadding(HDC hdc, Rect rect, LayoutProps layout) -> void
         rect.y + rect.height - layout.padding.bottom
     };
 
+    if (!g_paddingPen)
+    {
+        g_paddingPen = CreatePen(PS_SOLID, LayoutDebugTheme::Width, LayoutDebugTheme::Padding);
+    }
+
     NativeDraw::DrawOutlineRect(
         hdc,
         paddingRect,
-        LayoutDebugTheme::Padding,
-        LayoutDebugTheme::Width,
+        g_paddingPen,
         LayoutDebugTheme::Inflate
     );
 }
