@@ -1,10 +1,14 @@
 #pragma once
 
-#include <windows.h>
 #include <cstdio>
+#include <windows.h>
 
 #include "Props/Common/Point.h"
 #include "Props/Common/Size.h"
+
+
+namespace Blade {
+
 
 // EDIT text verticel align
 inline auto VerticalAlignCenter(const HWND hwnd) -> void
@@ -56,3 +60,6 @@ inline auto center(const Size size) -> Point
     const int yPos = (screenHeight - size.height) / 2;
     return {xPos, yPos};
 }
+
+
+} // namespace

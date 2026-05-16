@@ -1,7 +1,11 @@
 #pragma once
 
-#include "../Widget/Widget.h"
-#include "../../Native/NativeTextField/NativeTextField.h"
+#include "Backend/NativeTextField/NativeTextField.h"
+#include "Widgets/Widget/Widget.h"
+
+
+namespace Blade {
+
 
 class TextField : public Widget
 {
@@ -56,3 +60,6 @@ private:
     std::function<void(std::string)> m_onChange;
     std::function<void(bool)> m_onFocus;
 };
+
+
+} // namespace

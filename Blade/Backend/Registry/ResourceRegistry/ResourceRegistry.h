@@ -2,8 +2,11 @@
 
 #include <string>
 #include <unordered_map>
-
 #include <windows.h>
+
+
+namespace Blade {
+
 
 class ResourceRegistry
 {
@@ -26,3 +29,6 @@ private:
     static inline bool m_sInitialized = false;
     static inline std::unordered_map<std::string, HFONT> m_sFonts;
 };
+
+
+} // namespace

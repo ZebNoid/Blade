@@ -1,7 +1,10 @@
 #include "NativeLabel.h"
 
-#include "../Registry/ClassRegistry/ClassRegistry.h"
-#include "../Registry/ResourceRegistry/ResourceRegistry.h"
+#include "Backend/Registry/ClassRegistry/ClassRegistry.h"
+#include "Backend/Registry/ResourceRegistry/ResourceRegistry.h"
+
+
+namespace Blade {
 
 
 auto NativeLabel::create(const WidgetContext& ctx, const std::string& text) -> void
@@ -27,6 +30,9 @@ auto NativeLabel::create(const WidgetContext& ctx, const std::string& text) -> v
 
 auto NativeLabel::createNative(const Rect rect) -> HWND
 {
+    NativeWidget::createNative(rect);
+    if (m_ctx.hwnd == nullptr) return nullptr;
+
     m_hwnd = CreateWindowEx(
         0,
         ClassRegistry::Get("BladeLabel"),
@@ -37,7 +43,7 @@ auto NativeLabel::createNative(const Rect rect) -> HWND
         rect.width,
         rect.height,
         m_ctx.hwnd,
-        nullptr, // OD
+        nullptr, // ID
         m_ctx.app->hInstance,
         this
     );
@@ -125,3 +131,6 @@ auto NativeLabel::setRect(const Rect rect) -> void
 {
     SetWindowPos(m_hwnd, nullptr, rect.x, rect.y, rect.width, rect.height, SWP_NOZORDER);
 }
+
+
+} // namespace

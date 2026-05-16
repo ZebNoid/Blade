@@ -1,6 +1,9 @@
 #include "NativeTextField.h"
 
-#include "../Registry/ResourceRegistry/ResourceRegistry.h"
+#include "Backend/Registry/ResourceRegistry/ResourceRegistry.h"
+
+
+namespace Blade {
 
 
 auto NativeTextField::create(const WidgetContext& ctx, const WidgetId id) -> void
@@ -16,6 +19,9 @@ auto NativeTextField::create(const WidgetContext& ctx, const WidgetId id) -> voi
 
 auto NativeTextField::createNative(const Rect rect) -> HWND
 {
+    NativeWidget::createNative(rect);
+    if (m_ctx.hwnd == nullptr) return nullptr;
+
     m_hwnd = CreateWindowEx(
         0,
         L"EDIT",
@@ -23,7 +29,8 @@ auto NativeTextField::createNative(const Rect rect) -> HWND
         // WS_BORDER
         // ES_AUTOHSCROLL || WS_EX_CLIENTEDGE || WS_EX_TRANSPARENT
         // ES_LEFT ES_CENTER ES_RIGHT
-        WS_BORDER | WS_CHILD | WS_EX_TRANSPARENT| WS_VISIBLE | ES_LEFT | ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL,
+        WS_BORDER | WS_CHILD | WS_EX_TRANSPARENT | WS_VISIBLE | ES_LEFT | ES_MULTILINE | ES_AUTOVSCROLL |
+        ES_AUTOHSCROLL,
         // WS_CHILD | WS_VISIBLE | WS_EX_TRANSPARENT | ES_LEFT | ES_MULTILINE, // Styles
         rect.x, rect.y,
         rect.width, rect.height,
@@ -45,3 +52,6 @@ auto NativeTextField::setRect(const Rect rect) -> void
     SetWindowPos(m_hwnd, nullptr, rect.x, rect.y, rect.width, rect.height, SWP_NOZORDER);
     VerticalAlignCenter(m_hwnd);
 }
+
+
+} // namespace

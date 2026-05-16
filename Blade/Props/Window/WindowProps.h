@@ -1,9 +1,13 @@
 #pragma once
+
 #include <string>
 
 #include "Props/Common/Point.h"
-#include "Props/Common/Thickness.h"
 #include "Props/Common/Size.h"
+#include "Props/Common/Thickness.h"
+
+
+namespace Blade {
 
 
 struct WindowProps
@@ -23,3 +27,6 @@ struct WindowProps
 
     bool visible = true;
 };
+
+
+} // namespace

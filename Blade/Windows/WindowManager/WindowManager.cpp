@@ -2,6 +2,10 @@
 
 #include "Windows/Window/Window.h"
 
+
+namespace Blade {
+
+
 WindowManager::WindowManager(AppContext& ctx)
     : m_appCtx(ctx)
 {
@@ -52,3 +56,6 @@ auto WindowManager::empty() const -> bool
 {
     return m_windows.empty();
 }
+
+
+} // namespace

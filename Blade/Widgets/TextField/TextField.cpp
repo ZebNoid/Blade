@@ -1,5 +1,8 @@
 #include "TextField.h"
 
+
+namespace Blade {
+
 TextField::TextField()
 {
 }
@@ -23,3 +26,6 @@ auto TextField::mount(Materializer& m, WidgetContext& ctx) -> void
         m_onFocus(focus);
     });
 }
+
+
+} // namespace

@@ -1,5 +1,9 @@
 #include "Row.h"
 
+
+namespace Blade {
+
+
 auto Row::measure(const Size available) -> Size
 {
     int totalWidth = 0;
@@ -63,3 +67,6 @@ auto Row::arrange(const Rect rect) -> void
         x += margin.right;
     }
 }
+
+
+} // namespace

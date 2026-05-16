@@ -3,6 +3,9 @@
 #include "Widgets/Widget/Widget.h"
 
 
+namespace Blade {
+
+
 class Materializer
 {
 public:
@@ -11,3 +14,6 @@ public:
         widget.mount(*this, ctx);
     }
 };
+
+
+} // namespace

@@ -1,6 +1,10 @@
 #include "Widget.h"
 
-#include "../../Windows/Window/Window.h"
+#include "Windows/Window/Window.h"
+
+
+namespace Blade {
+
 
 auto Widget::allocateId(const WidgetContext& ctx) -> WidgetId
 {
@@ -11,3 +15,6 @@ auto Widget::bindEvent(const WidgetContext& ctx, const WidgetEvent event, const 
 {
     static_cast<Window*>(ctx.window)->router().bindEvent(m_id, event, fn);
 }
+
+
+} // namespace

@@ -1,5 +1,9 @@
 #include "ClassRegistry.h"
 
+
+namespace Blade {
+
+
 auto ClassRegistry::Init(const HINSTANCE hInstance) -> void
 {
     if (m_hInstance != nullptr) return;
@@ -36,3 +40,6 @@ auto ClassRegistry::Register(const std::string& key, const ClassDesc& desc) -> v
 
     m_names[key] = std::move(className);
 }
+
+
+} // namespace

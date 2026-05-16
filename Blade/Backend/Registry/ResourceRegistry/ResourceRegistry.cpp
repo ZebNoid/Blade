@@ -1,5 +1,9 @@
 #include "ResourceRegistry.h"
 
+
+namespace Blade {
+
+
 auto ResourceRegistry::init() -> void
 {
     if (m_sInitialized) return;
@@ -62,3 +66,6 @@ auto ResourceRegistry::create_system_ui_font() -> HFONT
 
     return CreateFontIndirectW(&ncm.lfMessageFont);
 }
+
+
+} // namespace

@@ -1,10 +1,14 @@
 #pragma once
 
-#include <vector>
 #include <memory>
+#include <vector>
 
 #include "Windows/Window/Window.h"
 #include "Windows/WindowBuilder/WindowBuilder.h"
+
+
+namespace Blade {
+
 
 class WindowManager
 {
@@ -24,3 +28,6 @@ private:
 
     friend class Window;
 };
+
+
+} // namespace

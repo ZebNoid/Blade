@@ -1,6 +1,11 @@
 #pragma once
-#include "../Common/LayoutProps.h"
-#include "../Common/Alignment.h"
+
+#include "Props/Common/Alignment.h"
+#include "Props/Common/LayoutProps.h"
+
+
+namespace Blade {
+
 
 struct RowProps
 {
@@ -9,3 +14,6 @@ struct RowProps
     // CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment::Stretch;
     LayoutProps layout{};
 };
+
+
+} // namespace

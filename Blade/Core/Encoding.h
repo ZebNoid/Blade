@@ -1,19 +1,21 @@
 #pragma once
 
+namespace Blade {
+
+
 inline auto Utf8ToUtf16(const std::string_view text) -> std::wstring
 {
     if (text.empty())
         return L"";
 
-    int size =
-        MultiByteToWideChar(
-            CP_UTF8,
-            0,
-            text.data(),
-            (int)text.size(),
-            nullptr,
-            0
-        );
+    int size = MultiByteToWideChar(
+        CP_UTF8,
+        0,
+        text.data(),
+        (int)text.size(),
+        nullptr,
+        0
+    );
 
     std::wstring result(size, 0);
 
@@ -62,3 +64,6 @@ inline auto Utf16ToUtf8(const std::wstring& text) -> std::string
 
     return result;
 }
+
+
+} // namespace

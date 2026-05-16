@@ -1,12 +1,17 @@
 #pragma once
 
-#include "Core/Core.h"
 #include "Context/WidgetContext.h"
+#include "Core/Core.h"
 #include "Events/WidgetEvent/WidgetEvent.h"
 #include "Props/Common/LayoutProps.h"
 #include "Props/Common/Size.h"
 
+
+namespace Blade {
+
+
 enum class WidgetEvent;
+
 
 class Widget
 {
@@ -29,12 +34,14 @@ public:
 
 protected:
     static auto allocateId(const WidgetContext& ctx) -> WidgetId;
+
     auto bindEvent(const WidgetContext& ctx, WidgetEvent event, const EventHandler& fn) const -> void;
-
-
 
 protected:
     WidgetId m_id = -1;
     Rect m_rect{};
     LayoutProps m_layout;
 };
+
+
+} // namespace

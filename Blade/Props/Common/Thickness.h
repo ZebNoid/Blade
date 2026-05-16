@@ -1,5 +1,8 @@
 #pragma once
 
+namespace Blade {
+
+
 struct Thickness
 {
     int left = 0;
@@ -9,7 +12,7 @@ struct Thickness
 
     Thickness() = default;
 
-    Thickness(int all)
+    Thickness(const int all)
         : left(all),
           top(all),
           right(all),
@@ -29,10 +32,10 @@ struct Thickness
     }
 
     Thickness(
-        int left,
-        int top,
-        int right,
-        int bottom
+        const int left,
+        const int top,
+        const int right,
+        const int bottom
     )
         : left(left),
           top(top),
@@ -41,3 +44,6 @@ struct Thickness
     {
     }
 };
+
+
+} // namespace

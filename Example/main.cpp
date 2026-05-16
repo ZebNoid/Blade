@@ -2,6 +2,8 @@
 
 #include "blade.h"
 
+using namespace Blade;
+
 
 class Sandbox : public App
 {
@@ -12,6 +14,11 @@ protected:
             Column(
                 Label("Label"),
                 Button("Button"),
+                Checkbox("Checkbox").set({
+                    .layout = {
+                        .margin = {10, 0},
+                    }
+                }),
                 Button("Button"),
                 Row(
                     Button("Button"),
@@ -38,6 +45,7 @@ protected:
         ).set({
             .title = "Blade",
             .size = {800, 600},
+            .padding = 15
         });
     }
 };

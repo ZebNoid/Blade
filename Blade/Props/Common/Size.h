@@ -1,5 +1,8 @@
 #pragma once
 
+namespace Blade {
+
+
 struct Size
 {
     int width{};
@@ -7,8 +10,4 @@ struct Size
 };
 
 
-// struct SizeProps
-// {
-//     int width = 0;
-//     int height = 0;
-// };
+} // namespace

@@ -1,6 +1,9 @@
 #include "App.h"
 
 
+namespace Blade {
+
+
 App::App() : m_wm(m_ctx)
 {
     m_ctx.hInstance = GetModuleHandle(nullptr);
@@ -15,6 +18,7 @@ auto App::run() -> int
 
     while (GetMessage(&m_msg, nullptr, 0, 0))
     {
+        uiLoop();
         TranslateMessage(&m_msg);
         DispatchMessage(&m_msg);
     }
@@ -42,3 +46,6 @@ auto App::init() -> void
 
     InitCommonControlsEx(&icc);
 }
+
+
+} // namespace

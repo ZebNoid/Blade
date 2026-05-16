@@ -2,9 +2,13 @@
 
 #include <unordered_map>
 
-#include "../../Core/Core.h"
-#include "../../Events/WidgetEvent/WidgetEvent.h"
-#include "../../Events/WidgetEvent/EventKey.h"
+#include "Core/Core.h"
+#include "Events/WidgetEvent/EventKey.h"
+#include "Events/WidgetEvent/WidgetEvent.h"
+
+
+namespace Blade {
+
 
 class EventRouter
 {
@@ -44,3 +48,6 @@ private:
         EventKeyHash
     > m_events;
 };
+
+
+} // namespace

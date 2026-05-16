@@ -1,4 +1,4 @@
-project(Blade VERSION 0.1.5)
+project(Blade VERSION 0.1.6)
 
 # Use the names to logic check
 if (NOT PROJECT_IS_TOP_LEVEL)
@@ -21,12 +21,12 @@ add_library(${PROJECT_NAME} STATIC
         Widgets/Layout/Column/Column.h
         Windows/Window/Window.cpp
         Windows/Window/Window.h
-        Native/NativeWidget/NativeWidget.cpp
-        Native/NativeWidget/NativeWidget.h
-        Native/NativeWindow/NativeWindow.cpp
-        Native/NativeWindow/NativeWindow.h
-        Native/NativeButton/NativeButton.cpp
-        Native/NativeButton/NativeButton.h
+        Backend/NativeWidget/NativeWidget.cpp
+        Backend/NativeWidget/NativeWidget.h
+        Backend/NativeWindow/NativeWindow.cpp
+        Backend/NativeWindow/NativeWindow.h
+        Backend/NativeButton/NativeButton.cpp
+        Backend/NativeButton/NativeButton.h
         Widgets/Layout/Container/Container.cpp
         Widgets/Layout/Container/Container.h
         Materializer/Materializer.cpp
@@ -36,21 +36,21 @@ add_library(${PROJECT_NAME} STATIC
         Core/Encoding.h
         Widgets/Label/Label.cpp
         Widgets/Label/Label.h
-        Native/NativeLabel/NativeLabel.cpp
-        Native/NativeLabel/NativeLabel.h
-        Native/Registry/ClassRegistry/ClassRegistry.cpp
-        Native/Registry/ClassRegistry/ClassRegistry.h
+        Backend/NativeLabel/NativeLabel.cpp
+        Backend/NativeLabel/NativeLabel.h
+        Backend/Registry/ClassRegistry/ClassRegistry.cpp
+        Backend/Registry/ClassRegistry/ClassRegistry.h
         Windows/EventRouter/EventRouter.cpp
         Windows/EventRouter/EventRouter.h
         Widgets/Layout/Row/Row.cpp
-        Native/NativeTextField/NativeTextField.cpp
+        Backend/NativeTextField/NativeTextField.cpp
         Widgets/TextField/TextField.cpp
         Widgets/TextField/TextField.h
         Events/WidgetEvent/WidgetEvent.h
         Events/WidgetEvent/EventKey.h
-        Native/Utils/WinApiUtils.h
-        Native/Registry/ResourceRegistry/ResourceRegistry.cpp
-        Native/Registry/ResourceRegistry/ResourceRegistry.h
+        Backend/Utils/WinApiUtils.h
+        Backend/Registry/ResourceRegistry/ResourceRegistry.cpp
+        Backend/Registry/ResourceRegistry/ResourceRegistry.h
         Props/Common/Alignment.h
         Props/Widget/ColumnProps.h
         Props/Widget/LabelProps.h
@@ -62,6 +62,12 @@ add_library(${PROJECT_NAME} STATIC
         Props/Common/Point.h
         Props/Common/TextAlign.h
         Props/Widget/ButtonProps.h
+        Props/Common/StyleProps.h
+        Backend/CheckboxNative/NativeCheckbox.cpp
+        Backend/CheckboxNative/NativeCheckbox.h
+        Widgets/Checkbox/Checkbox.cpp
+        Widgets/Checkbox/Checkbox.h
+        Props/Widget/CheckboxProps.h
 )
 
 # use Unicode

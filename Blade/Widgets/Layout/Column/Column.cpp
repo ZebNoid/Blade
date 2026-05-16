@@ -1,5 +1,9 @@
 #include "Column.h"
 
+
+namespace Blade {
+
+
 auto Column::measure(const Size available) -> Size
 {
     int totalHeight = 0;
@@ -80,3 +84,6 @@ auto Column::arrange(const Rect rect) -> void
         y += margin.bottom;
     }
 }
+
+
+} // namespace

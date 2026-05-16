@@ -1,9 +1,12 @@
 #pragma once
 
-
-#include "Widgets/Widget/Widget.h"
-#include "Widgets/Layout/Container/Container.h"
 #include "Props/Widget/RowProps.h"
+#include "Widgets/Layout/Container/Container.h"
+#include "Widgets/Widget/Widget.h"
+
+
+namespace Blade {
+
 
 class Row : public Container
 {
@@ -27,6 +30,7 @@ public:
     }
 
     auto measure(Size available) -> Size override;
+
     auto arrange(Rect rect) -> void override;
 
     auto set(RowProps props) & -> Row&
@@ -46,3 +50,6 @@ public:
 protected:
     RowProps m_props;
 };
+
+
+} // namespace

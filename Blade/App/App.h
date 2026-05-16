@@ -1,19 +1,23 @@
 #pragma once
 
 #include "Windows/Window/Window.h"
-#include "Windows/WindowManager/WindowManager.h"
 #include "Windows/WindowBuilder/WindowBuilder.h"
+#include "Windows/WindowManager/WindowManager.h"
+
+
+namespace Blade {
 
 
 class App
 {
 public:
     App();
+
     virtual ~App() = default;
 
     auto run() -> int;
 
-    template<typename T>
+    template <typename T>
     auto window(T&& widget) -> WindowBuilder&
     {
         m_windowBuilders.emplace_back(
@@ -33,6 +37,10 @@ public:
 protected:
     virtual auto ui() -> void = 0;
 
+    virtual auto uiLoop() -> void
+    {
+    }
+
 private:
     auto build() -> void;
 
@@ -49,3 +57,6 @@ protected:
 private:
     auto init() -> void;
 };
+
+
+} // namespace

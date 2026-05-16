@@ -1,8 +1,12 @@
 #pragma once
 
+#include <functional>
 #include <string>
 #include <variant>
-#include <functional>
+
+
+namespace Blade {
+
 
 using EventValue = std::variant<
     std::monostate,
@@ -14,9 +18,13 @@ using EventValue = std::variant<
 
 using EventHandler = std::function<void(const EventValue&)>;
 
+
 enum class WidgetEvent
 {
     Click,
     Change,
     Focus,
 };
+
+
+} // namespace
