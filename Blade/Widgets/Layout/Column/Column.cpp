@@ -10,29 +10,30 @@ auto Column::measure(const Size available) -> Size
 
     for (const auto& child : m_children)
     {
-        Size s = child->measure(available);
+        Size childSize = child->measure(available);
+        const auto& margin = child->layout().margin;
 
         // spacing between items
         if (!first)
         {
             totalHeight += spacing;
         }
-
-        const auto& margin = child->layout().margin;
+        else
+        {
+            first = false;
+        }
 
         totalHeight +=
             margin.top +
-            s.height +
+            childSize.height +
             margin.bottom;
 
         maxWidth = max(
             maxWidth,
             margin.left +
-            s.width +
+            childSize.width +
             margin.right
         );
-
-        first = false;
 
         // totalHeight += s.height;
         // maxWidth = max(maxWidth, s.width);
@@ -49,11 +50,22 @@ auto Column::arrange(const Rect rect) -> void
     Widget::arrange(rect);
 
     int y = rect.y;
+    bool first = true;
 
     for (const auto& child : m_children)
     {
-        Size size = child->measure({rect.width, rect.height});
+        // TODO later caching ?
+        Size childSize = child->measure({rect.width, rect.height});
         const auto& margin = child->layout().margin;
+
+        if (!first)
+        {
+            y += m_props.spacing;
+        }
+        else
+        {
+            first = false;
+        }
 
         y += margin.top;
 
@@ -61,10 +73,10 @@ auto Column::arrange(const Rect rect) -> void
             rect.x + margin.left,
             y,
             rect.width - margin.left - margin.right,
-            size.height
+            childSize.height
         });
 
-        y += size.height;
+        y += childSize.height;
         y += margin.bottom;
     }
 }
