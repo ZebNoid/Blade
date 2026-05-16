@@ -13,6 +13,8 @@ class Button : public Widget
 public:
     Button(std::string text);
 
+    auto name() -> std::wstring override  { return L"Button"; }
+
     // lvalue
     auto onClick(std::function<void()> fn) & -> Button&
     {

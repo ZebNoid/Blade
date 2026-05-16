@@ -16,7 +16,7 @@ struct LayoutDebugTheme
         RGB(0, 165, 0);
 
     static constexpr COLORREF Text =
-        RGB(255, 255, 255);
+        RGB(255, 165, 165);
 
     static constexpr int Width = 2;
 

@@ -21,6 +21,8 @@ public:
         ), ...);
     }
 
+    auto name() -> std::wstring override  { return L"Row"; }
+
     auto mount(Materializer& m, WidgetContext& ctx) -> void override
     {
         for (const auto& child : m_children)

@@ -13,6 +13,8 @@ class Checkbox : public Widget
 public:
     Checkbox(std::string text);
 
+    auto name() -> std::wstring override  { return L"Checkbox"; }
+
     auto mount(Materializer& m, WidgetContext& ctx) -> void override;
 
     auto measure(Size available) -> Size override

@@ -12,8 +12,7 @@ namespace {
 
     auto DrawDebugText(
         HDC hdc,
-        int x,
-        int y,
+        const Rect& rect,
         const std::wstring& text
     ) -> void
     {
@@ -27,10 +26,15 @@ namespace {
             LayoutDebugTheme::Text
         );
 
+        SIZE textSize = { 0 };
+
+        // 2. Calculate the bounds
+        GetTextExtentPoint32W(hdc, text.c_str(), text.size(), &textSize);
+
         TextOutW(
             hdc,
-            x,
-            y,
+            rect.x + (rect.width - textSize.cx)/2,
+            rect.y + (rect.height - textSize.cy)/2,
             text.c_str(),
             static_cast<int>(text.size())
         );
@@ -108,6 +112,8 @@ auto LayoutDebugRenderer::Render(
         rect.x + rect.width,
         rect.y + rect.height
     };
+
+    DrawDebugText(hdc, rect, widget.name());
 
     // -------------------------------------------------
     // Widget bounds

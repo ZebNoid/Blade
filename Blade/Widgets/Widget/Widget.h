@@ -18,6 +18,8 @@ class Widget
 public:
     virtual ~Widget() = default;
 
+    virtual auto name() -> std::wstring = 0;
+
     virtual auto mount(class Materializer& m, struct WidgetContext& ctx) -> void = 0;
 
     virtual auto measure(Size available) -> Size = 0;
