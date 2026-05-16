@@ -42,7 +42,7 @@ protected:
                     RadioButton("RadioButton")
                 ).set({
                     .gap = gap,
-                    .layout = layoutMarginH
+                    .layout = layoutMarginH,
                 }),
                 Label("Row Buttons").set(labelStyle),
                 Row(
@@ -53,7 +53,9 @@ protected:
                     Button("Button")
                 ).set({
                     .gap = gap,
-                    .layout = layoutMarginH
+                    .layout = layoutMarginH,
+                    .mainAxisAlignment = MainAxisAlignment::Center,
+                    .crossAxisAlignment = CrossAxisAlignment::Stretch,
                 }),
                 Label("Checkboxes"),
                 Row(
@@ -61,12 +63,14 @@ protected:
                     Checkbox("Checkbox"),
                     Checkbox("Checkbox")
                 ).set({
-                    .layout = layoutMarginH
+                    .layout = layoutMarginH,
+                    .mainAxisAlignment = MainAxisAlignment::Center,
+                    .crossAxisAlignment = CrossAxisAlignment::Center,
                 }),
                 Button("Button"),
                 Button("Button"),
                 Button("Button margin").set({
-                    .layout = layoutMarginH
+                    .layout = layoutMarginH,
                 }),
                 Button("Button")
             )
@@ -78,7 +82,7 @@ protected:
         ).id(windowId).set({
             .title = "Blade",
             .size = {800, 600},
-            .padding = 16
+            .padding = 16,
         });
     }
 };
