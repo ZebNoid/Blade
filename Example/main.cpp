@@ -22,7 +22,7 @@ protected:
         });
     }
 
-    auto contentBladeDemo() -> Column
+    auto contentBladeDemo() -> auto
     {
         return Column(
                 Label("Blade Example").id(labelId),
@@ -78,7 +78,7 @@ protected:
             });
     }
 
-    auto contentFlex() -> Column
+    auto contentFlex() -> auto
     {
         return Column(
             Label("Header"),
