@@ -1,5 +1,6 @@
 #include "LayoutDebugRenderer.h"
 
+#include "LayoutDebugTheme.h"
 #include "Widgets/Widget/Widget.h"
 #include "Props/Common/Thickness.h"
 
@@ -8,6 +9,33 @@ namespace Blade {
 
 
 namespace {
+
+    auto DrawDebugText(
+        HDC hdc,
+        int x,
+        int y,
+        const std::wstring& text
+    ) -> void
+    {
+        SetBkMode(
+            hdc,
+            TRANSPARENT
+        );
+
+        SetTextColor(
+            hdc,
+            LayoutDebugTheme::Text
+        );
+
+        TextOutW(
+            hdc,
+            x,
+            y,
+            text.c_str(),
+            static_cast<int>(text.size())
+        );
+    }
+
     auto DrawFilledRect(
         HDC hdc,
         const RECT& rect,
@@ -28,10 +56,12 @@ namespace {
     auto DrawOutlineRect(
         HDC hdc,
         const RECT& rect,
-        COLORREF color
+        COLORREF color,
+        int width = 1,
+        int inflate = 0
     ) -> void
     {
-        HPEN pen = CreatePen(PS_SOLID, 1, color);
+        HPEN pen = CreatePen(PS_SOLID, width, color);
 
         auto oldPen =
             static_cast<HPEN>(
@@ -43,12 +73,18 @@ namespace {
                 SelectObject(hdc, GetStockObject(NULL_BRUSH))
             );
 
+        if (inflate > 0)
+        {
+            InflateRect((LPRECT)&rect, inflate, inflate);
+        }
+
+        // Debug bound rect
         Rectangle(
             hdc,
-            rect.left,
-            rect.top,
-            rect.right,
-            rect.bottom
+            rect.left - 1,
+            rect.top - 1,
+            rect.right + 1,
+            rect.bottom + 1
         );
 
         SelectObject(hdc, oldPen);
@@ -80,7 +116,9 @@ auto LayoutDebugRenderer::Render(
     DrawOutlineRect(
         hdc,
         widgetRect,
-        RGB(255, 0, 0)
+        LayoutDebugTheme::WidgetBounds,
+        LayoutDebugTheme::Width,
+        LayoutDebugTheme::Inflate
     );
 
     // -------------------------------------------------
@@ -101,7 +139,9 @@ auto LayoutDebugRenderer::Render(
     DrawOutlineRect(
         hdc,
         paddingRect,
-        RGB(0, 255, 0)
+        LayoutDebugTheme::Padding,
+        LayoutDebugTheme::Width,
+        LayoutDebugTheme::Inflate
     );
 
     // -------------------------------------------------
@@ -122,7 +162,9 @@ auto LayoutDebugRenderer::Render(
     DrawOutlineRect(
         hdc,
         marginRect,
-        RGB(255, 165, 0)
+        LayoutDebugTheme::Margin,
+        LayoutDebugTheme::Width,
+        LayoutDebugTheme::Inflate
     );
 
     // -------------------------------------------------
