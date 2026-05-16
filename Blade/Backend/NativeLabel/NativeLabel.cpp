@@ -45,7 +45,7 @@ auto NativeLabel::createNative(const Rect rect) -> HWND
     m_hwnd = CreateWindowEx(
         0,
         ClassRegistry::Get("BladeLabel"),
-        L"",
+        TEXT(""),
         style(),
         rect.x,
         rect.y,
@@ -59,19 +59,17 @@ auto NativeLabel::createNative(const Rect rect) -> HWND
 
     // m_hwnd = CreateWindowEx(
     //     0,
-    //     L"STATIC", // Classic system Label
+    //     TEXT("STATIC"), // Classic system Label
     //     toNativeString(m_text).c_str(),
-    //     // TODO text align
     //     // hAlign SS_LEFT || SS_CENTER ||  SS_RIGHT
-    //     // vAlign SS_CENTERIMAGE
-    //     // ellipsis SS_WORDELLIPSIS || SS_ENDELLIPSIS
-    //     WS_VISIBLE | WS_CHILD | SS_WORDELLIPSIS | SS_CENTERIMAGE | SS_CENTER,
+    //     style() | SS_WORDELLIPSIS | SS_CENTERIMAGE | SS_CENTER,
     //     rect.x, rect.y,
     //     rect.width, rect.height,
     //     m_ctx.hwnd,
     //     nullptr, // ID
     //     m_ctx.app->hInstance,
-    //     nullptr);
+    //     nullptr
+    // );
 
     if (!m_hwnd)
     {

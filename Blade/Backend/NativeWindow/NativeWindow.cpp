@@ -145,10 +145,6 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
             return 0;
         }
 
-    // case WM_CTLCOLOREDIT :
-    //     // set a custom background or text color
-    //     break;
-
     // case WM_NCMOUSEMOVE:
     // // case WM_MOUSEMOVE:
     //     {
@@ -157,17 +153,17 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
     //     }
     //     break;
 
-    // // default STATIC label background transparency
-    // case WM_CTLCOLORSTATIC:
-    //     {
-    //         const auto hdc = (HDC)wParam;
-    //         // auto hwnd = (HWND)lParam;
-    //
-    //         SetBkMode(hdc, TRANSPARENT);
-    //
-    //         // если хочешь прозрачный фон
-    //         return (LRESULT)GetStockObject(NULL_BRUSH);
-    //     }
+    // case WM_CTLCOLORBTN:
+    // case WM_CTLCOLOREDIT:
+    case WM_CTLCOLORSTATIC:
+        {
+            // "STATIC" label background transparency
+            // auto childHwnd = (HWND)lParam;
+            const auto hdc = (HDC)wParam;
+            SetBkMode(hdc, TRANSPARENT);
+            // transparent background
+            return (LRESULT)GetStockObject(NULL_BRUSH); // NULL_BRUSH
+        }
 
     // case WM_SETCURSOR:
     //     // Check if the cursor is in the client area (not the title bar)

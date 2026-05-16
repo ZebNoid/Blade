@@ -43,7 +43,7 @@ auto NativeButton::createNative(const Rect rect) -> HWND
 
     m_hwnd = CreateWindowEx(
         0,
-        L"BUTTON",
+        TEXT("BUTTON"),
         toNativeString(m_text).c_str(),
         style(),
         rect.x, rect.y,

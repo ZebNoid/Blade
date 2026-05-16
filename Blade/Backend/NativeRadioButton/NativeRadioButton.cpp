@@ -41,7 +41,7 @@ auto NativeRadioButton::createNative(Rect rect) -> HWND
 
     m_hwnd = CreateWindowEx(
         0,
-        L"BUTTON", // Predefined class
+        TEXT("BUTTON"), // Predefined class
         toNativeString(m_text).c_str(), // Label
         style(),
         rect.x,
