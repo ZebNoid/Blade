@@ -66,7 +66,13 @@ protected:
                 }),
                 Button("Button"),
                 Label("Flex").set({.layout = {.flex = 1}}),
-                Label("Footer").set({.textAlign = TextAlign::Center})
+                Row(
+                    Button("Debug").onClick([]
+                    {
+                        LayoutDebugRenderer::debug = !LayoutDebugRenderer::debug;
+                    }),
+                    Label("Footer").set({.layout = {.flex = 1}, .textAlign = TextAlign::Center,})
+                )
             )
             .set({
                 .gap = gap,

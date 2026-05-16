@@ -7,8 +7,13 @@
 namespace Blade {
 
 
+bool LayoutDebugRenderer::debug = false;
+
+
 auto LayoutDebugRenderer::Render(HDC hdc, Widget& widget) -> void
 {
+    if (!debug) return;
+
     const auto rect = widget.rect();
 
     const auto layout = widget.layout();

@@ -16,6 +16,9 @@ namespace Blade {
 class LayoutDebugRenderer
 {
 public:
+    // TODO toggle and force redraw
+    static bool debug;
+
     static auto Render(HDC hdc, Widget& widget) -> void;
 
     virtual auto children() -> const std::vector<std::unique_ptr<Widget>>&;
