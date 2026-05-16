@@ -24,6 +24,8 @@ protected:
 
     auto createNative(Rect rect) -> HWND override;
 
+    auto setPlaceholder() -> void;
+
 public:
     auto setRect(Rect rect) -> void;
 

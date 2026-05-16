@@ -18,6 +18,7 @@ auto NativeTextField::create(const WidgetContext& ctx, const WidgetId id, const 
     // size are ignoring and recalculated in
     createNative(Rect{0, 0, 140, 32});
     applyFont(ResourceRegistry::get_font("system"));
+    setPlaceholder();
 }
 
 DWORD NativeTextField::style() const
@@ -88,7 +89,8 @@ auto NativeTextField::createNative(const Rect rect) -> HWND
     m_hwnd = CreateWindowEx(
         exStyle(),
         TEXT("Edit"),
-        toNativeString(m_text).c_str(),
+        // toNativeString(m_text).c_str(),
+        nullptr,
         style(),
         rect.x, rect.y,
         rect.width, rect.height,
@@ -104,11 +106,20 @@ auto NativeTextField::createNative(const Rect rect) -> HWND
     return m_hwnd;
 }
 
+auto NativeTextField::setPlaceholder() -> void
+{
+    // TODO fix Placeholder
+    // LPCWSTR placeholderText = TEXT("Enter your name here...");
+    // SendMessage(m_hwnd, EM_SETCUEBANNER, (WPARAM)TRUE , (LPARAM)placeholderText);
+
+    // SendMessage(m_hwnd, EM_SETCUEBANNER, (WPARAM)FALSE, (LPARAM)toNativeString(m_props.placeholder).c_str());
+}
+
 
 auto NativeTextField::setRect(const Rect rect) -> void
 {
     SetWindowPos(m_hwnd, nullptr, rect.x, rect.y, rect.width, rect.height, SWP_NOZORDER);
-    // TODO hack vAlign
+    // // TODO hack vAlign
     VerticalAlignCenter(m_hwnd);
 }
 

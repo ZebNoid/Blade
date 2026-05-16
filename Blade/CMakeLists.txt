@@ -51,7 +51,6 @@ add_library(${PROJECT_NAME} STATIC
         Backend/Utils/WinApiUtils.h
         Backend/Registry/ResourceRegistry/ResourceRegistry.cpp
         Backend/Registry/ResourceRegistry/ResourceRegistry.h
-        Props/Common/Alignment.h
         Props/Widget/ColumnProps.h
         Props/Widget/LabelProps.h
         Props/Window/WindowProps.h
@@ -74,6 +73,8 @@ add_library(${PROJECT_NAME} STATIC
         Widgets/RadioButton/RadioButton.h
         Props/Widget/RadioButtonProps.h
         Props/Widget/TextFieldProps.h
+        Props/Common/MainAxisAlignment.h
+        Props/Common/CrossAxisAlignment.h
 )
 
 # use Unicode
