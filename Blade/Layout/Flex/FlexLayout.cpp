@@ -110,56 +110,111 @@ auto FlexLayout::Arrange(
         rect.y + layout.padding.top,
 
         rect.width
-        - layout.padding.left
-        - layout.padding.right,
+            - layout.padding.left
+            - layout.padding.right,
 
         rect.height
-        - layout.padding.top
-        - layout.padding.bottom
+            - layout.padding.top
+            - layout.padding.bottom
     };
 
     // -------------------------------------------------
-    // Calculate content main size
+    // Pass 1:
+    // calculate fixed size + total flex
     // -------------------------------------------------
 
-    int contentMainSize = 0;
+    int fixedMainSize = 0;
+    int totalFlex = 0;
 
     bool first = true;
 
     for (const auto& child : children)
     {
-        const Size childSize =
-            child->measure({
-                contentRect.width,
-                contentRect.height
-            });
+        const auto& childLayout =
+            child->layout();
 
         const auto& margin =
-            child->layout().margin;
+            childLayout.margin;
 
         if (!first)
         {
-            contentMainSize += gap;
+            fixedMainSize += gap;
         }
         else
         {
             first = false;
         }
 
+        if (childLayout.flex > 0)
+        {
+            totalFlex += childLayout.flex;
+
+            // margins still consume space
+            if (direction == FlexDirection::Column)
+            {
+                fixedMainSize +=
+                    margin.top +
+                    margin.bottom;
+            }
+            else
+            {
+                fixedMainSize +=
+                    margin.left +
+                    margin.right;
+            }
+
+            continue;
+        }
+
+        const Size childSize =
+            child->measure({
+                contentRect.width,
+                contentRect.height
+            });
+
         if (direction == FlexDirection::Column)
         {
-            contentMainSize +=
+            fixedMainSize +=
                 margin.top +
                 childSize.height +
                 margin.bottom;
         }
         else
         {
-            contentMainSize +=
+            fixedMainSize +=
                 margin.left +
                 childSize.width +
                 margin.right;
         }
+    }
+
+    // -------------------------------------------------
+    // Remaining free space
+    // -------------------------------------------------
+
+    const int availableMainSize =
+        (direction == FlexDirection::Column)
+            ? contentRect.height
+            : contentRect.width;
+
+    int remainingMainSize =
+        availableMainSize - fixedMainSize;
+
+    if (remainingMainSize < 0)
+    {
+        remainingMainSize = 0;
+    }
+
+    // -------------------------------------------------
+    // Calculate final content size
+    // (needed for alignment)
+    // -------------------------------------------------
+
+    int contentMainSize = fixedMainSize;
+
+    if (totalFlex > 0)
+    {
+        contentMainSize += remainingMainSize;
     }
 
     // -------------------------------------------------
@@ -171,48 +226,41 @@ auto FlexLayout::Arrange(
             ? contentRect.y
             : contentRect.x;
 
-    const int availableMainSize =
-        (direction == FlexDirection::Column)
-            ? contentRect.height
-            : contentRect.width;
-
     switch (mainAxisAlignment)
     {
-    case MainAxisAlignment::Center:
+        case MainAxisAlignment::Center:
         {
             cursor +=
                 (availableMainSize - contentMainSize) / 2;
             break;
         }
 
-    case MainAxisAlignment::End:
+        case MainAxisAlignment::End:
         {
             cursor +=
                 availableMainSize - contentMainSize;
             break;
         }
 
-    case MainAxisAlignment::Start:
-    default:
-        break;
+        case MainAxisAlignment::Start:
+        default:
+            break;
     }
 
     // -------------------------------------------------
-    // Arrange children
+    // Pass 2:
+    // arrange children
     // -------------------------------------------------
 
     first = true;
 
     for (const auto& child : children)
     {
-        const Size childSize =
-            child->measure({
-                contentRect.width,
-                contentRect.height
-            });
+        const auto& childLayout =
+            child->layout();
 
         const auto& margin =
-            child->layout().margin;
+            childLayout.margin;
 
         if (!first)
         {
@@ -221,6 +269,33 @@ auto FlexLayout::Arrange(
         else
         {
             first = false;
+        }
+
+        Size childSize =
+            child->measure({
+                contentRect.width,
+                contentRect.height
+            });
+
+        // ---------------------------------------------
+        // Apply flex
+        // ---------------------------------------------
+
+        if (childLayout.flex > 0 && totalFlex > 0)
+        {
+            const int flexSize =
+                remainingMainSize *
+                childLayout.flex /
+                totalFlex;
+
+            if (direction == FlexDirection::Column)
+            {
+                childSize.height = flexSize;
+            }
+            else
+            {
+                childSize.width = flexSize;
+            }
         }
 
         int x = contentRect.x;
@@ -237,20 +312,16 @@ auto FlexLayout::Arrange(
         {
             cursor += margin.top;
 
-            // ---------------------------------------------
-            // Cross axis alignment
-            // ---------------------------------------------
-
             switch (crossAxisAlignment)
             {
-            case CrossAxisAlignment::Center:
+                case CrossAxisAlignment::Center:
                 {
                     x +=
                         (contentRect.width - childSize.width) / 2;
                     break;
                 }
 
-            case CrossAxisAlignment::End:
+                case CrossAxisAlignment::End:
                 {
                     x +=
                         contentRect.width -
@@ -259,7 +330,7 @@ auto FlexLayout::Arrange(
                     break;
                 }
 
-            case CrossAxisAlignment::Stretch:
+                case CrossAxisAlignment::Stretch:
                 {
                     width =
                         contentRect.width -
@@ -271,8 +342,8 @@ auto FlexLayout::Arrange(
                     break;
                 }
 
-            case CrossAxisAlignment::Start:
-            default:
+                case CrossAxisAlignment::Start:
+                default:
                 {
                     x += margin.left;
                     break;
@@ -300,20 +371,16 @@ auto FlexLayout::Arrange(
         {
             cursor += margin.left;
 
-            // ---------------------------------------------
-            // Cross axis alignment
-            // ---------------------------------------------
-
             switch (crossAxisAlignment)
             {
-            case CrossAxisAlignment::Center:
+                case CrossAxisAlignment::Center:
                 {
                     y +=
                         (contentRect.height - childSize.height) / 2;
                     break;
                 }
 
-            case CrossAxisAlignment::End:
+                case CrossAxisAlignment::End:
                 {
                     y +=
                         contentRect.height -
@@ -322,7 +389,7 @@ auto FlexLayout::Arrange(
                     break;
                 }
 
-            case CrossAxisAlignment::Stretch:
+                case CrossAxisAlignment::Stretch:
                 {
                     height =
                         contentRect.height -
@@ -334,8 +401,8 @@ auto FlexLayout::Arrange(
                     break;
                 }
 
-            case CrossAxisAlignment::Start:
-            default:
+                case CrossAxisAlignment::Start:
+                default:
                 {
                     y += margin.top;
                     break;
@@ -356,5 +423,6 @@ auto FlexLayout::Arrange(
         }
     }
 }
+
 
 } // namespace

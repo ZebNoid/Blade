@@ -10,6 +10,8 @@ struct LayoutProps
 {
     Thickness margin{};
     Thickness padding{};
+    
+    int flex = 0;
 };
 
 
