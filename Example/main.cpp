@@ -1,13 +1,3 @@
-# Blade 
-
-> **WinAPI** from *Hell*
-
-- LLM assisted  C++ UI Library based on WinAPI
-- Proof of concept
-
-## Example
-
-```c++
 #include <iostream>
 
 #include "blade.h"
@@ -55,35 +45,10 @@ protected:
 
 auto main() -> int
 {
-    std::cout << "Welcome to a Blade! " << "\n";
+    std::cout << "Welcome to a WinAPI Hell! " << "\n";
 
     Sandbox app;
     app.run();
 
     return 0;
 }
-```
-
-
-## Widget Tree
-
-```
-App
-└── Window > (NativeWindow)
-
-Widget
-├── Label > (NativeLabel)
-├── Button > (NativeButton)
-├── TextField > (NativeTextField)
-|
-└── Container
-	├── Colum
-	└── Row
-
-Backend        
-└── NativeWidget
-	├── NativeWindow
-	├── NativeLabel
-	├── NativeTextField
-	└── NativeButton
-```

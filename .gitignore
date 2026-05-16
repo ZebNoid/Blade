@@ -1,0 +1,43 @@
+## Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+##############
+
+# CMake
+cmake-build-debug/
+
+# IDE
+### VSCode ###
+.vscode/
+# !.vscode/launch.json
+### JetBrains ###
+.idea/
+*.iml
+
+# OS
+### macOS ###
+# General
+.DS_Store
+
+### Windows ###
+# Windows thumbnail cache files
+Thumbs.db
+
+# Folder config file
+[Dd]esktop.ini
+
+# Windows shortcuts
+*.lnk
+
+### Linux ###
+*~
+
+# temporary files which can be created if a process still has a handle open of a deleted file
+.fuse_hidden*
+
+# KDE directory preferences
+.directory
