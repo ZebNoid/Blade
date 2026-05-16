@@ -1,8 +1,11 @@
 #pragma once
 
-
 #include "Props/Widget/ColumnProps.h"
 #include "Widgets/Layout/Container/Container.h"
+
+
+namespace Blade {
+
 
 class Column : public Container
 {
@@ -24,6 +27,7 @@ public:
     }
 
     auto measure(Size available) -> Size override;
+
     auto arrange(Rect rect) -> void override;
 
     auto set(ColumnProps props) & -> Column&
@@ -43,3 +47,6 @@ public:
 protected:
     ColumnProps m_props;
 };
+
+
+} // namespace

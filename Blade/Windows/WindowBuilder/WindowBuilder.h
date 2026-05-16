@@ -1,8 +1,12 @@
 #pragma once
+
 #include <memory>
 
 #include "Props/Window/WindowProps.h"
 #include "Widgets/Widget/Widget.h"
+
+
+namespace Blade {
 
 
 class WindowBuilder
@@ -35,3 +39,6 @@ private:
 
     friend class WindowManager;
 };
+
+
+} // namespace

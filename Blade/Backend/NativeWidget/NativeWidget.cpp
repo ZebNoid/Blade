@@ -1,6 +1,9 @@
 #include "NativeWidget.h"
 
 
+namespace Blade {
+
+
 NativeWidget::~NativeWidget()
 {
     // TODO check for windows and children
@@ -66,3 +69,6 @@ auto CALLBACK NativeWidget::WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARA
 
     return DefWindowProc(hwnd, msg, wParam, lParam);
 }
+
+
+} // namespace

@@ -1,8 +1,12 @@
 #pragma once
 
-#include "Widgets/Widget/Widget.h"
-#include "Native/NativeButton/NativeButton.h"
+#include "Backend/NativeButton/NativeButton.h"
 #include "Props/Widget/ButtonProps.h"
+#include "Widgets/Widget/Widget.h"
+
+
+namespace Blade {
+
 
 class Button : public Widget
 {
@@ -46,9 +50,11 @@ public:
 
 private:
     NativeButton m_native;
-    std::string m_text;
-    std::function<void()> m_onClick;
     ButtonProps m_props;
 
-    friend class Materializer;
+    std::string m_text;
+    std::function<void()> m_onClick;
 };
+
+
+} // namespace

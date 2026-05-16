@@ -1,10 +1,12 @@
 #pragma once
 
+namespace Blade {
 
+// TODO type
 using WidgetId = uint32_t;
 
 
-
+// TODO move to props
 struct Rect
 {
     int x{};
@@ -13,5 +15,5 @@ struct Rect
     int height{};
 };
 
-// TODO remove? to separate file
-#define NAME_OF(__any__) #__any__
+
+} // namespace

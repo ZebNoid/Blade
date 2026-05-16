@@ -2,8 +2,12 @@
 
 #include <functional>
 
-#include "../../Core/Core.h"
-#include "WidgetEvent.h"
+#include "Core/Core.h"
+#include "Events/WidgetEvent/WidgetEvent.h"
+
+
+namespace Blade {
+
 
 struct EventKey
 {
@@ -12,6 +16,7 @@ struct EventKey
 
     auto operator==(const EventKey&) const -> bool = default;
 };
+
 
 struct EventKeyHash
 {
@@ -23,3 +28,6 @@ struct EventKeyHash
             (std::hash<int>()((int)k.event) << 1);
     }
 };
+
+
+} // namespace

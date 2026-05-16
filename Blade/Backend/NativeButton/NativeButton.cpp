@@ -1,15 +1,18 @@
 #include "NativeButton.h"
 
-#include "../../Context/WidgetContext.h"
-#include "../NativeWidget/NativeWidget.h"
-#include "../Registry/ResourceRegistry/ResourceRegistry.h"
+#include "Backend/NativeWidget/NativeWidget.h"
+#include "Backend/Registry/ResourceRegistry/ResourceRegistry.h"
+#include "Context/WidgetContext.h"
+
+
+namespace Blade {
 
 
 auto NativeButton::create(const WidgetContext& ctx, const WidgetId id, const std::string& text) -> void
 {
-    m_text = text;
-    m_id = id;
     m_ctx = ctx;
+    m_id = id;
+    m_text = text;
 
     // TODO native size?
     // size are ignoring and recalculated in Widget->Measure
@@ -19,6 +22,9 @@ auto NativeButton::create(const WidgetContext& ctx, const WidgetId id, const std
 
 auto NativeButton::createNative(const Rect rect) -> HWND
 {
+    NativeWidget::createNative(rect);
+    if (m_ctx.hwnd == nullptr) return nullptr;
+
     m_hwnd = CreateWindowEx(
         0,
         L"BUTTON",
@@ -42,3 +48,6 @@ auto NativeButton::setRect(const Rect rect) -> void
 {
     MoveWindow(m_hwnd, rect.x, rect.y, rect.width, rect.height, TRUE);
 }
+
+
+} // namespace

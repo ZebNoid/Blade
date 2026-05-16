@@ -1,8 +1,12 @@
 #pragma once
 
-#include "Widgets/Widget/Widget.h"
-#include "Native/NativeLabel/NativeLabel.h"
+#include "Backend/NativeLabel/NativeLabel.h"
 #include "Props/Widget/LabelProps.h"
+#include "Widgets/Widget/Widget.h"
+
+
+namespace Blade {
+
 
 class Label : public Widget
 {
@@ -32,8 +36,10 @@ public:
 
 private:
     NativeLabel m_native;
+    LabelProps m_props;
 
     std::string m_text;
-
-    LabelProps m_props;
 };
+
+
+} // namespace

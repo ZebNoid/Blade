@@ -1,5 +1,9 @@
 #pragma once
+
 #include "Thickness.h"
+
+
+namespace Blade {
 
 
 struct LayoutProps
@@ -7,3 +11,6 @@ struct LayoutProps
     Thickness margin{};
     Thickness padding{};
 };
+
+
+} // namespace

@@ -1,9 +1,12 @@
 #pragma once
 
-#include <vector>
 #include <memory>
+#include <vector>
 
-#include "../../Widget/Widget.h"
+#include "Widgets/Widget/Widget.h"
+
+
+namespace Blade {
 
 class Container : public Widget
 {
@@ -11,3 +14,6 @@ class Container : public Widget
 protected:
     std::vector<std::unique_ptr<Widget>> m_children;
 };
+
+
+} // namespace

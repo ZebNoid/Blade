@@ -1,9 +1,12 @@
 #include "NativeWindow.h"
 
-#include "Core/Encoding.h"
+#include "Backend/Registry/ClassRegistry/ClassRegistry.h"
+#include "Backend/Registry/ResourceRegistry/ResourceRegistry.h"
 #include "Context/WidgetContext.h"
-#include "Native/Registry/ClassRegistry/ClassRegistry.h"
-#include "Native/Registry/ResourceRegistry/ResourceRegistry.h"
+#include "Core/Encoding.h"
+
+
+namespace Blade {
 
 
 NativeWindow::NativeWindow()
@@ -201,20 +204,20 @@ inline auto NativeWindow::handleCommandMessage(HWND hwnd, UINT msg, WPARAM wPara
 {
     const int id = LOWORD(wParam);
     const int event = HIWORD(wParam);
+    const auto currentHwnd = (HWND)lParam;
 
     switch (event)
     {
     case EN_CHANGE:
         {
-            const auto hEdit = (HWND)lParam;
-            const int len = GetWindowTextLength(hEdit);
+            const int len = GetWindowTextLength(currentHwnd);
             if (len <= 0) break;
 
             std::wstring buffer(len + 1, L'\0');
-            GetWindowText(hEdit, &buffer[0], len + 1);
+            GetWindowText(currentHwnd, &buffer[0], len + 1);
             // GetWindowText(hEdit, buffer.data(), len + 1);
             m_owner->dispatchCommand(id, WidgetEvent::Change, Utf16ToUtf8(buffer));
-            VerticalAlignCenter(hEdit); // TODO dev
+            VerticalAlignCenter(currentHwnd); // TODO dev
         }
         break;
 
@@ -227,7 +230,19 @@ inline auto NativeWindow::handleCommandMessage(HWND hwnd, UINT msg, WPARAM wPara
         break;
 
     case BN_CLICKED:
-        m_owner->dispatchCommand(id, WidgetEvent::Click);
+        {
+            LONG_PTR style = GetWindowLongPtr(currentHwnd, GWL_STYLE);
+            LONG_PTR type = style & BS_TYPEMASK;
+
+            if (type == BS_AUTOCHECKBOX) {
+                LRESULT state = SendMessage(currentHwnd, BM_GETCHECK, 0, 0);
+                auto isChecked = state == BST_CHECKED;
+                m_owner->dispatchCommand(id, WidgetEvent::Change, isChecked);
+            } else
+            {
+                m_owner->dispatchCommand(id, WidgetEvent::Click);
+            }
+        }
         break;
 
     default: ;
@@ -256,3 +271,8 @@ auto NativeWindow::show() -> void
 {
     ShowWindow(m_hwnd, SW_SHOW);
 }
+
+// TODO force redraw
+// SetWindowPos(hwnd, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
+
+} // namespace

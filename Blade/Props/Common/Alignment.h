@@ -1,5 +1,8 @@
 #pragma once
 
+namespace Blade {
+
+
 // TODO
 enum class Alignment
 {
@@ -9,6 +12,7 @@ enum class Alignment
     Stretch
 };
 
+
 enum class HorizontalAlignment
 {
     Start,
@@ -16,6 +20,7 @@ enum class HorizontalAlignment
     End,
     Stretch
 };
+
 
 enum class VerticalAlignment
 {
@@ -25,6 +30,7 @@ enum class VerticalAlignment
     Stretch
 };
 
+
 enum class MainAxisAlignment
 {
     Start,
@@ -33,6 +39,7 @@ enum class MainAxisAlignment
     SpaceBetween
 };
 
+
 enum class CrossAxisAlignment
 {
     Start,
@@ -40,3 +47,6 @@ enum class CrossAxisAlignment
     End,
     Stretch
 };
+
+
+} // namespace

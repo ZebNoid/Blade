@@ -1,7 +1,10 @@
 #pragma once
 
-#include "Native/NativeWidget/NativeWidget.h"
+#include "Backend/NativeWidget/NativeWidget.h"
 #include "Props/Window/WindowProps.h"
+
+
+namespace Blade {
 
 
 class NativeWindow : public NativeWidget
@@ -13,7 +16,10 @@ public:
 
 protected:
     auto exStyle() const -> DWORD override;
+
     auto style() const -> DWORD override;
+
+    auto widgetName() const -> std::string override { return "NativeWindow"; }
 
     auto createNative(Rect rect) -> HWND override;
 
@@ -25,10 +31,12 @@ protected:
     }
 
     auto handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT override;
+
     auto handleCommandMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT;
 
 public:
     auto setSize(Size size) -> void;
+
     auto show() -> void;
 
 protected:
@@ -36,3 +44,6 @@ protected:
 
     WindowProps m_props{};
 };
+
+
+} // namespace

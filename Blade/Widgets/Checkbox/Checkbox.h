@@ -1,0 +1,45 @@
+#pragma once
+
+#include "Backend/CheckboxNative/NativeCheckbox.h"
+#include "Props/Widget/CheckboxProps.h"
+#include "Widgets/Widget/Widget.h"
+
+
+namespace Blade {
+
+
+class Checkbox : public Widget
+{
+public:
+    Checkbox(std::string text);
+
+    auto mount(Materializer& m, WidgetContext& ctx) -> void override;
+
+    auto measure(Size available) -> Size override
+    {
+        return {140, 20};
+    }
+
+    auto arrange(Rect rect) -> void override
+    {
+        Widget::arrange(rect);
+
+        m_native.setRect(rect);
+    }
+
+    auto set(CheckboxProps props) -> Checkbox&
+    {
+        m_layout = props.layout;
+        m_props = std::move(props);
+        return *this;
+    }
+
+private:
+    NativeCheckbox m_native;
+    CheckboxProps m_props;
+
+    std::string m_text;
+};
+
+
+} // namespace

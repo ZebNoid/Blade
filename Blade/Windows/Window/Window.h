@@ -2,11 +2,14 @@
 
 #include <memory>
 
+#include "Backend/NativeWindow/NativeWindow.h"
 #include "Materializer/Materializer.h"
-#include "Widgets/Widget/Widget.h"
-#include "Native/NativeWindow/NativeWindow.h"
-#include "Windows/EventRouter/EventRouter.h"
 #include "Props/Window/WindowProps.h"
+#include "Widgets/Widget/Widget.h"
+#include "Windows/EventRouter/EventRouter.h"
+
+
+namespace Blade {
 
 
 class Window
@@ -26,6 +29,7 @@ protected:
     }
 
     auto onDestroy() -> void;
+
     auto onResize(Size size) -> void;
 
     auto router() -> EventRouter& { return m_router; }
@@ -65,6 +69,7 @@ protected:
 
         m_materializer.mount(*m_root, ctx);
 
+        // TODO padding
         const auto [width, height] = m_native.clientSize();
 
         m_root->measure({width, height}); // TODO
@@ -90,3 +95,6 @@ private:
     friend class Widget;
     friend class NativeWindow;
 };
+
+
+} // namespace

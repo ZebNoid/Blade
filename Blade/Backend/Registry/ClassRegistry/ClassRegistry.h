@@ -1,13 +1,19 @@
 #pragma once
-#include <windows.h>
+
 #include <string>
 #include <unordered_map>
+#include <windows.h>
+
+
+namespace Blade {
+
+using WndProc = LRESULT (CALLBACK*)(HWND, UINT, WPARAM, LPARAM);
+
 
 class ClassRegistry
 {
 public:
-    using WndProc = LRESULT (CALLBACK*)(HWND, UINT, WPARAM, LPARAM);
-
+    // TODO move
     struct ClassDesc
     {
         std::wstring name;
@@ -31,3 +37,6 @@ private:
     static inline HINSTANCE m_hInstance = nullptr;
     static inline std::unordered_map<std::string, std::wstring> m_names;
 };
+
+
+} // namespace

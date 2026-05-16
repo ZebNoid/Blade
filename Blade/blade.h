@@ -3,6 +3,7 @@
 #include "App/App.h"
 
 #include "Widgets/Button/Button.h"
+#include "Widgets/Checkbox/Checkbox.h"
 #include "Widgets/Label/Label.h"
 #include "Widgets/TextField/TextField.h"
 

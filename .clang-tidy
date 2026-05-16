@@ -1,0 +1,56 @@
+# TODO incomplete
+Checks:
+  - 'readability-identifier-naming'
+  - 'modernize-use-trailing-return-type'
+CheckOptions:
+  # Namespaces should be all PascalCase
+  - key: readability-identifier-naming.NamespaceCase
+    value: CamelCase
+
+  # Classes and Structs use PascalCase
+  - key: readability-identifier-naming.ClassCase
+    value: CamelCase
+  - key: readability-identifier-naming.StructCase
+    value: CamelCase
+
+  # Enforces CamelCase for the enum name (e.g., MyEnum)
+  - key: readability-identifier-naming.EnumCase
+    value: CamelCase
+  # Enforces CamelCase for the enum values (e.g., MyValue)
+  - key: readability-identifier-naming.EnumConstantCase
+    value: CamelCase
+  # Specifically for C++11 scoped enums (enum class MyEnum { MyValue })
+  - key: readability-identifier-naming.ScopedEnumConstantCase
+    value: CamelCase
+
+  # Local variables use camelBack
+  - key: readability-identifier-naming.VariableCase
+    value: camelBack
+
+  # Static variables use camelBack
+  - key: readability-identifier-naming.StaticVariable
+    value: camelBack
+
+  - key: readability-identifier-naming.ParameterCase
+    value: camelBack
+
+  # Private members must start with 'm_' camelBack
+  - key: readability-identifier-naming.PrivateMemberCase
+    value: camelBack
+  - key: readability-identifier-naming.PrivateMemberPrefix
+    value: m_
+
+  # For static member functions (methods) inside a class
+  - key: readability-identifier-naming.ClassMethodCase
+    value: CamelCase
+  # For free functions (including those marked 'static' in a .cpp file)
+  - key: readability-identifier-naming.FunctionCase
+    value: CamelCase
+
+  # Global functions ?
+  - key: readability-identifier-naming.GlobalFunction
+    value: CamelCase
+
+  # Global constants should be SCREAMING_SNAKE_CASE
+  - key: readability-identifier-naming.GlobalConstantCase
+    value: UPPER_CASE
