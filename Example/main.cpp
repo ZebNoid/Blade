@@ -5,7 +5,7 @@
 
 class Sandbox : public App
 {
-public:
+protected:
     auto ui() -> void override
     {
         window(
@@ -15,8 +15,14 @@ public:
             )
         ).set({
             .title = "Blade",
-            .size = {800, 600}
+            .size = {800, 600},
+            .position = {3400, 400}
         });
+
+        // window(
+        //     Label("Hello")
+        // ).set({
+        // });
     }
 };
 

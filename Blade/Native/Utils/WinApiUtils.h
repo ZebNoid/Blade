@@ -2,6 +2,8 @@
 
 #include <windows.h>
 #include <cstdio>
+
+#include "Props/Common/Point.h"
 #include "Props/Common/Size.h"
 
 // EDIT text verticel align

@@ -3,11 +3,6 @@
 
 using WidgetId = uint32_t;
 
-struct Point
-{
-    int x;
-    int y;
-};
 
 
 struct Rect

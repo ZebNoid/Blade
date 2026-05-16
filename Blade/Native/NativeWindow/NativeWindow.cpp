@@ -72,7 +72,9 @@ auto NativeWindow::createNative(const Rect rect) -> HWND
         ClassRegistry::Get("NativeWindow"),
         toNativeString(m_props.title).c_str(),
         style(),
-        CW_USEDEFAULT, CW_USEDEFAULT,
+        // TODO remember size / position
+        // TODO center
+        m_props.position.x, m_props.position.y,
         m_props.size.width, m_props.size.height,
         // for root window it always m_ctx.hwnd = nullptr
         // m_ctx.hwnd != nullptr ? m_ctx.hwnd : HWND_DESKTOP,
