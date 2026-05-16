@@ -75,6 +75,9 @@ add_library(${PROJECT_NAME} STATIC
         Props/Widget/TextFieldProps.h
         Props/Common/MainAxisAlignment.h
         Props/Common/CrossAxisAlignment.h
+        Layout/Flex/FlexLayout.cpp
+        Layout/Flex/FlexLayout.h
+        Layout/Flex/FlexDirection.h
 )
 
 # use Unicode

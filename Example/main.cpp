@@ -71,7 +71,9 @@ protected:
                 Button("Button")
             )
             .set({
-                .gap = gap
+                .gap = gap,
+                .mainAxisAlignment = MainAxisAlignment::Start,
+                .crossAxisAlignment = CrossAxisAlignment::Stretch,
             })
         ).id(windowId).set({
             .title = "Blade",

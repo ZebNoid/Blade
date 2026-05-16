@@ -53,14 +53,84 @@ auto Column::arrange(const Rect rect) -> void
 {
     Widget::arrange(rect);
 
-    int y = rect.y;
+    // -------------------------------------------------
+    // First pass:
+    // calculate total content height
+    // -------------------------------------------------
+
+    int contentHeight = 0;
+
     bool first = true;
 
     for (const auto& child : m_children)
     {
-        // TODO later caching ?
-        Size childSize = child->measure({rect.width, rect.height});
-        const auto& margin = child->layout().margin;
+        const Size childSize =
+            child->measure({
+                rect.width,
+                rect.height
+            });
+
+        const auto& margin =
+            child->layout().margin;
+
+        if (!first)
+        {
+            contentHeight += m_props.gap;
+        }
+        else
+        {
+            first = false;
+        }
+
+        contentHeight +=
+            margin.top +
+            childSize.height +
+            margin.bottom;
+    }
+
+    // -------------------------------------------------
+    // Main axis alignment
+    // -------------------------------------------------
+
+    int y = rect.y;
+
+    switch (m_props.mainAxisAlignment)
+    {
+        case MainAxisAlignment::Center:
+        {
+            y +=
+                (rect.height - contentHeight) / 2;
+            break;
+        }
+
+        case MainAxisAlignment::End:
+        {
+            y +=
+                rect.height - contentHeight;
+            break;
+        }
+
+        case MainAxisAlignment::Start:
+        default:
+            break;
+    }
+
+    // -------------------------------------------------
+    // Arrange children
+    // -------------------------------------------------
+
+    first = true;
+
+    for (const auto& child : m_children)
+    {
+        const Size childSize =
+            child->measure({
+                rect.width,
+                rect.height
+            });
+
+        const auto& margin =
+            child->layout().margin;
 
         if (!first)
         {
@@ -73,16 +143,94 @@ auto Column::arrange(const Rect rect) -> void
 
         y += margin.top;
 
+        // ---------------------------------------------
+        // Cross axis alignment
+        // ---------------------------------------------
+
+        int x = rect.x;
+        int width = childSize.width;
+
+        switch (m_props.crossAxisAlignment)
+        {
+            case CrossAxisAlignment::Center:
+            {
+                x +=
+                    (rect.width - childSize.width) / 2;
+                break;
+            }
+
+            case CrossAxisAlignment::End:
+            {
+                x +=
+                    rect.width - childSize.width - margin.right;
+                break;
+            }
+
+            case CrossAxisAlignment::Stretch:
+            {
+                width =
+                    rect.width -
+                    margin.left -
+                    margin.right;
+
+                x += margin.left;
+
+                break;
+            }
+
+            case CrossAxisAlignment::Start:
+            default:
+            {
+                x += margin.left;
+                break;
+            }
+        }
+
+        // ---------------------------------------------
+        // Arrange child
+        // ---------------------------------------------
+
         child->arrange({
-            rect.x + margin.left,
+            x,
             y,
-            rect.width - margin.left - margin.right,
+            width,
             childSize.height
         });
 
         y += childSize.height;
         y += margin.bottom;
     }
+
+    // int y = rect.y;
+    // bool first = true;
+    //
+    // for (const auto& child : m_children)
+    // {
+    //     // TODO later caching ?
+    //     Size childSize = child->measure({rect.width, rect.height});
+    //     const auto& margin = child->layout().margin;
+    //
+    //     if (!first)
+    //     {
+    //         y += m_props.gap;
+    //     }
+    //     else
+    //     {
+    //         first = false;
+    //     }
+    //
+    //     y += margin.top;
+    //
+    //     child->arrange({
+    //         rect.x + margin.left,
+    //         y,
+    //         rect.width - margin.left - margin.right,
+    //         childSize.height
+    //     });
+    //
+    //     y += childSize.height;
+    //     y += margin.bottom;
+    // }
 }
 
 

@@ -89,8 +89,7 @@ auto NativeTextField::createNative(const Rect rect) -> HWND
     m_hwnd = CreateWindowEx(
         exStyle(),
         TEXT("Edit"),
-        // toNativeString(m_text).c_str(),
-        nullptr,
+        toNativeString(m_text).c_str(),
         style(),
         rect.x, rect.y,
         rect.width, rect.height,
