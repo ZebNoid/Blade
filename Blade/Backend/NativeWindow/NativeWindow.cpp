@@ -168,15 +168,12 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
 
     case WM_PAINT:
         {
+// #ifdef BLADE_DEBUG_LAYOUT
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hwnd, &ps);
-
-            LayoutDebugRenderer::Render(
-                hdc,
-                *m_owner->m_root
-            );
-
+            LayoutDebugRenderer::Render(hdc, *m_owner->m_root);
             EndPaint(hwnd, &ps);
+// #endif
             return 0;
         }
         break;
