@@ -16,13 +16,19 @@ auto ResourceRegistry::Shutdown() -> void
 {
     for (auto& [key, font] : m_fonts)
     {
-        if (font)
-        {
-            DeleteObject(font);
-        }
+        if (!font)continue;
+        DeleteObject(font);
     }
 
     m_fonts.clear();
+
+    for (auto& [key, pen] : m_pens)
+    {
+        if (!pen) continue;
+        DeleteObject(pen);
+    }
+
+    m_pens.clear();
 }
 
 auto ResourceRegistry::RegisterFont(const std::string& key, HFONT font) -> void
