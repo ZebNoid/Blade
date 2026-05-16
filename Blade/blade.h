@@ -11,4 +11,6 @@
 #include "Widgets/Layout/Column/Column.h"
 #include "Widgets/Layout/Row/Row.h"
 
+#include "Debug/LayoutDebugRenderer/LayoutDebugRenderer.h"
+
 

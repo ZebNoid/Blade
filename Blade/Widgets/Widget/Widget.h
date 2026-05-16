@@ -18,6 +18,8 @@ class Widget
 public:
     virtual ~Widget() = default;
 
+    virtual auto name() -> std::wstring = 0;
+
     virtual auto mount(class Materializer& m, struct WidgetContext& ctx) -> void = 0;
 
     virtual auto measure(Size available) -> Size = 0;
@@ -32,12 +34,16 @@ public:
         return m_layout;
     }
 
-    // // TODO get id
-    // auto id(WidgetId& id) -> Widget&
-    // {
-    //     id = m_id;
-    //     return *this;
-    // }
+    auto rect() -> Rect
+    {
+        return m_rect;
+    }
+
+    virtual auto children() -> const std::vector<std::unique_ptr<Widget>>&
+    {
+        static std::vector<std::unique_ptr<Widget>> empty; // TODO why?
+        return empty;
+    }
 
 protected:
     static auto allocateId(const WidgetContext& ctx) -> WidgetId;

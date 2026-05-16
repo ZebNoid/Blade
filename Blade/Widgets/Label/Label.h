@@ -13,6 +13,8 @@ class Label : public Widget
 public:
     Label(std::string text);
 
+    auto name() -> std::wstring override { return L"Label"; }
+
     auto mount(Materializer& m, WidgetContext& ctx) -> void override;
 
     auto measure(Size available) -> Size override

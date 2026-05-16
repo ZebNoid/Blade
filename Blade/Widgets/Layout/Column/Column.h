@@ -18,6 +18,8 @@ public:
         (m_children.push_back(std::make_unique<std::decay_t<T>>(std::forward<T>(widgets))), ...);
     }
 
+    auto name() -> std::wstring override  { return L"Column"; }
+
     auto mount(Materializer& m, WidgetContext& ctx) -> void override
     {
         for (const auto& child : m_children)

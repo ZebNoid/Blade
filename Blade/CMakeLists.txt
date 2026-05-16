@@ -1,4 +1,4 @@
-project(Blade VERSION 0.1.7)
+project(Blade VERSION 0.1.8)
 
 # Use the names to logic check
 if (NOT PROJECT_IS_TOP_LEVEL)
@@ -78,6 +78,13 @@ add_library(${PROJECT_NAME} STATIC
         Layout/Flex/FlexLayout.cpp
         Layout/Flex/FlexLayout.h
         Layout/Flex/FlexDirection.h
+        Debug/LayoutDebugRenderer/LayoutDebugRenderer.cpp
+        Debug/LayoutDebugRenderer/LayoutDebugRenderer.h
+        Debug/LayoutDebugRenderer/LayoutDebugTheme.h
+        Debug/DebugPainter/DebugPainter.cpp
+        Debug/DebugPainter/DebugPainter.h
+        Debug/NativeDraw/NativeDraw.cpp
+        Debug/NativeDraw/NativeDraw.h
 )
 
 # use Unicode

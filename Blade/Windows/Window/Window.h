@@ -70,7 +70,7 @@ protected:
 
         if (m_root == nullptr)
         {
-            // TODO error?
+            // TODO error no root logger?
             return *this;
         }
 

@@ -27,7 +27,7 @@ auto NativeLabel::create(const WidgetContext& ctx, WidgetId id, const LabelProps
     // TODO native size?
     // size are ignoring and recalculated in
     createNative(Rect{0, 0, 140, 32});
-    m_font = ResourceRegistry::get_font("system");
+    m_font = ResourceRegistry::GetFont("system");
     applyFont(m_font);
 }
 

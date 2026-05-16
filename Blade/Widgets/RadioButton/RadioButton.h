@@ -13,6 +13,8 @@ class RadioButton : public Widget
 public:
     RadioButton(std::string text);
 
+    auto name() -> std::wstring override { return L"RadioButton"; }
+
     auto mount(Materializer& m, WidgetContext& ctx) -> void override;
 
     auto measure(Size available) -> Size override

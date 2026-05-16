@@ -13,6 +13,8 @@ class TextField : public Widget
 public:
     TextField(const std::string& text = "");
 
+    auto name() -> std::wstring override { return L"TextField"; }
+
     // lvalue
     auto onChange(std::function<void(std::string)> fn) & -> TextField&
     {

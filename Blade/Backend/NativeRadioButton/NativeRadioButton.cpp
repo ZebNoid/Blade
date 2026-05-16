@@ -14,7 +14,7 @@ auto NativeRadioButton::create(const WidgetContext& ctx, const WidgetId id, cons
     m_text = text;
 
     createNative(Rect{0, 0, 140, 32});
-    applyFont(ResourceRegistry::get_font("system"));
+    applyFont(ResourceRegistry::GetFont("system"));
 }
 
 DWORD NativeRadioButton::style() const

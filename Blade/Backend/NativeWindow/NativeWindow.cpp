@@ -4,6 +4,7 @@
 #include "Backend/Registry/ResourceRegistry/ResourceRegistry.h"
 #include "Context/WidgetContext.h"
 #include "Core/Encoding.h"
+#include "Debug/LayoutDebugRenderer/LayoutDebugRenderer.h"
 
 
 namespace Blade {
@@ -13,7 +14,7 @@ NativeWindow::NativeWindow()
 {
     m_size = {800, 600};
     // TODO move to app cycle
-    ResourceRegistry::init();
+    ResourceRegistry::Init();
 }
 
 auto NativeWindow::create(const WidgetContext& ctx, Window* owner, const WindowProps& props) -> void
@@ -164,6 +165,18 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
             // transparent background
             return (LRESULT)GetStockObject(NULL_BRUSH); // NULL_BRUSH
         }
+
+    case WM_PAINT:
+        {
+// #ifdef BLADE_DEBUG_LAYOUT
+            PAINTSTRUCT ps;
+            HDC hdc = BeginPaint(hwnd, &ps);
+            LayoutDebugRenderer::Render(hdc, *m_owner->m_root);
+            EndPaint(hwnd, &ps);
+// #endif
+            return 0;
+        }
+        break;
 
     // case WM_SETCURSOR:
     //     // Check if the cursor is in the client area (not the title bar)

@@ -18,7 +18,7 @@ auto NativeButton::create(const WidgetContext& ctx, const WidgetId id, const But
     // TODO native size?
     // size are ignoring and recalculated in Widget->Measure
     createNative(Rect{0, 0, 140, 32});
-    applyFont(ResourceRegistry::get_font("system"));
+    applyFont(ResourceRegistry::GetFont("system"));
 }
 
 DWORD NativeButton::style() const

@@ -17,7 +17,7 @@ auto NativeTextField::create(const WidgetContext& ctx, const WidgetId id, const 
     // TODO native size?
     // size are ignoring and recalculated in
     createNative(Rect{0, 0, 140, 32});
-    applyFont(ResourceRegistry::get_font("system"));
+    applyFont(ResourceRegistry::GetFont("system"));
     setPlaceholder();
 }
 
