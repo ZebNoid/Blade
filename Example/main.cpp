@@ -8,29 +8,50 @@ class Sandbox : public App
 protected:
     auto ui() -> void override
     {
-         window(
+        window(
             Column(
                 Label("Label"),
-                Label("Label"),
+                Button("Button"),
+                Button("Button"),
+                Row(
+                    Button("Button"),
+                    Button("Button").set({
+                        .layout = {
+                            .margin = 20,
+                        }
+                    }),
+                    Button("Button")
+                )
+                // // TODO not working
+                // .set({
+                //         .layout = {
+                //             .margin = 20,
+                //         }
+                //     })
+                ,
+                Column(
+                    Button("Button"),
+                    Button("Button"),
+                    Button("Button").set({
+                        .layout = {
+                            .margin = 20,
+                        }
+                    }),
+                    Button("Button"),
+                    Button("Button")
+                )
+                // // TODO not working
+                // .set({
+                //     .layout = {
+                //         .margin = 20,
+                //     }
+                // })
+                ,
                 Button("Button"),
                 Button("Button"),
                 Button("Button").set({
                     .layout = {
                         .margin = 20,
-                    }
-                }),
-                Button("Button"),
-                Button("Button"),
-                Button("Button").set({
-                    .layout = {
-                        .margin = 40,
-                    }
-                }),
-                Button("Button"),
-                Button("Button"),
-                Label("Label").set({
-                    .layout = {
-                        .margin = 10,
                     }
                 }),
                 Button("Button"),

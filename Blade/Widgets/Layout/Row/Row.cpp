@@ -8,6 +8,22 @@ auto Row::measure(const Size available) -> Size
     for (const auto& child : m_children)
     {
         auto [width, height] = child->measure(available);
+
+        //  TODO
+        // const auto& margin = child->layout().margin;
+        //
+        // totalHeight +=
+        //     margin.top +
+        //     height +
+        //     margin.bottom;
+        //
+        // maxWidth = max(
+        //     maxWidth,
+        //     margin.left +
+        //     width +
+        //     margin.right
+        // );
+
         totalHeight += height;
         maxWidth = max(maxWidth, width);
     }
@@ -26,14 +42,18 @@ auto Row::arrange(const Rect rect) -> void
     for (const auto& child : m_children)
     {
         auto [width, height] = child->measure({rect.width, rect.height});
+        const auto& margin = child->layout().margin;
+
+        x += margin.left;
 
         child->arrange({
             x,
-            rect.y,
+            rect.y + margin.top,
             width,
-            rect.height
+            rect.height - margin.top - margin.bottom
         });
 
         x += width;
+        x += margin.right;
     }
 }

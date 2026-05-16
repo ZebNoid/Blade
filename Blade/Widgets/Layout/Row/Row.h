@@ -1,8 +1,9 @@
 #pragma once
 
 
-#include "../../Widget/Widget.h"
-#include "../Container/Container.h"
+#include "Widgets/Widget/Widget.h"
+#include "Widgets/Layout/Container/Container.h"
+#include "Props/Widget/RowProps.h"
 
 class Row : public Container
 {
@@ -27,4 +28,14 @@ public:
 
     auto measure(Size available) -> Size override;
     auto arrange(Rect rect) -> void override;
+
+    auto set(RowProps props) -> Row&
+    {
+        m_layout = props.layout;
+        m_props = std::move(props);
+        return *this;
+    }
+
+protected:
+    RowProps m_props;
 };
