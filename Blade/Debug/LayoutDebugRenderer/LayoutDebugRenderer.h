@@ -7,6 +7,11 @@
 
 namespace Blade {
 
+/// Legend
+///
+/// Red - widget bounds
+/// Green - padding
+/// Orange - margin
 
 class LayoutDebugRenderer
 {
