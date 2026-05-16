@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../../Core/Core.h"
-#include "../../Context/WidgetContext.h"
-#include "../../Events/WidgetEvent/WidgetEvent.h"
+#include "Core/Core.h"
+#include "Context/WidgetContext.h"
+#include "Events/WidgetEvent/WidgetEvent.h"
 #include "Props/Common/Size.h"
 
 enum class WidgetEvent;
@@ -28,11 +28,4 @@ protected:
 protected:
     WidgetId m_id = -1;
     Rect m_rect{};
-
-    // TODO as prop structure?
-    // Thickness m_margin;
-    // Thickness m_padding;
-    //
-    // Alignment m_horizontal;
-    // Alignment m_vertical;
 };

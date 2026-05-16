@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../Windows/Window/Window.h"
-#include "../Windows/WindowManager/WindowManager.h"
+#include "Windows/Window/Window.h"
+#include "Windows/WindowManager/WindowManager.h"
 #include "Windows/WindowBuilder/WindowBuilder.h"
 
 
@@ -33,7 +33,8 @@ public:
 protected:
     virtual auto ui() -> void = 0;
 
-    auto builder() -> void;
+private:
+    auto build() -> void;
 
 private:
     MSG m_msg = {};

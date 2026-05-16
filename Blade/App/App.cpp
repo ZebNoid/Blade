@@ -11,7 +11,7 @@ auto App::run() -> int
 {
     ui();
 
-    builder();
+    build();
 
     while (GetMessage(&m_msg, nullptr, 0, 0))
     {
@@ -21,7 +21,7 @@ auto App::run() -> int
     return static_cast<int>(m_msg.wParam);
 }
 
-auto App::builder() -> void
+auto App::build() -> void
 {
     for (auto& builder : m_windowBuilders)
     {
@@ -32,8 +32,6 @@ auto App::builder() -> void
 auto App::init() -> void
 {
     // TODO Native App
-
-
     // DPI awareness
     SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
 

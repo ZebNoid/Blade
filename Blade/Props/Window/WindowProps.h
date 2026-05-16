@@ -1,12 +1,14 @@
 #pragma once
 #include <string>
+
 #include "Props/Common/Thickness.h"
 #include "Props/Common/Size.h"
 
+
 struct WindowProps
 {
-    std::string title;
-    Size size{300, 300}; // TODO
+    std::string title = "Blade";
+    Size size{800, 600};
     Thickness padding{};
 
     bool resizable = true;
@@ -14,4 +16,6 @@ struct WindowProps
     bool maximizable = true;
 
     bool center = true;
+
+    bool visible = true;
 };

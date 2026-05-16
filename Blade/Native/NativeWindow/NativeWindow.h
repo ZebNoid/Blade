@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../NativeWidget/NativeWidget.h"
+#include "Native/NativeWidget/NativeWidget.h"
 #include "Props/Window/WindowProps.h"
 
 

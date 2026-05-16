@@ -1,6 +1,6 @@
 #include "WindowManager.h"
 
-#include "../Window/Window.h"
+#include "Windows/Window/Window.h"
 
 WindowManager::WindowManager(AppContext& ctx)
     : m_appCtx(ctx)
@@ -18,7 +18,8 @@ auto WindowManager::createWindow(WindowBuilder&& builder) -> Window&
 
     window->set(builder.m_props);
     window->create();
-    window->setRoot(std::move(builder.takeRoot()));
+    window->setRoot(builder.takeRoot());
+    // TODO show window after? .set({.visible})?
 
     auto& ref = *window;
 

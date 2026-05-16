@@ -1,9 +1,9 @@
 #include "NativeWindow.h"
 
-#include "../../Core/Encoding.h"
-#include "../../Context/WidgetContext.h"
-#include "../Registry/ClassRegistry/ClassRegistry.h"
-#include "../Registry/ResourceRegistry/ResourceRegistry.h"
+#include "Core/Encoding.h"
+#include "Context/WidgetContext.h"
+#include "Native/Registry/ClassRegistry/ClassRegistry.h"
+#include "Native/Registry/ResourceRegistry/ResourceRegistry.h"
 
 
 NativeWindow::NativeWindow()
@@ -100,8 +100,8 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
     case WM_CREATE:
         {
             // CREATESTRUCT *pCreate = reinterpret_cast<CREATESTRUCT*>(lParam);
-            // m_size.width = pCreate->cx;
-            // m_size.height = pCreate->cy;
+            // int width = pCreate->cx;
+            // int height = pCreate->cy;
             // int x = pCreate->x;
             // int y = pCreate->y;
             return 0;

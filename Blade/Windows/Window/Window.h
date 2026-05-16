@@ -57,6 +57,12 @@ protected:
             this
         };
 
+        if (m_root == nullptr)
+        {
+            // TODO error?
+            return *this;
+        }
+
         m_materializer.mount(*m_root, ctx);
 
         const auto [width, height] = m_native.clientSize();
@@ -67,33 +73,6 @@ protected:
 
         return *this;
     }
-
-    // // TODO?
-    // template <typename T>
-    // auto _setRoot(T&& widget) -> Window&
-    // {
-    //     using WidgetType = std::decay_t<T>;
-    //     m_root = std::make_unique<WidgetType>(
-    //         std::forward<T>(widget)
-    //     );
-    //
-    //     WidgetContext ctx{
-    //         m_native.handle(), // Set NativeWidget HWND
-    //         &m_appCtx,
-    //         this
-    //     };
-    //
-    //     m_materializer.mount(*m_root, ctx);
-    //
-    //     if (m_root != nullptr)
-    //     {
-    //         const auto [width, height] = m_native.clientSize();
-    //         // First Arrange
-    //         m_root->arrange({0, 0, width, height});
-    //     }
-    //
-    //     return *this;
-    // }
 
 private:
     WindowManager& m_manager;
@@ -107,7 +86,6 @@ private:
 
     WindowProps m_props{};
 
-    friend class App; // App::Window возвращает ссылку на Window чтобы использовать метод Window::Title()
     friend class WindowManager;
     friend class Widget;
     friend class NativeWindow;

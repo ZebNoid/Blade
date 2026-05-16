@@ -3,7 +3,7 @@
 #include <vector>
 #include <memory>
 
-#include "../Window/Window.h"
+#include "Windows/Window/Window.h"
 #include "Windows/WindowBuilder/WindowBuilder.h"
 
 class WindowManager
