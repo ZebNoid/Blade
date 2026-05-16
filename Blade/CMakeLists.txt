@@ -81,6 +81,10 @@ add_library(${PROJECT_NAME} STATIC
         Debug/LayoutDebugRenderer/LayoutDebugRenderer.cpp
         Debug/LayoutDebugRenderer/LayoutDebugRenderer.h
         Debug/LayoutDebugRenderer/LayoutDebugTheme.h
+        Debug/DebugPainter/DebugPainter.cpp
+        Debug/DebugPainter/DebugPainter.h
+        Debug/NativeDraw/NativeDraw.cpp
+        Debug/NativeDraw/NativeDraw.h
 )
 
 # use Unicode
