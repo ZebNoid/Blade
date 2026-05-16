@@ -59,15 +59,11 @@ protected:
 
         m_materializer.mount(*m_root, ctx);
 
-        const auto [width, height] =
-            m_native.clientSize();
+        const auto [width, height] = m_native.clientSize();
 
-        m_root->arrange({
-            0,
-            0,
-            width,
-            height
-        });
+        m_root->measure({width, height}); // TODO
+
+        m_root->arrange({0, 0, width, height});
 
         return *this;
     }

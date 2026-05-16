@@ -9,7 +9,7 @@ App::App() : m_wm(m_ctx)
 
 auto App::run() -> int
 {
-    build();
+    ui();
 
     builder();
 

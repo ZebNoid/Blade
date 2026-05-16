@@ -31,7 +31,7 @@ public:
     }
 
 protected:
-    virtual auto build() -> void = 0;
+    virtual auto ui() -> void = 0;
 
     auto builder() -> void;
 

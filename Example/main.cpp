@@ -6,21 +6,17 @@
 class Sandbox : public App
 {
 public:
-    Sandbox()
+    auto ui() -> void override
     {
-    }
-
-    auto build() -> void override
-    {
-        // window(Label("Test"));
-        window(Button("Test 1"));
-
-        // window(
-        //     Column(
-        //         Button("Test 1"),
-        //         Label("Hello")
-        //     )
-        // );
+        window(
+            Column(
+                Label("Hello"),
+                Button("Test 1")
+            )
+        ).set({
+            .title = "Blade",
+            .size = {800, 600}
+        });
     }
 };
 

@@ -24,9 +24,9 @@ public:
         return *this;
     }
 
-    auto takeRoot() -> std::unique_ptr<Widget>&
+    auto takeRoot() -> std::unique_ptr<Widget>
     {
-        return m_root;
+        return std::move(m_root);
     }
 
 private:

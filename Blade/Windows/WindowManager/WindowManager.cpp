@@ -17,8 +17,8 @@ auto WindowManager::createWindow(WindowBuilder&& builder) -> Window&
     );
 
     window->set(builder.m_props);
-    window->setRoot(std::move(builder.takeRoot()));
     window->create();
+    window->setRoot(std::move(builder.takeRoot()));
 
     auto& ref = *window;
 
