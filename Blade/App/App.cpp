@@ -11,6 +11,8 @@ auto App::run() -> int
 {
     build();
 
+    builder();
+
     while (GetMessage(&m_msg, nullptr, 0, 0))
     {
         TranslateMessage(&m_msg);
@@ -19,7 +21,7 @@ auto App::run() -> int
     return static_cast<int>(m_msg.wParam);
 }
 
-auto App::build() -> void
+auto App::builder() -> void
 {
     for (auto& builder : m_windowBuilders)
     {

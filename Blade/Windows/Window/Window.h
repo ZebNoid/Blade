@@ -2,10 +2,10 @@
 
 #include <memory>
 
-#include "../../Materializer/Materializer.h"
-#include "../../Widgets/Widget/Widget.h"
-#include "../../Native/NativeWindow/NativeWindow.h"
-#include "../EventRouter/EventRouter.h"
+#include "Materializer/Materializer.h"
+#include "Widgets/Widget/Widget.h"
+#include "Native/NativeWindow/NativeWindow.h"
+#include "Windows/EventRouter/EventRouter.h"
 #include "Props/Window/WindowProps.h"
 
 
@@ -49,6 +49,27 @@ public:
 protected:
     auto setRoot(std::unique_ptr<Widget> root) -> Window&
     {
+        m_root = std::move(root);
+
+        WidgetContext ctx{
+            m_native.handle(),
+            &m_appCtx,
+            this
+        };
+
+        m_materializer.mount(*m_root, ctx);
+
+        const auto [width, height] =
+            m_native.clientSize();
+
+        m_root->arrange({
+            0,
+            0,
+            width,
+            height
+        });
+
+        return *this;
     }
 
     // // TODO?

@@ -60,7 +60,7 @@ auto NativeLabel::createNative(const Rect rect) -> HWND
 
     if (!m_hwnd)
     {
-        std::cerr << "[Error] " << NAME_OF(NativeLabel::CreateNative) << GetLastError() << std::endl;
+        std::cerr << "[Error] NativeLabel::CreateNative " << GetLastError() << std::endl;
     }
     return m_hwnd;
 }

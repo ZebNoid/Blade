@@ -34,7 +34,7 @@ auto NativeTextField::createNative(const Rect rect) -> HWND
 
     if (!m_hwnd)
     {
-        std::cerr << "[Error] " << NAME_OF(NativeTextField::CreateNative) << GetLastError() << std::endl;
+        std::cerr << "[Error] NativeTextField::CreateNative " << GetLastError() << std::endl;
     }
     return m_hwnd;
 }

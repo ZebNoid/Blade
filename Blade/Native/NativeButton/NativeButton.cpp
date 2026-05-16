@@ -33,7 +33,7 @@ auto NativeButton::createNative(const Rect rect) -> HWND
 
     if (!m_hwnd)
     {
-        std::cerr << "[Error] " << NAME_OF(NativeButton::CreateNative) << GetLastError() << std::endl;
+        std::cerr << "[Error] NativeButton::CreateNative " << GetLastError() << std::endl;
     }
     return m_hwnd;
 }

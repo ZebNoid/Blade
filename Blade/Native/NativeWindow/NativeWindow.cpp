@@ -83,7 +83,7 @@ auto NativeWindow::createNative(const Rect rect) -> HWND
 
     if (!m_hwnd)
     {
-        std::cerr << "[Error] " << NAME_OF(NativeWindow::CreateNative) << GetLastError() << std::endl;
+        std::cerr << "[Error] NativeWindow::CreateNative " << GetLastError() << std::endl;
     }
 
     // SetLayeredWindowAttributes(m_hwnd, 0, (255 * 70) / 100, LWA_ALPHA);
@@ -177,7 +177,6 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
         {
             // TODO check multiple windows
             DestroyWindow(hwnd);
-            std::cerr << "[Error] " << "NativeWindow WM_CLOSE" << std::endl;
             return 0;
         }
 

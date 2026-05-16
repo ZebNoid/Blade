@@ -18,5 +18,5 @@ struct Rect
     int height{};
 };
 
-// TODO to separate file
+// TODO remove? to separate file
 #define NAME_OF(__any__) #__any__

@@ -13,28 +13,14 @@ public:
 
     auto run() -> int;
 
-    // TODO remove
-    // template <typename T>
-    // auto window(T&& widget) -> Window&
-    // {
-    //     auto& window = m_wm.newWindow("Blade Window");
-    //     return window.setRoot(std::forward<T>(widget));
-    // }
-
-    template <typename T>
+    template<typename T>
     auto window(T&& widget) -> WindowBuilder&
     {
-        auto builder = std::make_unique<WindowBuilder>(
+        m_windowBuilders.emplace_back(
             std::forward<T>(widget)
         );
 
-        auto& ref = *builder;
-
-        m_windowBuilders.push_back(
-            std::move(builder)
-        );
-
-        return ref;
+        return m_windowBuilders.back();
     }
 
     // TODO Alert / Popup
@@ -45,7 +31,9 @@ public:
     }
 
 protected:
-    virtual auto build() -> void;
+    virtual auto build() -> void = 0;
+
+    auto builder() -> void;
 
 private:
     MSG m_msg = {};
@@ -55,7 +43,7 @@ protected:
 
     WindowManager m_wm;
 
-    std::vector<std::unique_ptr<WindowBuilder>> m_windowBuilders;
+    std::vector<WindowBuilder> m_windowBuilders;
 
 private:
     auto init() -> void;
