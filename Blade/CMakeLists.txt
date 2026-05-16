@@ -63,8 +63,8 @@ add_library(${PROJECT_NAME} STATIC
         Props/Common/TextAlign.h
         Props/Widget/ButtonProps.h
         Props/Common/StyleProps.h
-        Backend/CheckboxNative/NativeCheckbox.cpp
-        Backend/CheckboxNative/NativeCheckbox.h
+        Backend/NativeCheckbox/NativeCheckbox.cpp
+        Backend/NativeCheckbox/NativeCheckbox.h
         Widgets/Checkbox/Checkbox.cpp
         Widgets/Checkbox/Checkbox.h
         Props/Widget/CheckboxProps.h
