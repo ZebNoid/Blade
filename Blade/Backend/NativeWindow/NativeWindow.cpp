@@ -238,6 +238,10 @@ inline auto NativeWindow::handleCommandMessage(HWND hwnd, UINT msg, WPARAM wPara
                 LRESULT state = SendMessage(currentHwnd, BM_GETCHECK, 0, 0);
                 auto isChecked = state == BST_CHECKED;
                 m_owner->dispatchCommand(id, WidgetEvent::Change, isChecked);
+            } else if (type == BS_AUTORADIOBUTTON) {
+                LRESULT state = SendMessage(currentHwnd, BM_GETCHECK, 0, 0);
+                auto isChecked = state == BST_CHECKED;
+                m_owner->dispatchCommand(id, WidgetEvent::Change, isChecked);
             } else
             {
                 m_owner->dispatchCommand(id, WidgetEvent::Click);

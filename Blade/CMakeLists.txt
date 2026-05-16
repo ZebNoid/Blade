@@ -68,6 +68,11 @@ add_library(${PROJECT_NAME} STATIC
         Widgets/Checkbox/Checkbox.cpp
         Widgets/Checkbox/Checkbox.h
         Props/Widget/CheckboxProps.h
+        Backend/NativeRadioButton/NativeRadioButton.cpp
+        Backend/NativeRadioButton/NativeRadioButton.h
+        Widgets/RadioButton/RadioButton.cpp
+        Widgets/RadioButton/RadioButton.h
+        Props/Widget/RadioButtonProps.h
 )
 
 # use Unicode

@@ -12,40 +12,55 @@ protected:
     {
         window(
             Column(
-                Label("Label"),
-                Button("Button"),
-                Checkbox("Checkbox").set({
+                Label("Blade Example"),
+                Label("Radio Buttons"),
+                Row(
+                    RadioButton("RadioButton"),
+                    RadioButton("RadioButton"),
+                    RadioButton("RadioButton")
+                ).set({
+                    .spacing = 8,
                     .layout = {
-                        .margin = {10, 0},
+                        .margin = {8, 0},
                     }
                 }),
-                Button("Button"),
+                Label("Row Buttons"),
                 Row(
                     Button("Button"),
                     Button("Button"),
                     Button("Button")
                 ).set({
-                    .spacing = 5,
+                    .spacing = 8,
                     .layout = {
-                        .margin = {5, 0},
+                        .margin = {8, 0},
+                    }
+                }),
+                Label("Checkboxes"),
+                Row(
+                    Checkbox("Checkbox"),
+                    Checkbox("Checkbox"),
+                    Checkbox("Checkbox")
+                ).set({
+                    .layout = {
+                        .margin = {8, 0},
                     }
                 }),
                 Button("Button"),
                 Button("Button"),
-                Button("Button").set({
+                Button("Button h margin").set({
                     .layout = {
-                        .margin = 20,
+                        .margin = {8,0},
                     }
                 }),
                 Button("Button")
             )
             .set({
-                .spacing = 10
+                .spacing = 8
             })
         ).set({
             .title = "Blade",
             .size = {800, 600},
-            .padding = 15
+            .padding = 16
         });
     }
 };

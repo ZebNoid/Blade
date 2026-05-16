@@ -1,4 +1,4 @@
-#include "NativeCheckbox.h"
+#include "NativeRadioButton.h"
 
 #include "Backend/Registry/ResourceRegistry/ResourceRegistry.h"
 
@@ -6,7 +6,7 @@
 namespace Blade {
 
 
-auto NativeCheckbox::create(const WidgetContext& ctx, const WidgetId id, const std::string& text) -> void
+auto NativeRadioButton::create(const WidgetContext& ctx, const WidgetId id, const std::string& text) -> void
 {
     m_ctx = ctx;
     m_id = id;
@@ -16,7 +16,7 @@ auto NativeCheckbox::create(const WidgetContext& ctx, const WidgetId id, const s
     applyFont(ResourceRegistry::get_font("system"));
 }
 
-auto NativeCheckbox::createNative(Rect rect) -> HWND
+auto NativeRadioButton::createNative(Rect rect) -> HWND
 {
     NativeWidget::createNative(rect);
     if (m_ctx.hwnd == nullptr) return nullptr;
@@ -25,7 +25,7 @@ auto NativeCheckbox::createNative(Rect rect) -> HWND
         0,
         L"BUTTON", // Predefined class
         toNativeString(m_text).c_str(), // Label
-        WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX,
+        WS_CHILD | WS_VISIBLE | BS_AUTORADIOBUTTON,
         rect.x,
         rect.y,
         rect.width,
@@ -44,7 +44,7 @@ auto NativeCheckbox::createNative(Rect rect) -> HWND
     return m_hwnd;
 }
 
-auto NativeCheckbox::setRect(const Rect rect) const -> void
+auto NativeRadioButton::setRect(const Rect rect) const -> void
 {
     // TODO ::setRect to NativeWidget ?
     SetWindowPos(m_hwnd, nullptr, rect.x, rect.y, rect.width, rect.height, SWP_NOZORDER);
