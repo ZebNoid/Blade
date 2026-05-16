@@ -169,10 +169,13 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
     case WM_PAINT:
         {
             const auto hdc = (HDC)wParam;
-            // LayoutDebugRenderer::Render(
-            //     hdc,
-            //     *window.root() // TODO
-            // );
+
+            // std::cout << "!! " << m_owner->m_root->children().size() << "\n";
+            LayoutDebugRenderer::Render(
+                hdc,
+                *m_owner->m_root // TODO
+            );
+            return 0;
         }
         break;
 

@@ -2,6 +2,8 @@
 
 #include <windows.h>
 
+#include "Widgets/Widget/Widget.h"
+
 
 namespace Blade {
 
