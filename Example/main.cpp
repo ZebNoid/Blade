@@ -11,9 +11,9 @@ class Sandbox : public App
 protected:
     auto ui() -> void override
     {
-        window(contentFlex()).set({
-            .title = "Flex"
-        });
+        // window(contentFlex()).set({
+        //     .title = "Flex"
+        // });
 
         window(contentBladeDemo()).id(windowId).set({
             .title = "Blade",
@@ -65,11 +65,8 @@ protected:
                     .crossAxisAlignment = CrossAxisAlignment::Center,
                 }),
                 Button("Button"),
-                Button("Button"),
-                Button("Button margin").set({
-                    .layout = layoutMarginH,
-                }),
-                Button("Button")
+                Label("Flex").set({.layout = {.flex = 1}}),
+                Label("Footer").set({.textAlign = TextAlign::Center})
             )
             .set({
                 .gap = gap,

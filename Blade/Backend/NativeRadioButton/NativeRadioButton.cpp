@@ -21,6 +21,7 @@ DWORD NativeRadioButton::style() const
 {
     // TODO Start of group WS_GROUP
 
+    // TODO BS_VCENTER?
     auto style = WS_CHILD | WS_VISIBLE | BS_AUTORADIOBUTTON;
 
     if (m_props.ltr)

@@ -20,6 +20,7 @@ auto NativeCheckbox::create(const WidgetContext& ctx, const WidgetId id, const C
 
 DWORD NativeCheckbox::style() const
 {
+    // TODO BS_VCENTER?
     auto style = WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX;
 
     if (m_props.ltr)

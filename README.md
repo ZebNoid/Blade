@@ -23,55 +23,53 @@ protected:
         window(
             Column(
                 Label("Blade Example"),
-                Label("Radio Buttons"),
-                Row(
-                    RadioButton("RadioButton"),
-                    RadioButton("RadioButton"),
-                    RadioButton("RadioButton")
-                ).set({
-                    .spacing = 8,
-                    .layout = {
-                        .margin = {8, 0},
-                    }
-                }),
-                Label("Row Buttons"),
-                Row(
-                    Button("Button"),
-                    Button("Button"),
-                    Button("Button")
-                ).set({
-                    .spacing = 8,
-                    .layout = {
-                        .margin = {8, 0},
-                    }
-                }),
-                Label("Checkboxes"),
-                Row(
-                    Checkbox("Checkbox"),
-                    Checkbox("Checkbox"),
-                    Checkbox("Checkbox")
-                ).set({
-                    .layout = {
-                        .margin = {8, 0},
-                    }
-                }),
+                rowRadioButtons(),
+                rowButtons(),
+                rowCheckboxes().set({.layout = {.margin = {8, 0}}}),
                 Button("Button"),
                 Button("Button"),
-                Button("Button h margin").set({
-                    .layout = {
-                        .margin = {8,0},
-                    }
-                }),
+                Label("").set({.layout = {.flex = 1}}),
                 Button("Button")
             )
             .set({
-                .spacing = 8
+                .gap = 8,
+                .mainAxisAlignment = MainAxisAlignment::Start,
+                .crossAxisAlignment = CrossAxisAlignment::Stretch,
             })
         ).set({
             .title = "Blade",
             .size = {800, 600},
-            .padding = 16
         });
+    }
+
+    auto rowCheckboxes() -> auto
+    {
+        return Row(
+            Label("Checkboxes:"),
+            Checkbox("Checkbox").set({.layout = {.flex = 1}}),
+            Checkbox("Checkbox").set({.layout = {.flex = 1}}),
+            Checkbox("Checkbox").set({.layout = {.flex = 1}})
+        );
+    }
+
+    auto rowButtons() -> auto
+    {
+        return Row(
+            Button("RadioButton"),
+            Label("Label").set({.layout = {.flex = 1}}),
+            Button("RadioButton").set({.layout = {.flex = 2}}),
+            Button("RadioButton")
+        );
+    }
+
+    auto rowRadioButtons() -> auto
+    {
+        return Row(
+            Label("RadioButtons:").set({.layout = {.flex = 1}}),
+            RadioButton("RadioButton"),
+            RadioButton("RadioButton"),
+            RadioButton("RadioButton")
+        );
     }
 };
 
