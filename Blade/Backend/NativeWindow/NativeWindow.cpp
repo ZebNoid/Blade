@@ -14,7 +14,7 @@ NativeWindow::NativeWindow()
 {
     m_size = {800, 600};
     // TODO move to app cycle
-    ResourceRegistry::init();
+    ResourceRegistry::Init();
 }
 
 auto NativeWindow::create(const WidgetContext& ctx, Window* owner, const WindowProps& props) -> void

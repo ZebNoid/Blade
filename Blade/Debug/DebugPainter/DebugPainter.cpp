@@ -1,17 +1,11 @@
 #include "DebugPainter.h"
 
+#include "Backend/Registry/ResourceRegistry/ResourceRegistry.h"
 #include "Debug/LayoutDebugRenderer/LayoutDebugTheme.h"
 #include "Debug/NativeDraw/NativeDraw.h"
 
 
 namespace Blade {
-
-namespace {
-    // TODO move to rsource manager
-    HPEN g_boundsPen = nullptr;
-    HPEN g_marginPen = nullptr;
-    HPEN g_paddingPen = nullptr;
-}
 
 
 auto DebugPainter::DrawBounds(HDC hdc, Rect rect) -> void
@@ -27,16 +21,10 @@ auto DebugPainter::DrawBounds(HDC hdc, Rect rect) -> void
         rect.y + rect.height
     };
 
-
-    if (!g_boundsPen)
-    {
-        g_boundsPen = CreatePen(PS_SOLID, LayoutDebugTheme::Width, LayoutDebugTheme::WidgetBounds);
-    }
-
     NativeDraw::DrawOutlineRect(
         hdc,
         widgetRect,
-        g_boundsPen,
+        ResourceRegistry::GetPen("debug_bounds", LayoutDebugTheme::WidgetBounds, LayoutDebugTheme::Width),
         LayoutDebugTheme::Inflate
     );
 }
@@ -47,7 +35,6 @@ auto DebugPainter::DrawMargin(HDC hdc, Rect rect, LayoutProps layout) -> void
     // Margin
     // -------------------------------------------------
 
-
     RECT marginRect = {
         rect.x - layout.margin.left,
         rect.y - layout.margin.top,
@@ -56,15 +43,10 @@ auto DebugPainter::DrawMargin(HDC hdc, Rect rect, LayoutProps layout) -> void
         rect.y + rect.height + layout.margin.bottom
     };
 
-    if (!g_marginPen)
-    {
-        g_marginPen = CreatePen(PS_SOLID, LayoutDebugTheme::Width, LayoutDebugTheme::Margin);
-    }
-
     NativeDraw::DrawOutlineRect(
         hdc,
         marginRect,
-        g_marginPen,
+        ResourceRegistry::GetPen("debug_margin", LayoutDebugTheme::Margin, LayoutDebugTheme::Width),
         LayoutDebugTheme::Inflate
     );
 }
@@ -84,15 +66,10 @@ auto DebugPainter::DrawPadding(HDC hdc, Rect rect, LayoutProps layout) -> void
         rect.y + rect.height - layout.padding.bottom
     };
 
-    if (!g_paddingPen)
-    {
-        g_paddingPen = CreatePen(PS_SOLID, LayoutDebugTheme::Width, LayoutDebugTheme::Padding);
-    }
-
     NativeDraw::DrawOutlineRect(
         hdc,
         paddingRect,
-        g_paddingPen,
+        ResourceRegistry::GetPen("debug_padding", LayoutDebugTheme::Padding, LayoutDebugTheme::Width),
         LayoutDebugTheme::Inflate
     );
 }

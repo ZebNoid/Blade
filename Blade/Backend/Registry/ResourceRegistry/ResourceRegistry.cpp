@@ -4,17 +4,17 @@
 namespace Blade {
 
 
-auto ResourceRegistry::init() -> void
+auto ResourceRegistry::Init() -> void
 {
     if (m_sInitialized) return;
     m_sInitialized = true;
 
-    register_font("system", create_system_ui_font());
+    RegisterFont("system", create_system_ui_font());
 }
 
-auto ResourceRegistry::shutdown() -> void
+auto ResourceRegistry::Shutdown() -> void
 {
-    for (auto& [key, font] : m_sFonts)
+    for (auto& [key, font] : m_fonts)
     {
         if (font)
         {
@@ -22,34 +22,45 @@ auto ResourceRegistry::shutdown() -> void
         }
     }
 
-    m_sFonts.clear();
+    m_fonts.clear();
 }
 
-auto ResourceRegistry::register_font(const std::string& key, HFONT font) -> void
+auto ResourceRegistry::RegisterFont(const std::string& key, HFONT font) -> void
 {
     if (!font) return;
 
     // already exists
-    const auto it = m_sFonts.find(key);
+    const auto it = m_fonts.find(key);
 
-    if (it != m_sFonts.end())
+    if (it != m_fonts.end())
     {
         DeleteObject(it->second);
     }
 
-    m_sFonts[key] = font;
+    m_fonts[key] = font;
 }
 
-auto ResourceRegistry::get_font(const std::string& key) -> HFONT
+auto ResourceRegistry::GetFont(const std::string& key) -> HFONT
 {
-    auto it = m_sFonts.find(key);
+    auto it = m_fonts.find(key);
 
-    if (it == m_sFonts.end())
+    if (it == m_fonts.end())
     {
         return nullptr;
     }
 
     return it->second;
+}
+
+auto ResourceRegistry::GetPen(const std::string& key, COLORREF color, int width) -> HPEN
+{
+    auto it = m_pens.find(key);
+    if (it != m_pens.end()) return it->second;
+
+    HPEN pen = CreatePen(PS_SOLID, width, color);
+    m_pens[key] = pen;
+
+    return pen;
 }
 
 auto ResourceRegistry::create_system_ui_font() -> HFONT

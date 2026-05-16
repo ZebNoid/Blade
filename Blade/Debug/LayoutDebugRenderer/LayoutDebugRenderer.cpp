@@ -12,7 +12,7 @@ bool LayoutDebugRenderer::debug = false;
 
 auto LayoutDebugRenderer::Render(HDC hdc, Widget& widget) -> void
 {
-    if (!debug) return;
+    if (debug == false) return;
 
     const auto rect = widget.rect();
 
