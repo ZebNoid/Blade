@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Backend/NativeButton/NativeButton.h"
-#include "Props/Widget/ButtonProps.h"
+#include "WidgetsProps/Widget/ButtonProps.h"
 #include "Widgets/Widget/Widget.h"
 
 

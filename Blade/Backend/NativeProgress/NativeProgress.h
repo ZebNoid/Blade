@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Backend/NativeWidget/NativeWidget.h"
-#include "Props/Widget/ProgressProps.h"
+#include "WidgetsProps/Widget/ProgressProps.h"
 
 namespace Blade {
 

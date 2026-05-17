@@ -51,30 +51,30 @@ add_library(${PROJECT_NAME} STATIC
         Backend/Utils/WinApiUtils.h
         Backend/Registry/ResourceRegistry/ResourceRegistry.cpp
         Backend/Registry/ResourceRegistry/ResourceRegistry.h
-        Props/Widget/ColumnProps.h
-        Props/Widget/LabelProps.h
-        Props/Window/WindowProps.h
-        Props/Common/Size.h
-        Props/Common/Thickness.h
+        WidgetsProps/Widget/ColumnProps.h
+        WidgetsProps/Widget/LabelProps.h
+        WidgetsProps/Window/WindowProps.h
+        WidgetsProps/Common/Size.h
+        WidgetsProps/Common/Thickness.h
         Windows/WindowBuilder/WindowBuilder.cpp
         Windows/WindowBuilder/WindowBuilder.h
-        Props/Common/Point.h
-        Props/Common/TextAlign.h
-        Props/Widget/ButtonProps.h
-        Props/Common/StyleProps.h
+        WidgetsProps/Common/Point.h
+        WidgetsProps/Common/TextAlign.h
+        WidgetsProps/Widget/ButtonProps.h
+        WidgetsProps/Common/StyleProps.h
         Backend/NativeCheckbox/NativeCheckbox.cpp
         Backend/NativeCheckbox/NativeCheckbox.h
         Widgets/Checkbox/Checkbox.cpp
         Widgets/Checkbox/Checkbox.h
-        Props/Widget/CheckboxProps.h
+        WidgetsProps/Widget/CheckboxProps.h
         Backend/NativeRadioButton/NativeRadioButton.cpp
         Backend/NativeRadioButton/NativeRadioButton.h
         Widgets/RadioButton/RadioButton.cpp
         Widgets/RadioButton/RadioButton.h
-        Props/Widget/RadioButtonProps.h
-        Props/Widget/TextFieldProps.h
-        Props/Common/MainAxisAlignment.h
-        Props/Common/CrossAxisAlignment.h
+        WidgetsProps/Widget/RadioButtonProps.h
+        WidgetsProps/Widget/TextFieldProps.h
+        WidgetsProps/Common/MainAxisAlignment.h
+        WidgetsProps/Common/CrossAxisAlignment.h
         Layout/FlexLayout/FlexLayout.cpp
         Layout/FlexLayout/FlexLayout.h
         Layout/FlexLayout/FlexDirection.h
@@ -91,12 +91,12 @@ add_library(${PROJECT_NAME} STATIC
         Backend/NativeProgress/NativeProgress.h
         Widgets/Progress/Progress.cpp
         Widgets/Progress/Progress.h
-        Props/Widget/ProgressProps.h
+        WidgetsProps/Widget/ProgressProps.h
         Backend/NativeSlider/NativeSlider.cpp
         Backend/NativeSlider/NativeSlider.h
         Widgets/Slider/Slider.cpp
         Widgets/Slider/Slider.h
-        Props/Widget/SliderProps.h
+        WidgetsProps/Widget/SliderProps.h
         Backend/Helpers/Helpers.h
         Backend/Handlers/CommandHandler/CommandHandler.cpp
         Backend/Handlers/CommandHandler/CommandHandler.h
@@ -110,6 +110,8 @@ add_library(${PROJECT_NAME} STATIC
         Widgets/Layout/Stack/Stack.h
         Layout/StackLayout/StackLayout.cpp
         Layout/StackLayout/StackLayout.h
+        WidgetsCallbacks/Window/WindowCallbacks.h
+        WidgetsCallbacks/Widget/ButtonCallbacks.h
 )
 
 # use Unicode

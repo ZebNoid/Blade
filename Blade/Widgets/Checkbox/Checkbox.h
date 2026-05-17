@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Backend/NativeCheckbox/NativeCheckbox.h"
-#include "Props/Widget/CheckboxProps.h"
+#include "WidgetsProps/Widget/CheckboxProps.h"
 #include "Widgets/Widget/Widget.h"
 
 

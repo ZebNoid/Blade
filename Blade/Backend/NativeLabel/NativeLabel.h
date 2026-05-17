@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Backend/NativeWidget/NativeWidget.h"
-#include "Props/Widget/LabelProps.h"
+#include "WidgetsProps/Widget/LabelProps.h"
 
 
 namespace Blade {

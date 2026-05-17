@@ -2,9 +2,9 @@
 
 #include <string>
 
-#include "Props/Common/Point.h"
-#include "Props/Common/Size.h"
-#include "Props/Common/Thickness.h"
+#include "WidgetsProps/Common/Point.h"
+#include "WidgetsProps/Common/Size.h"
+#include "WidgetsProps/Common/Thickness.h"
 
 
 namespace Blade {

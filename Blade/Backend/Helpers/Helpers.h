@@ -3,7 +3,7 @@
 #include <windows.h>
 #include <windowsx.h>
 
-#include "Props/Common/Point.h"
+#include "WidgetsProps/Common/Point.h"
 
 
 namespace Blade {

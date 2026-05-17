@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Backend/NativeProgress/NativeProgress.h"
-#include "Props/Widget/ProgressProps.h"
+#include "WidgetsProps/Widget/ProgressProps.h"
 #include "Widgets/Widget/Widget.h"
 
 

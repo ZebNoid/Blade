@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Backend/NativeLabel/NativeLabel.h"
-#include "Props/Widget/LabelProps.h"
+#include "WidgetsProps/Widget/LabelProps.h"
 #include "Widgets/Widget/Widget.h"
 
 

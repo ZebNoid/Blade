@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "Props/Window/WindowProps.h"
+#include "WidgetsProps/Window/WindowProps.h"
 #include "Widgets/Widget/Widget.h"
 
 

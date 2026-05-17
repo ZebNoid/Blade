@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Props/Widget/ColumnProps.h"
+#include "WidgetsProps/Widget/ColumnProps.h"
 #include "Widgets/Layout/Container/Container.h"
 
 

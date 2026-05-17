@@ -4,7 +4,7 @@
 
 #include "Backend/NativeWindow/NativeWindow.h"
 #include "Materializer/Materializer.h"
-#include "Props/Window/WindowProps.h"
+#include "WidgetsProps/Window/WindowProps.h"
 #include "Widgets/Widget/Widget.h"
 #include "Windows/EventRouter/EventRouter.h"
 
