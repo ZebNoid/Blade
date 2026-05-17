@@ -1,12 +1,11 @@
 #include "NativeWindow.h"
 
-#include "Handlers/CommandHandler/CommandHandler.h"
+#include "Backend/Handlers/CommandHandler/CommandHandler.h"
+#include "Backend/Handlers/InputHandler/InputHandler.h"
 #include "Backend/Registry/ClassRegistry/ClassRegistry.h"
 #include "Backend/Registry/ResourceRegistry/ResourceRegistry.h"
 #include "Context/WidgetContext.h"
 #include "Debug/LayoutDebugRenderer/LayoutDebugRenderer.h"
-#include "Handlers/CommandHandler/CommandHandler.h"
-#include "Handlers/InputHandler/InputHandler.h"
 
 
 namespace Blade {
