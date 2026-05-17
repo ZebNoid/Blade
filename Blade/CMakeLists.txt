@@ -97,11 +97,11 @@ add_library(${PROJECT_NAME} STATIC
         Widgets/Slider/Slider.cpp
         Widgets/Slider/Slider.h
         Props/Widget/SliderProps.h
+        Backend/Helpers/Helpers.h
         Backend/Handlers/CommandHandler/CommandHandler.cpp
         Backend/Handlers/CommandHandler/CommandHandler.h
         Backend/Handlers/InputHandler/InputHandler.cpp
         Backend/Handlers/InputHandler/InputHandler.h
-        Backend/Helpers/Helpers.h
         Backend/Handlers/WindowHandler/WindowHandler.cpp
         Backend/Handlers/WindowHandler/WindowHandler.h
 )

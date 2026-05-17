@@ -38,14 +38,14 @@ protected:
     auto handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT override;
 
 public:
-    auto show() -> void;
+    auto show() const -> void;
 
     auto getOwner() const -> Window*
     {
         return m_owner;
     }
 
-    auto setSize(Size size) -> void;
+    auto resize(Size size) -> void;
 
     auto onDestroy() const -> void;
 

@@ -5,15 +5,14 @@
 
 namespace Blade::Backend::WinApi {
 
-
-inline auto WindowHandler::Handle(NativeWindow& window, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
+auto WindowHandler::Handle(NativeWindow& window, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
 {
     switch (msg)
     {
 
     case WM_SIZE:
         {
-            window.setSize(WindowSize(lParam));
+            window.resize(WindowSize(lParam));
             return 0;
         }
 

@@ -203,7 +203,7 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
     //     }
     //     break;
 
-    // TODO
+
     case WM_CLOSE:
     case WM_SIZE:
     case WM_DESTROY:
@@ -222,12 +222,12 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
     return NativeWidget::handleMessage(hwnd, msg, wParam, lParam);
 }
 
-auto NativeWindow::show() -> void
+auto NativeWindow::show() const -> void
 {
     ShowWindow(m_hwnd, SW_SHOW);
 }
 
-auto NativeWindow::setSize(Size size) -> void
+auto NativeWindow::resize(Size size) -> void
 {
     m_size = size;
     m_owner->resize(m_size);
