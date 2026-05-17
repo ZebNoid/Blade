@@ -28,9 +28,6 @@ protected:
         m_native.create(w_ctx, this, m_props);
     }
 
-    auto onDestroy() -> void;
-
-    auto onResize(Size size) -> void;
 
     auto router() -> EventRouter& { return m_router; }
 
@@ -43,6 +40,10 @@ public:
     Window(const Window&) = delete;
 
     auto show() -> void;
+
+    auto destroy() -> void;
+
+    auto resize(Size size) -> void;
 
     auto set(WindowProps props) -> Window&
     {

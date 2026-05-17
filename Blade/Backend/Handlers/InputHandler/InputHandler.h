@@ -5,7 +5,7 @@
 #include "Backend/NativeWindow/NativeWindow.h"
 
 
-namespace Blade::Backend::Blade {
+namespace Blade::Backend::WinApi {
 
 
 class InputHandler

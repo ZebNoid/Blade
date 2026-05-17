@@ -137,7 +137,7 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
     case WM_KEYDOWN:
     case WM_KEYUP:
     case WM_CHAR:
-        return Backend::Blade::InputHandler::Handle(*this, msg, wParam, lParam);
+        return Backend::WinApi::InputHandler::Handle(*this, msg, wParam, lParam);
 
     case WM_SETFOCUS:
     case WM_KILLFOCUS:
@@ -163,14 +163,6 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
             return hit;
         }
 
-    case WM_SIZE:
-        {
-            m_size.width = LOWORD(lParam);
-            m_size.height = HIWORD(lParam);
-
-            m_owner->onResize(m_size);
-            return 0;
-        }
 
     // case WM_CTLCOLORBTN:
     // case WM_CTLCOLOREDIT:
@@ -211,23 +203,13 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
     //     }
     //     break;
 
-        // TODO
-    // case WM_CLOSE:
-    // case WM_SIZE:
-    // case WM_DESTROY:
-    //         Backend::Blade::WindowHandler::Handle(*this, msg, wParam, lParam);
-    //         break;
-
+    // TODO
     case WM_CLOSE:
-        {
-            // TODO check multiple windows
-            DestroyWindow(hwnd);
-            return 0;
-        }
-
+    case WM_SIZE:
     case WM_DESTROY:
-        m_owner->onDestroy();
-        return 0;
+        Backend::WinApi::WindowHandler::Handle(*this, msg, wParam, lParam);
+        break;
+
 
     case WM_NCDESTROY:
         {
@@ -243,6 +225,17 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
 auto NativeWindow::show() -> void
 {
     ShowWindow(m_hwnd, SW_SHOW);
+}
+
+auto NativeWindow::setSize(Size size) -> void
+{
+    m_size = size;
+    m_owner->resize(m_size);
+}
+
+auto NativeWindow::onDestroy() const -> void
+{
+    m_owner->destroy();
 }
 
 

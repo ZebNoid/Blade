@@ -1,12 +1,17 @@
 #pragma once
 
+#include <windows.h>
 
-namespace Blade::Backend::Blade {
+#include "Backend/NativeWindow/NativeWindow.h"
+
+
+namespace Blade::Backend::WinApi {
 
 
 class WindowHandler
 {
-
+public:
+    static auto Handle(NativeWindow& window, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT;
 };
 
 

@@ -1,9 +1,10 @@
 #include "InputHandler.h"
 
 #include "Backend/Helpers/Helpers.h"
+#include "Backend/NativeWindow/NativeWindow.h"
 
 
-namespace Blade::Backend::Blade {
+namespace Blade::Backend::WinApi {
 
 
 auto InputHandler::Handle(NativeWindow& window, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT

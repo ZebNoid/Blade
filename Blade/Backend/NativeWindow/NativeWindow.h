@@ -1,10 +1,17 @@
 #pragma once
 
+
 #include "Backend/NativeWidget/NativeWidget.h"
 #include "Props/Window/WindowProps.h"
+#include "Windows/Window/Window.h"
 
 
 namespace Blade {
+
+// namespace Backend::WinApi {
+//     class WindowHandler;
+//     class CommandHandler;
+// }
 
 
 class NativeWindow : public NativeWidget
@@ -37,6 +44,10 @@ public:
     {
         return m_owner;
     }
+
+    auto setSize(Size size) -> void;
+
+    auto onDestroy() const -> void;
 
 protected:
     Window* m_owner = nullptr;
