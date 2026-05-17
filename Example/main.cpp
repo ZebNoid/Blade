@@ -15,10 +15,10 @@ protected:
         //     .title = "Flex",
         // });
 
-        // window(Label("132")).set({
-        //     .title = "Flex",
-        //     .position = {3200,600},
-        // });
+        window(Label("132")).set({
+            .title = "Flex",
+            .position = {3200,600},
+        });
 
         window(Row()).set({
             .title = "Flex",

@@ -39,7 +39,7 @@ DWORD NativeLabel::style() const
 
 DWORD NativeLabel::exStyle() const
 {
-    auto exStyle = WS_EX_TRANSPARENT;
+    auto exStyle = 0;//WS_EX_TRANSPARENT;
     return exStyle;
 }
 

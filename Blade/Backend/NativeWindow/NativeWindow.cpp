@@ -61,7 +61,7 @@ auto NativeWindow::exStyle() const -> DWORD
 
 auto NativeWindow::style() const -> DWORD
 {
-    auto style = WS_OVERLAPPEDWINDOW | WS_VISIBLE;
+    auto style = WS_OVERLAPPEDWINDOW | WS_VISIBLE | SS_NOTIFY;
 
     // // preventing rendering artifacts when the parent redraws
     // style |= WS_CLIPCHILDREN ; // don't use without custom background
@@ -144,7 +144,6 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
     case WM_KEYDOWN:
     case WM_KEYUP:
     case WM_CHAR:
-        std::cout << "!!\n";
         return Backend::WinApi::InputHandler::Handle(*this, msg, wParam, lParam);
 
     case WM_SETFOCUS:
@@ -160,16 +159,16 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
     //     SetFocus(hwnd); // ? input hack? TODO
     //     break;
 
-    case WM_NCHITTEST:
-        {
-            LRESULT hit = DefWindowProc(hwnd, msg, wParam, lParam);
-            // If the click is in the client area, tell Windows it's the caption
-            if (hit == HTCLIENT)
-            {
-                return HTCAPTION;
-            }
-            return hit;
-        }
+    // case WM_NCHITTEST: // TODO
+    //     {
+    //         LRESULT hit = DefWindowProc(hwnd, msg, wParam, lParam);
+    //         // If the click is in the client area, tell Windows it's the caption
+    //         if (hit == HTCLIENT)
+    //         {
+    //             return HTCAPTION;
+    //         }
+    //         return hit;
+    //     }
 
 
     // case WM_CTLCOLORBTN:
