@@ -85,6 +85,8 @@ add_library(${PROJECT_NAME} STATIC
         Debug/DebugPainter/DebugPainter.h
         Debug/NativeDraw/NativeDraw.cpp
         Debug/NativeDraw/NativeDraw.h
+        Debug/DebugProps.h
+        Debug/DebugBrushProps.h
 )
 
 # use Unicode

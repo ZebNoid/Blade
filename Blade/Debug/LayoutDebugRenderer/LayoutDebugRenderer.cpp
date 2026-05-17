@@ -18,13 +18,12 @@ auto LayoutDebugRenderer::Render(HDC hdc, Widget& widget) -> void
 
     const auto layout = widget.layout();
 
-    DebugPainter::DrawTextW(hdc, rect, widget.name());
 
     // -------------------------------------------------
-    // Widget bounds
+    // Margin
     // -------------------------------------------------
 
-    DebugPainter::DrawBounds(hdc, rect);
+    DebugPainter::DrawMargin(hdc, rect, layout);
 
     // -------------------------------------------------
     // Padding
@@ -33,10 +32,16 @@ auto LayoutDebugRenderer::Render(HDC hdc, Widget& widget) -> void
     DebugPainter::DrawPadding(hdc, rect, layout);
 
     // -------------------------------------------------
-    // Margin
+    // Widget bounds
     // -------------------------------------------------
 
-    DebugPainter::DrawMargin(hdc, rect, layout);
+    DebugPainter::DrawBounds(hdc, rect);
+
+    // -------------------------------------------------
+    // Text
+    // -------------------------------------------------
+
+    DebugPainter::DrawTextW(hdc, rect, widget.name());
 
     // -------------------------------------------------
     // Children

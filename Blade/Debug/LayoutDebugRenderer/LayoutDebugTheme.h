@@ -8,17 +8,19 @@ namespace Blade {
 
 struct LayoutDebugTheme
 {
-    static constexpr COLORREF WidgetBounds = RGB(255, 0, 0);
+    static constexpr COLORREF Bounds = RGB(0, 165, 0);
 
-    static constexpr COLORREF Margin = RGB(255, 165, 0);
+    static constexpr COLORREF Margin = RGB(0, 255, 165);
 
-    static constexpr COLORREF Padding = RGB(0, 165, 0);
+    static constexpr COLORREF Padding = RGB(0, 165, 255);
 
-    static constexpr COLORREF Text = RGB(255, 165, 165);
+    static constexpr COLORREF Text = RGB(0, 165, 0);
 
-    static constexpr int Width = 2;
+    static constexpr int WidthBounds = 1;
+    static constexpr int WidthMargin = 1;
+    static constexpr int WidthPadding = 1;
 
-    static constexpr int Inflate = 1;
+    static constexpr int Inflate = 0;
 };
 
 } // namespace

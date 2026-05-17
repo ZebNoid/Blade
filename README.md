@@ -1,9 +1,21 @@
 # Blade 
 
-> **WinAPI** from *Hell*
+<p align="center">
+<img src=".github/assets/BladeLogo.svg" width="500">
+</p>
 
-- LLM assisted  C++ UI Library based on WinAPI
-- Proof of concept
+>
+> _Super_ **Fast** _Super_ **Small** _Super_ **Simple**
+> 
+> C++ **Declarative** UI Library 
+> 
+> Based on **WinAPI** from *Hell*
+> 
+
+> [!IMPORTANT]
+> 
+> **LLM** assisted in writing this code
+> 
 
 ## Example
 
