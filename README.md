@@ -39,7 +39,8 @@ class Sandbox : public App
 protected:
     auto ui() -> void override
     {
-        window(Column(
+        window(
+            Column(
                 Label("Label"),
                 Button("Button"),
                 Row(
@@ -52,7 +53,7 @@ protected:
                     Progress(10).set({.layout = {.flex = 1,}}),
                     Slider(90).set({.layout = {.flex = 2,}})
                 ).set({.gap = 8, .crossAxisAlignment = CrossAxisAlignment::Center,}),
-                Column().set({.layout = {.flex = 1,}}),
+                Column().set({.layout = {.flex = 1,},}),
                 Label("Footer")
             ).set({
                 .gap = 8,
@@ -79,29 +80,42 @@ auto main() -> int
 ```
 
 
-## Widget Tree
+## User Space
 
 ```
 App
+│
 └── Window > (NativeWindow)
 
 Widget
+│
 ├── Label > (NativeLabel)
 ├── Button > (NativeButton)
 ├── RadioButton > (NativeRadioButton)
 ├── Checkbox > (NativeCheckbox)
+├── Progress > (NativeProgress)
+├── Slider > (NativeSlider)
 ├── TextField > (NativeTextField)
-|
+│
 └── Container
+	├── Stack
 	├── Colum
 	└── Row
+```
 
-Backend        
+## Backend
+
+```
+Backend
+│    
 └── NativeWidget
+    │
 	├── NativeWindow
 	├── NativeLabel
 	├── NativeButton
 	├── NativeRadioButton
 	├── NativeCheckbox
+	├── NativeProgress
+	├── NativeSlider
 	└── NativeTextField
 ```
