@@ -2,7 +2,7 @@
 #include "Backend/NativeWindow/NativeWindow.h"
 
 
-namespace Blade::WinApi {
+namespace Blade::Backend::WinApi {
 
 
 auto CommandHandler::Handle(NativeWindow& window, WPARAM wParam, LPARAM lParam) -> LRESULT

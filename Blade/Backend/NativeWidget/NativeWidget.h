@@ -59,8 +59,12 @@ public:
         return m_size;
     }
 
-public:
     virtual auto setRect(Rect rect) -> void;
+
+    auto handle() -> HWND
+    {
+        return m_hwnd;
+    }
 
 protected:
     HWND m_hwnd = nullptr;

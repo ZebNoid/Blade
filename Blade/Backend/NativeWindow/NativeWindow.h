@@ -31,8 +31,6 @@ protected:
     auto handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT override;
 
 public:
-    auto setSize(Size size) -> void;
-
     auto show() -> void;
 
     auto getOwner() const -> Window*

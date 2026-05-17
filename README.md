@@ -12,7 +12,7 @@
 
 > [!NOTE]
 > 
-> _Super_ **Fast** _Super_ **Small** _Super_ **Simple**
+> _Super_ **Fast** _Super_ **Small** _Super_ **Simple** _Super_ **Buggy**
 > 
 > C++ **Declarative** UI Library 
 > 

@@ -1,11 +1,13 @@
 #include "NativeWindow.h"
 
-#include "Backend/NativeWindow/Handlers/CommandHandler.h"
+#include "Handlers/CommandHandler/CommandHandler.h"
 #include "Backend/Registry/ClassRegistry/ClassRegistry.h"
 #include "Backend/Registry/ResourceRegistry/ResourceRegistry.h"
 #include "Context/WidgetContext.h"
 #include "Debug/LayoutDebugRenderer/LayoutDebugRenderer.h"
-#include "Handlers/CommandHandler.h"
+#include "Handlers/CommandHandler/CommandHandler.h"
+#include "Handlers/InputHandler/InputHandler.h"
+
 
 namespace Blade {
 
@@ -39,6 +41,11 @@ auto NativeWindow::create(const WidgetContext& ctx, Window* owner, const WindowP
     );
 
     createNative({});
+
+    // TODO set Title
+    // SetWindowText(m_hwnd, toNativeString(m_props.title).c_str());
+    // TODO force redraw
+    // SetWindowPos(hwnd, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
 }
 
 auto NativeWindow::exStyle() const -> DWORD
@@ -121,17 +128,29 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
         }
 
     case WM_COMMAND:
-        return WinApi::CommandHandler::Handle(*this, wParam, lParam);
-        // return handleCommandMessage(hwnd, msg, wParam, lParam);
+        return Backend::WinApi::CommandHandler::Handle(*this, wParam, lParam);
+
+    case WM_MOUSEMOVE:
+    case WM_LBUTTONDOWN:
+    case WM_LBUTTONUP:
+    // case WM_MOUSEWHEEL: // dbl click?
+    case WM_KEYDOWN:
+    case WM_KEYUP:
+    case WM_CHAR:
+        return Backend::Blade::InputHandler::Handle(*this, msg, wParam, lParam);
+
+    case WM_SETFOCUS:
+    case WM_KILLFOCUS:
+        break;
 
     case WM_ACTIVATE:
         // Detect if the user switched to a different application.
         break;
 
-    // case WM_LBUTTONDOWN:
-    case WM_NCLBUTTONDOWN:
-        SetFocus(hwnd);
-        break;
+    // // case WM_LBUTTONDOWN:
+    // case WM_NCLBUTTONDOWN:
+    //     SetFocus(hwnd); // ? input hack? TODO
+    //     break;
 
     case WM_NCHITTEST:
         {
@@ -180,12 +199,12 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
 
     case WM_PAINT:
         {
-// #ifdef BLADE_DEBUG_LAYOUT
+            // #ifdef BLADE_DEBUG_LAYOUT
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hwnd, &ps);
             LayoutDebugRenderer::Render(hdc, *m_owner->m_root);
             EndPaint(hwnd, &ps);
-// #endif
+            // #endif
             return 0;
         }
         break;
@@ -222,23 +241,10 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
     return NativeWidget::handleMessage(hwnd, msg, wParam, lParam);
 }
 
-// auto NativeWindow::setTitle(const std::string& title) -> void
-// {
-//     SetWindowText(m_hwnd, toNativeString(m_props.title).c_str());
-// }
-
-auto NativeWindow::setSize(const Size size) -> void
-{
-    m_size = size;
-    SetWindowPos(m_hwnd, nullptr, 0, 0, size.width, size.height, SWP_NOMOVE);
-}
-
 auto NativeWindow::show() -> void
 {
     ShowWindow(m_hwnd, SW_SHOW);
 }
 
-// TODO force redraw
-// SetWindowPos(hwnd, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
 
 } // namespace

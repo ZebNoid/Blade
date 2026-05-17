@@ -97,8 +97,11 @@ add_library(${PROJECT_NAME} STATIC
         Widgets/Slider/Slider.cpp
         Widgets/Slider/Slider.h
         Props/Widget/SliderProps.h
-        Backend/NativeWindow/Handlers/CommandHandler.cpp
-        Backend/NativeWindow/Handlers/CommandHandler.h
+        Backend/NativeWindow/Handlers/CommandHandler/CommandHandler.cpp
+        Backend/NativeWindow/Handlers/CommandHandler/CommandHandler.h
+        Backend/NativeWindow/Handlers/InputHandler/InputHandler.cpp
+        Backend/NativeWindow/Handlers/InputHandler/InputHandler.h
+        Backend/Helpers/Helpers.h
 )
 
 # use Unicode
