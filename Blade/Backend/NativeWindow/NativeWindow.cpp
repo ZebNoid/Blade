@@ -4,6 +4,7 @@
 #include "Backend/Handlers/InputHandler/InputHandler.h"
 #include "Backend/Handlers/PaintHandler/PaintHandler.h"
 #include "Backend/Handlers/WindowHandler/WindowHandler.h"
+#include "Backend/Helpers/Helpers.h"
 #include "Backend/Registry/ClassRegistry/ClassRegistry.h"
 #include "Backend/Registry/ResourceRegistry/ResourceRegistry.h"
 #include "Context/WidgetContext.h"
@@ -159,16 +160,19 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
     //     SetFocus(hwnd); // ? input hack? TODO
     //     break;
 
-    // case WM_NCHITTEST: // TODO
-    //     {
-    //         LRESULT hit = DefWindowProc(hwnd, msg, wParam, lParam);
-    //         // If the click is in the client area, tell Windows it's the caption
-    //         if (hit == HTCLIENT)
-    //         {
-    //             return HTCAPTION;
-    //         }
-    //         return hit;
-    //     }
+    case WM_NCHITTEST: // TODO
+        {
+            LRESULT hit = DefWindowProc(hwnd, msg, wParam, lParam);
+            if (hit == HTCLIENT)
+            {
+                // POINT pt{GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam)};
+                // ScreenToClient(hwnd, &pt);
+                // if (pt.y < 32) return HTCAPTION;
+
+                return HTCAPTION; // TODO! Mouse events Blocker!
+            }
+            return hit;
+        }
 
 
     // case WM_CTLCOLORBTN:
