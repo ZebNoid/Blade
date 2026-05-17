@@ -132,9 +132,15 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
         return Backend::WinApi::CommandHandler::Handle(*this, wParam, lParam);
 
     case WM_MOUSEMOVE: // WM_NCMOUSEMOVE ?
+    case WM_LBUTTONDBLCLK:
     case WM_LBUTTONDOWN:
     case WM_LBUTTONUP:
-    // case WM_MOUSEWHEEL: // dbl click?
+    case WM_RBUTTONUP:
+    case WM_RBUTTONDBLCLK:
+    case WM_MBUTTONDOWN:
+    case WM_MBUTTONUP:
+    case WM_MBUTTONDBLCLK:
+    case WM_MOUSEWHEEL:
     case WM_KEYDOWN:
     case WM_KEYUP:
     case WM_CHAR:
