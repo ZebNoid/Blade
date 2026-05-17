@@ -3,6 +3,8 @@
 #include "Backend/NativeSlider/NativeSlider.h"
 #include "WidgetsProps/Widget/SliderProps.h"
 #include "Widgets/Widget/Widget.h"
+#include "WidgetsCallbacks/Widget/SliderCallbacks.h"
+
 
 namespace Blade {
 
@@ -25,7 +27,6 @@ public:
     auto arrange(Rect rect) -> void override
     {
         Widget::arrange(rect);
-
         m_native.setRect(rect);
     }
 
@@ -33,6 +34,12 @@ public:
     {
         m_layout = props.layout;
         m_props = std::move(props);
+        return *this;
+    }
+
+    auto on(SliderCallbacks callbacks) -> Slider&
+    {
+        m_callbacks = std::move(callbacks);
         return *this;
     }
 
@@ -45,6 +52,7 @@ public:
 private:
     NativeSlider m_native;
     SliderProps m_props;
+    SliderCallbacks m_callbacks;
 
     int m_value;
 };

@@ -1,13 +1,14 @@
 #pragma once
-#include <functional>
+
+#include "WidgetsCallbacks/Callback.h"
 
 
 namespace Blade {
 
+
 struct ButtonCallbacks
 {
-    // TODO on click
-    std::function<void()> click = nullptr;
+    CallbackVoid click = nullptr;
 };
 
 } // namespace

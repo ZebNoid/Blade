@@ -3,6 +3,7 @@
 #include "Backend/NativeRadioButton/NativeRadioButton.h"
 #include "WidgetsProps/Widget/RadioButtonProps.h"
 #include "Widgets/Widget/Widget.h"
+#include "WidgetsCallbacks/Widget/RadioButtonCallbacks.h"
 
 
 namespace Blade {
@@ -25,7 +26,6 @@ public:
     auto arrange(Rect rect) -> void override
     {
         Widget::arrange(rect);
-
         m_native.setRect(rect);
     }
 
@@ -33,6 +33,12 @@ public:
     {
         m_layout = props.layout;
         m_props = std::move(props);
+        return *this;
+    }
+
+    auto on(RadioButtonCallbacks callbacks) -> RadioButton&
+    {
+        m_callbacks = std::move(callbacks);
         return *this;
     }
 
@@ -45,6 +51,7 @@ public:
 private:
     NativeRadioButton m_native;
     RadioButtonProps m_props;
+    RadioButtonCallbacks m_callbacks;
 
     std::string m_text;
 };

@@ -14,21 +14,7 @@ class Button : public Widget
 public:
     Button(std::string text);
 
-    auto name() -> std::wstring override  { return L"Button"; }
-
-    // // lvalue
-    // auto onClick(std::function<void()> fn) & -> Button&
-    // {
-    //     m_onClick = std::move(fn);
-    //     return *this;
-    // }
-    //
-    // // rvalue
-    // auto onClick(std::function<void()> fn) && -> Button&&
-    // {
-    //     m_onClick = std::move(fn);
-    //     return std::move(*this);
-    // }
+    auto name() -> std::wstring override { return L"Button"; }
 
     auto mount(Materializer& m, WidgetContext& ctx) -> void override;
 
@@ -40,7 +26,6 @@ public:
     auto arrange(Rect rect) -> void override
     {
         Widget::arrange(rect);
-
         m_native.setRect(rect);
     }
 
@@ -69,7 +54,6 @@ private:
     ButtonCallbacks m_callbacks;
 
     std::string m_text;
-    std::function<void()> m_onClick;
 };
 
 

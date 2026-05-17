@@ -3,6 +3,7 @@
 #include "Backend/NativeTextField/NativeTextField.h"
 #include "WidgetsProps/Widget/TextFieldProps.h"
 #include "Widgets/Widget/Widget.h"
+#include "WidgetsCallbacks/Widget/TextFieldCallbacks.h"
 
 
 namespace Blade {
@@ -14,35 +15,6 @@ public:
     TextField(const std::string& text = "");
 
     auto name() -> std::wstring override { return L"TextField"; }
-
-    // // lvalue
-    // auto onChange(std::function<void(std::string)> fn) & -> TextField&
-    // {
-    //     m_onChange = std::move(fn);
-    //     return *this;
-    // }
-    //
-    // // rvalue
-    // auto onChange(std::function<void(std::string)> fn) && -> TextField&&
-    // {
-    //     m_onChange = std::move(fn);
-    //     return std::move(*this);
-    // }
-
-
-    // // lvalue
-    // auto onFocus(std::function<void(bool)> fn) & -> TextField&
-    // {
-    //     m_onFocus = std::move(fn);
-    //     return *this;
-    // }
-    //
-    // // rvalue
-    // auto onFocus(std::function<void(bool)> fn) && -> TextField&&
-    // {
-    //     m_onFocus = std::move(fn);
-    //     return std::move(*this);
-    // }
 
     auto mount(Materializer& m, WidgetContext& ctx) -> void override;
 
@@ -65,6 +37,12 @@ public:
         return *this;
     }
 
+    auto on(TextFieldCallbacks callbacks) -> TextField&
+    {
+        m_callbacks = std::move(callbacks);
+        return *this;
+    }
+
     auto id(WidgetId& id) -> TextField&
     {
         id = m_id;
@@ -74,10 +52,8 @@ public:
 private:
     NativeTextField m_native;
     TextFieldProps m_props;
+    TextFieldCallbacks m_callbacks;
     std::string m_text;
-
-    std::function<void(std::string)> m_onChange;
-    std::function<void(bool)> m_onFocus;
 };
 
 
