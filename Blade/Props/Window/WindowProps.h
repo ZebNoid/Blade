@@ -14,6 +14,7 @@ struct WindowProps
 {
     std::string title = "Blade";
     // TODO remember size/position
+    // TODO minSize / maxSize
     Size size{800, 600};
     // TODO remove windows default
     Point position{CW_USEDEFAULT, CW_USEDEFAULT};

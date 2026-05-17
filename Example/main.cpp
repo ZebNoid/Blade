@@ -25,7 +25,10 @@ protected:
 
         window(
             Stack(
-                Button("Test1")
+                // Button("Test1"),
+                Label("|-----+-----|").set({.layout = {.padding = 8,}}),
+                Label("|---+---|").set({.layout = {.padding = 16,}}),
+                Label("|-+-|").set({.layout = {.padding = 24,}})
             ).set({.layout = {.padding = 8, .flex = 1,}})
         ).set(wProp);
 
