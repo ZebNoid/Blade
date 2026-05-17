@@ -2,6 +2,7 @@
 
 #include "Backend/Handlers/CommandHandler/CommandHandler.h"
 #include "Backend/Handlers/InputHandler/InputHandler.h"
+#include "Backend/Handlers/PaintHandler/PaintHandler.h"
 #include "Backend/Handlers/WindowHandler/WindowHandler.h"
 #include "Backend/Registry/ClassRegistry/ClassRegistry.h"
 #include "Backend/Registry/ResourceRegistry/ResourceRegistry.h"
@@ -183,13 +184,15 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
 
     case WM_PAINT:
         {
-            // #ifdef BLADE_DEBUG_LAYOUT
-            PAINTSTRUCT ps;
-            HDC hdc = BeginPaint(hwnd, &ps);
-            LayoutDebugRenderer::Render(hdc, *m_owner->m_root);
-            EndPaint(hwnd, &ps);
-            // #endif
-            return 0;
+            // // #ifdef BLADE_DEBUG_LAYOUT
+            // PAINTSTRUCT ps;
+            // HDC hdc = BeginPaint(hwnd, &ps);
+            // LayoutDebugRenderer::Render(hdc, *m_owner->m_root);
+            // EndPaint(hwnd, &ps);
+            // // #endif
+            // return 0;
+
+            return Backend::WinApi::PaintHandler::Handle(*this, wParam, lParam);
         }
         break;
 

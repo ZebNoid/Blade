@@ -58,6 +58,11 @@ public:
         return *this;
     }
 
+    // auto getRoot() -> Widget
+    // {
+    //     return m_root;
+    // }
+
 protected:
     auto setRoot(std::unique_ptr<Widget> root) -> Window&
     {

@@ -104,6 +104,8 @@ add_library(${PROJECT_NAME} STATIC
         Backend/Handlers/InputHandler/InputHandler.h
         Backend/Handlers/WindowHandler/WindowHandler.cpp
         Backend/Handlers/WindowHandler/WindowHandler.h
+        Backend/Handlers/PaintHandler/PaintHandler.cpp
+        Backend/Handlers/PaintHandler/PaintHandler.h
 )
 
 # use Unicode
