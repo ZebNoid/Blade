@@ -24,7 +24,7 @@ auto WindowHandler::Handle(NativeWindow& window, UINT msg, WPARAM wParam, LPARAM
         }
 
     case WM_DESTROY:
-        window.getOwner()->destroy();
+        window.owner()->destroy();
         return 0;
     }
 

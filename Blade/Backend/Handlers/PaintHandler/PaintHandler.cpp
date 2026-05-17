@@ -6,13 +6,19 @@ namespace Blade::Backend::WinApi {
 
 auto PaintHandler::Handle(NativeWindow& window, WPARAM wParam, LPARAM lParam) -> LRESULT
 {
-    PAINTSTRUCT ps;
-    auto hwnd = window.handle();
-    HDC hdc = BeginPaint(hwnd, &ps);
+    if (auto* owner = window.owner())
+    {
+        if (auto* root = owner->root())
+        {
+            PAINTSTRUCT ps;
+            auto hwnd = window.handle();
+            HDC hdc = BeginPaint(hwnd, &ps);
 
-    LayoutDebugRenderer::Render(hdc, *window.getOwner()->root());
+            LayoutDebugRenderer::Render(hdc, *root);
 
-    EndPaint(hwnd, &ps);
+            EndPaint(hwnd, &ps);
+        }
+    }
     return 0;
 }
 

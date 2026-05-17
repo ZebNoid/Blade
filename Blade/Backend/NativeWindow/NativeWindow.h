@@ -40,7 +40,7 @@ protected:
 public:
     auto show() const -> void;
 
-    auto getOwner() const -> Window*
+    auto owner() const -> Window*
     {
         return m_owner;
     }

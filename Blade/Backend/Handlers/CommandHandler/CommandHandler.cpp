@@ -21,17 +21,17 @@ auto CommandHandler::Handle(NativeWindow& window, WPARAM wParam, LPARAM lParam) 
             std::wstring buffer(len + 1, L'\0');
             GetWindowText(currentHwnd, &buffer[0], len + 1);
             // GetWindowText(hEdit, buffer.data(), len + 1);
-            window.getOwner()->dispatchCommand(id, WidgetEvent::Change, Utf16ToUtf8(buffer));
+            window.owner()->dispatchCommand(id, WidgetEvent::Change, Utf16ToUtf8(buffer));
             VerticalAlignCenter(currentHwnd); // TODO dev
         }
         break;
 
     case EN_SETFOCUS:
-        window.getOwner()->dispatchCommand(id, WidgetEvent::Focus, true);
+        window.owner()->dispatchCommand(id, WidgetEvent::Focus, true);
         break;
 
     case EN_KILLFOCUS:
-        window.getOwner()->dispatchCommand(id, WidgetEvent::Focus, false);
+        window.owner()->dispatchCommand(id, WidgetEvent::Focus, false);
         break;
 
     case BN_CLICKED:
@@ -43,17 +43,17 @@ auto CommandHandler::Handle(NativeWindow& window, WPARAM wParam, LPARAM lParam) 
             {
                 LRESULT state = SendMessage(currentHwnd, BM_GETCHECK, 0, 0);
                 auto isChecked = state == BST_CHECKED;
-                window.getOwner()->dispatchCommand(id, WidgetEvent::Change, isChecked);
+                window.owner()->dispatchCommand(id, WidgetEvent::Change, isChecked);
             }
             else if (type == BS_AUTORADIOBUTTON)
             {
                 LRESULT state = SendMessage(currentHwnd, BM_GETCHECK, 0, 0);
                 auto isChecked = state == BST_CHECKED;
-                window.getOwner()->dispatchCommand(id, WidgetEvent::Change, isChecked);
+                window.owner()->dispatchCommand(id, WidgetEvent::Change, isChecked);
             }
             else
             {
-                window.getOwner()->dispatchCommand(id, WidgetEvent::Click);
+                window.owner()->dispatchCommand(id, WidgetEvent::Click);
             }
         }
         break;
