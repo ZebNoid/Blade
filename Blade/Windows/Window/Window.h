@@ -34,12 +34,12 @@ protected:
 
     auto router() -> EventRouter& { return m_router; }
 
+public:
     auto dispatchCommand(const WidgetId id, WidgetEvent event, const EventValue& value = {}) -> void
     {
         m_router.dispatchCommand(id, event, value);
     }
 
-public:
     Window(const Window&) = delete;
 
     auto show() -> void;

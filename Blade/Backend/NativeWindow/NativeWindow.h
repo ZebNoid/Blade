@@ -32,12 +32,15 @@ protected:
 
     auto handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT override;
 
-    auto handleCommandMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT;
-
 public:
     auto setSize(Size size) -> void;
 
     auto show() -> void;
+
+    auto getOwner() const -> Window*
+    {
+        return m_owner;
+    }
 
 protected:
     Window* m_owner = nullptr;

@@ -1,11 +1,11 @@
 #include "NativeWindow.h"
 
+#include "Backend/NativeWindow/Handlers/CommandHandler.h"
 #include "Backend/Registry/ClassRegistry/ClassRegistry.h"
 #include "Backend/Registry/ResourceRegistry/ResourceRegistry.h"
 #include "Context/WidgetContext.h"
-#include "Core/Encoding.h"
 #include "Debug/LayoutDebugRenderer/LayoutDebugRenderer.h"
-
+#include "Handlers/CommandHandler.h"
 
 namespace Blade {
 
@@ -121,7 +121,8 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
         }
 
     case WM_COMMAND:
-        return handleCommandMessage(hwnd, msg, wParam, lParam);
+        return WinApi::CommandHandler::Handle(*this, wParam, lParam);
+        // return handleCommandMessage(hwnd, msg, wParam, lParam);
 
     case WM_ACTIVATE:
         // Detect if the user switched to a different application.
@@ -221,63 +222,10 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
     return NativeWidget::handleMessage(hwnd, msg, wParam, lParam);
 }
 
-inline auto NativeWindow::handleCommandMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
-{
-    const int id = LOWORD(wParam);
-    const int event = HIWORD(wParam);
-    const auto currentHwnd = (HWND)lParam;
-
-    switch (event)
-    {
-    case EN_CHANGE:
-        {
-            const int len = GetWindowTextLength(currentHwnd);
-            if (len <= 0) break;
-
-            std::wstring buffer(len + 1, L'\0');
-            GetWindowText(currentHwnd, &buffer[0], len + 1);
-            // GetWindowText(hEdit, buffer.data(), len + 1);
-            m_owner->dispatchCommand(id, WidgetEvent::Change, Utf16ToUtf8(buffer));
-            VerticalAlignCenter(currentHwnd); // TODO dev
-        }
-        break;
-
-    case EN_SETFOCUS:
-        m_owner->dispatchCommand(id, WidgetEvent::Focus, true);
-        break;
-
-    case EN_KILLFOCUS:
-        m_owner->dispatchCommand(id, WidgetEvent::Focus, false);
-        break;
-
-    case BN_CLICKED:
-        {
-            LONG_PTR style = GetWindowLongPtr(currentHwnd, GWL_STYLE);
-            LONG_PTR type = style & BS_TYPEMASK;
-
-            if (type == BS_AUTOCHECKBOX)
-            {
-                LRESULT state = SendMessage(currentHwnd, BM_GETCHECK, 0, 0);
-                auto isChecked = state == BST_CHECKED;
-                m_owner->dispatchCommand(id, WidgetEvent::Change, isChecked);
-            }
-            else if (type == BS_AUTORADIOBUTTON)
-            {
-                LRESULT state = SendMessage(currentHwnd, BM_GETCHECK, 0, 0);
-                auto isChecked = state == BST_CHECKED;
-                m_owner->dispatchCommand(id, WidgetEvent::Change, isChecked);
-            }
-            else
-            {
-                m_owner->dispatchCommand(id, WidgetEvent::Click);
-            }
-        }
-        break;
-
-    default: ;
-    }
-    return 0;
-}
+// inline auto NativeWindow::handleCommandMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
+// {
+//
+// }
 
 auto NativeWindow::setRect(Rect rect) -> void
 {

@@ -67,8 +67,8 @@ protected:
                 Button("Button"),
                 Progress(100),
                 Button("Button"),
-                Slider(50),
-                Button("Button"),
+                // Slider(50),
+                // Button("Button"),
                 Label("Flex").set({.layout = {.flex = 1}}),
                 Row(
                     Button("Debug").onClick([]
