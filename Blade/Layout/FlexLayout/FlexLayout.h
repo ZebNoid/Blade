@@ -4,9 +4,9 @@
 #include <vector>
 
 #include "FlexDirection.h"
-#include "WidgetsProps/Common/CrossAxisAlignment.h"
-#include "WidgetsProps/Common/LayoutProps.h"
-#include "WidgetsProps/Common/MainAxisAlignment.h"
+#include "WidgetsProps/LayoutProps/CrossAxisAlignment.h"
+#include "WidgetsProps/LayoutProps/LayoutProps.h"
+#include "WidgetsProps/LayoutProps/MainAxisAlignment.h"
 #include "Widgets/Widget/Widget.h"
 
 

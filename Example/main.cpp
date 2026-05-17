@@ -37,11 +37,11 @@ protected:
 
         // window(Row()).set(wProp);
 
-        window(contentBladeDemo()).id(windowId).set({
-            .title = "Blade",
-            .size = {800, 600},
-            .position = {3200,600},
-        });
+        // window(contentBladeDemo()).id(windowId).set({
+        //     .title = "Blade",
+        //     .size = {800, 600},
+        //     .position = {3200,600},
+        // });
     }
 
     auto stack1() -> auto
@@ -74,7 +74,12 @@ protected:
             Column(
                 Button("Test2").set({.layout = {.margin = 16, .padding = 16, .flex = 1,}}),
                 Button("Test1").set({.layout = {.margin = 16, .padding = 16, .flex = 1,}}),
-                Button("Test0").set({.layout = {.margin = 8, .padding = 8, .flex = 1,}}),
+                Button("Callback!").set({.layout = {.margin = 8, .padding = 8, .flex = 1,}}).on({
+                    .click = []
+                    {
+                        std::cout << "!!!\n";
+                    }
+                }),
                 Label("TTTTTT")
             ).set({
                 .gap = 8,

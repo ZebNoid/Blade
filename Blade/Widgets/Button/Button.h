@@ -3,6 +3,7 @@
 #include "Backend/NativeButton/NativeButton.h"
 #include "WidgetsProps/Widget/ButtonProps.h"
 #include "Widgets/Widget/Widget.h"
+#include "WidgetsCallbacks/Widget/ButtonCallbacks.h"
 
 
 namespace Blade {
@@ -50,6 +51,12 @@ public:
         return *this;
     }
 
+    auto on(ButtonCallbacks callbacks) -> Button&
+    {
+        m_callbacks = std::move(callbacks);
+        return *this;
+    }
+
     auto id(WidgetId& id) -> Button&
     {
         id = m_id;
@@ -59,6 +66,7 @@ public:
 private:
     NativeButton m_native;
     ButtonProps m_props;
+    ButtonCallbacks m_callbacks;
 
     std::string m_text;
     std::function<void()> m_onClick;

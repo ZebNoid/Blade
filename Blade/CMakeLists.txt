@@ -73,8 +73,8 @@ add_library(${PROJECT_NAME} STATIC
         Widgets/RadioButton/RadioButton.h
         WidgetsProps/Widget/RadioButtonProps.h
         WidgetsProps/Widget/TextFieldProps.h
-        WidgetsProps/Common/MainAxisAlignment.h
-        WidgetsProps/Common/CrossAxisAlignment.h
+        WidgetsProps/LayoutProps/MainAxisAlignment.h
+        WidgetsProps/LayoutProps/CrossAxisAlignment.h
         Layout/FlexLayout/FlexLayout.cpp
         Layout/FlexLayout/FlexLayout.h
         Layout/FlexLayout/FlexDirection.h

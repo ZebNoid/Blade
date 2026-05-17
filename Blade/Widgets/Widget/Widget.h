@@ -3,7 +3,7 @@
 #include "Context/WidgetContext.h"
 #include "Core/Core.h"
 #include "Events/WidgetEvent/WidgetEvent.h"
-#include "WidgetsProps/Common/LayoutProps.h"
+#include "WidgetsProps/LayoutProps/LayoutProps.h"
 #include "WidgetsProps/Common/Size.h"
 
 

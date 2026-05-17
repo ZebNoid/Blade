@@ -1,6 +1,6 @@
 #pragma once
 
-#include "WidgetsProps/Common/LayoutProps.h"
+#include "WidgetsProps/LayoutProps/LayoutProps.h"
 
 
 namespace Blade {

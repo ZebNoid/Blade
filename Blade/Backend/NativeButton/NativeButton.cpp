@@ -8,7 +8,12 @@
 namespace Blade {
 
 
-auto NativeButton::create(const WidgetContext& ctx, const WidgetId id, const ButtonProps& props, const std::string& text) -> void
+auto NativeButton::create(
+    const WidgetContext& ctx,
+    const WidgetId id,
+    const ButtonProps& props,
+    const std::string& text
+) -> void
 {
     m_ctx = ctx;
     m_id = id;
