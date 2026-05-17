@@ -26,9 +26,9 @@ protected:
     auto handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT override;
 
 private:
+    LabelProps m_props{};
     std::string m_text;
     HFONT m_font = nullptr;
-    LabelProps m_props{};
 };
 
 

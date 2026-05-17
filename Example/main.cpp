@@ -24,12 +24,14 @@ protected:
         // window(Label("132")).set(wProp);
 
         window(
-            Stack(
-                // Button("Test1"),
-                Label("|-----+-----|").set({.layout = {.padding = 8,}}),
-                Label("|---+---|").set({.layout = {.padding = 16,}}),
-                Label("|-+-|").set({.layout = {.padding = 24,}})
-            ).set({.layout = {.padding = 8, .flex = 1,}})
+            Row(
+                stack1(),
+                stack2()
+            ).set({
+                .gap = 8,
+                .layout = {.padding = 8, .flex = 1,},
+                .crossAxisAlignment = CrossAxisAlignment::Stretch
+            })
         ).set(wProp);
 
         // window(Row()).set(wProp);
@@ -39,6 +41,32 @@ protected:
         //     .size = {800, 600},
         //     .position = {3200,600},
         // });
+    }
+
+    auto stack1() -> auto
+    {
+        return
+            Stack(
+                Button("Test0").set({.layout = {.padding = 8,}}),
+                Button("Test1").set({.layout = {.padding = 16,}})
+
+                // Label("|-----+-----|").set({.layout = {.padding = 8,}}),
+                // Label("|---+---|").set({.layout = {.padding = 16,}}),
+                // Label("|-+-|").set({.layout = {.padding = 24,}})
+            ).set({.layout = {.padding = 8, .flex = 1,}});
+    }
+
+    auto stack2() -> auto
+    {
+        return
+            Stack(
+                // Button("Test0").set({.layout = {.padding = 8,}}),
+                // Button("Test1").set({.layout = {.padding = 16,}}),
+
+                Label("|-----+-----|").set({.layout = {.padding = 8,}}),
+                Label("|---+---|").set({.layout = {.padding = 16,}})
+                // Label("|-+-|").set({.layout = {.padding = 24,}})
+            ).set({.layout = {.padding = 8, .flex = 1,}});
     }
 
     auto contentBladeDemo() -> auto
@@ -90,10 +118,11 @@ protected:
                 // Button("Button"),
                 Label("Flex").set({.layout = {.flex = 1}}),
                 Row(
-                    Button("Debug").onClick([]
-                    {
-                        Blade::Debug::debug = !Blade::Debug::debug;
-                    }),
+                    Button("Debug"),
+                    // .onClick([]
+                    // {
+                    //     Blade::Debug::debug = !Blade::Debug::debug;
+                    // }),
                     Progress(100).set({.marquee = true, .layout = {.flex = 1}}),
                     Label("Footer")
                 )

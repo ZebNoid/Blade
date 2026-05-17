@@ -16,7 +16,7 @@ auto Checkbox::mount(Materializer& m, WidgetContext& ctx) -> void
     bindEvent(ctx, WidgetEvent::Change, [this](const EventValue& value)
     {
         // auto isTrue = std::get<bool>(value);
-        // TODO Checkbox change callback
+        // TODO .on(Callbacks) Checkbox
     });
 }
 

@@ -15,19 +15,19 @@ public:
 
     auto name() -> std::wstring override  { return L"Button"; }
 
-    // lvalue
-    auto onClick(std::function<void()> fn) & -> Button&
-    {
-        m_onClick = std::move(fn);
-        return *this;
-    }
-
-    // rvalue
-    auto onClick(std::function<void()> fn) && -> Button&&
-    {
-        m_onClick = std::move(fn);
-        return std::move(*this);
-    }
+    // // lvalue
+    // auto onClick(std::function<void()> fn) & -> Button&
+    // {
+    //     m_onClick = std::move(fn);
+    //     return *this;
+    // }
+    //
+    // // rvalue
+    // auto onClick(std::function<void()> fn) && -> Button&&
+    // {
+    //     m_onClick = std::move(fn);
+    //     return std::move(*this);
+    // }
 
     auto mount(Materializer& m, WidgetContext& ctx) -> void override;
 

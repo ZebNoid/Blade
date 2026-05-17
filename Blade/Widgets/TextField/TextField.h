@@ -15,34 +15,34 @@ public:
 
     auto name() -> std::wstring override { return L"TextField"; }
 
-    // lvalue
-    auto onChange(std::function<void(std::string)> fn) & -> TextField&
-    {
-        m_onChange = std::move(fn);
-        return *this;
-    }
+    // // lvalue
+    // auto onChange(std::function<void(std::string)> fn) & -> TextField&
+    // {
+    //     m_onChange = std::move(fn);
+    //     return *this;
+    // }
+    //
+    // // rvalue
+    // auto onChange(std::function<void(std::string)> fn) && -> TextField&&
+    // {
+    //     m_onChange = std::move(fn);
+    //     return std::move(*this);
+    // }
 
-    // rvalue
-    auto onChange(std::function<void(std::string)> fn) && -> TextField&&
-    {
-        m_onChange = std::move(fn);
-        return std::move(*this);
-    }
 
-
-    // lvalue
-    auto onFocus(std::function<void(bool)> fn) & -> TextField&
-    {
-        m_onFocus = std::move(fn);
-        return *this;
-    }
-
-    // rvalue
-    auto onFocus(std::function<void(bool)> fn) && -> TextField&&
-    {
-        m_onFocus = std::move(fn);
-        return std::move(*this);
-    }
+    // // lvalue
+    // auto onFocus(std::function<void(bool)> fn) & -> TextField&
+    // {
+    //     m_onFocus = std::move(fn);
+    //     return *this;
+    // }
+    //
+    // // rvalue
+    // auto onFocus(std::function<void(bool)> fn) && -> TextField&&
+    // {
+    //     m_onFocus = std::move(fn);
+    //     return std::move(*this);
+    // }
 
     auto mount(Materializer& m, WidgetContext& ctx) -> void override;
 
