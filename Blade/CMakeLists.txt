@@ -75,9 +75,9 @@ add_library(${PROJECT_NAME} STATIC
         Props/Widget/TextFieldProps.h
         Props/Common/MainAxisAlignment.h
         Props/Common/CrossAxisAlignment.h
-        Layout/Flex/FlexLayout.cpp
-        Layout/Flex/FlexLayout.h
-        Layout/Flex/FlexDirection.h
+        Layout/FlexLayout/FlexLayout.cpp
+        Layout/FlexLayout/FlexLayout.h
+        Layout/FlexLayout/FlexDirection.h
         Debug/LayoutDebugRenderer/LayoutDebugRenderer.cpp
         Debug/LayoutDebugRenderer/LayoutDebugRenderer.h
         Debug/LayoutDebugTheme.h
@@ -108,6 +108,8 @@ add_library(${PROJECT_NAME} STATIC
         Backend/Handlers/PaintHandler/PaintHandler.h
         Widgets/Layout/Stack/Stack.cpp
         Widgets/Layout/Stack/Stack.h
+        Layout/StackLayout/StackLayout.cpp
+        Layout/StackLayout/StackLayout.h
 )
 
 # use Unicode
