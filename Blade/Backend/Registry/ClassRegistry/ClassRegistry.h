@@ -21,7 +21,7 @@ public:
         HBRUSH background = nullptr;
         HCURSOR cursor = nullptr;
         HICON icon = nullptr;
-        UINT style = CS_HREDRAW | CS_VREDRAW;
+        UINT style = CS_DBLCLKS | CS_HREDRAW | CS_VREDRAW;
     };
 
 public:

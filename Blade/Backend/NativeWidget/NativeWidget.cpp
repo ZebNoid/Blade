@@ -40,6 +40,12 @@ auto NativeWidget::applyFont(HFONT font) const -> void
     SendMessageW(m_hwnd, WM_SETFONT, (WPARAM)font, TRUE);
 }
 
+auto NativeWidget::setRect(Rect rect) -> void
+{
+    SetWindowPos(m_hwnd, nullptr, rect.x, rect.y, rect.width, rect.height, SWP_NONE);
+    // SetWindowPos(m_hwnd, nullptr, rect.x, rect.y, rect.width, rect.height, SWP_NOZORDER);
+}
+
 auto CALLBACK NativeWidget::WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
 {
     NativeWidget* widget = nullptr;

@@ -24,6 +24,8 @@ DWORD NativeRadioButton::style() const
     // TODO BS_VCENTER?
     auto style = WS_CHILD | WS_VISIBLE | BS_AUTORADIOBUTTON;
 
+    // style |= BS_OWNERDRAW;
+
     if (m_props.ltr)
     {
         // Left-To-Right
@@ -61,12 +63,6 @@ auto NativeRadioButton::createNative(Rect rect) -> HWND
     }
 
     return m_hwnd;
-}
-
-auto NativeRadioButton::setRect(const Rect rect) const -> void
-{
-    // TODO ::setRect to NativeWidget ?
-    SetWindowPos(m_hwnd, nullptr, rect.x, rect.y, rect.width, rect.height, SWP_NOZORDER);
 }
 
 

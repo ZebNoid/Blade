@@ -16,11 +16,6 @@ target_link_libraries(${PROJECT_NAME}
         Blade
 )
 
-#target_precompile_headers(${PROJECT_NAME}
-#        PRIVATE
-#        pch.h
-#)
-
 # use Unicode
 with_unicode(${PROJECT_NAME})
 # Hide console window

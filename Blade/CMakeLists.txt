@@ -1,4 +1,4 @@
-project(Blade VERSION 0.1.8)
+project(Blade VERSION 0.1.9)
 
 # Use the names to logic check
 if (NOT PROJECT_IS_TOP_LEVEL)
@@ -80,11 +80,34 @@ add_library(${PROJECT_NAME} STATIC
         Layout/Flex/FlexDirection.h
         Debug/LayoutDebugRenderer/LayoutDebugRenderer.cpp
         Debug/LayoutDebugRenderer/LayoutDebugRenderer.h
-        Debug/LayoutDebugRenderer/LayoutDebugTheme.h
+        Debug/LayoutDebugTheme.h
         Debug/DebugPainter/DebugPainter.cpp
         Debug/DebugPainter/DebugPainter.h
         Debug/NativeDraw/NativeDraw.cpp
         Debug/NativeDraw/NativeDraw.h
+        Debug/DebugProps.h
+        Debug/DebugBrushProps.h
+        Backend/NativeProgress/NativeProgress.cpp
+        Backend/NativeProgress/NativeProgress.h
+        Widgets/Progress/Progress.cpp
+        Widgets/Progress/Progress.h
+        Props/Widget/ProgressProps.h
+        Backend/NativeSlider/NativeSlider.cpp
+        Backend/NativeSlider/NativeSlider.h
+        Widgets/Slider/Slider.cpp
+        Widgets/Slider/Slider.h
+        Props/Widget/SliderProps.h
+        Backend/Helpers/Helpers.h
+        Backend/Handlers/CommandHandler/CommandHandler.cpp
+        Backend/Handlers/CommandHandler/CommandHandler.h
+        Backend/Handlers/InputHandler/InputHandler.cpp
+        Backend/Handlers/InputHandler/InputHandler.h
+        Backend/Handlers/WindowHandler/WindowHandler.cpp
+        Backend/Handlers/WindowHandler/WindowHandler.h
+        Backend/Handlers/PaintHandler/PaintHandler.cpp
+        Backend/Handlers/PaintHandler/PaintHandler.h
+        Widgets/Layout/Stack/Stack.cpp
+        Widgets/Layout/Stack/Stack.h
 )
 
 # use Unicode
@@ -101,6 +124,7 @@ target_link_libraries(${PROJECT_NAME}
         user32
         gdi32
         comctl32
+        uxtheme #include <uxtheme.h>
 )
 
 # TODO remove?

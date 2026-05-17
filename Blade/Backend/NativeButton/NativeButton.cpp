@@ -60,10 +60,5 @@ auto NativeButton::createNative(const Rect rect) -> HWND
     return m_hwnd;
 }
 
-auto NativeButton::setRect(const Rect rect) -> void
-{
-    MoveWindow(m_hwnd, rect.x, rect.y, rect.width, rect.height, TRUE);
-}
-
 
 } // namespace

@@ -17,8 +17,7 @@ struct WindowProps
     Size size{800, 600};
     // TODO remove windows default
     Point position{CW_USEDEFAULT, CW_USEDEFAULT};
-    Thickness padding{};
-
+    // TODO separate prop struct or enum
     bool resizable = true;
     bool minimizable = true;
     bool maximizable = true;

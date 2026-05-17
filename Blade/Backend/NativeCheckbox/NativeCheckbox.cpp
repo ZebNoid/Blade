@@ -60,11 +60,5 @@ auto NativeCheckbox::createNative(Rect rect) -> HWND
     return m_hwnd;
 }
 
-auto NativeCheckbox::setRect(const Rect rect) const -> void
-{
-    // TODO ::setRect to NativeWidget ?
-    SetWindowPos(m_hwnd, nullptr, rect.x, rect.y, rect.width, rect.height, SWP_NOZORDER);
-}
-
 
 } // namespace

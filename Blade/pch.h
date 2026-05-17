@@ -10,6 +10,7 @@
 
 #include <windows.h>
 #include <commctrl.h>
+#include <uxtheme.h>
 
 #include "blade.h"
 

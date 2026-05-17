@@ -1,9 +1,13 @@
 #include "NativeWindow.h"
 
+#include "Backend/Handlers/CommandHandler/CommandHandler.h"
+#include "Backend/Handlers/InputHandler/InputHandler.h"
+#include "Backend/Handlers/PaintHandler/PaintHandler.h"
+#include "Backend/Handlers/WindowHandler/WindowHandler.h"
+#include "Backend/Helpers/Helpers.h"
 #include "Backend/Registry/ClassRegistry/ClassRegistry.h"
 #include "Backend/Registry/ResourceRegistry/ResourceRegistry.h"
 #include "Context/WidgetContext.h"
-#include "Core/Encoding.h"
 #include "Debug/LayoutDebugRenderer/LayoutDebugRenderer.h"
 
 
@@ -39,18 +43,29 @@ auto NativeWindow::create(const WidgetContext& ctx, Window* owner, const WindowP
     );
 
     createNative({});
+
+    // TODO set Title
+    // SetWindowText(m_hwnd, toNativeString(m_props.title).c_str());
+    // TODO force redraw
+    // SetWindowPos(hwnd, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
 }
 
 auto NativeWindow::exStyle() const -> DWORD
 {
-    auto exStyle = 0; //  WS_EX_LAYERED | WS_EX_ACCEPTFILES
+    auto exStyle = 0; // WS_EX_ACCEPTFILES
+
+    // exStyle |= WS_EX_LAYERED; // +alphe
+
     return exStyle;
 }
 
 
 auto NativeWindow::style() const -> DWORD
 {
-    auto style = WS_OVERLAPPEDWINDOW | WS_VISIBLE;
+    auto style = WS_OVERLAPPEDWINDOW | WS_VISIBLE | SS_NOTIFY;
+
+    // // preventing rendering artifacts when the parent redraws
+    // style |= WS_CLIPCHILDREN ; // don't use without custom background
 
     if (!m_props.resizable)
     {
@@ -104,55 +119,62 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
 {
     switch (msg)
     {
-    case WM_CREATE:
-        {
-            // CREATESTRUCT *pCreate = reinterpret_cast<CREATESTRUCT*>(lParam);
-            // int width = pCreate->cx;
-            // int height = pCreate->cy;
-            // int x = pCreate->x;
-            // int y = pCreate->y;
-            return 0;
-        }
+    // case WM_CREATE:
+    //     {
+    //         // CREATESTRUCT *pCreate = reinterpret_cast<CREATESTRUCT*>(lParam);
+    //         // int width = pCreate->cx;
+    //         // int height = pCreate->cy;
+    //         // int x = pCreate->x;
+    //         // int y = pCreate->y;
+    //         return 0;
+    //     }
 
     case WM_COMMAND:
-        return handleCommandMessage(hwnd, msg, wParam, lParam);
+        return Backend::WinApi::CommandHandler::Handle(*this, wParam, lParam);
+
+    case WM_MOUSEMOVE: // WM_NCMOUSEMOVE ?
+    case WM_LBUTTONDBLCLK:
+    case WM_LBUTTONDOWN:
+    case WM_LBUTTONUP:
+    case WM_RBUTTONUP:
+    case WM_RBUTTONDBLCLK:
+    case WM_MBUTTONDOWN:
+    case WM_MBUTTONUP:
+    case WM_MBUTTONDBLCLK:
+    case WM_MOUSEWHEEL:
+    case WM_KEYDOWN:
+    case WM_KEYUP:
+    case WM_CHAR:
+        return Backend::WinApi::InputHandler::Handle(*this, msg, wParam, lParam);
+
+    case WM_SETFOCUS:
+    case WM_KILLFOCUS:
+        break;
 
     case WM_ACTIVATE:
         // Detect if the user switched to a different application.
         break;
 
-    // case WM_LBUTTONDOWN:
-    case WM_NCLBUTTONDOWN:
-        SetFocus(hwnd);
-        break;
+    // // case WM_LBUTTONDOWN:
+    // case WM_NCLBUTTONDOWN:
+    //     SetFocus(hwnd); // ? input hack? TODO
+    //     break;
 
-    case WM_NCHITTEST:
+    case WM_NCHITTEST: // TODO
         {
+            // return HTTRANSPARENT; // TODO TOTAL ignore
             LRESULT hit = DefWindowProc(hwnd, msg, wParam, lParam);
-            // If the click is in the client area, tell Windows it's the caption
             if (hit == HTCLIENT)
             {
-                return HTCAPTION;
+                // POINT pt{GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam)};
+                // ScreenToClient(hwnd, &pt);
+                // if (pt.y < 32) return HTCAPTION;
+
+                // return HTCAPTION; // TODO! Mouse events Blocker!
             }
             return hit;
         }
 
-    case WM_SIZE:
-        {
-            m_size.width = LOWORD(lParam);
-            m_size.height = HIWORD(lParam);
-
-            m_owner->onResize(m_size);
-            return 0;
-        }
-
-    // case WM_NCMOUSEMOVE:
-    // // case WM_MOUSEMOVE:
-    //     {
-    //         int x = GET_X_LPARAM(lParam);
-    //         int y = GET_Y_LPARAM(lParam);
-    //     }
-    //     break;
 
     // case WM_CTLCOLORBTN:
     // case WM_CTLCOLOREDIT:
@@ -162,19 +184,26 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
             // auto childHwnd = (HWND)lParam;
             const auto hdc = (HDC)wParam;
             SetBkMode(hdc, TRANSPARENT);
-            // transparent background
-            return (LRESULT)GetStockObject(NULL_BRUSH); // NULL_BRUSH
+            return (LRESULT)GetStockObject(NULL_BRUSH); // transparent background ==NULL_BRUSH
+            // Hack slider background?
+            return (INT_PTR)GetSysColorBrush(COLOR_3DFACE);
+            break;
         }
+
+    // case WM_ERASEBKGND:
+    //     return (LRESULT)TRUE; // Stop the OS from erasing the background
 
     case WM_PAINT:
         {
-// #ifdef BLADE_DEBUG_LAYOUT
-            PAINTSTRUCT ps;
-            HDC hdc = BeginPaint(hwnd, &ps);
-            LayoutDebugRenderer::Render(hdc, *m_owner->m_root);
-            EndPaint(hwnd, &ps);
-// #endif
-            return 0;
+            // // #ifdef BLADE_DEBUG_LAYOUT
+            // PAINTSTRUCT ps;
+            // HDC hdc = BeginPaint(hwnd, &ps);
+            // LayoutDebugRenderer::Render(hdc, *m_owner->m_root);
+            // EndPaint(hwnd, &ps);
+            // // #endif
+            // return 0;
+
+            return Backend::WinApi::PaintHandler::Handle(*this, wParam, lParam);
         }
         break;
 
@@ -188,16 +217,13 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
     //     }
     //     break;
 
-    case WM_CLOSE:
-        {
-            // TODO check multiple windows
-            DestroyWindow(hwnd);
-            return 0;
-        }
 
+    case WM_CLOSE:
+    case WM_SIZE:
     case WM_DESTROY:
-        m_owner->onDestroy();
-        return 0;
+        Backend::WinApi::WindowHandler::Handle(*this, msg, wParam, lParam);
+        break;
+
 
     case WM_NCDESTROY:
         {
@@ -210,87 +236,21 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
     return NativeWidget::handleMessage(hwnd, msg, wParam, lParam);
 }
 
-inline auto NativeWindow::handleCommandMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
-{
-    const int id = LOWORD(wParam);
-    const int event = HIWORD(wParam);
-    const auto currentHwnd = (HWND)lParam;
-
-    switch (event)
-    {
-    case EN_CHANGE:
-        {
-            const int len = GetWindowTextLength(currentHwnd);
-            if (len <= 0) break;
-
-            std::wstring buffer(len + 1, L'\0');
-            GetWindowText(currentHwnd, &buffer[0], len + 1);
-            // GetWindowText(hEdit, buffer.data(), len + 1);
-            m_owner->dispatchCommand(id, WidgetEvent::Change, Utf16ToUtf8(buffer));
-            VerticalAlignCenter(currentHwnd); // TODO dev
-        }
-        break;
-
-    case EN_SETFOCUS:
-        m_owner->dispatchCommand(id, WidgetEvent::Focus, true);
-        break;
-
-    case EN_KILLFOCUS:
-        m_owner->dispatchCommand(id, WidgetEvent::Focus, false);
-        break;
-
-    case BN_CLICKED:
-        {
-            LONG_PTR style = GetWindowLongPtr(currentHwnd, GWL_STYLE);
-            LONG_PTR type = style & BS_TYPEMASK;
-
-            if (type == BS_AUTOCHECKBOX)
-            {
-                LRESULT state = SendMessage(currentHwnd, BM_GETCHECK, 0, 0);
-                auto isChecked = state == BST_CHECKED;
-                m_owner->dispatchCommand(id, WidgetEvent::Change, isChecked);
-            }
-            else if (type == BS_AUTORADIOBUTTON)
-            {
-                LRESULT state = SendMessage(currentHwnd, BM_GETCHECK, 0, 0);
-                auto isChecked = state == BST_CHECKED;
-                m_owner->dispatchCommand(id, WidgetEvent::Change, isChecked);
-            }
-            else
-            {
-                m_owner->dispatchCommand(id, WidgetEvent::Click);
-            }
-        }
-        break;
-
-    default: ;
-    }
-    return 0;
-}
-
-auto NativeWindow::setRect(Rect rect) -> void
-{
-    // MoveWindow(m_hwnd, rect.x, rect.y, rect.width, rect.height, TRUE);
-    // SetWindowPos(m_hwnd, nullptr, rect.x, rect.y, rect.width, rect.height,  SWP_NONE);
-}
-
-// auto NativeWindow::setTitle(const std::string& title) -> void
-// {
-//     SetWindowText(m_hwnd, toNativeString(m_props.title).c_str());
-// }
-
-auto NativeWindow::setSize(const Size size) -> void
-{
-    m_size = size;
-    SetWindowPos(m_hwnd, nullptr, 0, 0, size.width, size.height, SWP_NOMOVE);
-}
-
-auto NativeWindow::show() -> void
+auto NativeWindow::show() const -> void
 {
     ShowWindow(m_hwnd, SW_SHOW);
 }
 
-// TODO force redraw
-// SetWindowPos(hwnd, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
+auto NativeWindow::resize(Size size) -> void
+{
+    m_size = size;
+    m_owner->resize(m_size);
+}
+
+auto NativeWindow::onDestroy() const -> void
+{
+    m_owner->destroy();
+}
+
 
 } // namespace

@@ -8,18 +8,34 @@ using namespace Blade;
 class Sandbox : public App
 {
 
+    WindowProps wProp = {
+        .title = "Flex",
+        .position = {3200, 600},
+    };
+
 protected:
     auto ui() -> void override
     {
-        // window(contentFlex()).set({
-        //     .title = "Flex"
-        // });
+        Blade::Debug::debug = false;
+        // .set({.layout = {.margin = 8,}})
 
-        window(contentBladeDemo()).id(windowId).set({
-            .title = "Blade",
-            .size = {800, 600},
-            .padding = 16,
-        });
+        // window(contentFlex()).set(wProp);
+
+        // window(Label("132")).set(wProp);
+
+        window(
+            Stack(
+                Button("Test1")
+            ).set({.layout = {.padding = 8, .flex = 1,}})
+        ).set(wProp);
+
+        // window(Row()).set(wProp);
+
+        // window(contentBladeDemo()).id(windowId).set({
+        //     .title = "Blade",
+        //     .size = {800, 600},
+        //     .position = {3200,600},
+        // });
     }
 
     auto contentBladeDemo() -> auto
@@ -65,13 +81,18 @@ protected:
                     .crossAxisAlignment = CrossAxisAlignment::Center,
                 }),
                 Button("Button"),
+                Progress(100),
+                Button("Button"),
+                // Slider(50),
+                // Button("Button"),
                 Label("Flex").set({.layout = {.flex = 1}}),
                 Row(
                     Button("Debug").onClick([]
                     {
-                        LayoutDebugRenderer::debug = !LayoutDebugRenderer::debug;
+                        Blade::Debug::debug = !Blade::Debug::debug;
                     }),
-                    Label("Footer").set({.layout = {.flex = 1}, .textAlign = TextAlign::Center,})
+                    Progress(100).set({.marquee = true, .layout = {.flex = 1}}),
+                    Label("Footer")
                 )
             )
             .set({

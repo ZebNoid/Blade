@@ -1,9 +1,28 @@
 # Blade 
 
-> **WinAPI** from *Hell*
+![code](https://badges.ws/badge/license-MIT-black?&labelColor=00599C)
+![llm](https://badges.ws/badge/use-LLM-black?labelColor=00599C) 
+![code](https://badges.ws/badge/code-C++-black?icon=cplusplus&labelColor=00599C)
+![code](https://badges.ws/badge/ide-Clion-black?icon=clion&labelColor=00599C)
 
-- LLM assisted  C++ UI Library based on WinAPI
-- Proof of concept
+
+<p align="center">
+<img src=".github/assets/BladeLogo.svg" width="500">
+</p>
+
+> [!NOTE]
+> 
+> _Super_ **Fast** _Super_ **Small** _Super_ **Simple** _Super_ **Buggy**
+> 
+> C++ **Declarative** UI Library 
+> 
+> Based on **WinAPI** from *Hell*
+> 
+
+> [!IMPORTANT]
+> 
+> **LLM** assisted in writing this code
+> 
 
 ## Example
 
@@ -20,56 +39,30 @@ class Sandbox : public App
 protected:
     auto ui() -> void override
     {
-        window(
-            Column(
-                Label("Blade Example"),
-                rowRadioButtons(),
-                rowButtons(),
-                rowCheckboxes().set({.layout = {.margin = {8, 0}}}),
+        window(Column(
+                Label("Label"),
                 Button("Button"),
-                Button("Button"),
-                Label("").set({.layout = {.flex = 1}}),
-                Button("Button")
-            )
-            .set({
+                Row(
+                    TextField("TextField").set({.layout = {.flex = 1,}}),
+                    RadioButton("RadioButton"),
+                    RadioButton("RadioButton"),
+                    Checkbox("Checkbox")
+                ).set({.gap = 8, .crossAxisAlignment = CrossAxisAlignment::Center,}),
+                Row(
+                    Progress(10).set({.layout = {.flex = 1,}}),
+                    Slider(90).set({.layout = {.flex = 2,}})
+                ).set({.gap = 8, .crossAxisAlignment = CrossAxisAlignment::Center,}),
+                Column().set({.layout = {.flex = 1,}}),
+                Label("Footer")
+            ).set({
                 .gap = 8,
-                .mainAxisAlignment = MainAxisAlignment::Start,
+                .layout = {.padding = 8,},
                 .crossAxisAlignment = CrossAxisAlignment::Stretch,
             })
         ).set({
             .title = "Blade",
             .size = {800, 600},
         });
-    }
-
-    auto rowCheckboxes() -> auto
-    {
-        return Row(
-            Label("Checkboxes:"),
-            Checkbox("Checkbox").set({.layout = {.flex = 1}}),
-            Checkbox("Checkbox").set({.layout = {.flex = 1}}),
-            Checkbox("Checkbox").set({.layout = {.flex = 1}})
-        );
-    }
-
-    auto rowButtons() -> auto
-    {
-        return Row(
-            Button("RadioButton"),
-            Label("Label").set({.layout = {.flex = 1}}),
-            Button("RadioButton").set({.layout = {.flex = 2}}),
-            Button("RadioButton")
-        );
-    }
-
-    auto rowRadioButtons() -> auto
-    {
-        return Row(
-            Label("RadioButtons:").set({.layout = {.flex = 1}}),
-            RadioButton("RadioButton"),
-            RadioButton("RadioButton"),
-            RadioButton("RadioButton")
-        );
     }
 };
 

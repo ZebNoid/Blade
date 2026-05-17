@@ -1,10 +1,17 @@
 #pragma once
 
+
 #include "Backend/NativeWidget/NativeWidget.h"
 #include "Props/Window/WindowProps.h"
+#include "Windows/Window/Window.h"
 
 
 namespace Blade {
+
+// namespace Backend::WinApi {
+//     class WindowHandler;
+//     class CommandHandler;
+// }
 
 
 class NativeWindow : public NativeWidget
@@ -23,8 +30,6 @@ protected:
 
     auto createNative(Rect rect) -> HWND override;
 
-    auto setRect(Rect rect) -> void;
-
     auto setProps(const WindowProps& props) -> void
     {
         m_props = props;
@@ -32,16 +37,20 @@ protected:
 
     auto handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT override;
 
-    auto handleCommandMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT;
-
 public:
-    auto setSize(Size size) -> void;
+    auto show() const -> void;
 
-    auto show() -> void;
+    auto owner() const -> Window*
+    {
+        return m_owner;
+    }
+
+    auto resize(Size size) -> void;
+
+    auto onDestroy() const -> void;
 
 protected:
     Window* m_owner = nullptr;
-
     WindowProps m_props{};
 };
 

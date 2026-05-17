@@ -17,6 +17,8 @@ public:
 protected:
     auto style() const -> DWORD override;
 
+    auto exStyle() const -> DWORD override;
+
     auto widgetName() const -> std::string override { return "NativeLabel"; }
 
     auto createNative(Rect rect) -> HWND override;
@@ -27,9 +29,6 @@ private:
     std::string m_text;
     HFONT m_font = nullptr;
     LabelProps m_props{};
-
-public:
-    auto setRect(Rect rect) -> void;
 };
 
 

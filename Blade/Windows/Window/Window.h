@@ -28,21 +28,22 @@ protected:
         m_native.create(w_ctx, this, m_props);
     }
 
-    auto onDestroy() -> void;
-
-    auto onResize(Size size) -> void;
 
     auto router() -> EventRouter& { return m_router; }
 
+public:
     auto dispatchCommand(const WidgetId id, WidgetEvent event, const EventValue& value = {}) -> void
     {
         m_router.dispatchCommand(id, event, value);
     }
 
-public:
     Window(const Window&) = delete;
 
     auto show() -> void;
+
+    auto destroy() -> void;
+
+    auto resize(Size size) -> void;
 
     auto set(WindowProps props) -> Window&
     {
@@ -55,6 +56,11 @@ public:
         // TODO get id
         // id = m_id;
         return *this;
+    }
+
+    auto root() const -> Widget*
+    {
+        return m_root.get();
     }
 
 protected:

@@ -1,7 +1,7 @@
 #include "DebugPainter.h"
 
 #include "Backend/Registry/ResourceRegistry/ResourceRegistry.h"
-#include "Debug/LayoutDebugRenderer/LayoutDebugTheme.h"
+#include "../LayoutDebugTheme.h"
 #include "Debug/NativeDraw/NativeDraw.h"
 
 
@@ -24,7 +24,7 @@ auto DebugPainter::DrawBounds(HDC hdc, Rect rect) -> void
     NativeDraw::DrawOutlineRect(
         hdc,
         widgetRect,
-        ResourceRegistry::GetPen("debug_bounds", LayoutDebugTheme::WidgetBounds, LayoutDebugTheme::Width),
+        ResourceRegistry::GetPen("debug_bounds", LayoutDebugTheme::Bounds, LayoutDebugTheme::WidthBounds),
         LayoutDebugTheme::Inflate
     );
 }
@@ -46,7 +46,7 @@ auto DebugPainter::DrawMargin(HDC hdc, Rect rect, LayoutProps layout) -> void
     NativeDraw::DrawOutlineRect(
         hdc,
         marginRect,
-        ResourceRegistry::GetPen("debug_margin", LayoutDebugTheme::Margin, LayoutDebugTheme::Width),
+        ResourceRegistry::GetPen("debug_margin", LayoutDebugTheme::Margin, LayoutDebugTheme::WidthMargin),
         LayoutDebugTheme::Inflate
     );
 }
@@ -69,7 +69,7 @@ auto DebugPainter::DrawPadding(HDC hdc, Rect rect, LayoutProps layout) -> void
     NativeDraw::DrawOutlineRect(
         hdc,
         paddingRect,
-        ResourceRegistry::GetPen("debug_padding", LayoutDebugTheme::Padding, LayoutDebugTheme::Width),
+        ResourceRegistry::GetPen("debug_padding", LayoutDebugTheme::Padding, LayoutDebugTheme::WidthMargin),
         LayoutDebugTheme::Inflate
     );
 }
