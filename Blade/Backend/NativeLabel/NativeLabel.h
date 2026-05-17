@@ -17,6 +17,8 @@ public:
 protected:
     auto style() const -> DWORD override;
 
+    auto exStyle() const -> DWORD override;
+
     auto widgetName() const -> std::string override { return "NativeLabel"; }
 
     auto createNative(Rect rect) -> HWND override;

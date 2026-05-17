@@ -12,14 +12,24 @@ protected:
     auto ui() -> void override
     {
         // window(contentFlex()).set({
-        //     .title = "Flex"
+        //     .title = "Flex",
         // });
 
-        window(contentBladeDemo()).id(windowId).set({
-            .title = "Blade",
-            .size = {800, 600},
+        // window(Label("132")).set({
+        //     .title = "Flex",
+        //     .position = {3200,600},
+        // });
+
+        window(Row()).set({
+            .title = "Flex",
             .position = {3200,600},
         });
+
+        // window(contentBladeDemo()).id(windowId).set({
+        //     .title = "Blade",
+        //     .size = {800, 600},
+        //     .position = {3200,600},
+        // });
     }
 
     auto contentBladeDemo() -> auto

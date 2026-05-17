@@ -37,13 +37,19 @@ DWORD NativeLabel::style() const
     return style;
 }
 
+DWORD NativeLabel::exStyle() const
+{
+    auto exStyle = WS_EX_TRANSPARENT;
+    return exStyle;
+}
+
 auto NativeLabel::createNative(const Rect rect) -> HWND
 {
     NativeWidget::createNative(rect);
     if (m_ctx.hwnd == nullptr) return nullptr;
 
     m_hwnd = CreateWindowEx(
-        0,
+        exStyle(),
         ClassRegistry::Get("BladeLabel"),
         TEXT(""),
         style(),
@@ -58,7 +64,7 @@ auto NativeLabel::createNative(const Rect rect) -> HWND
     );
 
     // m_hwnd = CreateWindowEx(
-    //     0,
+    //     exStyle(),
     //     TEXT("STATIC"), // Classic system Label
     //     toNativeString(m_text).c_str(),
     //     // hAlign SS_LEFT || SS_CENTER ||  SS_RIGHT
@@ -84,6 +90,34 @@ auto NativeLabel::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
     {
     case WM_ERASEBKGND:
         return 1;
+
+    case WM_LBUTTONDOWN:
+        {
+            SendMessage(
+                GetParent(hwnd),
+                msg,
+                wParam,
+                lParam
+            );
+
+            break;
+        }
+
+    // case WM_MOUSEMOVE: // WM_NCMOUSEMOVE ?
+    // case WM_LBUTTONDBLCLK:
+    // case WM_LBUTTONDOWN:
+    // case WM_LBUTTONUP:
+    // case WM_RBUTTONUP:
+    // case WM_RBUTTONDBLCLK:
+    // case WM_MBUTTONDOWN:
+    // case WM_MBUTTONUP:
+    // case WM_MBUTTONDBLCLK:
+    // case WM_MOUSEWHEEL:
+    // case WM_KEYDOWN:
+    // case WM_KEYUP:
+    // case WM_CHAR:
+    //     std::cout << "!!!\n";
+    //     break;
 
     case WM_PAINT:
         {

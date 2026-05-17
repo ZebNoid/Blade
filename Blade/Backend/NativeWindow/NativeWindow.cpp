@@ -118,15 +118,15 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
 {
     switch (msg)
     {
-    case WM_CREATE:
-        {
-            // CREATESTRUCT *pCreate = reinterpret_cast<CREATESTRUCT*>(lParam);
-            // int width = pCreate->cx;
-            // int height = pCreate->cy;
-            // int x = pCreate->x;
-            // int y = pCreate->y;
-            return 0;
-        }
+    // case WM_CREATE:
+    //     {
+    //         // CREATESTRUCT *pCreate = reinterpret_cast<CREATESTRUCT*>(lParam);
+    //         // int width = pCreate->cx;
+    //         // int height = pCreate->cy;
+    //         // int x = pCreate->x;
+    //         // int y = pCreate->y;
+    //         return 0;
+    //     }
 
     case WM_COMMAND:
         return Backend::WinApi::CommandHandler::Handle(*this, wParam, lParam);
@@ -144,6 +144,7 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
     case WM_KEYDOWN:
     case WM_KEYUP:
     case WM_CHAR:
+        std::cout << "!!\n";
         return Backend::WinApi::InputHandler::Handle(*this, msg, wParam, lParam);
 
     case WM_SETFOCUS:

@@ -27,8 +27,10 @@ auto InputHandler::Handle(NativeWindow& window, UINT msg, WPARAM wParam, LPARAM 
     {
     case WM_MOUSEMOVE: // WM_NCMOUSEMOVE ?
         {
-            MousePosition(lParam);
-            return 0;
+            auto pos = MousePosition(lParam);
+            std::cout << "WM_MOUSEMOVE " << pos.x << "\n";
+            // return 0;
+            break;
         }
 
     case WM_LBUTTONDOWN:
