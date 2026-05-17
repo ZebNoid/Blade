@@ -8,8 +8,10 @@
 
 namespace Blade {
 
+struct Helpers {};
 
-inline auto MousePosition(LPARAM lParam) -> Point
+
+inline auto MousePosition(const LPARAM lParam) -> Point
 {
     return {
         GET_X_LPARAM(lParam),

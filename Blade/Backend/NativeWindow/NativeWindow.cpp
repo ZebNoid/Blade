@@ -2,6 +2,7 @@
 
 #include "Backend/Handlers/CommandHandler/CommandHandler.h"
 #include "Backend/Handlers/InputHandler/InputHandler.h"
+#include "Backend/Handlers/WindowHandler/WindowHandler.h"
 #include "Backend/Registry/ClassRegistry/ClassRegistry.h"
 #include "Backend/Registry/ResourceRegistry/ResourceRegistry.h"
 #include "Context/WidgetContext.h"
@@ -129,7 +130,7 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
     case WM_COMMAND:
         return Backend::WinApi::CommandHandler::Handle(*this, wParam, lParam);
 
-    case WM_MOUSEMOVE:
+    case WM_MOUSEMOVE: // WM_NCMOUSEMOVE ?
     case WM_LBUTTONDOWN:
     case WM_LBUTTONUP:
     // case WM_MOUSEWHEEL: // dbl click?
@@ -171,14 +172,6 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
             return 0;
         }
 
-    // case WM_NCMOUSEMOVE:
-    // // case WM_MOUSEMOVE:
-    //     {
-    //         int x = GET_X_LPARAM(lParam);
-    //         int y = GET_Y_LPARAM(lParam);
-    //     }
-    //     break;
-
     // case WM_CTLCOLORBTN:
     // case WM_CTLCOLOREDIT:
     case WM_CTLCOLORSTATIC:
@@ -217,6 +210,13 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
     //         return TRUE; // Tell Windows we handled it
     //     }
     //     break;
+
+        // TODO
+    // case WM_CLOSE:
+    // case WM_SIZE:
+    // case WM_DESTROY:
+    //         Backend::Blade::WindowHandler::Handle(*this, msg, wParam, lParam);
+    //         break;
 
     case WM_CLOSE:
         {
