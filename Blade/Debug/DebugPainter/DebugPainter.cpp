@@ -1,7 +1,7 @@
 #include "DebugPainter.h"
 
 #include "Backend/Registry/ResourceRegistry/ResourceRegistry.h"
-#include "Debug/LayoutDebugRenderer/LayoutDebugTheme.h"
+#include "../LayoutDebugTheme.h"
 #include "Debug/NativeDraw/NativeDraw.h"
 
 

@@ -1,5 +1,11 @@
 # Blade 
 
+![code](https://badges.ws/badge/license-MIT-black?&labelColor=00599C)
+![llm](https://badges.ws/badge/use-LLM-black?labelColor=00599C) 
+![code](https://badges.ws/badge/code-C++-black?icon=cplusplus&labelColor=00599C)
+![code](https://badges.ws/badge/ide-Clion-black?icon=clion&labelColor=00599C)
+
+
 <p align="center">
 <img src=".github/assets/BladeLogo.svg" width="500">
 </p>
