@@ -33,7 +33,7 @@ auto NativeLabel::create(const WidgetContext& ctx, WidgetId id, const LabelProps
 
 DWORD NativeLabel::style() const
 {
-    auto style = WS_CHILD | WS_VISIBLE;
+    auto style = WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS;
     return style;
 }
 

@@ -23,7 +23,7 @@ auto NativeButton::create(const WidgetContext& ctx, const WidgetId id, const But
 
 DWORD NativeButton::style() const
 {
-    auto style = WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON;
+    auto style = WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | WS_CLIPSIBLINGS;
 
     if (m_props.defaultButton)
     {

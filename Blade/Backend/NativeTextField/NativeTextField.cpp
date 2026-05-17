@@ -23,7 +23,7 @@ auto NativeTextField::create(const WidgetContext& ctx, const WidgetId id, const 
 
 DWORD NativeTextField::style() const
 {
-    auto style = WS_CHILD | WS_VISIBLE;
+    auto style = WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS;
 
     // if (m_props.border)
     // {

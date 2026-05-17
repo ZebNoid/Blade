@@ -8,7 +8,6 @@
 #include "Backend/Registry/ClassRegistry/ClassRegistry.h"
 #include "Backend/Registry/ResourceRegistry/ResourceRegistry.h"
 #include "Context/WidgetContext.h"
-#include "Debug/LayoutDebugRenderer/LayoutDebugRenderer.h"
 
 
 namespace Blade {
@@ -62,7 +61,7 @@ auto NativeWindow::exStyle() const -> DWORD
 
 auto NativeWindow::style() const -> DWORD
 {
-    auto style = WS_OVERLAPPEDWINDOW | WS_VISIBLE | SS_NOTIFY;
+    auto style = WS_OVERLAPPEDWINDOW | WS_VISIBLE | SS_NOTIFY;// | WS_CLIPCHILDREN;
 
     // // preventing rendering artifacts when the parent redraws
     // style |= WS_CLIPCHILDREN ; // don't use without custom background

@@ -37,23 +37,24 @@ protected:
 
         // window(Row()).set(wProp);
 
-        // window(contentBladeDemo()).id(windowId).set({
-        //     .title = "Blade",
-        //     .size = {800, 600},
-        //     .position = {3200,600},
-        // });
+        window(contentBladeDemo()).id(windowId).set({
+            .title = "Blade",
+            .size = {800, 600},
+            .position = {3200,600},
+        });
     }
 
     auto stack1() -> auto
     {
         return
             Stack(
-                Button("Test0").set({.layout = {.padding = 8,}}),
-                Button("Test1").set({.layout = {.padding = 16,}})
+                Button("Test0").set({.layout = {.margin=16,}})
+                ,Button("Test1").set({.layout = {.margin=32,}})
+                ,Button("Test2").set({.layout = {.margin=48,}})
 
-                // Label("|-----+-----|").set({.layout = {.padding = 8,}}),
-                // Label("|---+---|").set({.layout = {.padding = 16,}}),
-                // Label("|-+-|").set({.layout = {.padding = 24,}})
+                ,Label("|-----+-----|").set({.layout = {.margin = 64,}})
+                // ,Label("|---+---|").set({.layout = {.margin = 16,}})
+                // ,Label("|-+-|").set({.layout = {.margin = 32,}})
             ).set({.layout = {.padding = 8, .flex = 1,}});
     }
 
@@ -61,24 +62,23 @@ protected:
     {
         return
             Stack(
-                // Button("Test0").set({.layout = {.padding = 8,}}),
-                // Button("Test1").set({.layout = {.padding = 16,}}),
-
                 Label("|-----+-----|").set({.layout = {.padding = 8,}}),
                 Label("|---+---|").set({.layout = {.padding = 16,}})
                 // Label("|-+-|").set({.layout = {.padding = 24,}})
-            ).set({.layout = {.padding = 8, .flex = 1,}});
+            ).set({.layout = {.margin = 8,.padding = 8, .flex = 1,}});
     }
 
     auto column1() -> auto
     {
         return
             Column(
+                Button("Test2").set({.layout = {.margin = 16, .padding = 16, .flex = 1,}}),
+                Button("Test1").set({.layout = {.margin = 16, .padding = 16, .flex = 1,}}),
                 Button("Test0").set({.layout = {.margin = 8, .padding = 8, .flex = 1,}}),
-                Button("Test1").set({.layout = {.margin = 16, .padding = 16, .flex = 1,}})
+                Label("TTTTTT")
             ).set({
                 .gap = 8,
-                .layout = {.padding = 8, .flex = 1,},
+                .layout = {.margin = 8,.padding = 8, .flex = 1,},
                 .mainAxisAlignment = MainAxisAlignment::Center,
                 .crossAxisAlignment = CrossAxisAlignment::Stretch,
             });
@@ -129,8 +129,8 @@ protected:
                 Button("Button"),
                 Progress(100),
                 Button("Button"),
-                // Slider(50),
-                // Button("Button"),
+                Slider(50),
+                Button("Button"),
                 Label("Flex").set({.layout = {.flex = 1}}),
                 Row(
                     Button("Debug"),
