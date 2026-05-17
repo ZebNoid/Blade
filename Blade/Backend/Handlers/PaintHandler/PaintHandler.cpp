@@ -10,7 +10,8 @@ auto PaintHandler::Handle(NativeWindow& window, WPARAM wParam, LPARAM lParam) ->
     auto hwnd = window.handle();
     HDC hdc = BeginPaint(hwnd, &ps);
 
-    // LayoutDebugRenderer::Render(hdc, *window.getOwner()->m_root); // TODO root
+    LayoutDebugRenderer::Render(hdc, *window.getOwner()->root());
+
     EndPaint(hwnd, &ps);
     return 0;
 }
