@@ -18,7 +18,7 @@ protected:
         window(contentBladeDemo()).id(windowId).set({
             .title = "Blade",
             .size = {800, 600},
-            .padding = 16,
+            .position = {3200,600},
         });
     }
 
@@ -65,13 +65,16 @@ protected:
                     .crossAxisAlignment = CrossAxisAlignment::Center,
                 }),
                 Button("Button"),
+                Progress(100),
+                Button("Button"),
                 Label("Flex").set({.layout = {.flex = 1}}),
                 Row(
                     Button("Debug").onClick([]
                     {
                         LayoutDebugRenderer::debug = !LayoutDebugRenderer::debug;
                     }),
-                    Label("Footer").set({.layout = {.flex = 1}, .textAlign = TextAlign::Center,})
+                    Progress(100).set({.layout = {.flex = 1}}),
+                    Label("Footer")
                 )
             )
             .set({

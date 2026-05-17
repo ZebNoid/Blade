@@ -7,6 +7,7 @@
 #include "Widgets/Label/Label.h"
 #include "Widgets/RadioButton/RadioButton.h"
 #include "Widgets/TextField/TextField.h"
+#include "Widgets/Progress/Progress.h"
 
 #include "Widgets/Layout/Column/Column.h"
 #include "Widgets/Layout/Row/Row.h"

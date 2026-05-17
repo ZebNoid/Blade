@@ -87,6 +87,11 @@ add_library(${PROJECT_NAME} STATIC
         Debug/NativeDraw/NativeDraw.h
         Debug/DebugProps.h
         Debug/DebugBrushProps.h
+        Backend/NativeProgress/NativeProgress.cpp
+        Backend/NativeProgress/NativeProgress.h
+        Widgets/Progress/Progress.cpp
+        Widgets/Progress/Progress.h
+        Props/Widget/ProgressProps.h
 )
 
 # use Unicode
@@ -103,6 +108,7 @@ target_link_libraries(${PROJECT_NAME}
         user32
         gdi32
         comctl32
+        uxtheme #include <uxtheme.h>
 )
 
 # TODO remove?
