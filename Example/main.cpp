@@ -16,13 +16,18 @@ class Sandbox : public App
 protected:
     auto ui() -> void override
     {
+        Blade::Debug::debug = false;
+        // .set({.layout = {.margin = 8,}})
+
         // window(contentFlex()).set(wProp);
 
         // window(Label("132")).set(wProp);
 
-        window(Stack(
-            Button("Test1")
-        )).set(wProp);
+        window(
+            Stack(
+                Button("Test1")
+            ).set({.layout = {.padding = 8, .flex = 1,}})
+        ).set(wProp);
 
         // window(Row()).set(wProp);
 
@@ -84,7 +89,7 @@ protected:
                 Row(
                     Button("Debug").onClick([]
                     {
-                        LayoutDebugRenderer::debug = !LayoutDebugRenderer::debug;
+                        Blade::Debug::debug = !Blade::Debug::debug;
                     }),
                     Progress(100).set({.marquee = true, .layout = {.flex = 1}}),
                     Label("Footer")

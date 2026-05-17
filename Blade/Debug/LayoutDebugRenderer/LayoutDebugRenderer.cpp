@@ -1,5 +1,6 @@
 #include "LayoutDebugRenderer.h"
 
+#include "Debug/LayoutDebugTheme.h"
 #include "Debug/DebugPainter/DebugPainter.h"
 #include "Widgets/Widget/Widget.h"
 
@@ -7,12 +8,9 @@
 namespace Blade {
 
 
-bool LayoutDebugRenderer::debug = false;
-
-
 auto LayoutDebugRenderer::Render(HDC hdc, Widget& widget) -> void
 {
-    if (debug == false) return;
+    if (Debug::debug == false) return;
 
     const auto rect = widget.rect();
 

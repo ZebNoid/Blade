@@ -39,56 +39,30 @@ class Sandbox : public App
 protected:
     auto ui() -> void override
     {
-        window(
-            Column(
-                Label("Blade Example"),
-                rowRadioButtons(),
-                rowButtons(),
-                rowCheckboxes().set({.layout = {.margin = {8, 0}}}),
+        window(Column(
+                Label("Label"),
                 Button("Button"),
-                Button("Button"),
-                Label("").set({.layout = {.flex = 1}}),
-                Button("Button")
-            )
-            .set({
+                Row(
+                    TextField("TextField").set({.layout = {.flex = 1,}}),
+                    RadioButton("RadioButton"),
+                    RadioButton("RadioButton"),
+                    Checkbox("Checkbox")
+                ).set({.gap = 8, .crossAxisAlignment = CrossAxisAlignment::Center,}),
+                Row(
+                    Progress(10).set({.layout = {.flex = 1,}}),
+                    Slider(90).set({.layout = {.flex = 2,}})
+                ).set({.gap = 8, .crossAxisAlignment = CrossAxisAlignment::Center,}),
+                Column().set({.layout = {.flex = 1,}}),
+                Label("Footer")
+            ).set({
                 .gap = 8,
-                .mainAxisAlignment = MainAxisAlignment::Start,
+                .layout = {.padding = 8,},
                 .crossAxisAlignment = CrossAxisAlignment::Stretch,
             })
         ).set({
             .title = "Blade",
             .size = {800, 600},
         });
-    }
-
-    auto rowCheckboxes() -> auto
-    {
-        return Row(
-            Label("Checkboxes:"),
-            Checkbox("Checkbox").set({.layout = {.flex = 1}}),
-            Checkbox("Checkbox").set({.layout = {.flex = 1}}),
-            Checkbox("Checkbox").set({.layout = {.flex = 1}})
-        );
-    }
-
-    auto rowButtons() -> auto
-    {
-        return Row(
-            Button("RadioButton"),
-            Label("Label").set({.layout = {.flex = 1}}),
-            Button("RadioButton").set({.layout = {.flex = 2}}),
-            Button("RadioButton")
-        );
-    }
-
-    auto rowRadioButtons() -> auto
-    {
-        return Row(
-            Label("RadioButtons:").set({.layout = {.flex = 1}}),
-            RadioButton("RadioButton"),
-            RadioButton("RadioButton"),
-            RadioButton("RadioButton")
-        );
     }
 };
 

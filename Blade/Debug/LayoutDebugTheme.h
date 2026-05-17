@@ -5,6 +5,9 @@
 
 namespace Blade {
 
+namespace Debug{
+    static bool debug = !false;
+}
 
 struct LayoutDebugTheme
 {

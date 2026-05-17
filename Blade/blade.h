@@ -14,6 +14,8 @@
 #include "Widgets/Layout/Row/Row.h"
 #include "Widgets/Layout/Stack/Stack.h"
 
+#include "Debug/LayoutDebugTheme.h"
+
 #include "Debug/LayoutDebugRenderer/LayoutDebugRenderer.h"
 
 
