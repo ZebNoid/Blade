@@ -59,6 +59,9 @@ public:
         return m_size;
     }
 
+public:
+    virtual auto setRect(Rect rect) -> void;
+
 protected:
     HWND m_hwnd = nullptr;
     WidgetContext m_ctx{};

@@ -117,7 +117,8 @@ auto NativeTextField::setPlaceholder() -> void
 
 auto NativeTextField::setRect(const Rect rect) -> void
 {
-    SetWindowPos(m_hwnd, nullptr, rect.x, rect.y, rect.width, rect.height, SWP_NOZORDER);
+    NativeWidget::setRect(rect);
+    // SetWindowPos(m_hwnd, nullptr, rect.x, rect.y, rect.width, rect.height, SWP_NOZORDER);
     // // TODO hack vAlign
     VerticalAlignCenter(m_hwnd);
 }

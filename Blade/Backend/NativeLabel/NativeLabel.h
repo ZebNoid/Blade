@@ -27,9 +27,6 @@ private:
     std::string m_text;
     HFONT m_font = nullptr;
     LabelProps m_props{};
-
-public:
-    auto setRect(Rect rect) -> void;
 };
 
 

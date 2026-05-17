@@ -24,9 +24,6 @@ protected:
 private:
     ProgressProps m_props{};
     int m_value;
-
-public:
-    auto setRect(Rect rect) const -> void;
 };
 
 

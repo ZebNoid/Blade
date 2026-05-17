@@ -27,12 +27,10 @@ protected:
 
     auto createNative(Rect rect) -> HWND override;
 
+
 private:
     ButtonProps m_props{};
     std::string m_text;
-
-public:
-    auto setRect(Rect rect) -> void;
 };
 
 

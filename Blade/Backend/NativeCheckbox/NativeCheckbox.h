@@ -25,9 +25,6 @@ protected:
 private:
     CheckboxProps m_props{};
     std::string m_text;
-
-public:
-    auto setRect(Rect rect) const -> void;
 };
 
 

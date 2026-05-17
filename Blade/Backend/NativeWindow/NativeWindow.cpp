@@ -222,17 +222,6 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
     return NativeWidget::handleMessage(hwnd, msg, wParam, lParam);
 }
 
-// inline auto NativeWindow::handleCommandMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
-// {
-//
-// }
-
-auto NativeWindow::setRect(Rect rect) -> void
-{
-    // MoveWindow(m_hwnd, rect.x, rect.y, rect.width, rect.height, TRUE);
-    SetWindowPos(m_hwnd, nullptr, rect.x, rect.y, rect.width, rect.height,  SWP_NONE);
-}
-
 // auto NativeWindow::setTitle(const std::string& title) -> void
 // {
 //     SetWindowText(m_hwnd, toNativeString(m_props.title).c_str());

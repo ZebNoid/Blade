@@ -147,10 +147,5 @@ auto NativeLabel::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
     return NativeWidget::handleMessage(hwnd, msg, wParam, lParam);
 }
 
-auto NativeLabel::setRect(const Rect rect) -> void
-{
-    SetWindowPos(m_hwnd, nullptr, rect.x, rect.y, rect.width, rect.height, SWP_NOZORDER);
-}
-
 
 } // namespace

@@ -77,12 +77,5 @@ auto NativeSlider::createNative(Rect rect) -> HWND
     return m_hwnd;
 }
 
-auto NativeSlider::setRect(const Rect rect) const -> void
-{
-    // TODO ::setRect to NativeWidget ?
-    // SetWindowPos(m_hwnd, nullptr, rect.x, rect.y, rect.width, rect.height, SWP_NOZORDER);
-    SetWindowPos(m_hwnd, nullptr, rect.x, rect.y, rect.width, rect.height, SWP_NONE);
-}
-
 
 } // namespace

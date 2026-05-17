@@ -23,8 +23,6 @@ protected:
 
     auto createNative(Rect rect) -> HWND override;
 
-    auto setRect(Rect rect) -> void;
-
     auto setProps(const WindowProps& props) -> void
     {
         m_props = props;
@@ -44,7 +42,6 @@ public:
 
 protected:
     Window* m_owner = nullptr;
-
     WindowProps m_props{};
 };
 
