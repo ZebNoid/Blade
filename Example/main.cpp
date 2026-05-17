@@ -26,7 +26,8 @@ protected:
         window(
             Row(
                 stack1(),
-                stack2()
+                stack2(),
+                column1()
             ).set({
                 .gap = 8,
                 .layout = {.padding = 8, .flex = 1,},
@@ -67,6 +68,20 @@ protected:
                 Label("|---+---|").set({.layout = {.padding = 16,}})
                 // Label("|-+-|").set({.layout = {.padding = 24,}})
             ).set({.layout = {.padding = 8, .flex = 1,}});
+    }
+
+    auto column1() -> auto
+    {
+        return
+            Column(
+                Button("Test0").set({.layout = {.margin = 8, .padding = 8, .flex = 1,}}),
+                Button("Test1").set({.layout = {.margin = 16, .padding = 16, .flex = 1,}})
+            ).set({
+                .gap = 8,
+                .layout = {.padding = 8, .flex = 1,},
+                .mainAxisAlignment = MainAxisAlignment::Center,
+                .crossAxisAlignment = CrossAxisAlignment::Stretch,
+            });
     }
 
     auto contentBladeDemo() -> auto
