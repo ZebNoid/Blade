@@ -67,13 +67,15 @@ protected:
                 Button("Button"),
                 Progress(100),
                 Button("Button"),
+                Slider(50),
+                Button("Button"),
                 Label("Flex").set({.layout = {.flex = 1}}),
                 Row(
                     Button("Debug").onClick([]
                     {
                         LayoutDebugRenderer::debug = !LayoutDebugRenderer::debug;
                     }),
-                    Progress(100).set({.layout = {.flex = 1}}),
+                    Progress(100).set({.marquee = true, .layout = {.flex = 1}}),
                     Label("Footer")
                 )
             )

@@ -8,6 +8,7 @@
 #include "Widgets/RadioButton/RadioButton.h"
 #include "Widgets/TextField/TextField.h"
 #include "Widgets/Progress/Progress.h"
+#include "Widgets/Slider/Slider.h"
 
 #include "Widgets/Layout/Column/Column.h"
 #include "Widgets/Layout/Row/Row.h"

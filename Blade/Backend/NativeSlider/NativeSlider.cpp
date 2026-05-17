@@ -1,4 +1,6 @@
-#include "NativeRadioButton.h"
+#include "NativeSlider.h"
+
+#include <commctrl.h>
 
 #include "Backend/Registry/ResourceRegistry/ResourceRegistry.h"
 
@@ -6,46 +8,53 @@
 namespace Blade {
 
 
-auto NativeRadioButton::create(const WidgetContext& ctx, const WidgetId id, const RadioButtonProps& props, const std::string& text) -> void
+auto NativeSlider::create(
+    const WidgetContext& ctx,
+    const WidgetId id,
+    const SliderProps& props,
+    const int value
+) -> void
 {
     m_ctx = ctx;
     m_id = id;
     m_props = props;
-    m_text = text;
+    m_value = value;
 
     createNative(Rect{0, 0, 140, 32});
     applyFont(ResourceRegistry::GetFont("system"));
+
+    // SendMessage(m_hwnd, TBM_SETRANGEMIN, TRUE, (LPARAM)0);
+    // SendMessage(m_hwnd, TBM_SETRANGEMAX, TRUE, (LPARAM)60);
+    SendMessage(m_hwnd, TBM_SETPOS, TRUE, (LPARAM)value);
 }
 
-DWORD NativeRadioButton::style() const
+DWORD NativeSlider::style() const
 {
-    // TODO Start of group WS_GROUP
+    auto style = WS_CHILD | WS_VISIBLE;
 
-    // TODO BS_VCENTER?
-    auto style = WS_CHILD | WS_VISIBLE | BS_AUTORADIOBUTTON;
+    style |= TBS_TRANSPARENTBKGND;
 
-    // style |= BS_OWNERDRAW;
+    style |= TBS_NOTICKS;
+    // style |= TBS_AUTOTICKS;
+    // style |= TBS_BOTTOM;
+    // style |= TBS_TOP;
 
-    if (m_props.ltr)
-    {
-        // Left-To-Right
-        style |= (BS_RIGHTBUTTON | BS_RIGHT);
-    }
-
+    // if (m_props.)
+    // {
+    //     style |= ;
+    // }
     return style;
 }
 
-auto NativeRadioButton::createNative(Rect rect) -> HWND
+auto NativeSlider::createNative(Rect rect) -> HWND
 {
     NativeWidget::createNative(rect);
     if (m_ctx.hwnd == nullptr) return nullptr;
 
-    // TODO grouping? CheckRadioButton(hwndDlg, IDC_FIRST_RADIO, IDC_LAST_RADIO, IDC_RADIO_ONE);
-
     m_hwnd = CreateWindowEx(
         0,
-        TEXT("BUTTON"), // Predefined class
-        toNativeString(m_text).c_str(), // Label
+        TRACKBAR_CLASS, // Predefined class
+        TEXT("NativeSlider"), // TODO ?
         style(),
         rect.x,
         rect.y,
@@ -65,7 +74,7 @@ auto NativeRadioButton::createNative(Rect rect) -> HWND
     return m_hwnd;
 }
 
-auto NativeRadioButton::setRect(const Rect rect) const -> void
+auto NativeSlider::setRect(const Rect rect) const -> void
 {
     // TODO ::setRect to NativeWidget ?
     SetWindowPos(m_hwnd, nullptr, rect.x, rect.y, rect.width, rect.height, SWP_NOZORDER);

@@ -34,8 +34,11 @@ auto NativeProgress::create(
     // SendMessage(m_hwnd, PBM_SETSTATE, PBST_ERROR, 0); // stop Red
     // SendMessage(m_hwnd, PBM_SETSTATE, PBST_NORMAL, 0); // progress Green
 
-    // https://learn.microsoft.com/en-us/windows/win32/controls/progress-bar-control#marquee-style
-    // SendMessage(m_hwnd, PBM_SETMARQUEE, (WPARAM)TRUE, 0); // pulsing? use with style PBS_MARQUEE
+    if (m_props.marquee)
+    {
+        // https://learn.microsoft.com/en-us/windows/win32/controls/progress-bar-control#marquee-style
+        SendMessage(m_hwnd, PBM_SETMARQUEE, (WPARAM)TRUE, 0); // pulsing? use with style PBS_MARQUEE
+    }
 
     // SetWindowTheme(m_hwnd, L"", L""); // disable theme for selected hwnd
     // SendMessage(m_hwnd, PBM_SETBARCOLOR , 0, (LPARAM)RGB(255, 0, 0));
@@ -47,14 +50,20 @@ auto NativeProgress::create(
 DWORD NativeProgress::style() const
 {
     auto style = WS_CHILD | WS_VISIBLE;
-    // style |= PBS_VERTICAL;
+    if (m_props.vertical)
+    {
+        style |= PBS_VERTICAL;
+    }
 
     // old
     // style |= PBS_SMOOTH;
     // style |= PBS_SMOOTHREVERSE;
 
-    // pulsing (not theme)
-    // style |= PBS_MARQUEE;
+    if (m_props.marquee)
+    {
+        // pulsing (not theme)
+        style |= PBS_MARQUEE;
+    }
     return style;
 }
 
@@ -66,7 +75,7 @@ auto NativeProgress::createNative(Rect rect) -> HWND
     m_hwnd = CreateWindowEx(
         0,
         PROGRESS_CLASS, // Predefined class
-        nullptr, // TODO ?
+        nullptr,
         style(),
         rect.x,
         rect.y,

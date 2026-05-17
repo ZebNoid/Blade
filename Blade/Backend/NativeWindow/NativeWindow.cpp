@@ -43,7 +43,10 @@ auto NativeWindow::create(const WidgetContext& ctx, Window* owner, const WindowP
 
 auto NativeWindow::exStyle() const -> DWORD
 {
-    auto exStyle = 0; //  WS_EX_LAYERED | WS_EX_ACCEPTFILES
+    auto exStyle = 0; // WS_EX_ACCEPTFILES
+
+    // exStyle |= WS_EX_LAYERED; // +alphe
+
     return exStyle;
 }
 
@@ -51,6 +54,9 @@ auto NativeWindow::exStyle() const -> DWORD
 auto NativeWindow::style() const -> DWORD
 {
     auto style = WS_OVERLAPPEDWINDOW | WS_VISIBLE;
+
+    // // preventing rendering artifacts when the parent redraws
+    // style |= WS_CLIPCHILDREN ; // don't use without custom background
 
     if (!m_props.resizable)
     {
@@ -162,9 +168,14 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
             // auto childHwnd = (HWND)lParam;
             const auto hdc = (HDC)wParam;
             SetBkMode(hdc, TRANSPARENT);
-            // transparent background
-            return (LRESULT)GetStockObject(NULL_BRUSH); // NULL_BRUSH
+            return (LRESULT)GetStockObject(NULL_BRUSH); // transparent background ==NULL_BRUSH
+            // Hack slider background?
+            return (INT_PTR)GetSysColorBrush(COLOR_3DFACE);
+            break;
         }
+
+    // case WM_ERASEBKGND:
+    //     return (LRESULT)TRUE; // Stop the OS from erasing the background
 
     case WM_PAINT:
         {

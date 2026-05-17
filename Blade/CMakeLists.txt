@@ -92,6 +92,11 @@ add_library(${PROJECT_NAME} STATIC
         Widgets/Progress/Progress.cpp
         Widgets/Progress/Progress.h
         Props/Widget/ProgressProps.h
+        Backend/NativeSlider/NativeSlider.cpp
+        Backend/NativeSlider/NativeSlider.h
+        Widgets/Slider/Slider.cpp
+        Widgets/Slider/Slider.h
+        Props/Widget/SliderProps.h
 )
 
 # use Unicode
