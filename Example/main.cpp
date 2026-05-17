@@ -8,22 +8,23 @@ using namespace Blade;
 class Sandbox : public App
 {
 
+    WindowProps wProp = {
+        .title = "Flex",
+        .position = {3200, 600},
+    };
+
 protected:
     auto ui() -> void override
     {
-        // window(contentFlex()).set({
-        //     .title = "Flex",
-        // });
+        // window(contentFlex()).set(wProp);
 
-        window(Label("132")).set({
-            .title = "Flex",
-            .position = {3200,600},
-        });
+        // window(Label("132")).set(wProp);
 
-        window(Row()).set({
-            .title = "Flex",
-            .position = {3200,600},
-        });
+        window(Stack(
+            Button("Test1")
+        )).set(wProp);
+
+        // window(Row()).set(wProp);
 
         // window(contentBladeDemo()).id(windowId).set({
         //     .title = "Blade",

@@ -162,6 +162,7 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
 
     case WM_NCHITTEST: // TODO
         {
+            // return HTTRANSPARENT; // TODO TOTAL ignore
             LRESULT hit = DefWindowProc(hwnd, msg, wParam, lParam);
             if (hit == HTCLIENT)
             {
@@ -169,7 +170,7 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
                 // ScreenToClient(hwnd, &pt);
                 // if (pt.y < 32) return HTCAPTION;
 
-                return HTCAPTION; // TODO! Mouse events Blocker!
+                // return HTCAPTION; // TODO! Mouse events Blocker!
             }
             return hit;
         }
