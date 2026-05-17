@@ -35,6 +35,9 @@ DWORD NativeSlider::style() const
     style |= TBS_TRANSPARENTBKGND;
 
     style |= TBS_NOTICKS;
+
+    style |= TBS_BOTH;
+
     // style |= TBS_AUTOTICKS;
     // style |= TBS_BOTTOM;
     // style |= TBS_TOP;
@@ -77,7 +80,8 @@ auto NativeSlider::createNative(Rect rect) -> HWND
 auto NativeSlider::setRect(const Rect rect) const -> void
 {
     // TODO ::setRect to NativeWidget ?
-    SetWindowPos(m_hwnd, nullptr, rect.x, rect.y, rect.width, rect.height, SWP_NOZORDER);
+    // SetWindowPos(m_hwnd, nullptr, rect.x, rect.y, rect.width, rect.height, SWP_NOZORDER);
+    SetWindowPos(m_hwnd, nullptr, rect.x, rect.y, rect.width, rect.height, SWP_NONE);
 }
 
 

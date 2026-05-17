@@ -282,7 +282,7 @@ inline auto NativeWindow::handleCommandMessage(HWND hwnd, UINT msg, WPARAM wPara
 auto NativeWindow::setRect(Rect rect) -> void
 {
     // MoveWindow(m_hwnd, rect.x, rect.y, rect.width, rect.height, TRUE);
-    // SetWindowPos(m_hwnd, nullptr, rect.x, rect.y, rect.width, rect.height,  SWP_NONE);
+    SetWindowPos(m_hwnd, nullptr, rect.x, rect.y, rect.width, rect.height,  SWP_NONE);
 }
 
 // auto NativeWindow::setTitle(const std::string& title) -> void
