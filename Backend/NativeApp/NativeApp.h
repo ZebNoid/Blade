@@ -1,12 +1,16 @@
 #pragma once
 
 
-namespace Blade {
+namespace Blade::Backend {
 
 
 class NativeApp
 {
+public:
+    auto run() -> int;
 
+private:
+    MSG m_msg = {};
 };
 
 

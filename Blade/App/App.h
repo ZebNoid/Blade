@@ -56,6 +56,8 @@ protected:
 
 private:
     auto init() -> void;
+
+    std::unique_ptr<Blade::Backend::NativeApp> m_nativeApp;
 };
 
 

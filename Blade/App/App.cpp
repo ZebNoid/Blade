@@ -12,17 +12,22 @@ App::App() : m_wm(m_ctx)
 
 auto App::run() -> int
 {
-    ui();
+    m_nativeApp = std::make_unique<Backend::NativeApp>();
+    m_nativeApp->initialize();
 
-    build();
+    // ui();
+    //
+    // build();
 
-    while (GetMessage(&m_msg, nullptr, 0, 0))
-    {
-        uiLoop();
-        TranslateMessage(&m_msg);
-        DispatchMessage(&m_msg);
-    }
-    return static_cast<int>(m_msg.wParam);
+    return m_nativeApp->run();
+
+    // while (GetMessage(&m_msg, nullptr, 0, 0))
+    // {
+    //     uiLoop();
+    //     TranslateMessage(&m_msg);
+    //     DispatchMessage(&m_msg);
+    // }
+    // return static_cast<int>(m_msg.wParam);
 }
 
 auto App::build() -> void
