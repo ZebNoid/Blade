@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Api/AppBackend.h"
+#include "Api/ApiAppBackend.h"
 #include "Windows/Window/Window.h"
 #include "Windows/WindowBuilder/WindowBuilder.h"
 #include "Windows/WindowManager/WindowManager.h"
@@ -69,7 +69,7 @@ protected:
     std::vector<WindowBuilder> m_windowBuilders;
 
 private:
-    std::unique_ptr<AppBackend> m_backend;
+    std::unique_ptr<ApiAppBackend> m_backend;
 };
 
 

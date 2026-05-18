@@ -1,13 +1,13 @@
 #pragma once
 
-#include "Api/AppBackend.h"
+#include "Api/ApiAppBackend.h"
 #include "Context/WinAppContext.h"
 
 
 namespace Blade::Backend {
 
 
-class WinApp : public AppBackend
+class WinApp : public ApiAppBackend
 {
 public:
     WinApp();

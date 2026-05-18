@@ -3,10 +3,10 @@
 namespace Blade {
 
 
-class AppBackend
+class ApiAppBackend
 {
 public:
-    virtual ~AppBackend() = default;
+    virtual ~ApiAppBackend() = default;
 
     virtual auto run() -> int = 0;
 };
