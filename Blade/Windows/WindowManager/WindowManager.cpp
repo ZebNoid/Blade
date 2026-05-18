@@ -21,6 +21,7 @@ auto WindowManager::createWindow(WindowBuilder&& builder) -> Window&
     );
 
     window->set(builder.m_props);
+    window->on(builder.m_events);
     window->create();
     window->setRoot(builder.takeRoot());
     // TODO show window after? .set({.visible})?
