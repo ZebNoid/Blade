@@ -16,9 +16,11 @@ public:
 
     virtual ~App() = default;
 
-    auto setBackend(
-        std::unique_ptr<AppBackend> backend
-    ) -> void;
+    template <typename TBackend>
+    auto use(TBackend backend) -> void
+    {
+        m_backend = std::make_unique<TBackend>(std::move(backend));
+    }
 
     auto run() -> int;
 

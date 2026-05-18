@@ -10,11 +10,6 @@ App::App() : m_wm(m_ctx)
     init();
 }
 
-auto App::setBackend(std::unique_ptr<AppBackend> backend) -> void
-{
-    m_backend = std::move(backend);
-}
-
 auto App::run() -> int
 {
     setup();
