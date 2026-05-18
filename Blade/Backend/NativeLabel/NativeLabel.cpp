@@ -7,8 +7,12 @@
 namespace Blade {
 
 
-auto NativeLabel::create(const WidgetContext& ctx, WidgetId id, const LabelProps& props,
-                         const std::string& text) -> void
+auto NativeLabel::create(
+    const WidgetContext& ctx,
+    WidgetId id,
+    const LabelProps& props,
+    const std::string& text
+) -> void
 {
     m_ctx = ctx;
     m_id = id;

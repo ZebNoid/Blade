@@ -10,9 +10,7 @@ auto NativeRender::fillRect(
 ) -> void
 {
     // TODO ResourceManager!!
-    HBRUSH brush = CreateSolidBrush(
-        color
-    );
+    HBRUSH brush = CreateSolidBrush(color);
 
     ::FillRect(hdc, &rect, brush);
 
@@ -35,20 +33,23 @@ auto NativeRender::drawRect(
     );
 
     // TODO ResourceManager!!
-    HGDIOBJ oldPen = SelectObject(hdc, pen);
+    // HGDIOBJ oldPen = SelectObject(hdc, pen);
+    // HGDIOBJ oldBrush = SelectObject(hdc, GetStockObject(HOLLOW_BRUSH));
 
-    HGDIOBJ oldBrush = SelectObject(hdc, GetStockObject(HOLLOW_BRUSH));
+    HBRUSH brush = CreateSolidBrush(color);
+    FrameRect(hdc, &rect, brush);
+    DeleteObject(brush);
 
-    Rectangle(
-        hdc,
-        rect.left,
-        rect.top,
-        rect.left + rect.bottom,
-        rect.top + rect.bottom
-    );
+    // Rectangle(
+    //     hdc,
+    //     rect.left,
+    //     rect.top,
+    //     rect.right,
+    //     rect.bottom
+    // );
 
-    SelectObject(hdc, oldPen);
-    SelectObject(hdc, oldBrush);
+    // SelectObject(hdc, oldPen);
+    // SelectObject(hdc, oldBrush);
 
     // TODO ResourceManager!!
     DeleteObject(pen);
@@ -87,7 +88,7 @@ auto NativeRender::drawText(
     COLORREF color
 ) -> void
 {
-    SetBkMode(hdc, TRANSPARENT);
+    // SetBkMode(hdc, TRANSPARENT);
 
     SetTextColor(
         hdc,

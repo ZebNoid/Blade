@@ -25,7 +25,7 @@ public:
     auto arrange(Rect rect) -> void override
     {
         Widget::arrange(rect);
-        // m_native.setRect(rect);
+        m_native.setRect(rect);
     }
 
     auto set(NopProps props) -> Nop&

@@ -1,6 +1,7 @@
 #include "NativeCustom.h"
 
 #include "Backend/Registry/ClassRegistry/ClassRegistry.h"
+#include "Backend/Registry/ResourceRegistry/ResourceRegistry.h"
 
 
 namespace Blade {
@@ -26,7 +27,7 @@ auto NativeCustom::create(
     );
 
     createNative(Rect{0, 0, 140, 32}); // TODO rect? its ignored anyway
-    // m_font = ResourceRegistry::GetFont("system");
+    m_systemFont = ResourceRegistry::GetFont("system");
 }
 
 DWORD NativeCustom::style() const
@@ -69,7 +70,6 @@ auto NativeCustom::createNative(const Rect rect) -> HWND
 
 auto NativeCustom::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
 {
-            std::cout << "NativeCustom::handleMessage!!\n";
     switch (msg)
     {
     case WM_ERASEBKGND:
@@ -77,7 +77,6 @@ auto NativeCustom::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
 
     case WM_PAINT:
         {
-            std::cout << "NativeCustom!!\n";
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hwnd, &ps);
 
@@ -87,7 +86,6 @@ auto NativeCustom::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
             GetClientRect(hwnd, &rc);
 
             paint(hdc, rc);
-
 
             EndPaint(hwnd, &ps);
 

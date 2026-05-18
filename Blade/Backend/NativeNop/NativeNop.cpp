@@ -15,7 +15,6 @@ auto NativeNop::create(const WidgetContext& ctx, WidgetId id, const NopProps& pr
 
 auto NativeNop::paint(HDC hdc, RECT rect) -> void
 {
-    std::cout << "NativeNop!!\n";
     m_render.fillRect(
         hdc,
         rect,
@@ -25,7 +24,7 @@ auto NativeNop::paint(HDC hdc, RECT rect) -> void
     m_render.drawRect(
         hdc,
         rect,
-        RGB(255, 0, 0),
+        RGB(0, 0, 255),
         2
     );
 
@@ -46,7 +45,7 @@ auto NativeNop::paint(HDC hdc, RECT rect) -> void
         rect.top,
         rect.left,
         rect.top + rect.bottom,
-        (255, 0, 0)
+        RGB(0, 255, 0)
     );
 
     m_render.drawText(

@@ -26,6 +26,7 @@ protected:
 
 protected:
     Backend::NativeRender m_render;
+    HFONT m_systemFont = nullptr;
 };
 
 } // namespace
