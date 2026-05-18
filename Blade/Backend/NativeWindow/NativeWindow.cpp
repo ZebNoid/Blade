@@ -46,7 +46,24 @@ auto NativeWindow::create(const WidgetContext& ctx, Window* owner, const WindowP
     // TODO set Title
     // SetWindowText(m_hwnd, toNativeString(m_props.title).c_str());
     // TODO force redraw
-    // SetWindowPos(hwnd, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
+    // SetWindowPos(m_hwnd, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
+}
+
+auto NativeWindow::initPosition() -> Point
+{
+    auto result = Point{CW_USEDEFAULT, CW_USEDEFAULT};
+
+    if (m_props.position.x >= 0)
+    {
+        result.x = m_props.position.x;
+    }
+
+    if (m_props.position.y >= 0)
+    {
+        result.y = m_props.position.y;
+    }
+
+    return result;
 }
 
 auto NativeWindow::exStyle() const -> DWORD
@@ -86,6 +103,8 @@ auto NativeWindow::style() const -> DWORD
 
 auto NativeWindow::createNative(const Rect rect) -> HWND
 {
+    auto startPos = initPosition();
+
     m_hwnd = CreateWindowEx(
         exStyle(),
         ClassRegistry::Get("NativeWindow"),
@@ -93,7 +112,7 @@ auto NativeWindow::createNative(const Rect rect) -> HWND
         style(),
         // TODO remember size / position
         // TODO center
-        m_props.position.x, m_props.position.y,
+        startPos.x, startPos.y,
         m_props.size.width, m_props.size.height,
         // for root window it always m_ctx.hwnd = nullptr
         // m_ctx.hwnd != nullptr ? m_ctx.hwnd : HWND_DESKTOP,
@@ -169,7 +188,7 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
                 // ScreenToClient(hwnd, &pt);
                 // if (pt.y < 32) return HTCAPTION;
 
-                // return HTCAPTION; // TODO! Mouse events Blocker!
+                return HTCAPTION; // TODO! Mouse events Blocker!
             }
             return hit;
         }

@@ -13,7 +13,7 @@ struct RowProps
     int gap = 0;
     LayoutProps layout;
     MainAxisAlignment mainAxisAlignment = MainAxisAlignment::Start;
-    CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment::Start;
+    CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment::Stretch;
 };
 
 

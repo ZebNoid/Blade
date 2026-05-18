@@ -2,6 +2,7 @@
 
 #include "App/App.h"
 
+#include "Widgets/Nop/Nop.h"
 #include "Widgets/Button/Button.h"
 #include "Widgets/Checkbox/Checkbox.h"
 #include "Widgets/Label/Label.h"

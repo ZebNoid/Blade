@@ -30,10 +30,10 @@ auto NativeDraw::DrawDebugText(
     TextOutW(
         hdc,
         // TODO Debug text center
-        // rect.x + (rect.width - textSize.cx) / 2,
-        // rect.y + (rect.height - textSize.cy) / 2,
-        rect.x + 8,
-        rect.y + 8,
+        rect.x + (rect.width - textSize.cx) / 2,
+        rect.y + (rect.height - textSize.cy) / 2,
+        // rect.x + 8,
+        // rect.y + 8,
         text.c_str(),
         static_cast<int>(text.size())
     );

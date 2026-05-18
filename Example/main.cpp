@@ -9,7 +9,7 @@ class Sandbox : public App
 {
 
     WindowProps wProp = {
-        .title = "Flex",
+        .title = "Blade",
         .position = {3200, 600},
     };
 
@@ -23,33 +23,45 @@ protected:
 
         // window(Label("132")).set(wProp);
 
+        // window(
+        //     Row(
+        //         // TextField()
+        //         // .set({.layout = {.padding = 8, .flex = 1,}})
+        //         // .on({
+        //         //     .change = [](const std::string& value)
+        //         //     {
+        //         //         std::cout << value << "\n";
+        //         //     },
+        //         // })
+        //         stack1()
+        //         ,stack2()
+        //         ,column1()
+        //     ).set({
+        //         .gap = 8,
+        //         .layout = {.padding = 8, .flex = 1,},
+        //         .crossAxisAlignment = CrossAxisAlignment::Stretch
+        //     })
+        // ).set(wProp);
+
         window(
             Row(
-                // TextField()
-                // .set({.layout = {.padding = 8, .flex = 1,}})
-                // .on({
-                //     .change = [](const std::string& value)
-                //     {
-                //         std::cout << value << "\n";
-                //     },
-                // })
-                stack1()
-                ,stack2()
-                ,column1()
-            ).set({
-                .gap = 8,
-                .layout = {.padding = 8, .flex = 1,},
-                .crossAxisAlignment = CrossAxisAlignment::Stretch
-            })
+                Stack(
+                    Nop("Nop")
+                    , Nop("Nop")
+                    , Nop("Nop").set({.layout = {100, 10,}})
+                )
+                , Stack(
+                    Label("Label")
+                    , Label("|-----+-----|")
+                )
+            )
         ).set(wProp);
 
-        // window(Row()).set(wProp);
-
-        window(contentBladeDemo()).id(windowId).set({
-            .title = "Blade",
-            .size = {800, 600},
-            .position = {3200,600},
-        });
+        // window(contentBladeDemo()).id(windowId).set({
+        //     .title = "Blade",
+        //     .size = {800, 600},
+        //     .position = {3200,600},
+        // });
     }
 
     auto stack1() -> auto
@@ -142,6 +154,13 @@ protected:
                 Button("Button"),
                 Progress(100),
                 Button("Button"),
+                //  Row(
+                //      Slider(50).set({.layout = {.flex=1}})
+                // ).set({
+                //     .layout = layoutMarginH,
+                //     .mainAxisAlignment = MainAxisAlignment::Center,
+                //     .crossAxisAlignment = CrossAxisAlignment::Stretch,
+                // }),
                 Slider(50),
                 Button("Button"),
                 Label("Flex").set({.layout = {.flex = 1}}),

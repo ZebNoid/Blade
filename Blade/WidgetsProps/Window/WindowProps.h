@@ -16,8 +16,8 @@ struct WindowProps
     // TODO remember size/position
     // TODO minSize / maxSize
     Size size{800, 600};
-    // TODO remove windows default
-    Point position{CW_USEDEFAULT, CW_USEDEFAULT};
+    // TODO default by system
+    Point position{-1 , -1 };
     // TODO separate prop struct or enum
     bool resizable = true;
     bool minimizable = true;

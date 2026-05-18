@@ -7,7 +7,7 @@
 namespace Blade {
 
 
-class NativeLabel : public NativeWidget
+class NativeLabel : public NativeCustom
 {
 public:
     NativeLabel() = default;
@@ -15,19 +15,21 @@ public:
     auto create(const WidgetContext& ctx, WidgetId id, const LabelProps& props, const std::string& text) -> void;
 
 protected:
-    auto style() const -> DWORD override;
-
-    auto exStyle() const -> DWORD override;
+    // auto style() const -> DWORD override;
+    //
+    // auto exStyle() const -> DWORD override;
 
     auto widgetName() const -> std::string override { return "NativeLabel"; }
 
-    auto createNative(Rect rect) -> HWND override;
+    auto paint(HDC hdc, RECT rect) -> void override;
 
-    auto handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT override;
+    // auto createNative(Rect rect) -> HWND override;
+    //
+    // auto handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT override;
 
 private:
     LabelProps m_props{};
-    std::string m_text;
+    std::wstring m_text;
     HFONT m_font = nullptr;
 };
 

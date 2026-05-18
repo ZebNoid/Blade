@@ -1,4 +1,4 @@
-project(Blade VERSION 0.2.0)
+project(Blade VERSION 0.2.1)
 
 # Use the names to logic check
 if (NOT PROJECT_IS_TOP_LEVEL)
@@ -123,6 +123,20 @@ add_library(${PROJECT_NAME} STATIC
         Layout/LayoutEngine/LayoutType.h
         Layout/LayoutContext/LayoutContext.cpp
         Layout/LayoutContext/LayoutContext.h
+        Backend/NativeCustom/NativeCustom.cpp
+        Backend/NativeCustom/NativeCustom.h
+        Backend/NativeNop/NativeNop.cpp
+        Backend/NativeNop/NativeNop.h
+        Widgets/Nop/Nop.cpp
+        Widgets/Nop/Nop.h
+        WidgetsProps/Widget/NopProps.h
+        Render/Render.cpp
+        Render/Render.h
+        Backend/NativeRender/NativeRender.cpp
+        Backend/NativeRender/NativeRender.h
+        Core/Rect.h
+        Backend/NativeApp/NativeApp.cpp
+        Backend/NativeApp/NativeApp.h
 )
 
 # use Unicode
