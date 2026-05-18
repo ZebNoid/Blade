@@ -35,9 +35,17 @@ protected:
 public:
     Window() {}
 
-    Window(std::unique_ptr<Widget> child)
-    {
+    Window(std::unique_ptr<Widget> child) {
         m_root = std::move(child);
+    }
+
+    template<typename TWidget>
+    requires std::derived_from<TWidget, Widget>
+    Window(TWidget child)
+    {
+        m_root = std::make_unique<TWidget>(
+                std::move(child)
+            );
 
         // auto& window = wm.NewWindow("BladeUI Window");
     }

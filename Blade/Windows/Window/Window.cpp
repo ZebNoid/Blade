@@ -7,10 +7,10 @@
 namespace Blade {
 
 
-Window::Window(AppContext& appCtx, WindowManager& manager)
-    : m_manager(manager), m_appCtx(appCtx)
-{
-}
+// Window::Window(AppContext& appCtx, WindowManager& manager)
+//     : m_manager(manager), m_appCtx(appCtx)
+// {
+// }
 
 auto Window::show() -> void
 {
@@ -19,7 +19,7 @@ auto Window::show() -> void
 
 auto Window::destroy() -> void
 {
-    m_manager.destroyWindow(this);
+    // m_manager.destroyWindow(this);
 }
 
 auto Window::resize(Size size) -> void
