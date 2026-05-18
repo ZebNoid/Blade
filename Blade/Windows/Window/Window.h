@@ -35,14 +35,13 @@ protected:
 public:
     Window() {}
 
-    template <typename T>
-    Window(T&& widget)
+    Window(std::unique_ptr<Widget> child)
     {
-        // m_root = std::move(root);
+        m_root = std::move(child);
 
         // auto& window = wm.NewWindow("BladeUI Window");
-        // window.SetRoot(std::forward<T>(widget));
     }
+
 
     auto dispatchCommand(const WidgetId id, WidgetEvent event, const EventValue& value = {}) -> void
     {
@@ -76,7 +75,7 @@ public:
         return *this;
     }
 
-    auto mount(class App& app) -> void
+    auto mount(class App* app) -> void
     {
     }
 
