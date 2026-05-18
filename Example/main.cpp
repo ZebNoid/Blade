@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "blade.h"
+#include "NativeApp/NativeApp.h"
 
 using namespace Blade;
 
@@ -14,6 +15,11 @@ class Sandbox : public App
     };
 
 protected:
+    auto setup() -> void override
+    {
+        backend(std::make_unique<Backend::NativeApp>());
+    }
+
     auto ui() -> void override
     {
         Blade::Debug::debug = false;

@@ -16,8 +16,13 @@ public:
 
     virtual ~App() = default;
 
+    auto backend(
+        std::unique_ptr<AppBackend> backend
+    ) -> void;
+
     auto run() -> int;
 
+    // TODO remove USE Windows(...).start(this) or? .app(this) .bind(this) .init(this) not .set({app=this})
     template <typename T>
     auto window(T&& widget) -> WindowBuilder&
     {
@@ -36,6 +41,8 @@ public:
     }
 
 protected:
+    virtual auto setup() -> void = 0;
+
     virtual auto ui() -> void = 0;
 
     virtual auto uiLoop() -> void
@@ -58,7 +65,7 @@ protected:
 private:
     auto init() -> void;
 
-    std::unique_ptr<AppBackend> m_nativeApp;
+    std::unique_ptr<AppBackend> m_backend;
 };
 
 

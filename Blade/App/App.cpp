@@ -10,24 +10,28 @@ App::App() : m_wm(m_ctx)
     init();
 }
 
+auto App::backend(std::unique_ptr<AppBackend> backend) -> void
+{
+    m_backend = std::move(backend);
+}
+
 auto App::run() -> int
 {
-    // m_nativeApp = std::make_unique<Backend::NativeApp>();
+    setup();
+
+    if (!m_backend)
+    {
+        std::cerr << "No Backend set" << std::endl;
+        return -1;
+    }
+
     // m_nativeApp->initialize();
 
-    // ui();
-    //
-    // build();
+    ui();
 
-    return m_nativeApp->run();
+    build();
 
-    // while (GetMessage(&m_msg, nullptr, 0, 0))
-    // {
-    //     uiLoop();
-    //     TranslateMessage(&m_msg);
-    //     DispatchMessage(&m_msg);
-    // }
-    // return static_cast<int>(m_msg.wParam);
+    return m_backend->run();
 }
 
 auto App::build() -> void

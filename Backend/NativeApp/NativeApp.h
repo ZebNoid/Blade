@@ -9,7 +9,7 @@ namespace Blade::Backend {
 class NativeApp : public AppBackend
 {
 public:
-    auto run() -> int;
+    auto run() -> int override;
 
 private:
     MSG m_msg = {};
