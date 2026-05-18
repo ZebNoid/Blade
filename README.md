@@ -44,7 +44,12 @@ protected:
                 Label("Label"),
                 Button("Button"),
                 Row(
-                    TextField("TextField").set({.layout = {.flex = 1,}}),
+                    TextField("TextField").set({.layout = {.flex = 1,}}).on({
+                        .change = [](const std::string& value)
+                        {
+                            std::cout << value << "\n";
+                        },
+                    }),
                     RadioButton("RadioButton"),
                     RadioButton("RadioButton"),
                     Checkbox("Checkbox")
