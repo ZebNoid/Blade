@@ -16,6 +16,8 @@ public:
 
     auto createWindow(Window& window) -> void override;
 
+    auto quit() -> void override;
+
 private:
     HINSTANCE m_hInstance;
     MSG m_msg = {};

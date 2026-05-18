@@ -33,6 +33,7 @@ auto WindowManager::destroyWindow(Window* target) -> void
     std::erase_if(
         m_windows,
         [target](const std::unique_ptr<Window>& w)
+        -> bool
         {
             return w.get() == target;
         }
@@ -44,7 +45,7 @@ auto WindowManager::destroyWindow(Window* target) -> void
 
     if (m_windows.empty())
     {
-        PostQuitMessage(0);
+        m_backend->quit();
     }
 }
 

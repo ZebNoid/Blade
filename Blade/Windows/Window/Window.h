@@ -15,26 +15,10 @@ namespace Blade {
 class Window
 {
 protected:
-    // Window(AppContext& appCtx, class WindowManager& manager);
-
-    auto create() -> void
-    {
-        // WidgetContext w_ctx{
-        //     nullptr,
-        //     &m_appCtx,
-        //     this
-        // };
-        //
-        // m_native.create(w_ctx, this, m_props);
-    }
-
-
     auto router() -> EventRouter& { return m_router; }
 
 public:
-    Window()
-    {
-    }
+    Window() = default;
 
     Window(std::unique_ptr<Widget> child)
     {
@@ -48,17 +32,12 @@ public:
         m_root = std::make_unique<TWidget>(
             std::move(child)
         );
-
-        // auto& window = wm.NewWindow("BladeUI Window");
     }
-
 
     auto dispatchCommand(const WidgetId id, WidgetEvent event, const EventValue& value = {}) -> void
     {
         m_router.dispatchCommand(id, event, value);
     }
-
-    // Window(const Window&) = delete;
 
     auto show() -> void;
 
@@ -106,21 +85,7 @@ public:
 
 protected:
     // auto setRoot(std::unique_ptr<Widget> root) -> Window&
-    // {
-    //     // m_root = std::move(root);
-    //     //
-    //     // WidgetContext ctx{
-    //     //     m_native.handle(),
-    //     //     &m_appCtx,
-    //     //     this
-    //     // };
-    //     //
-    //     // if (m_root == nullptr)
-    //     // {
-    //     //     // TODO error no root logger?
-    //     //     return *this;
-    //     // }
-    //     //
+    // // TODO Window materializer mount
     //     // m_materializer.mount(*m_root, ctx);
     //
     //     // TODO padding
@@ -129,7 +94,6 @@ protected:
     //     m_root->measure({width, height}); // TODO
     //
     //     m_root->arrange({0, 0, width, height});
-    //
     //     return *this;
     // }
 
@@ -143,10 +107,7 @@ private:
     WindowProps m_props{};
     WindowEvents m_events{};
 
-    // friend class App;
-    // friend class WindowManager;
     friend class Widget;
-    // friend class WinWindow;
 };
 
 

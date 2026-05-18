@@ -38,4 +38,10 @@ auto WinBackend::createWindow(Window& window) -> void
     );
 }
 
+auto WinBackend::quit() -> void
+{
+    std::cout << "Quit!";
+    PostQuitMessage(0);
+}
+
 } // namespace
