@@ -17,14 +17,9 @@ protected:
 
     auto exStyle() const -> DWORD override;
 
-    auto widgetName() const -> std::string override { return "NativeCustom"; }
-
     auto createNative(Rect rect) -> HWND override;
 
     auto handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT override;
-
-private:
-    // HFONT m_font = nullptr;
 };
 
 } // namespace

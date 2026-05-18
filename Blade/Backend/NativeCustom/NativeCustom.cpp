@@ -5,6 +5,8 @@
 
 namespace Blade {
 
+#define CUSTOM_CLASS_KEY "NativeCustom"
+#define NATIVE_CUSTOM_CLASS "NativeCustomClass"
 
 auto NativeCustom::create(
     const WidgetContext& ctx,
@@ -15,9 +17,9 @@ auto NativeCustom::create(
 
 
     ClassRegistry::Register(
-        "BladeLabel",
+        NATIVE_CUSTOM_CLASS,
         {
-            .name = L"BladeLabel",
+            .name = TEXT(CUSTOM_CLASS_KEY),
             .proc = WindowProc,
             .background = nullptr
         }
@@ -25,7 +27,6 @@ auto NativeCustom::create(
 
     createNative(Rect{0, 0, 140, 32});
     // m_font = ResourceRegistry::GetFont("system");
-    // applyFont(m_font);
 }
 
 DWORD NativeCustom::style() const
@@ -47,7 +48,7 @@ auto NativeCustom::createNative(const Rect rect) -> HWND
 
     m_hwnd = CreateWindowEx(
         exStyle(),
-        ClassRegistry::Get("BladeLabel"),
+        ClassRegistry::Get(NATIVE_CUSTOM_CLASS),
         TEXT(""),
         style(),
         rect.x, rect.y,
