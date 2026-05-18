@@ -11,22 +11,22 @@
 namespace Blade::Backend {
 
 
-WinWindow::WinWindow()
+// WinWindow::WinWindow()
+// {
+// }
+
+WinWindow::WinWindow(Window& window)
 {
     m_size = {800, 600};
     // TODO move to app cycle
     ResourceRegistry::Init();
 }
 
-WinWindow::WinWindow(class Window& window)
-{
-}
-
 auto WinWindow::create(const WidgetContext& ctx, Window* owner, const WindowProps& props) -> void
 {
     m_ctx = ctx;
     // TODO id
-    m_props = props;
+    m_props = owner->getProps();
     m_owner = owner;
 
     ClassRegistry::Init(ctx.app->hInstance);

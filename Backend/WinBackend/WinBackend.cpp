@@ -22,19 +22,25 @@ auto WinBackend::runApp() -> int
     return static_cast<int>(m_msg.wParam);
 }
 
-auto WinBackend::createWindow(const Blade::Window& window) -> void
+auto WinBackend::createWindow(const Window& window) -> void
 {
     std::cout << "WinBackend::createWindow\n";
 
-    // auto native = std::make_unique<WinWindow>(
-    //     window
-    // );
+    auto native = std::make_unique<WinWindow>(
+        window
+    );
+
+    // WidgetContext w_ctx{
+    //     nullptr,
+    //     &m_appCtx,
+    //     this
+    // };
     //
-    // // native->create(); // TODO
-    //
-    // m_windows.push_back(
-    //     std::move(native)
-    // );
+    // native->create(w_ctx, window); // TODO
+
+    m_windows.push_back(
+        std::move(native)
+    );
 }
 
 } // namespace
