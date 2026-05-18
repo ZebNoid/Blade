@@ -1,7 +1,6 @@
 #include "Stack.h"
 
 #include "Layout/LayoutEngine/LayoutEngine.h"
-#include "Layout/StackLayout/StackLayout.h"
 
 
 namespace Blade {

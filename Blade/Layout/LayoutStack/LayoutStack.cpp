@@ -1,9 +1,9 @@
-#include "StackLayout.h"
+#include "LayoutStack.h"
 
 
 namespace Blade {
 
-auto StackLayout::Measure(
+auto LayoutStack::Measure(
     const std::vector<std::unique_ptr<Widget>>& children,
     const LayoutProps& layout,
     Size available
@@ -41,7 +41,7 @@ auto StackLayout::Measure(
     };
 }
 
-auto StackLayout::Arrange(
+auto LayoutStack::Arrange(
     const std::vector<std::unique_ptr<Widget>>& children,
     const LayoutProps& layout,
     Rect rect

@@ -4,8 +4,8 @@
 
 namespace Blade {
 
-// TODO StackLayout -> LayoutStack
-class StackLayout
+
+class LayoutStack
 {
 public:
     static auto Measure(

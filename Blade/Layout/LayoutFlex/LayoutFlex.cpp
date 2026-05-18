@@ -1,4 +1,4 @@
-#include "FlexLayout.h"
+#include "LayoutFlex.h"
 
 
 namespace Blade {
@@ -7,7 +7,7 @@ namespace Blade {
 // By LLM
 // -------------------------------------------------
 
-auto FlexLayout::Measure(
+auto LayoutFlex::Measure(
     const FlexDirection direction,
     const std::vector<std::unique_ptr<Widget>>& children,
     const LayoutProps& layout,
@@ -91,7 +91,7 @@ auto FlexLayout::Measure(
     };
 }
 
-auto FlexLayout::Arrange(
+auto LayoutFlex::Arrange(
     const FlexDirection direction,
     const std::vector<std::unique_ptr<Widget>>& children,
     const LayoutProps& layout,

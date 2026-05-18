@@ -13,7 +13,7 @@
 namespace Blade {
 
 // FlexLayout -> LayoutFlex
-class FlexLayout
+class LayoutFlex
 {
 public:
     static auto Measure(

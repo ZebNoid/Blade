@@ -1,7 +1,7 @@
 #include "LayoutEngine.h"
 
-#include "Layout/FlexLayout/FlexLayout.h"
-#include "Layout/StackLayout/StackLayout.h"
+#include "Layout/LayoutFlex/LayoutFlex.h"
+#include "Layout/LayoutStack/LayoutStack.h"
 
 
 namespace Blade {
@@ -13,7 +13,7 @@ auto LayoutEngine::Measure(const LayoutContext& ctx) -> Size
     {
     case LayoutType::Flex:
         {
-            return FlexLayout::Measure(
+            return LayoutFlex::Measure(
                 ctx.direction,
                 *ctx.children,
                 *ctx.layout,
@@ -24,7 +24,7 @@ auto LayoutEngine::Measure(const LayoutContext& ctx) -> Size
 
     case LayoutType::Stack:
         {
-            return StackLayout::Measure(
+            return LayoutStack::Measure(
                 *ctx.children,
                 *ctx.layout,
                 ctx.available
@@ -41,7 +41,7 @@ auto LayoutEngine::Arrange(const LayoutContext& ctx) -> void
     {
     case LayoutType::Flex:
         {
-            FlexLayout::Arrange(
+            LayoutFlex::Arrange(
                 ctx.direction,
                 *ctx.children,
                 *ctx.layout,
@@ -56,7 +56,7 @@ auto LayoutEngine::Arrange(const LayoutContext& ctx) -> void
 
     case LayoutType::Stack:
         {
-            StackLayout::Arrange(
+            LayoutStack::Arrange(
                 *ctx.children,
                 *ctx.layout,
                 ctx.rect

@@ -75,9 +75,9 @@ add_library(${PROJECT_NAME} STATIC
         WidgetsProps/Widget/TextFieldProps.h
         WidgetsProps/LayoutProps/MainAxisAlignment.h
         WidgetsProps/LayoutProps/CrossAxisAlignment.h
-        Layout/FlexLayout/FlexLayout.cpp
-        Layout/FlexLayout/FlexLayout.h
-        Layout/FlexLayout/FlexDirection.h
+        Layout/LayoutFlex/LayoutFlex.cpp
+        Layout/LayoutFlex/LayoutFlex.h
+        Layout/LayoutFlex/FlexDirection.h
         Debug/LayoutDebugRenderer/LayoutDebugRenderer.cpp
         Debug/LayoutDebugRenderer/LayoutDebugRenderer.h
         Debug/LayoutDebugTheme.h
@@ -108,8 +108,8 @@ add_library(${PROJECT_NAME} STATIC
         Backend/Handlers/PaintHandler/PaintHandler.h
         Widgets/Layout/Stack/Stack.cpp
         Widgets/Layout/Stack/Stack.h
-        Layout/StackLayout/StackLayout.cpp
-        Layout/StackLayout/StackLayout.h
+        Layout/LayoutStack/LayoutStack.cpp
+        Layout/LayoutStack/LayoutStack.h
         WidgetsEvents/Window/WindowEvents.h
         WidgetsEvents/Widget/ButtonEvents.h
         WidgetsEvents/Callback.h
