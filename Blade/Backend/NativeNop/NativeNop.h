@@ -14,6 +14,8 @@ public:
 protected:
     auto widgetName() const -> std::string override { return "NativeNop"; }
 
+    auto paint(HDC hdc) -> void override;
+
 private:
     NopProps m_props{};
     std::string m_text;

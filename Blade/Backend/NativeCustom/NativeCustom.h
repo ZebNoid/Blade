@@ -20,6 +20,8 @@ protected:
     auto createNative(Rect rect) -> HWND override;
 
     auto handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT override;
+
+    virtual auto paint(HDC hdc) -> void = 0;
 };
 
 } // namespace

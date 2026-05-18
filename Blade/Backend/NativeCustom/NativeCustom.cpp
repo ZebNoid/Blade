@@ -113,6 +113,7 @@ auto NativeCustom::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
             RECT rc;
             GetClientRect(hwnd, &rc);
 
+            paint(hdc);
 
             EndPaint(hwnd, &ps);
 
