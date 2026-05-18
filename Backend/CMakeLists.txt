@@ -24,6 +24,8 @@ add_library(${PROJECT_NAME} STATIC
         Handlers/WindowHandler/WindowHandler.h
         Handlers/PaintHandler/PaintHandler.cpp
         Handlers/PaintHandler/PaintHandler.h
+        Widget/WinCustom/WinCustom.h
+        Widget/WinCustom/WinCustom.cpp
 )
 
 # use Unicode
