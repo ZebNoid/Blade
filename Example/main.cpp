@@ -17,7 +17,8 @@ class Sandbox : public App
 protected:
     auto setup() -> void override
     {
-        use(Backend::NativeApp());
+        // use(Backend::NativeApp());
+        use<Backend::NativeApp>();
     }
 
     auto ui() -> void override
