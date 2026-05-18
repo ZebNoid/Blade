@@ -24,20 +24,14 @@ auto WinBackend::runApp() -> int
 
 auto WinBackend::createWindow(Window& window) -> void
 {
-    std::cout << "WinBackend::createWindow\n";
+    std::cout << "WinBackend::createWindow\n"; // TODO dev
 
     auto native = std::make_unique<WinWindow>(
-        window
+        window,
+        m_hInstance
     );
 
-    // WidgetContext w_ctx{
-    //     nullptr,
-    //     &m_appCtx,
-    //     this
-    // };
-    // native->create(w_ctx, window); // TODO
-
-    native->create(m_hInstance); // TODO
+    native->create();
 
     m_windows.push_back(
         std::move(native)

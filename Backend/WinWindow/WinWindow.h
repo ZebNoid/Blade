@@ -12,12 +12,9 @@ namespace Blade::Backend {
 class WinWindow : public WinWidget
 {
 public:
-    // WinWindow(WinWindow&&) = default;
-    // WinWindow(); // TODO
-    explicit WinWindow(Window& window);
+    explicit WinWindow(Window& window, HINSTANCE hInstance);
 
-    // auto create(const WidgetContext& ctx, Window* owner, const WindowProps& props) -> void;
-    auto create(HINSTANCE hInstance) -> void;
+    auto create() -> void;
 
 protected:
     auto exStyle() const -> DWORD override;

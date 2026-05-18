@@ -5,27 +5,21 @@
 #include "Backend/Helpers/Helpers.h"
 #include "Backend/Registry/ClassRegistry/ClassRegistry.h"
 #include "Backend/Registry/ResourceRegistry/ResourceRegistry.h"
-#include "Context/WidgetContext.h"
 
 
 namespace Blade::Backend {
 
 
-// WinWindow::WinWindow()
-// {
-// }
-
-// WinWindow::WinWindow(Window& window)
-// {
-//     m_size = {800, 600};
-//     // TODO move to app cycle
-//     ResourceRegistry::Init();
-// }
+WinWindow::WinWindow(Window& window, HINSTANCE hInstance) : m_window(window), m_hInstance(hInstance)
+{
+    m_size = {800, 600};
+    // TODO move to app cycle
+    ResourceRegistry::Init();
+}
 
 // auto WinWindow::create(const WidgetContext& ctx, Window* owner, const WindowProps& props) -> void
-auto WinWindow::create(HINSTANCE hInstance) -> void
+auto WinWindow::create() -> void
 {
-    m_hInstance = hInstance;
     // m_ctx = ctx;
     // TODO id
     m_props = m_window.getProps();
@@ -83,7 +77,7 @@ auto WinWindow::exStyle() const -> DWORD
 
 auto WinWindow::style() const -> DWORD
 {
-    auto style = WS_OVERLAPPEDWINDOW | WS_VISIBLE | SS_NOTIFY;// | WS_CLIPCHILDREN;
+    auto style = WS_OVERLAPPEDWINDOW | WS_VISIBLE | SS_NOTIFY; // | WS_CLIPCHILDREN;
 
     // // preventing rendering artifacts when the parent redraws
     // style |= WS_CLIPCHILDREN ; // don't use without custom background
