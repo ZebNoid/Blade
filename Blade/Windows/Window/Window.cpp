@@ -6,7 +6,6 @@
 namespace Blade {
 
 
-
 auto Window::show() -> void
 {
     // TODO wm +id
@@ -15,7 +14,12 @@ auto Window::show() -> void
 
 auto Window::destroy() -> void
 {
-    // m_manager.destroyWindow(this);
+    if (m_app == nullptr)
+    {
+        std::cerr << "Window::destroy no app context\n";
+        return;
+    }
+    m_app->wm().destroyWindow(this);
 }
 
 auto Window::resize(Size size) -> void
@@ -27,13 +31,13 @@ auto Window::resize(Size size) -> void
 
 auto Window::mount(App* app) && -> void
 {
+    m_app = app;
     app->wm().add(
         std::make_unique<Window>(
             std::move(*this)
         )
     );
 }
-
 
 
 } // namespace

@@ -78,6 +78,7 @@ public:
         return m_root.get();
     }
 
+    // TODO friend WindowManager?
     auto getProps() -> WindowProps
     {
         return m_props;
@@ -98,6 +99,8 @@ protected:
     // }
 
 private:
+    App* m_app = nullptr;
+
     // WinWindow m_native;
     Materializer m_materializer;
     EventRouter m_router;
