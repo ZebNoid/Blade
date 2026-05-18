@@ -12,10 +12,7 @@ namespace Blade {
 class WindowManager
 {
 public:
-    // WindowManager(AppContext& ctx);
-    WindowManager()
-    {
-    }
+    WindowManager() = default;
 
     auto add(std::unique_ptr<Window> window) -> void
     {
@@ -30,31 +27,31 @@ public:
 
     auto bind(ApiBackend& backend) -> void
     {
-        // m_backend = backend;
+        m_backend = &backend;
     }
 
-    auto createWndows() -> void
+    auto createWindows() -> void
     {
+        // if (!m_backend) return;
         for (auto& window : m_windows)
         {
-            // m_backend.createWindow(*window);
+            m_backend->createWindow(*window);
+            // createWindow(*window); // TODO
         }
     }
 
-
-    // auto create(const std::unique_ptr<ApiBackend>::element_type& backend) -> void
-    // {
-    //
-    // }
+    auto createWindow(const Window& window) -> void
+    {
+        if (!m_backend) return;
+        m_backend->createWindow(window);
+    }
 
 private:
-    ApiBackend* m_backend;
-
-    // AppContext& m_appCtx;
+    ApiBackend* m_backend = nullptr;
 
     std::vector<std::unique_ptr<Window>> m_windows;
 
-    friend class Window;
+    // friend class Window;
 };
 
 

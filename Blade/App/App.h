@@ -10,8 +10,6 @@ namespace Blade {
 class App
 {
 public:
-    // App();
-
     virtual ~App() = default;
 
     template <typename TBackend>
@@ -33,7 +31,7 @@ public:
         return m_wm;
     }
 
-    // TODO Alert / Popup
+    // TODO move to Backend Alert / Popup
     static auto Alert(const std::string& text) -> void
     {
         // TODO Native alert builder
@@ -45,9 +43,7 @@ protected:
 
     virtual auto ui() -> void = 0;
 
-    virtual auto uiLoop() -> void
-    {
-    }
+    // virtual auto uiLoop() -> void {    } // TODO app loop callback?
 
 private:
     auto initBackend() -> void;

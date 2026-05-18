@@ -12,7 +12,7 @@ WinBackend::WinBackend()
     m_hInstance = GetModuleHandle(nullptr);
 }
 
-auto WinBackend::run() -> int
+auto WinBackend::runApp() -> int
 {
     while (GetMessage(&m_msg, nullptr, 0, 0))
     {
@@ -24,6 +24,7 @@ auto WinBackend::run() -> int
 
 auto WinBackend::createWindow(const Blade::Window& window) -> void
 {
+    std::cout << "WinBackend::createWindow\n";
     // auto native = std::make_unique<WinWindow>(
     //     window
     // );

@@ -11,7 +11,7 @@ class WinBackend : public ApiBackend
 public:
     WinBackend();
 
-    auto run() -> int override;
+    auto runApp() -> int override;
 
     auto createWindow(const Blade::Window& window) -> void override;
 

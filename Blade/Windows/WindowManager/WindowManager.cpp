@@ -46,6 +46,8 @@ auto WindowManager::destroyWindow(Window* target) -> void
         }
     );
 
+    // TODO quit();
+
     std::cout << "windows count: " << m_windows.size() << "\n"; // TODO
 
     if (m_windows.empty())

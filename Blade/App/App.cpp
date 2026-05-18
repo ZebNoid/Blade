@@ -16,7 +16,7 @@ auto App::run() -> int
     ui();
     buildUi();
 
-    return m_backend->run();
+    return m_backend->runApp();
 }
 
 auto App::initBackend() -> void
@@ -27,7 +27,7 @@ auto App::initBackend() -> void
 
 auto App::buildUi() -> void
 {
-    m_wm.createWndows();
+    m_wm.createWindows();
 }
 
 

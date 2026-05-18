@@ -12,7 +12,7 @@ class ApiBackend
 public:
     virtual ~ApiBackend() = default;
 
-    virtual auto run() -> int = 0;
+    virtual auto runApp() -> int = 0;
 
     virtual auto createWindow(const Window& window) -> void = 0;
 };
