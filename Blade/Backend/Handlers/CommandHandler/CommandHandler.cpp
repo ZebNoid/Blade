@@ -21,17 +21,19 @@ auto CommandHandler::Handle(WinWindow& window, WPARAM wParam, LPARAM lParam) -> 
             std::wstring buffer(len + 1, L'\0');
             GetWindowText(currentHwnd, &buffer[0], len + 1);
             // GetWindowText(hEdit, buffer.data(), len + 1);
-            window.owner()->dispatchCommand(id, WidgetEvent::Change, Utf16ToUtf8(buffer));
+
+            // window.owner()->dispatchCommand(id, WidgetEvent::Change, Utf16ToUtf8(buffer)); // TODO!!!
+
             VerticalAlignCenter(currentHwnd); // TODO dev
         }
         break;
 
     case EN_SETFOCUS:
-        window.owner()->dispatchCommand(id, WidgetEvent::Focus, true);
+        // window.owner()->dispatchCommand(id, WidgetEvent::Focus, true); // TODO!!!
         break;
 
     case EN_KILLFOCUS:
-        window.owner()->dispatchCommand(id, WidgetEvent::Focus, false);
+        // window.owner()->dispatchCommand(id, WidgetEvent::Focus, false); // TODO!!!
         break;
 
     case BN_CLICKED:
@@ -43,17 +45,17 @@ auto CommandHandler::Handle(WinWindow& window, WPARAM wParam, LPARAM lParam) -> 
             {
                 LRESULT state = SendMessage(currentHwnd, BM_GETCHECK, 0, 0);
                 auto isChecked = state == BST_CHECKED;
-                window.owner()->dispatchCommand(id, WidgetEvent::Change, isChecked);
+                // window.owner()->dispatchCommand(id, WidgetEvent::Change, isChecked); // TODO!!!
             }
             else if (type == BS_AUTORADIOBUTTON)
             {
                 LRESULT state = SendMessage(currentHwnd, BM_GETCHECK, 0, 0);
                 auto isChecked = state == BST_CHECKED;
-                window.owner()->dispatchCommand(id, WidgetEvent::Change, isChecked);
+                // window.owner()->dispatchCommand(id, WidgetEvent::Change, isChecked); // TODO!!!
             }
             else
             {
-                window.owner()->dispatchCommand(id, WidgetEvent::Click);
+                // window.owner()->dispatchCommand(id, WidgetEvent::Click); // TODO!!!
             }
         }
         break;

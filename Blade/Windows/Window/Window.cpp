@@ -27,7 +27,7 @@ auto Window::resize(Size size) -> void
 
 auto Window::mount(App* app) && -> void
 {
-    app->windows().add(
+    app->wm().add(
         std::make_unique<Window>(
             std::move(*this)
         )

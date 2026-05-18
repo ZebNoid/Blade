@@ -5,6 +5,7 @@
 
 namespace Blade {
 
+// TODO remove
 // TODO Native App context
 // struct AppContext
 // {

@@ -14,6 +14,7 @@ add_library(${PROJECT_NAME} STATIC
         WinWindow/WinWindow.h
         Context/WinAppContext.cpp
         Context/WinAppContext.h
+        WinWidget/WinWidget.h
 )
 
 # use Unicode

@@ -10,7 +10,7 @@ namespace Blade {
 class App
 {
 public:
-    App();
+    // App();
 
     virtual ~App() = default;
 
@@ -28,21 +28,10 @@ public:
 
     auto run() -> int;
 
-    auto windows() -> WindowManager&
+    auto wm() -> WindowManager&
     {
         return m_wm;
     }
-
-    // // TODO remove USE Windows(...).start(this) or? .app(this) .bind(this) .init(this) not .set({app=this})
-    // template <typename T>
-    // auto window(T&& widget) -> WindowBuilder&
-    // {
-    //     m_windowBuilders.emplace_back(
-    //         std::forward<T>(widget)
-    //     );
-    //
-    //     return m_windowBuilders.back();
-    // }
 
     // TODO Alert / Popup
     static auto Alert(const std::string& text) -> void
@@ -63,15 +52,10 @@ protected:
 private:
     auto initBackend() -> void;
 
-    auto build() -> void;
-
+    auto buildUi() -> void;
 
 protected:
-    AppContext m_ctx{};
-
     WindowManager m_wm;
-
-    // std::vector<WindowBuilder> m_windowBuilders;
 
 private:
     std::unique_ptr<ApiBackend> m_backend;

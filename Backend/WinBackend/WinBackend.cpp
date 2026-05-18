@@ -8,6 +8,8 @@ namespace Blade::Backend {
 WinBackend::WinBackend()
 {
     WinInit::InitDpi();
+
+    m_hInstance = GetModuleHandle(nullptr);
 }
 
 auto WinBackend::run() -> int
@@ -18,6 +20,19 @@ auto WinBackend::run() -> int
         DispatchMessage(&m_msg);
     }
     return static_cast<int>(m_msg.wParam);
+}
+
+auto WinBackend::createWindow(const Blade::Window& window) -> void
+{
+    // auto native = std::make_unique<WinWindow>(
+    //     window
+    // );
+    //
+    // // native->create(); // TODO
+    //
+    // m_windows.push_back(
+    //     std::move(native)
+    // );
 }
 
 } // namespace

@@ -28,13 +28,19 @@ public:
 
     auto empty() const -> bool;
 
-    auto create(ApiBackend& backend) -> void
+    auto bind(ApiBackend& backend) -> void
+    {
+        // m_backend = backend;
+    }
+
+    auto createWndows() -> void
     {
         for (auto& window : m_windows)
         {
-            backend.createWindow(*window);
+            // m_backend.createWindow(*window);
         }
     }
+
 
     // auto create(const std::unique_ptr<ApiBackend>::element_type& backend) -> void
     // {
@@ -42,6 +48,8 @@ public:
     // }
 
 private:
+    ApiBackend* m_backend;
+
     // AppContext& m_appCtx;
 
     std::vector<std::unique_ptr<Window>> m_windows;

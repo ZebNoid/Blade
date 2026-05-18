@@ -24,7 +24,7 @@ auto WindowHandler::Handle(WinWindow& window, UINT msg, WPARAM wParam, LPARAM lP
         }
 
     case WM_DESTROY:
-        window.owner()->destroy();
+        // window.owner()->destroy(); // TODO!!!
         return 0;
     }
 

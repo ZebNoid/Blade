@@ -6,13 +6,14 @@
 #include "Windows/Window/Window.h"
 
 
-namespace Blade {
+namespace Blade::Backend {
 
 
 class WinWindow : public NativeWidget
 {
 public:
-    WinWindow();
+    WinWindow(); // TODO
+    explicit WinWindow(class Window& window);
 
     auto create(const WidgetContext& ctx, class Window* owner, const WindowProps& props) -> void;
 
@@ -25,7 +26,7 @@ protected:
 
     auto createNative(Rect rect) -> HWND override;
 
-    Point initPosition();
+    auto initPosition() -> Point;
 
     auto handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT override;
 

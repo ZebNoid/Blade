@@ -4,41 +4,30 @@
 namespace Blade {
 
 
-App::App() //: m_wm(m_ctx)
-{
-    // m_ctx.hInstance = GetModuleHandle(nullptr);
-    // init();
-}
-
 auto App::run() -> int
 {
     setup();
-
     if (!m_backend)
     {
         std::cerr << "No Backend set" << std::endl;
         return -1;
     }
     initBackend();
-    // m_nativeApp->initialize(); // todo init
-
     ui();
-    build();
+    buildUi();
 
     return m_backend->run();
 }
 
 auto App::initBackend() -> void
 {
-    m_wm.create(*m_backend);
+    // m_backend->initialize(); // todo init
+    m_wm.bind(*m_backend);
 }
 
-auto App::build() -> void
+auto App::buildUi() -> void
 {
-    // for (auto& builder : m_windowBuilders)
-    // {
-    //     m_wm.createWindow(std::move(builder));
-    // }
+    m_wm.createWndows();
 }
 
 
