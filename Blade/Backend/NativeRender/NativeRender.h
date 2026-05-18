@@ -10,20 +10,20 @@ namespace Blade::Backend {
 class NativeRender
 {
 public:
-    auto fillRect(
+    auto rectFill(
         HDC hdc,
         RECT rect,
         COLORREF color
     ) -> void;
 
-    auto drawRect(
+    auto rectBorder(
         HDC hdc,
         RECT rect,
         COLORREF color,
         int thickness = 1
     ) -> void;
 
-    auto drawLine(
+    auto line(
         HDC hdc,
         int x1, int y1,
         int x2, int y2,
@@ -31,7 +31,7 @@ public:
         int thickness = 1
     ) -> void;
 
-    auto drawText(
+    auto text(
         HDC hdc,
         RECT rect,
         const std::wstring& text,

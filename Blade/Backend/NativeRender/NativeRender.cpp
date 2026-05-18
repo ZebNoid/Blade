@@ -3,7 +3,7 @@
 
 namespace Blade::Backend {
 
-auto NativeRender::fillRect(
+auto NativeRender::rectFill(
     HDC hdc,
     RECT rect,
     COLORREF color
@@ -11,52 +11,26 @@ auto NativeRender::fillRect(
 {
     // TODO ResourceManager!!
     HBRUSH brush = CreateSolidBrush(color);
-
     ::FillRect(hdc, &rect, brush);
-
-    // TODO ResourceManager!!
     DeleteObject(brush);
 }
 
 
-auto NativeRender::drawRect(
+auto NativeRender::rectBorder(
     HDC hdc,
     RECT rect,
     COLORREF color,
     int thickness
 ) -> void
 {
-    HPEN pen = CreatePen(
-        PS_SOLID,
-        thickness,
-        color
-    );
-
     // TODO ResourceManager!!
-    // HGDIOBJ oldPen = SelectObject(hdc, pen);
-    // HGDIOBJ oldBrush = SelectObject(hdc, GetStockObject(HOLLOW_BRUSH));
-
     HBRUSH brush = CreateSolidBrush(color);
-    FrameRect(hdc, &rect, brush);
+    ::FrameRect(hdc, &rect, brush);
     DeleteObject(brush);
-
-    // Rectangle(
-    //     hdc,
-    //     rect.left,
-    //     rect.top,
-    //     rect.right,
-    //     rect.bottom
-    // );
-
-    // SelectObject(hdc, oldPen);
-    // SelectObject(hdc, oldBrush);
-
-    // TODO ResourceManager!!
-    DeleteObject(pen);
 }
 
 
-auto NativeRender::drawLine(
+auto NativeRender::line(
     HDC hdc,
     int x1, int y1,
     int x2, int y2,
@@ -73,15 +47,16 @@ auto NativeRender::drawLine(
 
     HGDIOBJ oldPen = SelectObject(hdc, pen);
 
-    MoveToEx(hdc, x1, y1, nullptr);
-    LineTo(hdc, x2, y2);
+    ::MoveToEx(hdc, x1, y1, nullptr);
+    ::LineTo(hdc, x2, y2);
+
     SelectObject(hdc, oldPen);
 
     // TODO ResourceManager!!
     DeleteObject(pen);
 }
 
-auto NativeRender::drawText(
+auto NativeRender::text(
     HDC hdc,
     RECT rect,
     const std::wstring& text,
@@ -90,17 +65,7 @@ auto NativeRender::drawText(
 {
     // SetBkMode(hdc, TRANSPARENT);
 
-    SetTextColor(
-        hdc,
-        color
-    );
-
-    // RECT rc{
-    //     rect.left,
-    //     rect.top,
-    //     rect.left + rect.right,
-    //     rect.top + rect.bottom
-    // };
+    SetTextColor(hdc, color);
 
     ::DrawTextW(
         hdc,

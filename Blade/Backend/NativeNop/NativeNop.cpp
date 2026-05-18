@@ -15,31 +15,29 @@ auto NativeNop::create(const WidgetContext& ctx, WidgetId id, const NopProps& pr
 
 auto NativeNop::paint(HDC hdc, RECT rect) -> void
 {
-    m_render.fillRect(
+    m_render.rectFill(
         hdc,
         rect,
         RGB(40, 40, 40)
     );
 
-    m_render.drawRect(
+    m_render.rectBorder(
         hdc,
         rect,
         RGB(0, 0, 255),
         2
     );
 
-    m_render.drawLine(
+    m_render.line(
         hdc,
         rect.left,
         rect.top,
-        // rect.left + rect.right,
-        // rect.top + rect.bottom,
         rect.right,
         rect.bottom,
         RGB(255, 0, 0)
     );
 
-    m_render.drawLine(
+    m_render.line(
         hdc,
         rect.left + rect.right,
         rect.top,
@@ -48,7 +46,7 @@ auto NativeNop::paint(HDC hdc, RECT rect) -> void
         RGB(0, 255, 0)
     );
 
-    m_render.drawText(
+    m_render.text(
         hdc,
         rect,
         m_text,
