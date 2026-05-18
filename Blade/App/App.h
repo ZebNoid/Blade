@@ -65,7 +65,7 @@ protected:
 
     WindowManager m_wm;
 
-    std::vector<WindowBuilder> m_windowBuilders;
+    // std::vector<WindowBuilder> m_windowBuilders;
 
 private:
     std::unique_ptr<ApiBackend> m_backend;
