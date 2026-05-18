@@ -45,12 +45,9 @@ protected:
 
         window(
             Row(
-                Nop("Nop").set({.layout = {.flex = 1,},})
-                , Label("Label").set({.layout = {.flex = 1,},})
+                Nop("Nop")
+                , Label("Label")
             )
-            .set({
-                .crossAxisAlignment = CrossAxisAlignment::Stretch,
-            })
         ).set(wProp);
 
         // window(contentBladeDemo()).id(windowId).set({

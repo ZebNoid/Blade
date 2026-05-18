@@ -25,10 +25,7 @@ protected:
 
     auto createNative(Rect rect) -> HWND override;
 
-    auto setProps(const WindowProps& props) -> void
-    {
-        m_props = props;
-    }
+    Point initPosition();
 
     auto handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT override;
 

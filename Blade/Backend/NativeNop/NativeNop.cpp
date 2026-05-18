@@ -21,7 +21,7 @@ auto NativeNop::paint(HDC hdc, RECT rect) -> void
         RGB(40, 40, 40)
     );
 
-    m_render.rectBorder(
+    m_render.border(
         hdc,
         rect,
         RGB(0, 0, 255),

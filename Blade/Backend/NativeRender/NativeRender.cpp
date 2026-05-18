@@ -16,7 +16,7 @@ auto NativeRender::rectFill(
 }
 
 
-auto NativeRender::rectBorder(
+auto NativeRender::border(
     HDC hdc,
     RECT rect,
     COLORREF color,

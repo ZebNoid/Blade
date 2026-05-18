@@ -16,7 +16,7 @@ public:
         COLORREF color
     ) -> void;
 
-    auto rectBorder(
+    auto border(
         HDC hdc,
         RECT rect,
         COLORREF color,
