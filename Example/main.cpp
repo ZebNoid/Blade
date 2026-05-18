@@ -22,15 +22,11 @@ protected:
 
     auto ui() -> void override
     {
+        // Window().set(wProp).mount(this);
 
-        Window().set(wProp).mount(this);
+        Window(Nop("Nop")).set(wProp).mount(this);
 
-        Window(
-                Label("Label")
-            )
-            .set(wProp)
-            .mount(this);
-
+        // Window(Label("Label")).set(wProp).mount(this);
 
 
         // window(contentFlex()).set(wProp);

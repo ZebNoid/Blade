@@ -35,6 +35,8 @@ add_library(${PROJECT_NAME} STATIC
         Registry/ResourceRegistry/ResourceRegistry.cpp
         Widget/WinLabel/WinLabel.h
         Widget/WinLabel/WinLabel.cpp
+        Widget/WinNop/WinNop.h
+        Widget/WinNop/WinNop.cpp
 )
 
 # use Unicode
