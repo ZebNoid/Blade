@@ -15,6 +15,7 @@ auto NativeSlider::create(
     const int value
 ) -> void
 {
+    // TODO force redraw on resize?
     m_ctx = ctx;
     m_id = id;
     m_props = props;

@@ -121,6 +121,8 @@ add_library(${PROJECT_NAME} STATIC
         Layout/LayoutEngine/LayoutEngine.cpp
         Layout/LayoutEngine/LayoutEngine.h
         Layout/LayoutEngine/LayoutType.h
+        Layout/LayoutContext/LayoutContext.cpp
+        Layout/LayoutContext/LayoutContext.h
 )
 
 # use Unicode

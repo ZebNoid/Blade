@@ -9,36 +9,26 @@ namespace Blade {
 
 auto Stack::measure(Size available) -> Size
 {
-    return LayoutEngine::Measure(
-        LayoutType::Stack,
-        FlexDirection::Row,
-        m_children,
-        m_props.layout,
-        0, // NO gap // note used here
-        available
-    );
+    return LayoutEngine::Measure({
+        .type = LayoutType::Stack,
+        .direction = FlexDirection::Column,
+        .children = &m_children,
+        .layout = &m_props.layout,
+        .available = available,
+    });
 }
 
 auto Stack::arrange(Rect rect) -> void
 {
     Widget::arrange(rect);
 
-    return LayoutEngine::Arrange(
-        LayoutType::Stack, // LayoutContext
-        FlexDirection::Row,
-        m_children,
-        m_props.layout,
-        MainAxisAlignment::Center, // note used here
-        CrossAxisAlignment::Center, // note used here
-        0, // note used here
-        rect
-    );
-
-    StackLayout::Arrange(
-        m_children,
-        m_props.layout,
-        rect
-    );
+    return LayoutEngine::Arrange({
+        .type = LayoutType::Stack,
+        .direction = FlexDirection::Column,
+        .children = &m_children,
+        .layout = &m_props.layout,
+        .rect = rect,
+    });
 }
 
 

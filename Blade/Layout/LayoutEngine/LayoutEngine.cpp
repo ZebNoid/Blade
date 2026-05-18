@@ -7,34 +7,27 @@
 namespace Blade {
 
 
-auto LayoutEngine::Measure(
-    LayoutType type,
-    FlexDirection direction,
-    const std::vector<std::unique_ptr<Widget>>& children,
-    const LayoutProps& layout,
-    int gap,
-    Size available
-) -> Size
+auto LayoutEngine::Measure(const LayoutContext& ctx) -> Size
 {
-    switch (type)
+    switch (ctx.type)
     {
     case LayoutType::Flex:
         {
             return FlexLayout::Measure(
-                direction,
-                children,
-                layout,
-                gap,
-                available
+                ctx.direction,
+                *ctx.children,
+                *ctx.layout,
+                ctx.gap,
+                ctx.available
             );
         }
 
     case LayoutType::Stack:
         {
             return StackLayout::Measure(
-                children,
-                layout,
-                available
+                *ctx.children,
+                *ctx.layout,
+                ctx.available
             );
         }
     }
@@ -42,29 +35,20 @@ auto LayoutEngine::Measure(
     return {};
 }
 
-auto LayoutEngine::Arrange(
-    LayoutType type,
-    FlexDirection direction,
-    const std::vector<std::unique_ptr<Widget>>& children,
-    const LayoutProps& layout,
-    MainAxisAlignment mainAxisAlignment,
-    CrossAxisAlignment crossAxisAlignment,
-    int gap,
-    Rect rect
-) -> void
+auto LayoutEngine::Arrange(const LayoutContext& ctx) -> void
 {
-    switch (type)
+    switch (ctx.type)
     {
     case LayoutType::Flex:
         {
             FlexLayout::Arrange(
-                direction,
-                children,
-                layout,
-                mainAxisAlignment,
-                crossAxisAlignment,
-                gap,
-                rect
+                ctx.direction,
+                *ctx.children,
+                *ctx.layout,
+                ctx.mainAxisAlignment,
+                ctx.crossAxisAlignment,
+                ctx.gap,
+                ctx.rect
             );
 
             break;
@@ -73,9 +57,9 @@ auto LayoutEngine::Arrange(
     case LayoutType::Stack:
         {
             StackLayout::Arrange(
-                children,
-                layout,
-                rect
+                *ctx.children,
+                *ctx.layout,
+                ctx.rect
             );
 
             break;

@@ -1,6 +1,6 @@
 #pragma once
-#include "LayoutType.h"
-#include "Layout/FlexLayout/FlexDirection.h"
+
+#include "Layout/LayoutContext/LayoutContext.h"
 
 
 namespace Blade {
@@ -9,25 +9,9 @@ namespace Blade {
 class LayoutEngine
 {
 public:
-    static auto Measure(
-        LayoutType type,
-        FlexDirection direction,
-        const std::vector<std::unique_ptr<Widget>>& children,
-        const LayoutProps& layout,
-        int gap,
-        Size available
-    ) -> Size;
+    static auto Measure(const LayoutContext& ctx) -> Size;
 
-    static auto Arrange(
-        LayoutType type,
-        FlexDirection direction,
-        const std::vector<std::unique_ptr<Widget>>& children,
-        const LayoutProps& layout,
-        MainAxisAlignment mainAxisAlignment,
-        CrossAxisAlignment crossAxisAlignment,
-        int gap,
-        Rect rect
-    ) -> void;
+    static auto Arrange(const LayoutContext& ctx) -> void;
 };
 
 
