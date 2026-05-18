@@ -8,11 +8,6 @@
 
 namespace Blade {
 
-// namespace Backend::WinApi {
-//     class WindowHandler;
-//     class CommandHandler;
-// }
-
 
 class NativeWindow : public NativeWidget
 {

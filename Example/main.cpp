@@ -44,7 +44,14 @@ protected:
         // ).set(wProp);
 
         window(Row(
-                Nop("MyNop").set({.layout = {.flex = 1,},})
+            Stack(
+                // Button("Button 1")
+            Nop(                "MyNop")
+            ,Nop(                "MyNop1")
+            //     ,Nop("MyNop2")
+            //     ,Label("Label2")
+                )
+                .set({.layout = {.flex = 1,},})
                 , Label("Label").set({.layout = {.flex = 1,},})
             )
             .set({

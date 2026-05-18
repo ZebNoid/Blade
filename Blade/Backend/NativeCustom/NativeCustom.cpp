@@ -72,19 +72,20 @@ auto NativeCustom::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
     switch (msg)
     {
     case WM_ERASEBKGND:
-        return 1;
+        return TRUE; // Stop the OS from erasing the background
 
-    case WM_LBUTTONDOWN:
-        {
-            SendMessage(
-                GetParent(hwnd),
-                msg,
-                wParam,
-                lParam
-            );
 
-            break;
-        }
+    // case WM_LBUTTONDOWN: // TODO why
+    //     {
+    //         SendMessage(
+    //             GetParent(hwnd),
+    //             msg,
+    //             wParam,
+    //             lParam
+    //         );
+    //
+    //         break;
+    //     }
 
     // case WM_MOUSEMOVE: // WM_NCMOUSEMOVE ?
     // case WM_LBUTTONDBLCLK:
@@ -119,6 +120,7 @@ auto NativeCustom::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
         }
 
     case WM_NCHITTEST:
+        // TODO for child class
         return HTTRANSPARENT; // All hits pass through
     }
 

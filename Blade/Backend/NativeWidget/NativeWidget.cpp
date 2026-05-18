@@ -31,6 +31,7 @@ auto NativeWidget::exStyle() const -> DWORD
 
 auto NativeWidget::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
 {
+
     return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 

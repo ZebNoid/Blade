@@ -130,6 +130,7 @@ add_library(${PROJECT_NAME} STATIC
         Widgets/Nop/Nop.cpp
         Widgets/Nop/Nop.h
         WidgetsProps/Widget/NopProps.h
+        Backend/NativeRender/NativeRenderContext.h
 )
 
 # use Unicode

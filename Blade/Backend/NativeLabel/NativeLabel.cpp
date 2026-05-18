@@ -87,19 +87,19 @@ auto NativeLabel::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
     switch (msg)
     {
     case WM_ERASEBKGND:
-        return 1;
+        return TRUE;
 
-    case WM_LBUTTONDOWN:
-        {
-            SendMessage(
-                GetParent(hwnd),
-                msg,
-                wParam,
-                lParam
-            );
-
-            break;
-        }
+    // case WM_LBUTTONDOWN:
+    //     {
+    //         SendMessage(
+    //             GetParent(hwnd),
+    //             msg,
+    //             wParam,
+    //             lParam
+    //         );
+    //
+    //         break;
+    //     }
 
     // case WM_MOUSEMOVE: // WM_NCMOUSEMOVE ?
     // case WM_LBUTTONDBLCLK:
