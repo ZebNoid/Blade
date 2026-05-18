@@ -16,7 +16,7 @@ public:
 
     virtual ~App() = default;
 
-    auto backend(
+    auto setBackend(
         std::unique_ptr<AppBackend> backend
     ) -> void;
 

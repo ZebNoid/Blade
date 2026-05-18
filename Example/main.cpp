@@ -17,7 +17,7 @@ class Sandbox : public App
 protected:
     auto setup() -> void override
     {
-        backend(std::make_unique<Backend::NativeApp>());
+        setBackend(std::make_unique<Backend::NativeApp>());
     }
 
     auto ui() -> void override
