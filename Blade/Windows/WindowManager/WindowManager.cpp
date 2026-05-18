@@ -11,30 +11,30 @@ namespace Blade {
 // {
 // }
 
-auto WindowManager::createWindow(WindowBuilder&& builder) -> Window&
-{
-    auto window = std::unique_ptr<Window>(
-        new Window(
-            // m_appCtx,
-            // *this
-        )
-    );
-
-    // TODO build
-    window->set(builder.m_props);
-    window->on(builder.m_events);
-    window->create();
-    // window->setRoot(builder.takeRoot());
-    // TODO show window after? .set({.visible})?
-
-    auto& ref = *window;
-
-    m_windows.push_back(
-        std::move(window)
-    );
-
-    return ref;
-}
+// auto WindowManager::createWindow(WindowBuilder&& builder) -> Window&
+// {
+//     auto window = std::unique_ptr<Window>(
+//         new Window(
+//             // m_appCtx,
+//             // *this
+//         )
+//     );
+//
+//     // TODO build
+//     window->set(builder.m_props);
+//     window->on(builder.m_events);
+//     window->create();
+//     // window->setRoot(builder.takeRoot());
+//     // TODO show window after? .set({.visible})?
+//
+//     auto& ref = *window;
+//
+//     m_windows.push_back(
+//         std::move(window)
+//     );
+//
+//     return ref;
+// }
 
 auto WindowManager::destroyWindow(Window* target) -> void
 {

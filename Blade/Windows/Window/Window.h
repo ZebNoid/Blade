@@ -64,10 +64,17 @@ public:
 
     auto resize(Size size) -> void;
 
-    auto set(WindowProps props) -> Window&
+
+    auto set(WindowProps props) & -> Window&
     {
         m_props = std::move(props);
         return *this;
+    }
+
+    auto set(WindowProps props) && -> Window&&
+    {
+        m_props = std::move(props);
+        return std::move(*this);
     }
 
     auto on(WindowEvents events) -> Window&
@@ -84,8 +91,6 @@ public:
     }
 
     auto mount(class App* app) && -> void;
-
-    // auto mount(class App* app) & -> void;
 
     auto root() const -> Widget*
     {

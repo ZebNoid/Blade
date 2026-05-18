@@ -56,8 +56,6 @@ add_library(${PROJECT_NAME} STATIC
         WidgetsProps/Window/WindowProps.h
         WidgetsProps/Common/Size.h
         WidgetsProps/Common/Thickness.h
-        Windows/WindowBuilder/WindowBuilder.cpp
-        Windows/WindowBuilder/WindowBuilder.h
         WidgetsProps/Common/Point.h
         WidgetsProps/Common/TextAlign.h
         WidgetsProps/Widget/ButtonProps.h

@@ -4,7 +4,6 @@
 #include <vector>
 
 #include "Windows/Window/Window.h"
-#include "Windows/WindowBuilder/WindowBuilder.h"
 
 
 namespace Blade {
@@ -22,8 +21,6 @@ public:
         //   std::move(window)
         // );
     }
-
-    auto createWindow(WindowBuilder&& builder) -> Window&;
 
     auto destroyWindow(Window* target) -> void;
 

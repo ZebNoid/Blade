@@ -39,9 +39,6 @@ auto Window::mount(App* app) && -> void
     );
 }
 
-// auto Window::mount(App* app) & -> void
-// {
-// }
 
 
 } // namespace
