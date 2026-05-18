@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Backend/NativeWidget/NativeWidget.h"
-#include "Props/Widget/LabelProps.h"
+#include "WidgetsProps/Widget/LabelProps.h"
 
 
 namespace Blade {
@@ -26,9 +26,9 @@ protected:
     auto handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT override;
 
 private:
+    LabelProps m_props{};
     std::string m_text;
     HFONT m_font = nullptr;
-    LabelProps m_props{};
 };
 
 

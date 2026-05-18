@@ -1,4 +1,4 @@
-project(Blade VERSION 0.1.9)
+project(Blade VERSION 0.2.0)
 
 # Use the names to logic check
 if (NOT PROJECT_IS_TOP_LEVEL)
@@ -51,33 +51,33 @@ add_library(${PROJECT_NAME} STATIC
         Backend/Utils/WinApiUtils.h
         Backend/Registry/ResourceRegistry/ResourceRegistry.cpp
         Backend/Registry/ResourceRegistry/ResourceRegistry.h
-        Props/Widget/ColumnProps.h
-        Props/Widget/LabelProps.h
-        Props/Window/WindowProps.h
-        Props/Common/Size.h
-        Props/Common/Thickness.h
+        WidgetsProps/Widget/ColumnProps.h
+        WidgetsProps/Widget/LabelProps.h
+        WidgetsProps/Window/WindowProps.h
+        WidgetsProps/Common/Size.h
+        WidgetsProps/Common/Thickness.h
         Windows/WindowBuilder/WindowBuilder.cpp
         Windows/WindowBuilder/WindowBuilder.h
-        Props/Common/Point.h
-        Props/Common/TextAlign.h
-        Props/Widget/ButtonProps.h
-        Props/Common/StyleProps.h
+        WidgetsProps/Common/Point.h
+        WidgetsProps/Common/TextAlign.h
+        WidgetsProps/Widget/ButtonProps.h
+        WidgetsProps/Common/StyleProps.h
         Backend/NativeCheckbox/NativeCheckbox.cpp
         Backend/NativeCheckbox/NativeCheckbox.h
         Widgets/Checkbox/Checkbox.cpp
         Widgets/Checkbox/Checkbox.h
-        Props/Widget/CheckboxProps.h
+        WidgetsProps/Widget/CheckboxProps.h
         Backend/NativeRadioButton/NativeRadioButton.cpp
         Backend/NativeRadioButton/NativeRadioButton.h
         Widgets/RadioButton/RadioButton.cpp
         Widgets/RadioButton/RadioButton.h
-        Props/Widget/RadioButtonProps.h
-        Props/Widget/TextFieldProps.h
-        Props/Common/MainAxisAlignment.h
-        Props/Common/CrossAxisAlignment.h
-        Layout/Flex/FlexLayout.cpp
-        Layout/Flex/FlexLayout.h
-        Layout/Flex/FlexDirection.h
+        WidgetsProps/Widget/RadioButtonProps.h
+        WidgetsProps/Widget/TextFieldProps.h
+        WidgetsProps/LayoutProps/MainAxisAlignment.h
+        WidgetsProps/LayoutProps/CrossAxisAlignment.h
+        Layout/LayoutFlex/LayoutFlex.cpp
+        Layout/LayoutFlex/LayoutFlex.h
+        Layout/LayoutFlex/FlexDirection.h
         Debug/LayoutDebugRenderer/LayoutDebugRenderer.cpp
         Debug/LayoutDebugRenderer/LayoutDebugRenderer.h
         Debug/LayoutDebugTheme.h
@@ -91,12 +91,12 @@ add_library(${PROJECT_NAME} STATIC
         Backend/NativeProgress/NativeProgress.h
         Widgets/Progress/Progress.cpp
         Widgets/Progress/Progress.h
-        Props/Widget/ProgressProps.h
+        WidgetsProps/Widget/ProgressProps.h
         Backend/NativeSlider/NativeSlider.cpp
         Backend/NativeSlider/NativeSlider.h
         Widgets/Slider/Slider.cpp
         Widgets/Slider/Slider.h
-        Props/Widget/SliderProps.h
+        WidgetsProps/Widget/SliderProps.h
         Backend/Helpers/Helpers.h
         Backend/Handlers/CommandHandler/CommandHandler.cpp
         Backend/Handlers/CommandHandler/CommandHandler.h
@@ -108,6 +108,21 @@ add_library(${PROJECT_NAME} STATIC
         Backend/Handlers/PaintHandler/PaintHandler.h
         Widgets/Layout/Stack/Stack.cpp
         Widgets/Layout/Stack/Stack.h
+        Layout/LayoutStack/LayoutStack.cpp
+        Layout/LayoutStack/LayoutStack.h
+        WidgetsEvents/Window/WindowEvents.h
+        WidgetsEvents/Widget/ButtonEvents.h
+        WidgetsEvents/Callback.h
+        WidgetsEvents/Widget/CheckboxEvents.h
+        WidgetsEvents/Widget/ProgressEvents.h
+        WidgetsEvents/Widget/RadioButtonEvents.h
+        WidgetsEvents/Widget/SliderEvents.h
+        WidgetsEvents/Widget/TextFieldEvents.h
+        Layout/LayoutEngine/LayoutEngine.cpp
+        Layout/LayoutEngine/LayoutEngine.h
+        Layout/LayoutEngine/LayoutType.h
+        Layout/LayoutContext/LayoutContext.cpp
+        Layout/LayoutContext/LayoutContext.h
 )
 
 # use Unicode

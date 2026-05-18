@@ -1,8 +1,10 @@
 #pragma once
 
 #include "Backend/NativeSlider/NativeSlider.h"
-#include "Props/Widget/SliderProps.h"
+#include "WidgetsProps/Widget/SliderProps.h"
 #include "Widgets/Widget/Widget.h"
+#include "WidgetsEvents/Widget/SliderEvents.h"
+
 
 namespace Blade {
 
@@ -25,7 +27,6 @@ public:
     auto arrange(Rect rect) -> void override
     {
         Widget::arrange(rect);
-
         m_native.setRect(rect);
     }
 
@@ -33,6 +34,12 @@ public:
     {
         m_layout = props.layout;
         m_props = std::move(props);
+        return *this;
+    }
+
+    auto on(SliderEvents events) -> Slider&
+    {
+        m_events = std::move(events);
         return *this;
     }
 
@@ -45,6 +52,7 @@ public:
 private:
     NativeSlider m_native;
     SliderProps m_props;
+    SliderEvents m_events;
 
     int m_value;
 };

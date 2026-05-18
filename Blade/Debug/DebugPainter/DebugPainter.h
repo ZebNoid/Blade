@@ -3,7 +3,7 @@
 #include <string>
 #include <windows.h>
 
-#include "Props/Common/LayoutProps.h"
+#include "WidgetsProps/LayoutProps/LayoutProps.h"
 
 
 namespace Blade {

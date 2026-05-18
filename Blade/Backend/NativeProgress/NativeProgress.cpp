@@ -49,7 +49,7 @@ auto NativeProgress::create(
 
 DWORD NativeProgress::style() const
 {
-    auto style = WS_CHILD | WS_VISIBLE;
+    auto style = WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS;
     if (m_props.vertical)
     {
         style |= PBS_VERTICAL;

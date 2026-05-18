@@ -3,8 +3,8 @@
 #include <cstdio>
 #include <windows.h>
 
-#include "Props/Common/Point.h"
-#include "Props/Common/Size.h"
+#include "WidgetsProps/Common/Point.h"
+#include "WidgetsProps/Common/Size.h"
 
 
 namespace Blade {

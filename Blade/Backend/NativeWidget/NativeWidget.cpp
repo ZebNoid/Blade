@@ -76,5 +76,30 @@ auto CALLBACK NativeWidget::WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARA
     return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 
+// TODO z order
+// auto updateZOrder() -> void;
+// auto NativeWidget::updateZOrder() -> void
+// {
+// HWND previous = nullptr;
+//
+// for (auto it = m_children.rbegin();         it != m_children.rend();         ++it)
+// {
+//     auto hwnd = (*it)->nativeHandle();
+//
+//     SetWindowPos(
+//         hwnd,
+//         previous,
+//         0,
+//         0,
+//         0,
+//         0,
+//         SWP_NOMOVE |
+//         SWP_NOSIZE |
+//         SWP_NOACTIVATE
+//     );
+//
+//     previous = hwnd;
+// }
+// }
 
 } // namespace

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Props/Common/LayoutProps.h"
-#include "Props/Common/TextAlign.h"
+#include "WidgetsProps/LayoutProps/LayoutProps.h"
+#include "WidgetsProps/Common/TextAlign.h"
 
 
 namespace Blade {

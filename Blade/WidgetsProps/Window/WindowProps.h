@@ -2,9 +2,9 @@
 
 #include <string>
 
-#include "Props/Common/Point.h"
-#include "Props/Common/Size.h"
-#include "Props/Common/Thickness.h"
+#include "WidgetsProps/Common/Point.h"
+#include "WidgetsProps/Common/Size.h"
+#include "WidgetsProps/Common/Thickness.h"
 
 
 namespace Blade {
@@ -14,6 +14,7 @@ struct WindowProps
 {
     std::string title = "Blade";
     // TODO remember size/position
+    // TODO minSize / maxSize
     Size size{800, 600};
     // TODO remove windows default
     Point position{CW_USEDEFAULT, CW_USEDEFAULT};

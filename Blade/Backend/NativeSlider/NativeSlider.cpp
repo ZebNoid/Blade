@@ -15,6 +15,7 @@ auto NativeSlider::create(
     const int value
 ) -> void
 {
+    // TODO force redraw on resize?
     m_ctx = ctx;
     m_id = id;
     m_props = props;
@@ -30,7 +31,7 @@ auto NativeSlider::create(
 
 DWORD NativeSlider::style() const
 {
-    auto style = WS_CHILD | WS_VISIBLE;
+    auto style = WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS;
 
     style |= TBS_TRANSPARENTBKGND;
 

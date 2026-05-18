@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Thickness.h"
+#include "WidgetsProps/Common/Thickness.h"
 
 
 namespace Blade {

@@ -16,7 +16,7 @@ auto Slider::mount(Materializer& m, WidgetContext& ctx) -> void
     bindEvent(ctx, WidgetEvent::Change, [this](const EventValue& value)
     {
         // auto value = std::get<int>(value);
-        // TODO Slider change callback
+        // TODO .on(Callbacks) Slider
     });
 }
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Backend/NativeWidget/NativeWidget.h"
-#include "Props/Widget/CheckboxProps.h"
+#include "WidgetsProps/Widget/CheckboxProps.h"
 
 
 namespace Blade {

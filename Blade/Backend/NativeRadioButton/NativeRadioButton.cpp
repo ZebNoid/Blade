@@ -22,7 +22,7 @@ DWORD NativeRadioButton::style() const
     // TODO Start of group WS_GROUP
 
     // TODO BS_VCENTER?
-    auto style = WS_CHILD | WS_VISIBLE | BS_AUTORADIOBUTTON;
+    auto style = WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | BS_AUTORADIOBUTTON;
 
     // style |= BS_OWNERDRAW;
 

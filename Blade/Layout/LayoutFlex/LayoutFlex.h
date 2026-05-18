@@ -4,16 +4,16 @@
 #include <vector>
 
 #include "FlexDirection.h"
-#include "Props/Common/CrossAxisAlignment.h"
-#include "Props/Common/LayoutProps.h"
-#include "Props/Common/MainAxisAlignment.h"
+#include "WidgetsProps/LayoutProps/CrossAxisAlignment.h"
+#include "WidgetsProps/LayoutProps/LayoutProps.h"
+#include "WidgetsProps/LayoutProps/MainAxisAlignment.h"
 #include "Widgets/Widget/Widget.h"
 
 
 namespace Blade {
 
-
-class FlexLayout
+// FlexLayout -> LayoutFlex
+class LayoutFlex
 {
 public:
     static auto Measure(

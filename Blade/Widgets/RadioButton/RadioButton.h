@@ -1,8 +1,9 @@
 #pragma once
 
 #include "Backend/NativeRadioButton/NativeRadioButton.h"
-#include "Props/Widget/RadioButtonProps.h"
+#include "WidgetsProps/Widget/RadioButtonProps.h"
 #include "Widgets/Widget/Widget.h"
+#include "WidgetsEvents/Widget/RadioButtonEvents.h"
 
 
 namespace Blade {
@@ -25,7 +26,6 @@ public:
     auto arrange(Rect rect) -> void override
     {
         Widget::arrange(rect);
-
         m_native.setRect(rect);
     }
 
@@ -33,6 +33,12 @@ public:
     {
         m_layout = props.layout;
         m_props = std::move(props);
+        return *this;
+    }
+
+    auto on(RadioButtonEvents events) -> RadioButton&
+    {
+        m_events = std::move(events);
         return *this;
     }
 
@@ -45,6 +51,7 @@ public:
 private:
     NativeRadioButton m_native;
     RadioButtonProps m_props;
+    RadioButtonEvents m_events;
 
     std::string m_text;
 };

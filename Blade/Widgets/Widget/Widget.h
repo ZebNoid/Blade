@@ -3,8 +3,8 @@
 #include "Context/WidgetContext.h"
 #include "Core/Core.h"
 #include "Events/WidgetEvent/WidgetEvent.h"
-#include "Props/Common/LayoutProps.h"
-#include "Props/Common/Size.h"
+#include "WidgetsProps/LayoutProps/LayoutProps.h"
+#include "WidgetsProps/Common/Size.h"
 
 
 namespace Blade {

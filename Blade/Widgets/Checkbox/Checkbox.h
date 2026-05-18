@@ -1,8 +1,9 @@
 #pragma once
 
 #include "Backend/NativeCheckbox/NativeCheckbox.h"
-#include "Props/Widget/CheckboxProps.h"
+#include "WidgetsProps/Widget/CheckboxProps.h"
 #include "Widgets/Widget/Widget.h"
+#include "WidgetsEvents/Widget/CheckboxEvents.h"
 
 
 namespace Blade {
@@ -25,7 +26,6 @@ public:
     auto arrange(Rect rect) -> void override
     {
         Widget::arrange(rect);
-
         m_native.setRect(rect);
     }
 
@@ -33,6 +33,12 @@ public:
     {
         m_layout = props.layout;
         m_props = std::move(props);
+        return *this;
+    }
+
+    auto on(CheckboxEvents events) -> Checkbox&
+    {
+        m_events = std::move(events);
         return *this;
     }
 
@@ -45,6 +51,7 @@ public:
 private:
     NativeCheckbox m_native;
     CheckboxProps m_props;
+    CheckboxEvents m_events;
 
     std::string m_text;
 };

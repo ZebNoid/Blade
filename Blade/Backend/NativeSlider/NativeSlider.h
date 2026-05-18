@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Backend/NativeWidget/NativeWidget.h"
-#include "Props/Widget/SliderProps.h"
+#include "WidgetsProps/Widget/SliderProps.h"
 
 
 namespace Blade {

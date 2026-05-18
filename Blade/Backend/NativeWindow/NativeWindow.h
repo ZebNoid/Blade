@@ -2,7 +2,7 @@
 
 
 #include "Backend/NativeWidget/NativeWidget.h"
-#include "Props/Window/WindowProps.h"
+#include "WidgetsProps/Window/WindowProps.h"
 #include "Windows/Window/Window.h"
 
 

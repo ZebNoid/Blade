@@ -2,8 +2,9 @@
 
 #include <memory>
 
-#include "Props/Window/WindowProps.h"
+#include "WidgetsProps/Window/WindowProps.h"
 #include "Widgets/Widget/Widget.h"
+#include "WidgetsEvents/Window/WindowEvents.h"
 
 
 namespace Blade {
@@ -28,6 +29,12 @@ public:
         return *this;
     }
 
+    auto on(WindowEvents events) -> WindowBuilder&
+    {
+        m_events = std::move(events);
+        return *this;
+    }
+
     auto id(WidgetId& id) -> WindowBuilder&
     {
         // TODO get id
@@ -42,6 +49,7 @@ public:
 
 private:
     WindowProps m_props;
+    WindowEvents m_events;
     std::unique_ptr<Widget> m_root;
 
     friend class WindowManager;

@@ -8,7 +8,12 @@
 namespace Blade {
 
 
-auto NativeButton::create(const WidgetContext& ctx, const WidgetId id, const ButtonProps& props, const std::string& text) -> void
+auto NativeButton::create(
+    const WidgetContext& ctx,
+    const WidgetId id,
+    const ButtonProps& props,
+    const std::string& text
+) -> void
 {
     m_ctx = ctx;
     m_id = id;
@@ -23,7 +28,7 @@ auto NativeButton::create(const WidgetContext& ctx, const WidgetId id, const But
 
 DWORD NativeButton::style() const
 {
-    auto style = WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON;
+    auto style = WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | WS_CLIPSIBLINGS;
 
     if (m_props.defaultButton)
     {

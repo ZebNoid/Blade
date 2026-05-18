@@ -1,16 +1,34 @@
 #include "Stack.h"
 
+#include "Layout/LayoutEngine/LayoutEngine.h"
+
 
 namespace Blade {
 
 
 auto Stack::measure(Size available) -> Size
 {
-    return {200,200};
+    return LayoutEngine::Measure({
+        .type = LayoutType::Stack,
+        .direction = FlexDirection::Column,
+        .children = &m_children,
+        .layout = &m_props.layout,
+        .available = available,
+    });
 }
 
-void Stack::arrange(Rect rect)
+auto Stack::arrange(Rect rect) -> void
 {
-    Container::arrange(rect);
+    Widget::arrange(rect);
+
+    return LayoutEngine::Arrange({
+        .type = LayoutType::Stack,
+        .direction = FlexDirection::Column,
+        .children = &m_children,
+        .layout = &m_props.layout,
+        .rect = rect,
+    });
 }
+
+
 } // namespace

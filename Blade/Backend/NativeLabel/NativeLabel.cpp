@@ -33,13 +33,13 @@ auto NativeLabel::create(const WidgetContext& ctx, WidgetId id, const LabelProps
 
 DWORD NativeLabel::style() const
 {
-    auto style = WS_CHILD | WS_VISIBLE;
+    auto style = WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS;
     return style;
 }
 
 DWORD NativeLabel::exStyle() const
 {
-    auto exStyle = 0;//WS_EX_TRANSPARENT;
+    auto exStyle = 0; //WS_EX_TRANSPARENT;
     return exStyle;
 }
 
@@ -53,10 +53,8 @@ auto NativeLabel::createNative(const Rect rect) -> HWND
         ClassRegistry::Get("BladeLabel"),
         TEXT(""),
         style(),
-        rect.x,
-        rect.y,
-        rect.width,
-        rect.height,
+        rect.x, rect.y,
+        rect.width, rect.height,
         m_ctx.hwnd,
         nullptr, // ID
         m_ctx.app->hInstance,

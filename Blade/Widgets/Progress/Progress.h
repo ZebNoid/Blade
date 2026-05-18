@@ -1,8 +1,9 @@
 #pragma once
 
 #include "Backend/NativeProgress/NativeProgress.h"
-#include "Props/Widget/ProgressProps.h"
+#include "WidgetsProps/Widget/ProgressProps.h"
 #include "Widgets/Widget/Widget.h"
+#include "WidgetsEvents/Widget/ProgressEvents.h"
 
 
 namespace Blade {
@@ -13,7 +14,7 @@ class Progress : public Widget
 public:
     Progress(int value);
 
-    auto name() -> std::wstring override  { return L"Progress"; }
+    auto name() -> std::wstring override { return L"Progress"; }
 
     auto mount(Materializer& m, WidgetContext& ctx) -> void override;
 
@@ -26,7 +27,6 @@ public:
     auto arrange(Rect rect) -> void override
     {
         Widget::arrange(rect);
-
         m_native.setRect(rect);
     }
 
@@ -34,6 +34,12 @@ public:
     {
         m_layout = props.layout;
         m_props = std::move(props);
+        return *this;
+    }
+
+    auto on(ProgressEvents events) -> Progress&
+    {
+        m_events = std::move(events);
         return *this;
     }
 
@@ -46,6 +52,7 @@ public:
 private:
     NativeProgress m_native;
     ProgressProps m_props;
+    ProgressEvents m_events;
 
     int m_value;
 };

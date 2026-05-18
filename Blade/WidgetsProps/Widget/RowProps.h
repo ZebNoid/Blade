@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Props/Common/CrossAxisAlignment.h"
-#include "Props/Common/LayoutProps.h"
-#include "Props/Common/MainAxisAlignment.h"
+#include "WidgetsProps/LayoutProps/CrossAxisAlignment.h"
+#include "WidgetsProps/LayoutProps/LayoutProps.h"
+#include "WidgetsProps/LayoutProps/MainAxisAlignment.h"
 
 
 namespace Blade {
