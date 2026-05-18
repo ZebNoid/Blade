@@ -45,8 +45,15 @@ protected:
 
         window(
             Row(
-                Nop("Nop")
-                , Label("Label")
+                Stack(
+                    Nop("Nop")
+                    , Nop("Nop")
+                    , Nop("Nop").set({.layout = {100, 10,}})
+                )
+                , Stack(
+                    Label("Label")
+                    , Label("|-----+-----|")
+                )
             )
         ).set(wProp);
 

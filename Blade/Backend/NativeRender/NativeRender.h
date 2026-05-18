@@ -41,8 +41,12 @@ public:
         HDC hdc,
         RECT rect,
         const std::wstring& text,
-        COLORREF color
+        COLORREF color,
+        HFONT font = nullptr,
+        int style = DT_CENTER
     ) -> void;
+
+
 };
 
 } // namespace

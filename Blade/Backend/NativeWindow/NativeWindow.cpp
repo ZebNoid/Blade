@@ -46,7 +46,7 @@ auto NativeWindow::create(const WidgetContext& ctx, Window* owner, const WindowP
     // TODO set Title
     // SetWindowText(m_hwnd, toNativeString(m_props.title).c_str());
     // TODO force redraw
-    // SetWindowPos(hwnd, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
+    // SetWindowPos(m_hwnd, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
 }
 
 auto NativeWindow::initPosition() -> Point

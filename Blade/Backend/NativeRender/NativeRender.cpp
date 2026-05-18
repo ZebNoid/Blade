@@ -92,9 +92,19 @@ auto NativeRender::text(
     HDC hdc,
     RECT rect,
     const std::wstring& text,
-    COLORREF color
+    COLORREF color,
+    HFONT font,
+    int style
 ) -> void
 {
+    // выбрать font
+    HFONT oldFont = nullptr;
+
+    if (font)
+    {
+        oldFont = (HFONT)SelectObject(hdc, font);
+    }
+
     // SetBkMode(hdc, TRANSPARENT);
 
     SetTextColor(hdc, color);
@@ -104,10 +114,16 @@ auto NativeRender::text(
         text.c_str(),
         -1,
         &rect,
-        DT_CENTER |
+        // DT_CENTER |
         DT_VCENTER |
-        DT_SINGLELINE
+        DT_SINGLELINE |
+        DT_END_ELLIPSIS | style
     );
+
+    if (oldFont)
+    {
+        SelectObject(hdc, oldFont);
+    }
 }
 
 } // namespace

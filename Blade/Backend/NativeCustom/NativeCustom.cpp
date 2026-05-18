@@ -16,6 +16,7 @@ auto NativeCustom::create(
 {
     m_ctx = ctx;
     m_id = id;
+    m_systemFont = ResourceRegistry::GetFont("system");
 
     ClassRegistry::Register(
         NATIVE_CUSTOM_CLASS,
@@ -27,7 +28,7 @@ auto NativeCustom::create(
     );
 
     createNative(Rect{0, 0, 140, 32}); // TODO rect? its ignored anyway
-    m_systemFont = ResourceRegistry::GetFont("system");
+    applyFont(m_systemFont);
 }
 
 DWORD NativeCustom::style() const

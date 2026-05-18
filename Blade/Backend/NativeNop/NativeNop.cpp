@@ -13,20 +13,12 @@ auto NativeNop::create(const WidgetContext& ctx, WidgetId id, const NopProps& pr
     m_text = Utf8ToUtf16(text);
 }
 
-auto NativeNop::paint(HDC hdc, RECT rect) -> void
+auto NativeNop::paint(const HDC hdc, const RECT rect) -> void
 {
-    m_render.rectFill(
-        hdc,
-        rect,
-        RGB(40, 40, 40)
-    );
+    // m_render.rectFill(hdc, rect, RGB(40, 40, 40));
 
-    m_render.rect(
-        hdc,
-        rect,
-        RGB(0, 0, 255),
-        2
-    );
+    m_render.frame(hdc, rect, RGB(0, 0, 255));
+    // m_render.rect(hdc, rect, RGB(0, 0, 255), 2);
 
     m_render.line(
         hdc,
@@ -50,7 +42,10 @@ auto NativeNop::paint(HDC hdc, RECT rect) -> void
         hdc,
         rect,
         m_text,
-        RGB(255, 255, 255)
+        RGB(128, 128, 128),
+        m_systemFont
     );
 }
+
+
 } // namespace
