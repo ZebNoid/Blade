@@ -14,7 +14,7 @@ public:
 
     auto runApp() -> int override;
 
-    auto createWindow(const Blade::Window& window) -> void override;
+    auto createWindow(Window& window) -> void override;
 
 private:
     HINSTANCE m_hInstance;

@@ -15,21 +15,24 @@ namespace Blade::Backend {
 // {
 // }
 
-WinWindow::WinWindow(Window& window)
-{
-    m_size = {800, 600};
-    // TODO move to app cycle
-    ResourceRegistry::Init();
-}
+// WinWindow::WinWindow(Window& window)
+// {
+//     m_size = {800, 600};
+//     // TODO move to app cycle
+//     ResourceRegistry::Init();
+// }
 
-auto WinWindow::create(const WidgetContext& ctx, Window* owner, const WindowProps& props) -> void
+// auto WinWindow::create(const WidgetContext& ctx, Window* owner, const WindowProps& props) -> void
+auto WinWindow::create(HINSTANCE hInstance) -> void
 {
-    m_ctx = ctx;
+    m_hInstance = hInstance;
+    // m_ctx = ctx;
     // TODO id
-    m_props = owner->getProps();
-    m_owner = owner;
+    m_props = m_window.getProps();
+    // m_window = owner;
 
-    ClassRegistry::Init(ctx.app->hInstance);
+
+    ClassRegistry::Init(m_hInstance);
 
     ClassRegistry::Register(
         "NativeWindow",
@@ -38,8 +41,8 @@ auto WinWindow::create(const WidgetContext& ctx, Window* owner, const WindowProp
             .proc = WindowProc,
             // .background = (HBRUSH)COLOR_HIGHLIGHTTEXT,
             // TODO set window icon
-            .icon = LoadIcon(ctx.app->hInstance, MAKEINTRESOURCE(101)),
-            // .icon = LoadIcon(ctx.app->hInstance, MAKEINTRESOURCE(IDI_APP_ICON)),
+            .icon = LoadIcon(m_hInstance, MAKEINTRESOURCE(101)),
+            // .icon = LoadIcon(m_hInstance, MAKEINTRESOURCE(IDI_APP_ICON)),
         }
     );
 
@@ -116,11 +119,9 @@ auto WinWindow::createNative(const Rect rect) -> HWND
         // TODO center
         startPos.x, startPos.y,
         m_props.size.width, m_props.size.height,
-        // for root window it always m_ctx.hwnd = nullptr
-        // m_ctx.hwnd != nullptr ? m_ctx.hwnd : HWND_DESKTOP,
-        m_ctx.hwnd,
+        HWND_DESKTOP, // m_ctx.hwnd, create parent window?
         nullptr,
-        m_ctx.app->hInstance,
+        m_hInstance,
         this);
 
     if (!m_hwnd)
@@ -264,12 +265,12 @@ auto WinWindow::show() const -> void
 auto WinWindow::resize(Size size) -> void
 {
     m_size = size;
-    m_owner->resize(m_size);
+    m_window.resize(m_size);
 }
 
 auto WinWindow::onDestroy() const -> void
 {
-    m_owner->destroy();
+    m_window.destroy();
 }
 
 

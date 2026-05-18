@@ -18,7 +18,7 @@ public:
 
     auto add(std::unique_ptr<Window> window) -> void;
 
-    auto createWindow(const Window& window) const -> void;
+    auto createWindow(Window& window) const -> void;
 
     auto destroyWindow(Window* target) -> void;
 

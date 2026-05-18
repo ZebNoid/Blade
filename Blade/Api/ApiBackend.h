@@ -14,7 +14,7 @@ public:
 
     virtual auto runApp() -> int = 0;
 
-    virtual auto createWindow(const Window& window) -> void = 0;
+    virtual auto createWindow(Window& window) -> void = 0;
 };
 
 

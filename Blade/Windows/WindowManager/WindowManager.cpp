@@ -21,7 +21,7 @@ auto WindowManager::add(std::unique_ptr<Window> window) -> void
     );
 }
 
-auto WindowManager::createWindow(const Window& window) const -> void
+auto WindowManager::createWindow(Window& window) const -> void
 {
     if (!m_backend) return;
     m_backend->createWindow(window);

@@ -22,7 +22,7 @@ auto WinBackend::runApp() -> int
     return static_cast<int>(m_msg.wParam);
 }
 
-auto WinBackend::createWindow(const Window& window) -> void
+auto WinBackend::createWindow(Window& window) -> void
 {
     std::cout << "WinBackend::createWindow\n";
 
@@ -35,8 +35,9 @@ auto WinBackend::createWindow(const Window& window) -> void
     //     &m_appCtx,
     //     this
     // };
-    //
     // native->create(w_ctx, window); // TODO
+
+    native->create(m_hInstance); // TODO
 
     m_windows.push_back(
         std::move(native)

@@ -7,18 +7,18 @@ namespace Blade {
 
 // TODO remove
 // TODO Native App context
-// struct AppContext
-// {
-//     HINSTANCE hInstance;
-//     // config, settings, renderer, etc
-// };
-
-class AppContext
+struct AppContext
 {
-public:
-    virtual ~AppContext() = default;
-
     HINSTANCE hInstance;
+    // config, settings, renderer, etc
 };
+
+// class AppContext
+// {
+// public:
+//     virtual ~AppContext() = default;
+//
+//     HINSTANCE hInstance;
+// };
 
 } // namespace
