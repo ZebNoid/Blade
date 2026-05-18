@@ -22,7 +22,21 @@ protected:
 
     auto ui() -> void override
     {
-        Blade::Debug::debug = false;
+        window(
+            Row(
+                Stack(
+                    Nop("Nop")
+                    , Nop("Nop")
+                    , Nop("Nop").set({.layout = {100, 10,}})
+                )
+                , Stack(
+                    Label("Label")
+                    , Label("|-----+-----|")
+                )
+            )
+        ).set(wProp);
+
+
         // .set({.layout = {.margin = 8,}})
 
         // window(contentFlex()).set(wProp);
@@ -49,19 +63,6 @@ protected:
         //     })
         // ).set(wProp);
 
-        window(
-            Row(
-                Stack(
-                    Nop("Nop")
-                    , Nop("Nop")
-                    , Nop("Nop").set({.layout = {100, 10,}})
-                )
-                , Stack(
-                    Label("Label")
-                    , Label("|-----+-----|")
-                )
-            )
-        ).set(wProp);
 
         // window(contentBladeDemo()).id(windowId).set({
         //     .title = "Blade",
