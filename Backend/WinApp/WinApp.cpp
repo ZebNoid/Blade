@@ -1,9 +1,16 @@
-#include "NativeApp.h"
+#include "WinApp.h"
+
+#include "WinInit/WinInit.h"
 
 
 namespace Blade::Backend {
 
-auto NativeApp::run() -> int
+WinApp::WinApp()
+{
+    WinInit::InitDpi();
+}
+
+auto WinApp::run() -> int
 {
     while (GetMessage(&m_msg, nullptr, 0, 0))
     {

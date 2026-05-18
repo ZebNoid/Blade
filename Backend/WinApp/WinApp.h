@@ -6,9 +6,11 @@
 namespace Blade::Backend {
 
 
-class NativeApp : public AppBackend
+class WinApp : public AppBackend
 {
 public:
+    WinApp();
+
     auto run() -> int override;
 
 private:

@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "blade.h"
-#include "NativeApp/NativeApp.h"
+#include "WinApp/WinApp.h"
 
 using namespace Blade;
 
@@ -17,7 +17,7 @@ class Sandbox : public App
 protected:
     auto setup() -> void override
     {
-        use<Backend::NativeApp>();
+        use<Backend::WinApp>();
     }
 
     auto ui() -> void override

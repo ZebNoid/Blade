@@ -6,9 +6,11 @@ if (NOT PROJECT_IS_TOP_LEVEL)
 endif ()
 
 add_library(${PROJECT_NAME} STATIC
-        NativeApp/NativeApp.cpp
-        NativeApp/NativeApp.h
+        WinApp/WinApp.cpp
+        WinApp/WinApp.h
         backend.h
+        WinInit/WinInit.cpp
+        WinInit/WinInit.h
 )
 
 # use Unicode

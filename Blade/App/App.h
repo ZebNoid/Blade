@@ -22,6 +22,12 @@ public:
         m_backend = std::make_unique<TBackend>();
     }
 
+    template <typename TBackend>
+    auto use(TBackend backend) -> void
+    {
+        m_backend = std::make_unique<TBackend>(std::move(backend));
+    }
+
     auto run() -> int;
 
     // TODO remove USE Windows(...).start(this) or? .app(this) .bind(this) .init(this) not .set({app=this})
@@ -54,8 +60,6 @@ protected:
 private:
     auto build() -> void;
 
-private:
-    MSG m_msg = {};
 
 protected:
     AppContext m_ctx{};
