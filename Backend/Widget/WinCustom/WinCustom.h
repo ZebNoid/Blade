@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Backend/NativeRender/NativeRender.h"
 #include "Context/WidgetContext.h"
+#include "Widget/NativeRender/WinRender.h"
 #include "Widget/WinWidget/WinWidget.h"
 
 
@@ -27,7 +27,7 @@ protected:
     virtual auto paint(HDC hdc, RECT rect) -> void = 0;
 
 protected:
-    Backend::NativeRender m_render;
+    WinRender m_render;
     HFONT m_systemFont = nullptr;
 };
 

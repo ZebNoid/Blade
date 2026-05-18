@@ -1,7 +1,7 @@
 #include "WinCustom.h"
 
-#include "Backend/Registry/ClassRegistry/ClassRegistry.h"
-#include "Backend/Registry/ResourceRegistry/ResourceRegistry.h"
+#include "Registry/ClassRegistry/ClassRegistry.h"
+#include "Registry/ResourceRegistry/ResourceRegistry.h"
 
 
 namespace Blade::Backend {

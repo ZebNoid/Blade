@@ -13,8 +13,6 @@ add_library(${PROJECT_NAME} STATIC
         WinInit/WinInit.h
         WinWindow/WinWindow.cpp
         WinWindow/WinWindow.h
-        Widget/WinWidget/WinWidget.cpp
-        Widget/WinWidget/WinWidget.h
 
         Handlers/CommandHandler/CommandHandler.cpp
         Handlers/CommandHandler/CommandHandler.h
@@ -24,8 +22,17 @@ add_library(${PROJECT_NAME} STATIC
         Handlers/WindowHandler/WindowHandler.h
         Handlers/PaintHandler/PaintHandler.cpp
         Handlers/PaintHandler/PaintHandler.h
+
+        Widget/WinWidget/WinWidget.cpp
+        Widget/WinWidget/WinWidget.h
         Widget/WinCustom/WinCustom.h
         Widget/WinCustom/WinCustom.cpp
+        Widget/NativeRender/WinRender.cpp
+        Widget/NativeRender/WinRender.h
+        Registry/ClassRegistry/ClassRegistry.cpp
+        Registry/ClassRegistry/ClassRegistry.h
+        Registry/ResourceRegistry/ResourceRegistry.h
+        Registry/ResourceRegistry/ResourceRegistry.cpp
 )
 
 # use Unicode

@@ -3,12 +3,11 @@
 #include "Handlers/PaintHandler/PaintHandler.h"
 #include "Handlers/WindowHandler/WindowHandler.h"
 #include "Backend/Helpers/Helpers.h"
-#include "Backend/Registry/ClassRegistry/ClassRegistry.h"
-#include "Backend/Registry/ResourceRegistry/ResourceRegistry.h"
+#include "Registry/ClassRegistry/ClassRegistry.h"
+#include "Registry/ResourceRegistry/ResourceRegistry.h"
 
 
 namespace Blade::Backend {
-
 
 WinWindow::WinWindow(Window& window, HINSTANCE hInstance) : m_window(window), m_hInstance(hInstance)
 {
