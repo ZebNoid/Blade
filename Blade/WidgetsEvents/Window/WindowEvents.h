@@ -2,9 +2,9 @@
 
 namespace Blade {
 
-struct RadioButtonCallbacks
+struct WindowEvents
 {
-
+    // TODO on destroy
 };
 
 } // namespace

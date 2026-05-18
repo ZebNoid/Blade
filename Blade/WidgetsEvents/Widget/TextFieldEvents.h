@@ -1,10 +1,10 @@
 #pragma once
-#include "WidgetsCallbacks/Callback.h"
+#include "WidgetsEvents/Callback.h"
 
 
 namespace Blade {
 
-struct TextFieldCallbacks
+struct TextFieldEvents
 {
     CallbackString change;
     CallbackBool focus;

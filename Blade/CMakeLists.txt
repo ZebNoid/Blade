@@ -110,14 +110,14 @@ add_library(${PROJECT_NAME} STATIC
         Widgets/Layout/Stack/Stack.h
         Layout/StackLayout/StackLayout.cpp
         Layout/StackLayout/StackLayout.h
-        WidgetsCallbacks/Window/WindowCallbacks.h
-        WidgetsCallbacks/Widget/ButtonCallbacks.h
-        WidgetsCallbacks/Callback.h
-        WidgetsCallbacks/Widget/CheckboxCallbacks.h
-        WidgetsCallbacks/Widget/ProgressCallbacks.h
-        WidgetsCallbacks/Widget/RadioButtonCallbacks.h
-        WidgetsCallbacks/Widget/SliderCallbacks.h
-        WidgetsCallbacks/Widget/TextFieldCallbacks.h
+        WidgetsEvents/Window/WindowEvents.h
+        WidgetsEvents/Widget/ButtonEvents.h
+        WidgetsEvents/Callback.h
+        WidgetsEvents/Widget/CheckboxEvents.h
+        WidgetsEvents/Widget/ProgressEvents.h
+        WidgetsEvents/Widget/RadioButtonEvents.h
+        WidgetsEvents/Widget/SliderEvents.h
+        WidgetsEvents/Widget/TextFieldEvents.h
 )
 
 # use Unicode

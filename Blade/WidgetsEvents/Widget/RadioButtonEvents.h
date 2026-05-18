@@ -2,7 +2,7 @@
 
 namespace Blade {
 
-struct SliderCallbacks
+struct RadioButtonEvents
 {
 
 };

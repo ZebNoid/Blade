@@ -16,8 +16,8 @@ auto Button::mount(Materializer& m, WidgetContext& ctx) -> void
     bindEvent(ctx, WidgetEvent::Click, [this](const EventValue&)
     {
         // std::cout << m_id <<"_btn\n"; // todo dev
-        if (m_callbacks.click == nullptr) return;
-        m_callbacks.click();
+        if (m_events.click == nullptr) return;
+        m_events.click();
     });
 }
 

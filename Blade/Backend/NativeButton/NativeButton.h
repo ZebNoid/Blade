@@ -2,7 +2,7 @@
 
 // #include <windows.h>
 
-#include "WidgetsCallbacks/Widget/ButtonCallbacks.h"
+#include "WidgetsEvents/Widget/ButtonEvents.h"
 #include "WidgetsProps/Widget/ButtonProps.h"
 
 
@@ -35,7 +35,7 @@ protected:
 
 private:
     ButtonProps m_props{};
-    ButtonCallbacks m_callbacks{};
+    ButtonEvents m_callbacks{};
     std::string m_text;
 };
 

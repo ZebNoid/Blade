@@ -2,7 +2,7 @@
 
 namespace Blade {
 
-struct CheckboxCallbacks
+struct SliderEvents
 {
 
 };

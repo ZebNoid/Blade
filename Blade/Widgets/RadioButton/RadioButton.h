@@ -3,7 +3,7 @@
 #include "Backend/NativeRadioButton/NativeRadioButton.h"
 #include "WidgetsProps/Widget/RadioButtonProps.h"
 #include "Widgets/Widget/Widget.h"
-#include "WidgetsCallbacks/Widget/RadioButtonCallbacks.h"
+#include "WidgetsEvents/Widget/RadioButtonEvents.h"
 
 
 namespace Blade {
@@ -36,9 +36,9 @@ public:
         return *this;
     }
 
-    auto on(RadioButtonCallbacks callbacks) -> RadioButton&
+    auto on(RadioButtonEvents events) -> RadioButton&
     {
-        m_callbacks = std::move(callbacks);
+        m_events = std::move(events);
         return *this;
     }
 
@@ -51,7 +51,7 @@ public:
 private:
     NativeRadioButton m_native;
     RadioButtonProps m_props;
-    RadioButtonCallbacks m_callbacks;
+    RadioButtonEvents m_events;
 
     std::string m_text;
 };

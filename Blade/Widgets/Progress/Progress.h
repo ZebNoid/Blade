@@ -3,7 +3,7 @@
 #include "Backend/NativeProgress/NativeProgress.h"
 #include "WidgetsProps/Widget/ProgressProps.h"
 #include "Widgets/Widget/Widget.h"
-#include "WidgetsCallbacks/Widget/ProgressCallbacks.h"
+#include "WidgetsEvents/Widget/ProgressEvents.h"
 
 
 namespace Blade {
@@ -37,9 +37,9 @@ public:
         return *this;
     }
 
-    auto on(ProgressCallbacks callbacks) -> Progress&
+    auto on(ProgressEvents events) -> Progress&
     {
-        m_callbacks = std::move(callbacks);
+        m_events = std::move(events);
         return *this;
     }
 
@@ -52,7 +52,7 @@ public:
 private:
     NativeProgress m_native;
     ProgressProps m_props;
-    ProgressCallbacks m_callbacks;
+    ProgressEvents m_events;
 
     int m_value;
 };

@@ -2,9 +2,9 @@
 
 namespace Blade {
 
-struct WindowCallbacks
+struct CheckboxEvents
 {
-    // TODO on destroy
+
 };
 
 } // namespace

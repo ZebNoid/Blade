@@ -1,12 +1,12 @@
 #pragma once
 
-#include "WidgetsCallbacks/Callback.h"
+#include "WidgetsEvents/Callback.h"
 
 
 namespace Blade {
 
 
-struct ButtonCallbacks
+struct ButtonEvents
 {
     CallbackVoid click = nullptr;
 };

@@ -3,7 +3,7 @@
 #include "Backend/NativeTextField/NativeTextField.h"
 #include "WidgetsProps/Widget/TextFieldProps.h"
 #include "Widgets/Widget/Widget.h"
-#include "WidgetsCallbacks/Widget/TextFieldCallbacks.h"
+#include "WidgetsEvents/Widget/TextFieldEvents.h"
 
 
 namespace Blade {
@@ -37,9 +37,9 @@ public:
         return *this;
     }
 
-    auto on(TextFieldCallbacks callbacks) -> TextField&
+    auto on(TextFieldEvents events) -> TextField&
     {
-        m_callbacks = std::move(callbacks);
+        m_events = std::move(events);
         return *this;
     }
 
@@ -52,7 +52,7 @@ public:
 private:
     NativeTextField m_native;
     TextFieldProps m_props;
-    TextFieldCallbacks m_callbacks;
+    TextFieldEvents m_events;
     std::string m_text;
 };
 

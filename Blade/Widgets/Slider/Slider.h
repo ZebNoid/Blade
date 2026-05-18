@@ -3,7 +3,7 @@
 #include "Backend/NativeSlider/NativeSlider.h"
 #include "WidgetsProps/Widget/SliderProps.h"
 #include "Widgets/Widget/Widget.h"
-#include "WidgetsCallbacks/Widget/SliderCallbacks.h"
+#include "WidgetsEvents/Widget/SliderEvents.h"
 
 
 namespace Blade {
@@ -37,9 +37,9 @@ public:
         return *this;
     }
 
-    auto on(SliderCallbacks callbacks) -> Slider&
+    auto on(SliderEvents events) -> Slider&
     {
-        m_callbacks = std::move(callbacks);
+        m_events = std::move(events);
         return *this;
     }
 
@@ -52,7 +52,7 @@ public:
 private:
     NativeSlider m_native;
     SliderProps m_props;
-    SliderCallbacks m_callbacks;
+    SliderEvents m_events;
 
     int m_value;
 };

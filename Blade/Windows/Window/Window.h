@@ -6,6 +6,7 @@
 #include "Materializer/Materializer.h"
 #include "WidgetsProps/Window/WindowProps.h"
 #include "Widgets/Widget/Widget.h"
+#include "WidgetsEvents/Window/WindowEvents.h"
 #include "Windows/EventRouter/EventRouter.h"
 
 
@@ -48,6 +49,12 @@ public:
     auto set(WindowProps props) -> Window&
     {
         m_props = std::move(props);
+        return *this;
+    }
+
+    auto on(WindowEvents events) -> Window&
+    {
+        m_events = std::move(events);
         return *this;
     }
 
@@ -103,6 +110,7 @@ private:
     std::unique_ptr<Widget> m_root;
 
     WindowProps m_props{};
+    WindowEvents m_events{};
 
     friend class WindowManager;
     friend class Widget;

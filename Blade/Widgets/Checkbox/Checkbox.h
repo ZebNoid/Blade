@@ -3,7 +3,7 @@
 #include "Backend/NativeCheckbox/NativeCheckbox.h"
 #include "WidgetsProps/Widget/CheckboxProps.h"
 #include "Widgets/Widget/Widget.h"
-#include "WidgetsCallbacks/Widget/CheckboxCallbacks.h"
+#include "WidgetsEvents/Widget/CheckboxEvents.h"
 
 
 namespace Blade {
@@ -36,9 +36,9 @@ public:
         return *this;
     }
 
-    auto on(CheckboxCallbacks callbacks) -> Checkbox&
+    auto on(CheckboxEvents events) -> Checkbox&
     {
-        m_callbacks = std::move(callbacks);
+        m_events = std::move(events);
         return *this;
     }
 
@@ -51,7 +51,7 @@ public:
 private:
     NativeCheckbox m_native;
     CheckboxProps m_props;
-    CheckboxCallbacks m_callbacks;
+    CheckboxEvents m_events;
 
     std::string m_text;
 };

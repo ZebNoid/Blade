@@ -2,7 +2,7 @@
 
 namespace Blade {
 
-struct ProgressCallbacks
+struct ProgressEvents
 {
 
 };

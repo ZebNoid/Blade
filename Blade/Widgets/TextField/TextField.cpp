@@ -14,17 +14,17 @@ auto TextField::mount(Materializer& m, WidgetContext& ctx) -> void
 
     bindEvent(ctx, WidgetEvent::Change, [this](const EventValue& value)
     {
-        if (m_callbacks.change == nullptr) return;
+        if (m_events.change == nullptr) return;
         const auto& text = std::get<std::string>(value);
-        m_callbacks.change(text);
+        m_events.change(text);
     });
 
 
     bindEvent(ctx, WidgetEvent::Focus, [this](const EventValue& value)
     {
-        if (m_callbacks.focus == nullptr) return;
+        if (m_events.focus == nullptr) return;
         const auto focus = std::get<bool>(value);
-        m_callbacks.focus(focus);
+        m_events.focus(focus);
     });
 }
 
