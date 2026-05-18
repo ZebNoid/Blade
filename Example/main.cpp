@@ -23,7 +23,7 @@ protected:
     auto ui() -> void override
     {
 
-        // Window().mount(this);
+        Window().set(wProp).mount(this);
 
         Window(
                 Label("Label")

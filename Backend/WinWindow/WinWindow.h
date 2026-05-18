@@ -9,10 +9,10 @@
 namespace Blade {
 
 
-class NativeWindow : public NativeWidget
+class WinWindow : public NativeWidget
 {
 public:
-    NativeWindow();
+    WinWindow();
 
     auto create(const WidgetContext& ctx, class Window* owner, const WindowProps& props) -> void;
 

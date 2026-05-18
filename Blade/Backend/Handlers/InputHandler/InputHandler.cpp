@@ -1,7 +1,7 @@
 #include "InputHandler.h"
 
 #include "Backend/Helpers/Helpers.h"
-#include "Backend/NativeWindow/NativeWindow.h"
+#include "../../../../Backend/WinWindow/WinWindow.h"
 
 
 namespace Blade::Backend::WinApi {
@@ -21,7 +21,7 @@ namespace Blade::Backend::WinApi {
 // WM_KEYUP
 // WM_CHAR
 
-auto InputHandler::Handle(NativeWindow& window, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
+auto InputHandler::Handle(WinWindow& window, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
 {
     switch (msg)
     {

@@ -2,7 +2,7 @@
 
 #include <windows.h>
 
-#include "Backend/NativeWindow/NativeWindow.h"
+#include "../../../../Backend/WinWindow/WinWindow.h"
 
 
 namespace Blade::Backend::WinApi {
@@ -12,7 +12,7 @@ class InputHandler
 {
 public:
     static auto Handle(
-        NativeWindow& window,
+        WinWindow& window,
         UINT msg,
         WPARAM wParam,
         LPARAM lParam

@@ -19,12 +19,18 @@ auto App::run() -> int
         std::cerr << "No Backend set" << std::endl;
         return -1;
     }
+    initBackend();
     // m_nativeApp->initialize(); // todo init
 
     ui();
     build();
 
     return m_backend->run();
+}
+
+auto App::initBackend() -> void
+{
+    m_wm.create(*m_backend);
 }
 
 auto App::build() -> void

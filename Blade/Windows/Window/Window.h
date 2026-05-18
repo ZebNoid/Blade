@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "Backend/NativeWindow/NativeWindow.h"
+#include "../../../Backend/WinWindow/WinWindow.h"
 #include "Materializer/Materializer.h"
 #include "WidgetsProps/Window/WindowProps.h"
 #include "Widgets/Widget/Widget.h"
@@ -127,10 +127,7 @@ protected:
     // }
 
 private:
-    // WindowManager& m_manager;
-    // AppContext& m_appCtx;
-
-    NativeWindow m_native;
+    // WinWindow m_native;
     Materializer m_materializer;
     EventRouter m_router;
 
@@ -140,9 +137,9 @@ private:
     WindowEvents m_events{};
 
     // friend class App;
-    friend class WindowManager;
+    // friend class WindowManager;
     friend class Widget;
-    friend class NativeWindow;
+    // friend class WinWindow;
 };
 
 

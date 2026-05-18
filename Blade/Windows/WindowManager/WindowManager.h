@@ -13,18 +13,33 @@ class WindowManager
 {
 public:
     // WindowManager(AppContext& ctx);
-    WindowManager() {}
+    WindowManager()
+    {
+    }
 
     auto add(std::unique_ptr<Window> window) -> void
     {
-        // m_windows.push_back(
-        //   std::move(window)
-        // );
+        m_windows.push_back(
+            std::move(window)
+        );
     }
 
     auto destroyWindow(Window* target) -> void;
 
     auto empty() const -> bool;
+
+    auto create(ApiBackend& backend) -> void
+    {
+        for (auto& window : m_windows)
+        {
+            backend.createWindow(*window);
+        }
+    }
+
+    // auto create(const std::unique_ptr<ApiBackend>::element_type& backend) -> void
+    // {
+    //
+    // }
 
 private:
     // AppContext& m_appCtx;

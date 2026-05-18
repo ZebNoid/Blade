@@ -1,11 +1,11 @@
 #include "WindowHandler.h"
 
 #include "Backend/Helpers/Helpers.h"
-#include "Backend/NativeWindow/NativeWindow.h"
+#include "../../../../Backend/WinWindow/WinWindow.h"
 
 namespace Blade::Backend::WinApi {
 
-auto WindowHandler::Handle(NativeWindow& window, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
+auto WindowHandler::Handle(WinWindow& window, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
 {
     switch (msg)
     {

@@ -10,6 +10,8 @@ add_library(${PROJECT_NAME} STATIC
         backend.h
         WinInit/WinInit.cpp
         WinInit/WinInit.h
+        WinWindow/WinWindow.cpp
+        WinWindow/WinWindow.h
         Context/WinAppContext.cpp
         Context/WinAppContext.h
 )

@@ -2,7 +2,7 @@
 
 #include <windows.h>
 
-#include "Backend/NativeWindow/NativeWindow.h"
+#include "../../../../Backend/WinWindow/WinWindow.h"
 
 
 namespace Blade::Backend::WinApi {
@@ -11,7 +11,7 @@ namespace Blade::Backend::WinApi {
 class PaintHandler
 {
 public:
-    static auto Handle(NativeWindow& window, WPARAM wParam, LPARAM lParam) -> LRESULT;
+    static auto Handle(WinWindow& window, WPARAM wParam, LPARAM lParam) -> LRESULT;
 };
 
 

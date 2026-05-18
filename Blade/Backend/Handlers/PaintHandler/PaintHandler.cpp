@@ -4,7 +4,7 @@
 namespace Blade::Backend::WinApi {
 
 
-auto PaintHandler::Handle(NativeWindow& window, WPARAM wParam, LPARAM lParam) -> LRESULT
+auto PaintHandler::Handle(WinWindow& window, WPARAM wParam, LPARAM lParam) -> LRESULT
 {
     if (auto* owner = window.owner())
     {

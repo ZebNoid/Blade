@@ -1,11 +1,11 @@
 #include "CommandHandler.h"
-#include "Backend/NativeWindow/NativeWindow.h"
+#include "../../../../Backend/WinWindow/WinWindow.h"
 
 
 namespace Blade::Backend::WinApi {
 
 
-auto CommandHandler::Handle(NativeWindow& window, WPARAM wParam, LPARAM lParam) -> LRESULT
+auto CommandHandler::Handle(WinWindow& window, WPARAM wParam, LPARAM lParam) -> LRESULT
 {
     const int id = LOWORD(wParam);
     const int event = HIWORD(wParam);

@@ -1,5 +1,3 @@
-#include "NativeWindow.h"
-
 #include "Backend/Handlers/CommandHandler/CommandHandler.h"
 #include "Backend/Handlers/InputHandler/InputHandler.h"
 #include "Backend/Handlers/PaintHandler/PaintHandler.h"
@@ -13,14 +11,14 @@
 namespace Blade {
 
 
-NativeWindow::NativeWindow()
+WinWindow::WinWindow()
 {
     m_size = {800, 600};
     // TODO move to app cycle
     ResourceRegistry::Init();
 }
 
-auto NativeWindow::create(const WidgetContext& ctx, Window* owner, const WindowProps& props) -> void
+auto WinWindow::create(const WidgetContext& ctx, Window* owner, const WindowProps& props) -> void
 {
     m_ctx = ctx;
     // TODO id
@@ -49,7 +47,7 @@ auto NativeWindow::create(const WidgetContext& ctx, Window* owner, const WindowP
     // SetWindowPos(m_hwnd, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
 }
 
-auto NativeWindow::initPosition() -> Point
+auto WinWindow::initPosition() -> Point
 {
     auto result = Point{CW_USEDEFAULT, CW_USEDEFAULT};
 
@@ -66,7 +64,7 @@ auto NativeWindow::initPosition() -> Point
     return result;
 }
 
-auto NativeWindow::exStyle() const -> DWORD
+auto WinWindow::exStyle() const -> DWORD
 {
     auto exStyle = 0; // WS_EX_ACCEPTFILES
 
@@ -76,7 +74,7 @@ auto NativeWindow::exStyle() const -> DWORD
 }
 
 
-auto NativeWindow::style() const -> DWORD
+auto WinWindow::style() const -> DWORD
 {
     auto style = WS_OVERLAPPEDWINDOW | WS_VISIBLE | SS_NOTIFY;// | WS_CLIPCHILDREN;
 
@@ -101,7 +99,7 @@ auto NativeWindow::style() const -> DWORD
     return style;
 }
 
-auto NativeWindow::createNative(const Rect rect) -> HWND
+auto WinWindow::createNative(const Rect rect) -> HWND
 {
     auto startPos = initPosition();
 
@@ -133,7 +131,7 @@ auto NativeWindow::createNative(const Rect rect) -> HWND
     return m_hwnd;
 }
 
-auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
+auto WinWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
 {
     switch (msg)
     {
@@ -254,18 +252,18 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
     return NativeWidget::handleMessage(hwnd, msg, wParam, lParam);
 }
 
-auto NativeWindow::show() const -> void
+auto WinWindow::show() const -> void
 {
     ShowWindow(m_hwnd, SW_SHOW);
 }
 
-auto NativeWindow::resize(Size size) -> void
+auto WinWindow::resize(Size size) -> void
 {
     m_size = size;
     m_owner->resize(m_size);
 }
 
-auto NativeWindow::onDestroy() const -> void
+auto WinWindow::onDestroy() const -> void
 {
     m_owner->destroy();
 }

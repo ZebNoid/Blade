@@ -1,21 +1,16 @@
 #include "Window.h"
 
-#include "Backend/NativeWindow/NativeWindow.h"
-#include "Context/WidgetContext.h"
 #include "App/App.h"
 
 
 namespace Blade {
 
 
-// Window::Window(AppContext& appCtx, WindowManager& manager)
-//     : m_manager(manager), m_appCtx(appCtx)
-// {
-// }
 
 auto Window::show() -> void
 {
-    m_native.show();
+    // TODO wm +id
+    // m_native.show();
 }
 
 auto Window::destroy() -> void

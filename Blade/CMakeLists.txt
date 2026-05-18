@@ -23,8 +23,6 @@ add_library(${PROJECT_NAME} STATIC
         Windows/Window/Window.h
         Backend/NativeWidget/NativeWidget.cpp
         Backend/NativeWidget/NativeWidget.h
-        Backend/NativeWindow/NativeWindow.cpp
-        Backend/NativeWindow/NativeWindow.h
         Backend/NativeButton/NativeButton.cpp
         Backend/NativeButton/NativeButton.h
         Widgets/Layout/Container/Container.cpp
