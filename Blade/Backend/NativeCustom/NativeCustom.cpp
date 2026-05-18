@@ -69,6 +69,7 @@ auto NativeCustom::createNative(const Rect rect) -> HWND
 
 auto NativeCustom::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
 {
+            std::cout << "NativeCustom::handleMessage!!\n";
     switch (msg)
     {
     case WM_ERASEBKGND:
@@ -76,6 +77,7 @@ auto NativeCustom::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
 
     case WM_PAINT:
         {
+            std::cout << "NativeCustom!!\n";
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hwnd, &ps);
 
@@ -86,7 +88,6 @@ auto NativeCustom::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
 
             paint(hdc, rc);
 
-            std::cout << "NativeCustom!!\n";
 
             EndPaint(hwnd, &ps);
 
