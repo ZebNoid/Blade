@@ -3,70 +3,63 @@
 
 namespace Blade::Backend {
 
-auto NativeRender::FillRect(
-    NativeRenderContext& ctx,
-    Rect rect,
-    Color color
+auto NativeRender::fillRect(
+    HDC hdc,
+    RECT rect,
+    COLORREF color
 ) -> void
 {
     // TODO ResourceManager!!
     HBRUSH brush = CreateSolidBrush(
-        RGB(color.r, color.g, color.b)
+        color
     );
 
-    RECT rc{
-        rect.x,
-        rect.y,
-        rect.x + rect.width,
-        rect.y + rect.height
-    };
-
-    ::FillRect(ctx.hdc, &rc, brush);
+    ::FillRect(hdc, &rect, brush);
 
     // TODO ResourceManager!!
     DeleteObject(brush);
 }
 
 
-auto NativeRender::DrawRect(
-    NativeRenderContext& ctx,
-    Rect rect,
-    Color color,
+auto NativeRender::drawRect(
+    HDC hdc,
+    RECT rect,
+    COLORREF color,
     int thickness
 ) -> void
 {
     HPEN pen = CreatePen(
         PS_SOLID,
         thickness,
-        RGB(color.r, color.g, color.b)
+        color
     );
 
     // TODO ResourceManager!!
-    HGDIOBJ oldPen = SelectObject(ctx.hdc, pen);
+    HGDIOBJ oldPen = SelectObject(hdc, pen);
 
-    HGDIOBJ oldBrush = SelectObject(ctx.hdc, GetStockObject(HOLLOW_BRUSH));
+    HGDIOBJ oldBrush = SelectObject(hdc, GetStockObject(HOLLOW_BRUSH));
 
     Rectangle(
-        ctx.hdc,
-        rect.x,
-        rect.y,
-        rect.x + rect.width,
-        rect.y + rect.height
+        hdc,
+        rect.left,
+        rect.top,
+        rect.left + rect.bottom,
+        rect.top + rect.bottom
     );
 
-    SelectObject(ctx.hdc, oldPen);
-    SelectObject(ctx.hdc, oldBrush);
+    SelectObject(hdc, oldPen);
+    SelectObject(hdc, oldBrush);
 
     // TODO ResourceManager!!
     DeleteObject(pen);
 }
 
 
-auto NativeRender::DrawLine(
-    NativeRenderContext& ctx,
+auto NativeRender::drawLine(
+    HDC hdc,
     int x1, int y1,
     int x2, int y2,
-    Color color,
+    COLORREF color,
     int thickness
 ) -> void
 {
@@ -74,47 +67,45 @@ auto NativeRender::DrawLine(
     HPEN pen = CreatePen(
         PS_SOLID,
         thickness,
-        RGB(color.r, color.g, color.b)
+        color
     );
 
-    HGDIOBJ oldPen = SelectObject(ctx.hdc, pen);
+    HGDIOBJ oldPen = SelectObject(hdc, pen);
 
-    MoveToEx(ctx.hdc, x1, y1, nullptr);
-
-    LineTo(ctx.hdc, x2, y2);
-
-    SelectObject(ctx.hdc, oldPen);
+    MoveToEx(hdc, x1, y1, nullptr);
+    LineTo(hdc, x2, y2);
+    SelectObject(hdc, oldPen);
 
     // TODO ResourceManager!!
     DeleteObject(pen);
 }
 
-auto NativeRender::DrawText(
-    NativeRenderContext& ctx,
-    Rect rect,
+auto NativeRender::drawText(
+    HDC hdc,
+    RECT rect,
     const std::wstring& text,
-    Color color
+    COLORREF color
 ) -> void
 {
-    SetBkMode(ctx.hdc, TRANSPARENT);
+    SetBkMode(hdc, TRANSPARENT);
 
     SetTextColor(
-        ctx.hdc,
-        RGB(color.r, color.g, color.b)
+        hdc,
+        color
     );
 
-    RECT rc{
-        rect.x,
-        rect.y,
-        rect.x + rect.width,
-        rect.y + rect.height
-    };
+    // RECT rc{
+    //     rect.left,
+    //     rect.top,
+    //     rect.left + rect.right,
+    //     rect.top + rect.bottom
+    // };
 
     ::DrawTextW(
-        ctx.hdc,
+        hdc,
         text.c_str(),
         -1,
-        &rc,
+        &rect,
         DT_CENTER |
         DT_VCENTER |
         DT_SINGLELINE

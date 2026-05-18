@@ -74,35 +74,6 @@ auto NativeCustom::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
     case WM_ERASEBKGND:
         return TRUE; // Stop the OS from erasing the background
 
-
-    // case WM_LBUTTONDOWN: // TODO why
-    //     {
-    //         SendMessage(
-    //             GetParent(hwnd),
-    //             msg,
-    //             wParam,
-    //             lParam
-    //         );
-    //
-    //         break;
-    //     }
-
-    // case WM_MOUSEMOVE: // WM_NCMOUSEMOVE ?
-    // case WM_LBUTTONDBLCLK:
-    // case WM_LBUTTONDOWN:
-    // case WM_LBUTTONUP:
-    // case WM_RBUTTONUP:
-    // case WM_RBUTTONDBLCLK:
-    // case WM_MBUTTONDOWN:
-    // case WM_MBUTTONUP:
-    // case WM_MBUTTONDBLCLK:
-    // case WM_MOUSEWHEEL:
-    // case WM_KEYDOWN:
-    // case WM_KEYUP:
-    // case WM_CHAR:
-    //     std::cout << "!!!\n";
-    //     break;
-
     case WM_PAINT:
         {
             PAINTSTRUCT ps;
@@ -113,7 +84,9 @@ auto NativeCustom::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
             RECT rc;
             GetClientRect(hwnd, &rc);
 
-            paint(hdc);
+            paint(hdc, rc);
+
+            std::cout << "NativeCustom!!\n";
 
             EndPaint(hwnd, &ps);
 

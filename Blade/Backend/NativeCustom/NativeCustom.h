@@ -1,4 +1,5 @@
 #pragma once
+#include "Backend/NativeRender/NativeRender.h"
 #include "Context/WidgetContext.h"
 
 
@@ -21,7 +22,10 @@ protected:
 
     auto handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT override;
 
-    virtual auto paint(HDC hdc) -> void = 0;
+    virtual auto paint(HDC hdc, RECT rect) -> void = 0;
+
+protected:
+    Backend::NativeRender m_render;
 };
 
 } // namespace

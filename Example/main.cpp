@@ -43,15 +43,9 @@ protected:
         //     })
         // ).set(wProp);
 
-        window(Row(
-            Stack(
-                // Button("Button 1")
-            Nop(                "MyNop")
-            ,Nop(                "MyNop1")
-            //     ,Nop("MyNop2")
-            //     ,Label("Label2")
-                )
-                .set({.layout = {.flex = 1,},})
+        window(
+            Row(
+                Nop("Nop").set({.layout = {.flex = 1,},})
                 , Label("Label").set({.layout = {.flex = 1,},})
             )
             .set({

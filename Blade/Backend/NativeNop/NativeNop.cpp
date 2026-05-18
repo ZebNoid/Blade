@@ -10,51 +10,50 @@ auto NativeNop::create(const WidgetContext& ctx, WidgetId id, const NopProps& pr
 {
     NativeCustom::create(ctx, id);
     m_props = props;
-    m_text = text;
+    m_text = Utf8ToUtf16(text);
 }
 
-auto NativeNop::paint(HDC hdc) -> void
+auto NativeNop::paint(HDC hdc, RECT rect) -> void
 {
-    NativeRenderContext ctx{
-        .hdc = hdc
-    };
-
-    Backend::NativeRender::FillRect(
-        ctx,
-        rect(),
-        {40, 40, 40}
+    std::cout << "NativeNop!!\n";
+    m_render.fillRect(
+        hdc,
+        rect,
+        RGB(40, 40, 40)
     );
 
-    Backend::NativeRender::DrawRect(
-        ctx,
-        rect(),
-        {255, 0, 0},
+    m_render.drawRect(
+        hdc,
+        rect,
+        RGB(255, 0, 0),
         2
     );
 
-    Backend::NativeRender::DrawLine(
-        ctx,
-        rect().x,
-        rect().y,
-        rect().x + rect().width,
-        rect().y + rect().height,
-        {255, 0, 0}
+    m_render.drawLine(
+        hdc,
+        rect.left,
+        rect.top,
+        // rect.left + rect.right,
+        // rect.top + rect.bottom,
+        rect.right,
+        rect.bottom,
+        RGB(255, 0, 0)
     );
 
-    Backend::NativeRender::DrawLine(
-        ctx,
-        rect().x + rect().width,
-        rect().y,
-        rect().x,
-        rect().y + rect().height,
-        {255, 0, 0}
+    m_render.drawLine(
+        hdc,
+        rect.left + rect.right,
+        rect.top,
+        rect.left,
+        rect.top + rect.bottom,
+        (255, 0, 0)
     );
 
-    Backend::NativeRender::DrawText(
-        ctx,
-        rect(),
+    m_render.drawText(
+        hdc,
+        rect,
         m_text,
-        {255, 255, 255}
+        RGB(255, 255, 255)
     );
 }
 } // namespace

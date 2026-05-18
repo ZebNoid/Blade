@@ -3,42 +3,39 @@
 #include <string>
 #include <windows.h>
 
-#include "Backend/NativeRender/NativeRenderContext.h"
-#include "Core/Rect.h"
-
 
 namespace Blade::Backend {
+
+
 class NativeRender
 {
 public:
-    static auto FillRect(
-        NativeRenderContext& ctx,
-        Rect rect,
-        Color color
+    auto fillRect(
+        HDC hdc,
+        RECT rect,
+        COLORREF color
     ) -> void;
 
-    static auto DrawRect(
-        NativeRenderContext& ctx,
-        Rect rect,
-        Color color,
+    auto drawRect(
+        HDC hdc,
+        RECT rect,
+        COLORREF color,
         int thickness = 1
     ) -> void;
 
-    static auto DrawLine(
-        NativeRenderContext& ctx,
-        int x1,
-        int y1,
-        int x2,
-        int y2,
-        Color color,
+    auto drawLine(
+        HDC hdc,
+        int x1, int y1,
+        int x2, int y2,
+        COLORREF color,
         int thickness = 1
     ) -> void;
 
-    static auto DrawText(
-        NativeRenderContext& ctx,
-        Rect rect,
+    auto drawText(
+        HDC hdc,
+        RECT rect,
         const std::wstring& text,
-        Color color
+        COLORREF color
     ) -> void;
 };
 
