@@ -2,7 +2,6 @@
 
 #include <memory>
 
-#include "Materializer/Materializer.h"
 #include "WidgetsProps/Window/WindowProps.h"
 #include "Widgets/Widget/Widget.h"
 #include "WidgetsEvents/Window/WindowEvents.h"
@@ -102,7 +101,7 @@ private:
     App* m_app = nullptr;
 
     // WinWindow m_native;
-    Materializer m_materializer;
+    // Materializer m_materializer;
     EventRouter m_router;
 
     std::unique_ptr<Widget> m_root;

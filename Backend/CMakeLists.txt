@@ -37,6 +37,8 @@ add_library(${PROJECT_NAME} STATIC
         Widget/WinLabel/WinLabel.cpp
         Widget/WinNop/WinNop.h
         Widget/WinNop/WinNop.cpp
+        Materializer/Materializer.cpp
+        Materializer/Materializer.h
 )
 
 # use Unicode

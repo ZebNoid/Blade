@@ -27,8 +27,6 @@ add_library(${PROJECT_NAME} STATIC
         Backend/NativeButton/NativeButton.h
         Widgets/Layout/Container/Container.cpp
         Widgets/Layout/Container/Container.h
-        Materializer/Materializer.cpp
-        Materializer/Materializer.h
         Core/Core.h
         Core/Encoding.cpp
         Core/Encoding.h
