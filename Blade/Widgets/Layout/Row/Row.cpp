@@ -1,6 +1,7 @@
 #include "Row.h"
 
-#include "../../../Layout/FlexLayout/FlexLayout.h"
+#include "Layout/FlexLayout/FlexLayout.h"
+#include "Layout/LayoutEngine/LayoutEngine.h"
 
 
 namespace Blade {
@@ -8,7 +9,8 @@ namespace Blade {
 
 auto Row::measure(Size available) -> Size
 {
-    return FlexLayout::Measure(
+    return LayoutEngine::Measure(
+        LayoutType::Flex,
         FlexDirection::Row,
         m_children,
         m_props.layout,
@@ -21,7 +23,8 @@ auto Row::arrange(const Rect rect) -> void
 {
     Widget::arrange(rect);
 
-    return FlexLayout::Arrange(
+    return LayoutEngine::Arrange(
+        LayoutType::Flex, // LayoutContext
         FlexDirection::Row,
         m_children,
         m_props.layout,

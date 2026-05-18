@@ -118,6 +118,9 @@ add_library(${PROJECT_NAME} STATIC
         WidgetsEvents/Widget/RadioButtonEvents.h
         WidgetsEvents/Widget/SliderEvents.h
         WidgetsEvents/Widget/TextFieldEvents.h
+        Layout/LayoutEngine/LayoutEngine.cpp
+        Layout/LayoutEngine/LayoutEngine.h
+        Layout/LayoutEngine/LayoutType.h
 )
 
 # use Unicode

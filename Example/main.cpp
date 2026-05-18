@@ -25,17 +25,17 @@ protected:
 
         window(
             Row(
-                TextField()
-                .set({.layout = {.padding = 8, .flex = 1,}})
-                .on({
-                    .change = [](const std::string& value)
-                    {
-                        std::cout << value << "\n";
-                    },
-                })
-                // stack1(),
-                // stack2(),
-                // column1()
+                // TextField()
+                // .set({.layout = {.padding = 8, .flex = 1,}})
+                // .on({
+                //     .change = [](const std::string& value)
+                //     {
+                //         std::cout << value << "\n";
+                //     },
+                // })
+                stack1()
+                ,stack2()
+                ,column1()
             ).set({
                 .gap = 8,
                 .layout = {.padding = 8, .flex = 1,},
@@ -45,11 +45,11 @@ protected:
 
         // window(Row()).set(wProp);
 
-        // window(contentBladeDemo()).id(windowId).set({
-        //     .title = "Blade",
-        //     .size = {800, 600},
-        //     .position = {3200,600},
-        // });
+        window(contentBladeDemo()).id(windowId).set({
+            .title = "Blade",
+            .size = {800, 600},
+            .position = {3200,600},
+        });
     }
 
     auto stack1() -> auto
