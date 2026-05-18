@@ -25,11 +25,11 @@ protected:
 
         Window().set(wProp).mount(this);
 
-        // Window(
-        //         Label("Label")
-        //     )
-        //     .set(wProp)
-        //     .mount(this);
+        Window(
+                Label("Label")
+            )
+            .set(wProp)
+            .mount(this);
 
 
 

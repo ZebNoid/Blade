@@ -13,8 +13,8 @@ add_library(${PROJECT_NAME} STATIC
         WinInit/WinInit.h
         WinWindow/WinWindow.cpp
         WinWindow/WinWindow.h
-        WinWidget/WinWidget.cpp
-        WinWidget/WinWidget.h
+        Widget/WinWidget/WinWidget.cpp
+        Widget/WinWidget/WinWidget.h
 
         Handlers/CommandHandler/CommandHandler.cpp
         Handlers/CommandHandler/CommandHandler.h
