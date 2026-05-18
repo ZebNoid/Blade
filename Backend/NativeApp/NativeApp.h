@@ -1,10 +1,12 @@
 #pragma once
 
+#include "Api/AppBackend.h"
+
 
 namespace Blade::Backend {
 
 
-class NativeApp
+class NativeApp : public AppBackend
 {
 public:
     auto run() -> int;

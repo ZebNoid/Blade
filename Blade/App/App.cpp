@@ -12,8 +12,8 @@ App::App() : m_wm(m_ctx)
 
 auto App::run() -> int
 {
-    m_nativeApp = std::make_unique<Backend::NativeApp>();
-    m_nativeApp->initialize();
+    // m_nativeApp = std::make_unique<Backend::NativeApp>();
+    // m_nativeApp->initialize();
 
     // ui();
     //

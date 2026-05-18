@@ -22,6 +22,7 @@ target_include_directories(${PROJECT_NAME}
 # Link required WinAPI libraries
 target_link_libraries(${PROJECT_NAME}
         PUBLIC
+        Blade # Blade API
         user32
         gdi32
         comctl32

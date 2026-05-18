@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Api/AppBackend.h"
 #include "Windows/Window/Window.h"
 #include "Windows/WindowBuilder/WindowBuilder.h"
 #include "Windows/WindowManager/WindowManager.h"
@@ -57,7 +58,7 @@ protected:
 private:
     auto init() -> void;
 
-    std::unique_ptr<Blade::Backend::NativeApp> m_nativeApp;
+    std::unique_ptr<AppBackend> m_nativeApp;
 };
 
 
