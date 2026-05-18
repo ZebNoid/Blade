@@ -1,16 +1,16 @@
 #pragma once
 
-#include "Api/ApiAppBackend.h"
+#include "Api/ApiBackend.h"
 #include "Context/WinAppContext.h"
 
 
 namespace Blade::Backend {
 
 
-class WinApp : public ApiAppBackend
+class WinBackend : public ApiBackend
 {
 public:
-    WinApp();
+    WinBackend();
 
     auto run() -> int override;
 

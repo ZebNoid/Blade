@@ -1,16 +1,16 @@
-#include "WinApp.h"
+#include "WinBackend.h"
 
 #include "WinInit/WinInit.h"
 
 
 namespace Blade::Backend {
 
-WinApp::WinApp()
+WinBackend::WinBackend()
 {
     WinInit::InitDpi();
 }
 
-auto WinApp::run() -> int
+auto WinBackend::run() -> int
 {
     while (GetMessage(&m_msg, nullptr, 0, 0))
     {

@@ -6,8 +6,7 @@ if (NOT PROJECT_IS_TOP_LEVEL)
 endif ()
 
 add_library(${PROJECT_NAME} STATIC
-        WinApp/WinApp.cpp
-        WinApp/WinApp.h
+        WinBackend/WinBackend.cpp
         backend.h
         WinInit/WinInit.cpp
         WinInit/WinInit.h

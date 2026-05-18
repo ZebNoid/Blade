@@ -135,9 +135,7 @@ add_library(${PROJECT_NAME} STATIC
         Backend/NativeRender/NativeRender.cpp
         Backend/NativeRender/NativeRender.h
         Core/Rect.h
-        Api/ApiAppBackend.h
         api.h
-        Api/ApiBackend.h
 )
 
 # use Unicode
