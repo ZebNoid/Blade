@@ -1,21 +1,21 @@
 #pragma once
 
 
-#include "Backend/NativeWidget/NativeWidget.h"
 #include "WidgetsProps/Window/WindowProps.h"
 #include "Windows/Window/Window.h"
+#include "WinWidget/WinWidget.h"
 
 
 namespace Blade::Backend {
 
 
-class WinWindow : public NativeWidget
+class WinWindow : public WinWidget
 {
 public:
     WinWindow(); // TODO
-    explicit WinWindow(class Window& window);
+    explicit WinWindow(Window& window);
 
-    auto create(const WidgetContext& ctx, class Window* owner, const WindowProps& props) -> void;
+    auto create(const WidgetContext& ctx, Window* owner, const WindowProps& props) -> void;
 
 protected:
     auto exStyle() const -> DWORD override;

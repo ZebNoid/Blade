@@ -1,5 +1,7 @@
 #pragma once
+
 #include "Backend/NativeRender/NativeRender.h"
+#include "Backend/NativeWidget/NativeWidget.h"
 #include "Context/WidgetContext.h"
 
 

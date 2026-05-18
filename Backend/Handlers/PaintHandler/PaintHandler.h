@@ -2,10 +2,10 @@
 
 #include <windows.h>
 
-#include "../../../../Backend/WinWindow/WinWindow.h"
+#include "WinWindow/WinWindow.h"
 
 
-namespace Blade::Backend::WinApi {
+namespace Blade::Backend {
 
 
 class PaintHandler

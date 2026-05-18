@@ -1,12 +1,13 @@
 #pragma once
 
+#include <algorithm>
 #include <cstdint>
+#include <functional>
 #include <iostream>
 #include <string>
-#include <vector>
 #include <unordered_map>
-#include <functional>
-#include <algorithm>
+#include <vector>
+
 
 #include <windows.h>
 #include <commctrl.h>

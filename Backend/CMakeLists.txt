@@ -6,15 +6,24 @@ if (NOT PROJECT_IS_TOP_LEVEL)
 endif ()
 
 add_library(${PROJECT_NAME} STATIC
-        WinBackend/WinBackend.cpp
         backend.h
+        WinBackend/WinBackend.cpp
+        WinBackend/WinBackend.h
         WinInit/WinInit.cpp
         WinInit/WinInit.h
         WinWindow/WinWindow.cpp
         WinWindow/WinWindow.h
-        Context/WinAppContext.cpp
-        Context/WinAppContext.h
+        WinWidget/WinWidget.cpp
         WinWidget/WinWidget.h
+
+        Handlers/CommandHandler/CommandHandler.cpp
+        Handlers/CommandHandler/CommandHandler.h
+        Handlers/InputHandler/InputHandler.cpp
+        Handlers/InputHandler/InputHandler.h
+        Handlers/WindowHandler/WindowHandler.cpp
+        Handlers/WindowHandler/WindowHandler.h
+        Handlers/PaintHandler/PaintHandler.cpp
+        Handlers/PaintHandler/PaintHandler.h
 )
 
 # use Unicode

@@ -1,7 +1,7 @@
-#include "Backend/Handlers/CommandHandler/CommandHandler.h"
-#include "Backend/Handlers/InputHandler/InputHandler.h"
-#include "Backend/Handlers/PaintHandler/PaintHandler.h"
-#include "Backend/Handlers/WindowHandler/WindowHandler.h"
+#include "Handlers/CommandHandler/CommandHandler.h"
+#include "Handlers/InputHandler/InputHandler.h"
+#include "Handlers/PaintHandler/PaintHandler.h"
+#include "Handlers/WindowHandler/WindowHandler.h"
 #include "Backend/Helpers/Helpers.h"
 #include "Backend/Registry/ClassRegistry/ClassRegistry.h"
 #include "Backend/Registry/ResourceRegistry/ResourceRegistry.h"
@@ -150,7 +150,7 @@ auto WinWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     //     }
 
     case WM_COMMAND:
-        return Backend::WinApi::CommandHandler::Handle(*this, wParam, lParam);
+        return Backend::CommandHandler::Handle(*this, wParam, lParam);
 
     case WM_MOUSEMOVE: // WM_NCMOUSEMOVE ?
     case WM_LBUTTONDBLCLK:
@@ -165,7 +165,7 @@ auto WinWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     case WM_KEYDOWN:
     case WM_KEYUP:
     case WM_CHAR:
-        return Backend::WinApi::InputHandler::Handle(*this, msg, wParam, lParam);
+        return Backend::InputHandler::Handle(*this, msg, wParam, lParam);
 
     case WM_SETFOCUS:
     case WM_KILLFOCUS:
@@ -223,7 +223,7 @@ auto WinWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             // // #endif
             // return 0;
 
-            return Backend::WinApi::PaintHandler::Handle(*this, wParam, lParam);
+            return Backend::PaintHandler::Handle(*this, wParam, lParam);
         }
         break;
 
@@ -241,7 +241,7 @@ auto WinWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     case WM_CLOSE:
     case WM_SIZE:
     case WM_DESTROY:
-        Backend::WinApi::WindowHandler::Handle(*this, msg, wParam, lParam);
+        Backend::WindowHandler::Handle(*this, msg, wParam, lParam);
         break;
 
 
@@ -253,7 +253,7 @@ auto WinWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         }
     }
 
-    return NativeWidget::handleMessage(hwnd, msg, wParam, lParam);
+    return WinWidget::handleMessage(hwnd, msg, wParam, lParam);
 }
 
 auto WinWindow::show() const -> void

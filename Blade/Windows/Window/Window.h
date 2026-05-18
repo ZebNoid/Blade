@@ -2,7 +2,6 @@
 
 #include <memory>
 
-#include "../../../Backend/WinWindow/WinWindow.h"
 #include "Materializer/Materializer.h"
 #include "WidgetsProps/Window/WindowProps.h"
 #include "Widgets/Widget/Widget.h"

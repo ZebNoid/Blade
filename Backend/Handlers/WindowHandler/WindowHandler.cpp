@@ -1,9 +1,9 @@
 #include "WindowHandler.h"
 
 #include "Backend/Helpers/Helpers.h"
-#include "../../../../Backend/WinWindow/WinWindow.h"
+#include "WinWindow/WinWindow.h"
 
-namespace Blade::Backend::WinApi {
+namespace Blade::Backend {
 
 auto WindowHandler::Handle(WinWindow& window, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
 {

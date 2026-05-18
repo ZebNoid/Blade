@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Api/ApiBackend.h"
+#include "WinWindow/WinWindow.h"
 
 
 namespace Blade::Backend {

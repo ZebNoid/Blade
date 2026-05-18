@@ -1,7 +1,7 @@
 #include "PaintHandler.h"
 
 
-namespace Blade::Backend::WinApi {
+namespace Blade::Backend {
 
 
 auto PaintHandler::Handle(WinWindow& window, WPARAM wParam, LPARAM lParam) -> LRESULT

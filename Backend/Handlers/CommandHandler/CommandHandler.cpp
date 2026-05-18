@@ -1,8 +1,8 @@
 #include "CommandHandler.h"
-#include "../../../../Backend/WinWindow/WinWindow.h"
 
 
-namespace Blade::Backend::WinApi {
+
+namespace Blade::Backend {
 
 
 auto CommandHandler::Handle(WinWindow& window, WPARAM wParam, LPARAM lParam) -> LRESULT

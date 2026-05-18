@@ -1,10 +1,10 @@
 #include "InputHandler.h"
 
 #include "Backend/Helpers/Helpers.h"
-#include "../../../../Backend/WinWindow/WinWindow.h"
+#include "WinWindow/WinWindow.h"
 
 
-namespace Blade::Backend::WinApi {
+namespace Blade::Backend {
 
 
 // WM_MOUSEMOVE
