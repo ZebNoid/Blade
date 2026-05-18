@@ -22,19 +22,21 @@ protected:
 
     auto ui() -> void override
     {
-        window(
-            Row(
-                Stack(
-                    Nop("Nop")
-                    , Nop("Nop")
-                    , Nop("Nop").set({.layout = {100, 10,}})
-                )
-                , Stack(
-                    Label("Label")
-                    , Label("|-----+-----|")
+        Window(
+                Row(
+                    Stack(
+                        Nop("Nop")
+                        , Nop("Nop")
+                        , Nop("Nop").set({.layout = {100, 10,}})
+                    )
+                    , Stack(
+                        Label("Label")
+                        , Label("|-----+-----|")
+                    )
                 )
             )
-        ).set(wProp);
+            .set(wProp)
+            .mount(this);
 
 
         // .set({.layout = {.margin = 8,}})

@@ -30,16 +30,16 @@ public:
 
     auto run() -> int;
 
-    // TODO remove USE Windows(...).start(this) or? .app(this) .bind(this) .init(this) not .set({app=this})
-    template <typename T>
-    auto window(T&& widget) -> WindowBuilder&
-    {
-        m_windowBuilders.emplace_back(
-            std::forward<T>(widget)
-        );
-
-        return m_windowBuilders.back();
-    }
+    // // TODO remove USE Windows(...).start(this) or? .app(this) .bind(this) .init(this) not .set({app=this})
+    // template <typename T>
+    // auto window(T&& widget) -> WindowBuilder&
+    // {
+    //     m_windowBuilders.emplace_back(
+    //         std::forward<T>(widget)
+    //     );
+    //
+    //     return m_windowBuilders.back();
+    // }
 
     // TODO Alert / Popup
     static auto Alert(const std::string& text) -> void

@@ -15,15 +15,16 @@ auto WindowManager::createWindow(WindowBuilder&& builder) -> Window&
 {
     auto window = std::unique_ptr<Window>(
         new Window(
-            m_appCtx,
-            *this
+            // m_appCtx,
+            // *this
         )
     );
 
+    // TODO build
     window->set(builder.m_props);
     window->on(builder.m_events);
     window->create();
-    window->setRoot(builder.takeRoot());
+    // window->setRoot(builder.takeRoot());
     // TODO show window after? .set({.visible})?
 
     auto& ref = *window;

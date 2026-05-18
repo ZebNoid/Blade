@@ -16,23 +16,34 @@ namespace Blade {
 class Window
 {
 protected:
-    Window(AppContext& appCtx, class WindowManager& manager);
+    // Window(AppContext& appCtx, class WindowManager& manager);
 
     auto create() -> void
     {
-        WidgetContext w_ctx{
-            nullptr,
-            &m_appCtx,
-            this
-        };
-
-        m_native.create(w_ctx, this, m_props);
+        // WidgetContext w_ctx{
+        //     nullptr,
+        //     &m_appCtx,
+        //     this
+        // };
+        //
+        // m_native.create(w_ctx, this, m_props);
     }
 
 
     auto router() -> EventRouter& { return m_router; }
 
 public:
+    Window() {}
+
+    template <typename T>
+    Window(T&& widget)
+    {
+        // m_root = std::move(root);
+
+        // auto& window = wm.NewWindow("BladeUI Window");
+        // window.SetRoot(std::forward<T>(widget));
+    }
+
     auto dispatchCommand(const WidgetId id, WidgetEvent event, const EventValue& value = {}) -> void
     {
         m_router.dispatchCommand(id, event, value);
@@ -65,6 +76,10 @@ public:
         return *this;
     }
 
+    auto mount(class App& app) -> void
+    {
+    }
+
     auto root() const -> Widget*
     {
         return m_root.get();
@@ -73,21 +88,21 @@ public:
 protected:
     auto setRoot(std::unique_ptr<Widget> root) -> Window&
     {
-        m_root = std::move(root);
-
-        WidgetContext ctx{
-            m_native.handle(),
-            &m_appCtx,
-            this
-        };
-
-        if (m_root == nullptr)
-        {
-            // TODO error no root logger?
-            return *this;
-        }
-
-        m_materializer.mount(*m_root, ctx);
+        // m_root = std::move(root);
+        //
+        // WidgetContext ctx{
+        //     m_native.handle(),
+        //     &m_appCtx,
+        //     this
+        // };
+        //
+        // if (m_root == nullptr)
+        // {
+        //     // TODO error no root logger?
+        //     return *this;
+        // }
+        //
+        // m_materializer.mount(*m_root, ctx);
 
         // TODO padding
         const auto [width, height] = m_native.clientSize();
@@ -100,8 +115,8 @@ protected:
     }
 
 private:
-    WindowManager& m_manager;
-    AppContext& m_appCtx;
+    // WindowManager& m_manager;
+    // AppContext& m_appCtx;
 
     NativeWindow m_native;
     Materializer m_materializer;
