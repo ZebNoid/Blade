@@ -16,6 +16,8 @@ class AppContext
 {
 public:
     virtual ~AppContext() = default;
+
+    HINSTANCE hInstance;
 };
 
 } // namespace

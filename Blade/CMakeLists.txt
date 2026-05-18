@@ -137,6 +137,7 @@ add_library(${PROJECT_NAME} STATIC
         Core/Rect.h
         Api/ApiAppBackend.h
         api.h
+        Api/ApiBackend.h
 )
 
 # use Unicode
