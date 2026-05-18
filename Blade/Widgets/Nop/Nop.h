@@ -2,6 +2,7 @@
 
 #include "Backend/NativeNop/NativeNop.h"
 #include "Widgets/Widget/Widget.h"
+#include "WidgetsProps/Widget/NopProps.h"
 
 
 namespace Blade {
@@ -27,12 +28,12 @@ public:
         // m_native.setRect(rect);
     }
 
-    // auto set(NopProps props) -> Nop&
-    // {
-    //     m_layout = props.layout;
-    //     m_props = std::move(props);
-    //     return *this;
-    // }
+    auto set(NopProps props) -> Nop&
+    {
+        m_layout = props.layout;
+        m_props = std::move(props);
+        return *this;
+    }
 
     auto id(WidgetId& id) -> Nop&
     {
@@ -42,7 +43,7 @@ public:
 
 private:
     NativeNop m_native;
-    // NopProps m_props;
+    NopProps m_props;
 
     std::string m_text;
 };

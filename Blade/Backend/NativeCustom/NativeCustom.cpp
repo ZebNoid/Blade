@@ -10,7 +10,8 @@ namespace Blade {
 
 auto NativeCustom::create(
     const WidgetContext& ctx,
-    WidgetId id) -> void
+    WidgetId id
+) -> void
 {
     m_ctx = ctx;
     m_id = id;
@@ -25,7 +26,7 @@ auto NativeCustom::create(
         }
     );
 
-    createNative(Rect{0, 0, 140, 32});
+    createNative(Rect{0, 0, 140, 32}); // TODO rect? its ignored anyway
     // m_font = ResourceRegistry::GetFont("system");
 }
 
@@ -110,7 +111,6 @@ auto NativeCustom::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
 
             RECT rc;
             GetClientRect(hwnd, &rc);
-
 
 
             EndPaint(hwnd, &ps);

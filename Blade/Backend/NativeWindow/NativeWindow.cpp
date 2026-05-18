@@ -169,7 +169,7 @@ auto NativeWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
                 // ScreenToClient(hwnd, &pt);
                 // if (pt.y < 32) return HTCAPTION;
 
-                // return HTCAPTION; // TODO! Mouse events Blocker!
+                return HTCAPTION; // TODO! Mouse events Blocker!
             }
             return hit;
         }
