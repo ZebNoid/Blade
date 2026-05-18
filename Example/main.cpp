@@ -44,8 +44,13 @@ protected:
         // ).set(wProp);
 
         window(Row(
-            Nop()
-            )).set(wProp);
+                Nop("MyNop").set({.layout = {.flex = 1,},})
+                , Label("Label").set({.layout = {.flex = 1,},})
+            )
+            .set({
+                .crossAxisAlignment = CrossAxisAlignment::Stretch,
+            })
+        ).set(wProp);
 
         // window(contentBladeDemo()).id(windowId).set({
         //     .title = "Blade",
@@ -144,13 +149,13 @@ protected:
                 Button("Button"),
                 Progress(100),
                 Button("Button"),
-               //  Row(
-               //      Slider(50).set({.layout = {.flex=1}})
-               // ).set({
-               //     .layout = layoutMarginH,
-               //     .mainAxisAlignment = MainAxisAlignment::Center,
-               //     .crossAxisAlignment = CrossAxisAlignment::Stretch,
-               // }),
+                //  Row(
+                //      Slider(50).set({.layout = {.flex=1}})
+                // ).set({
+                //     .layout = layoutMarginH,
+                //     .mainAxisAlignment = MainAxisAlignment::Center,
+                //     .crossAxisAlignment = CrossAxisAlignment::Stretch,
+                // }),
                 Slider(50),
                 Button("Button"),
                 Label("Flex").set({.layout = {.flex = 1}}),

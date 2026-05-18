@@ -16,7 +16,6 @@ auto NativeCustom::create(
     m_ctx = ctx;
     m_id = id;
 
-
     ClassRegistry::Register(
         NATIVE_CUSTOM_CLASS,
         {
@@ -52,8 +51,9 @@ auto NativeCustom::createNative(const Rect rect) -> HWND
         ClassRegistry::Get(NATIVE_CUSTOM_CLASS),
         TEXT(""),
         style(),
-        rect.x, rect.y,
-        rect.width, rect.height,
+        0,0,0,0, // TODO why?
+        // rect.x, rect.y,
+        // rect.width, rect.height,
         m_ctx.hwnd,
         nullptr, // ID
         m_ctx.app->hInstance,
