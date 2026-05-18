@@ -10,17 +10,23 @@ namespace Blade::Backend {
 class NativeRender
 {
 public:
+    auto rect(
+        HDC hdc,
+        RECT rect,
+        COLORREF color,
+        int thickness = 1
+    ) -> void;
+
     auto rectFill(
         HDC hdc,
         RECT rect,
         COLORREF color
     ) -> void;
 
-    auto border(
+    auto frame(
         HDC hdc,
         RECT rect,
-        COLORREF color,
-        int thickness = 1
+        COLORREF color
     ) -> void;
 
     auto line(

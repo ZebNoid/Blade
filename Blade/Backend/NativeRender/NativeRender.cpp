@@ -3,6 +3,39 @@
 
 namespace Blade::Backend {
 
+
+auto NativeRender::rect(
+    HDC hdc,
+    RECT rect,
+    COLORREF color,
+    int thickness
+) -> void
+{
+    HPEN pen = CreatePen(
+        PS_SOLID,
+        thickness,
+        color
+    );
+
+    // TODO ResourceManager!!
+    HGDIOBJ oldPen = SelectObject(hdc, pen);
+    HGDIOBJ oldBrush = SelectObject(hdc, GetStockObject(HOLLOW_BRUSH));
+
+    Rectangle(
+        hdc,
+        rect.left,
+        rect.top,
+        rect.right,
+        rect.bottom
+    );
+
+    SelectObject(hdc, oldPen);
+    SelectObject(hdc, oldBrush);
+
+    // TODO ResourceManager!!
+    DeleteObject(pen);
+}
+
 auto NativeRender::rectFill(
     HDC hdc,
     RECT rect,
@@ -16,11 +49,10 @@ auto NativeRender::rectFill(
 }
 
 
-auto NativeRender::border(
+auto NativeRender::frame(
     HDC hdc,
     RECT rect,
-    COLORREF color,
-    int thickness
+    COLORREF color
 ) -> void
 {
     // TODO ResourceManager!!
