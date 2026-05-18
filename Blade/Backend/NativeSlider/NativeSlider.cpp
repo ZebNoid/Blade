@@ -16,6 +16,7 @@ auto NativeSlider::create(
 ) -> void
 {
     // TODO force redraw on resize?
+    // TODO fix vertical align!
     m_ctx = ctx;
     m_id = id;
     m_props = props;

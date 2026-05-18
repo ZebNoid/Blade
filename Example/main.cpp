@@ -142,6 +142,13 @@ protected:
                 Button("Button"),
                 Progress(100),
                 Button("Button"),
+               //  Row(
+               //      Slider(50).set({.layout = {.flex=1}})
+               // ).set({
+               //     .layout = layoutMarginH,
+               //     .mainAxisAlignment = MainAxisAlignment::Center,
+               //     .crossAxisAlignment = CrossAxisAlignment::Stretch,
+               // }),
                 Slider(50),
                 Button("Button"),
                 Label("Flex").set({.layout = {.flex = 1}}),
