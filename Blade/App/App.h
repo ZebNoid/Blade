@@ -29,6 +29,11 @@ public:
 
     auto run() -> int;
 
+    auto windows() -> WindowManager&
+    {
+        return m_wm;
+    }
+
     // // TODO remove USE Windows(...).start(this) or? .app(this) .bind(this) .init(this) not .set({app=this})
     // template <typename T>
     // auto window(T&& widget) -> WindowBuilder&

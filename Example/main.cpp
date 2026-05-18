@@ -22,7 +22,7 @@ protected:
 
     auto ui() -> void override
     {
-        Window().mount(this);
+        // Window().mount(this);
 
         Window(
                 Row(

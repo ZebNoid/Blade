@@ -6,10 +6,10 @@
 namespace Blade {
 
 
-WindowManager::WindowManager(AppContext& ctx)
-    : m_appCtx(ctx)
-{
-}
+// WindowManager::WindowManager(AppContext& ctx)
+//     : m_appCtx(ctx)
+// {
+// }
 
 auto WindowManager::createWindow(WindowBuilder&& builder) -> Window&
 {

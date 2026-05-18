@@ -2,6 +2,7 @@
 
 #include "Backend/NativeWindow/NativeWindow.h"
 #include "Context/WidgetContext.h"
+#include "App/App.h"
 
 
 namespace Blade {
@@ -28,6 +29,19 @@ auto Window::resize(Size size) -> void
 
     m_root->arrange({0, 0, size.width, size.height});
 }
+
+auto Window::mount(App* app) && -> void
+{
+    app->windows().add(
+        std::make_unique<Window>(
+            std::move(*this)
+        )
+    );
+}
+
+// auto Window::mount(App* app) & -> void
+// {
+// }
 
 
 } // namespace

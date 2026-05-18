@@ -4,9 +4,9 @@
 namespace Blade {
 
 
-App::App() : m_wm(m_ctx)
+App::App() //: m_wm(m_ctx)
 {
-    m_ctx.hInstance = GetModuleHandle(nullptr);
+    // m_ctx.hInstance = GetModuleHandle(nullptr);
     // init();
 }
 
@@ -29,10 +29,10 @@ auto App::run() -> int
 
 auto App::build() -> void
 {
-    for (auto& builder : m_windowBuilders)
-    {
-        m_wm.createWindow(std::move(builder));
-    }
+    // for (auto& builder : m_windowBuilders)
+    // {
+    //     m_wm.createWindow(std::move(builder));
+    // }
 }
 
 

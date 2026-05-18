@@ -56,7 +56,7 @@ public:
         m_router.dispatchCommand(id, event, value);
     }
 
-    Window(const Window&) = delete;
+    // Window(const Window&) = delete;
 
     auto show() -> void;
 
@@ -83,9 +83,9 @@ public:
         return *this;
     }
 
-    auto mount(class App* app) -> void
-    {
-    }
+    auto mount(class App* app) && -> void;
+
+    // auto mount(class App* app) & -> void;
 
     auto root() const -> Widget*
     {
@@ -93,33 +93,33 @@ public:
     }
 
 protected:
-    auto setRoot(std::unique_ptr<Widget> root) -> Window&
-    {
-        // m_root = std::move(root);
-        //
-        // WidgetContext ctx{
-        //     m_native.handle(),
-        //     &m_appCtx,
-        //     this
-        // };
-        //
-        // if (m_root == nullptr)
-        // {
-        //     // TODO error no root logger?
-        //     return *this;
-        // }
-        //
-        // m_materializer.mount(*m_root, ctx);
-
-        // TODO padding
-        const auto [width, height] = m_native.clientSize();
-
-        m_root->measure({width, height}); // TODO
-
-        m_root->arrange({0, 0, width, height});
-
-        return *this;
-    }
+    // auto setRoot(std::unique_ptr<Widget> root) -> Window&
+    // {
+    //     // m_root = std::move(root);
+    //     //
+    //     // WidgetContext ctx{
+    //     //     m_native.handle(),
+    //     //     &m_appCtx,
+    //     //     this
+    //     // };
+    //     //
+    //     // if (m_root == nullptr)
+    //     // {
+    //     //     // TODO error no root logger?
+    //     //     return *this;
+    //     // }
+    //     //
+    //     // m_materializer.mount(*m_root, ctx);
+    //
+    //     // TODO padding
+    //     const auto [width, height] = m_native.clientSize();
+    //
+    //     m_root->measure({width, height}); // TODO
+    //
+    //     m_root->arrange({0, 0, width, height});
+    //
+    //     return *this;
+    // }
 
 private:
     // WindowManager& m_manager;
@@ -134,6 +134,7 @@ private:
     WindowProps m_props{};
     WindowEvents m_events{};
 
+    // friend class App;
     friend class WindowManager;
     friend class Widget;
     friend class NativeWindow;
