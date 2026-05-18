@@ -123,6 +123,8 @@ add_library(${PROJECT_NAME} STATIC
         Layout/LayoutEngine/LayoutType.h
         Layout/LayoutContext/LayoutContext.cpp
         Layout/LayoutContext/LayoutContext.h
+        Backend/NativeCustom/NativeCustom.cpp
+        Backend/NativeCustom/NativeCustom.h
 )
 
 # use Unicode
