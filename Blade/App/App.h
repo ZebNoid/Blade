@@ -69,8 +69,6 @@ protected:
     std::vector<WindowBuilder> m_windowBuilders;
 
 private:
-    auto init() -> void;
-
     std::unique_ptr<AppBackend> m_backend;
 };
 

@@ -11,6 +11,8 @@ add_library(${PROJECT_NAME} STATIC
         backend.h
         WinInit/WinInit.cpp
         WinInit/WinInit.h
+        Context/WinAppContext.cpp
+        Context/WinAppContext.h
 )
 
 # use Unicode
