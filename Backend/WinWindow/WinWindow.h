@@ -21,7 +21,7 @@ protected:
 
     auto style() const -> DWORD override;
 
-    auto widgetName() const -> std::string override { return "NativeWindow"; }
+    auto widgetName() const -> std::string override { return "WinWindow"; }
 
     auto createNative(Rect rect) -> HWND override;
 

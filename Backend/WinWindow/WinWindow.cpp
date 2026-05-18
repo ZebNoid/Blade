@@ -9,6 +9,9 @@
 
 namespace Blade::Backend {
 
+#define CUSTOM_CLASS_KEY "WinWindowKey"
+#define NATIVE_CUSTOM_CLASS "WinWindowClass"
+
 WinWindow::WinWindow(Window& window, HINSTANCE hInstance) : m_window(window), m_hInstance(hInstance)
 {
     m_size = {800, 600};
@@ -28,9 +31,9 @@ auto WinWindow::create() -> void
     ClassRegistry::Init(m_hInstance);
 
     ClassRegistry::Register(
-        "NativeWindow",
+        CUSTOM_CLASS_KEY,
         {
-            .name = L"NativeWindowClass",
+            .name = TEXT(CUSTOM_CLASS_KEY),
             .proc = WindowProc,
             // .background = (HBRUSH)COLOR_HIGHLIGHTTEXT,
             // TODO set window icon
@@ -105,7 +108,7 @@ auto WinWindow::createNative(const Rect rect) -> HWND
 
     m_hwnd = CreateWindowEx(
         exStyle(),
-        ClassRegistry::Get("NativeWindow"),
+        ClassRegistry::Get(CUSTOM_CLASS_KEY),
         toNativeString(m_props.title).c_str(),
         style(),
         // TODO remember size / position
@@ -119,7 +122,7 @@ auto WinWindow::createNative(const Rect rect) -> HWND
 
     if (!m_hwnd)
     {
-        std::cerr << "[Error] NativeWindow::CreateNative " << GetLastError() << std::endl;
+        std::cerr << "[Error] WinWindow::CreateNative " << GetLastError() << std::endl;
     }
 
     // SetLayeredWindowAttributes(m_hwnd, 0, (255 * 70) / 100, LWA_ALPHA);

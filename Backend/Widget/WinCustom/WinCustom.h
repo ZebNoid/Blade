@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Context/WidgetContext.h"
-#include "Widget/NativeRender/WinRender.h"
+#include "Widget/WinRender/WinRender.h"
 #include "Widget/WinWidget/WinWidget.h"
 
 

@@ -27,12 +27,14 @@ add_library(${PROJECT_NAME} STATIC
         Widget/WinWidget/WinWidget.h
         Widget/WinCustom/WinCustom.h
         Widget/WinCustom/WinCustom.cpp
-        Widget/NativeRender/WinRender.cpp
-        Widget/NativeRender/WinRender.h
+        Widget/WinRender/WinRender.cpp
+        Widget/WinRender/WinRender.h
         Registry/ClassRegistry/ClassRegistry.cpp
         Registry/ClassRegistry/ClassRegistry.h
         Registry/ResourceRegistry/ResourceRegistry.h
         Registry/ResourceRegistry/ResourceRegistry.cpp
+        Widget/WinLabel/WinLabel.h
+        Widget/WinLabel/WinLabel.cpp
 )
 
 # use Unicode
