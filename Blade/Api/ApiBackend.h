@@ -1,5 +1,4 @@
 #pragma once
-#include <complex.h>
 
 #include "Windows/Window/Window.h"
 

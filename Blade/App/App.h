@@ -31,19 +31,10 @@ public:
         return m_wm;
     }
 
-    // TODO move to Backend Alert / Popup
-    static auto Alert(const std::string& text) -> void
-    {
-        // TODO Native alert builder
-        // MessageBox(nullptr, Utf8ToUtf16(text).c_str(), L"Help!", MB_OK);
-    }
-
 protected:
     virtual auto setup() -> void = 0;
 
     virtual auto ui() -> void = 0;
-
-    // virtual auto uiLoop() -> void {    } // TODO app loop callback?
 
 private:
     auto initBackend() -> void;

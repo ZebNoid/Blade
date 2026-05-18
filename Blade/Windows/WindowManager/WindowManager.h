@@ -14,6 +14,7 @@ class WindowManager
 public:
     WindowManager() = default;
 
+private:
     auto bind(ApiBackend& backend) -> void;
 
     auto add(std::unique_ptr<Window> window) -> void;
@@ -30,6 +31,10 @@ private:
     ApiBackend* m_backend = nullptr;
 
     std::vector<std::unique_ptr<Window>> m_windows;
+
+    // TODO friends
+    friend App; // bind
+    friend Window; // destroy?
 };
 
 
