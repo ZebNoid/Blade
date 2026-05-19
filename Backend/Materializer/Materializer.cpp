@@ -46,6 +46,8 @@ auto Materializer::buildChildren(Widget& widget, ApiWidget& native) -> void
     {
         auto nativeChild = create(*child);
 
+        nativeChild->create(native);
+
         buildChildren(
             *child,
             *nativeChild
