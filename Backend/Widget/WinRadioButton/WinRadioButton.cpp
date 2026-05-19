@@ -1,12 +1,12 @@
-#include "NativeRadioButton.h"
+#include "WinRadioButton.h"
 
-#include "Backend/Registry/ResourceRegistry/ResourceRegistry.h"
-
-
-namespace Blade {
+#include "Registry/ResourceRegistry/ResourceRegistry.h"
 
 
-auto NativeRadioButton::create(const WidgetContext& ctx, const WidgetId id, const RadioButtonProps& props, const std::string& text) -> void
+namespace Blade::Backend {
+
+
+auto WinRadioButton::create(const WidgetContext& ctx, const WidgetId id, const RadioButtonProps& props, const std::string& text) -> void
 {
     m_ctx = ctx;
     m_id = id;
@@ -17,7 +17,7 @@ auto NativeRadioButton::create(const WidgetContext& ctx, const WidgetId id, cons
     applyFont(ResourceRegistry::GetFont("system"));
 }
 
-DWORD NativeRadioButton::style() const
+DWORD WinRadioButton::style() const
 {
     // TODO Start of group WS_GROUP
 
@@ -35,9 +35,10 @@ DWORD NativeRadioButton::style() const
     return style;
 }
 
-auto NativeRadioButton::createNative(Rect rect) -> HWND
+auto WinRadioButton::createNative(Rect rect) -> HWND
 {
-    NativeWidget::createNative(rect);
+    WinWidget::createNative(rect);
+
     if (m_ctx.hwnd == nullptr) return nullptr;
 
     // TODO grouping? CheckRadioButton(hwndDlg, IDC_FIRST_RADIO, IDC_LAST_RADIO, IDC_RADIO_ONE);

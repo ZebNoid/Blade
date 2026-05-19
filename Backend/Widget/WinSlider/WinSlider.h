@@ -1,22 +1,22 @@
 #pragma once
 
-#include "Backend/NativeWidget/NativeWidget.h"
+#include "Widget/WinWidget/WinWidget.h"
 #include "WidgetsProps/Widget/SliderProps.h"
 
 
-namespace Blade {
+namespace Blade::Backend {
 
 
-class NativeSlider : public NativeWidget
+class WinSlider : public WinWidget
 {
 
 public:
-    NativeSlider() = default;
+    WinSlider() = default;
 
     auto create(const WidgetContext& ctx, WidgetId id, const SliderProps& props, const int value) -> void;
 
 protected:
-    auto widgetName() const -> std::string override { return "NativeSlider"; }
+    auto widgetName() const -> std::string override { return "WinSlider"; }
 
     auto style() const -> DWORD override;
 

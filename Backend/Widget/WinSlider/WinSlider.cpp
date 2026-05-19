@@ -1,14 +1,14 @@
-#include "NativeSlider.h"
+#include "WinSlider.h"
 
 #include <commctrl.h>
 
-#include "Backend/Registry/ResourceRegistry/ResourceRegistry.h"
+#include "Registry/ResourceRegistry/ResourceRegistry.h"
 
 
-namespace Blade {
+namespace Blade::Backend {
 
 
-auto NativeSlider::create(
+auto WinSlider::create(
     const WidgetContext& ctx,
     const WidgetId id,
     const SliderProps& props,
@@ -30,7 +30,7 @@ auto NativeSlider::create(
     SendMessage(m_hwnd, TBM_SETPOS, TRUE, (LPARAM)value);
 }
 
-DWORD NativeSlider::style() const
+DWORD WinSlider::style() const
 {
     auto style = WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS;
 
@@ -51,15 +51,15 @@ DWORD NativeSlider::style() const
     return style;
 }
 
-auto NativeSlider::createNative(Rect rect) -> HWND
+auto WinSlider::createNative(Rect rect) -> HWND
 {
-    NativeWidget::createNative(rect);
+    WinWidget::createNative(rect);
     if (m_ctx.hwnd == nullptr) return nullptr;
 
     m_hwnd = CreateWindowEx(
         0,
         TRACKBAR_CLASS, // Predefined class
-        TEXT("NativeSlider"), // TODO ?
+        TEXT("WinSlider"), // TODO ?
         style(),
         rect.x,
         rect.y,

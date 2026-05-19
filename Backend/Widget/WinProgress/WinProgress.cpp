@@ -1,15 +1,15 @@
-#include "NativeProgress.h"
+#include "WinProgress.h"
 
 #include <commctrl.h>
-#include <uxtheme.h>
+// #include <uxtheme.h>
 
-#include "Backend/Registry/ResourceRegistry/ResourceRegistry.h"
-
-
-namespace Blade {
+#include "Registry/ResourceRegistry/ResourceRegistry.h"
 
 
-auto NativeProgress::create(
+namespace Blade::Backend {
+
+
+auto WinProgress::create(
     const WidgetContext& ctx,
     const WidgetId id,
     const ProgressProps& props,
@@ -47,7 +47,7 @@ auto NativeProgress::create(
     // SendMessage(m_hwnd, PBM_SETSTATE, PBST_PAUSED, 0); // pause Yellow
 }
 
-DWORD NativeProgress::style() const
+DWORD WinProgress::style() const
 {
     auto style = WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS;
     if (m_props.vertical)
@@ -67,9 +67,9 @@ DWORD NativeProgress::style() const
     return style;
 }
 
-auto NativeProgress::createNative(Rect rect) -> HWND
+auto WinProgress::createNative(Rect rect) -> HWND
 {
-    NativeWidget::createNative(rect);
+    WinWidget::createNative(rect);
     if (m_ctx.hwnd == nullptr) return nullptr;
 
     m_hwnd = CreateWindowEx(

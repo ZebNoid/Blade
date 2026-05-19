@@ -1,22 +1,22 @@
 #pragma once
 
-#include "Backend/NativeWidget/NativeWidget.h"
+#include "Widget/WinWidget/WinWidget.h"
 #include "WidgetsProps/Widget/TextFieldProps.h"
 #include "Widgets/TextField/TextField.h"
 
 
-namespace Blade {
+namespace Blade::Backend {
 
 
-class NativeTextField : public NativeWidget
+class WinTextField : public WinWidget
 {
 public:
-    NativeTextField() = default;
+    WinTextField() = default;
 
     auto create(const WidgetContext& ctx, WidgetId id, const TextFieldProps& props, const std::string& text) -> void;
 
 protected:
-    auto widgetName() const -> std::string override { return "NativeTextField"; }
+    auto widgetName() const -> std::string override { return "WinTextField"; }
 
     auto style() const -> DWORD override;
 

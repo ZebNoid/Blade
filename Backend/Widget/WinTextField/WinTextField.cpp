@@ -1,13 +1,14 @@
-#include "NativeTextField.h"
+#include "WinTextField.h"
 
-#include "Backend/Registry/ResourceRegistry/ResourceRegistry.h"
-
-
-namespace Blade {
+#include "Helpers/WinUtils.h"
+#include "Registry/ResourceRegistry/ResourceRegistry.h"
 
 
-auto NativeTextField::create(const WidgetContext& ctx, const WidgetId id, const TextFieldProps& props,
-                             const std::string& text) -> void
+namespace Blade::Backend {
+
+
+auto WinTextField::create(const WidgetContext& ctx, const WidgetId id, const TextFieldProps& props,
+                          const std::string& text) -> void
 {
     m_ctx = ctx;
     m_id = id;
@@ -21,7 +22,7 @@ auto NativeTextField::create(const WidgetContext& ctx, const WidgetId id, const 
     setPlaceholder();
 }
 
-DWORD NativeTextField::style() const
+DWORD WinTextField::style() const
 {
     auto style = WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS;
 
@@ -68,7 +69,7 @@ DWORD NativeTextField::style() const
     return style;
 }
 
-DWORD NativeTextField::exStyle() const
+DWORD WinTextField::exStyle() const
 {
     auto exStyle = WS_EX_CLIENTEDGE;
 
@@ -81,9 +82,9 @@ DWORD NativeTextField::exStyle() const
     return exStyle;
 }
 
-auto NativeTextField::createNative(const Rect rect) -> HWND
+auto WinTextField::createNative(const Rect rect) -> HWND
 {
-    NativeWidget::createNative(rect);
+    WinWidget::createNative(rect);
     if (m_ctx.hwnd == nullptr) return nullptr;
 
     m_hwnd = CreateWindowEx(
@@ -100,12 +101,12 @@ auto NativeTextField::createNative(const Rect rect) -> HWND
 
     if (!m_hwnd)
     {
-        std::cerr << "[Error] NativeTextField::CreateNative " << GetLastError() << std::endl;
+        std::cerr << "[Error] WinTextField::CreateNative " << GetLastError() << std::endl;
     }
     return m_hwnd;
 }
 
-auto NativeTextField::setPlaceholder() -> void
+auto WinTextField::setPlaceholder() -> void
 {
     // TODO fix Placeholder
     // LPCWSTR placeholderText = TEXT("Enter your name here...");
@@ -115,12 +116,12 @@ auto NativeTextField::setPlaceholder() -> void
 }
 
 
-auto NativeTextField::setRect(const Rect rect) -> void
+auto WinTextField::setRect(const Rect rect) -> void
 {
-    NativeWidget::setRect(rect);
+    WinWidget::setRect(rect);
     // SetWindowPos(m_hwnd, nullptr, rect.x, rect.y, rect.width, rect.height, SWP_NOZORDER);
     // // TODO hack vAlign
-    VerticalAlignCenter(m_hwnd);
+    WinUtils::VerticalAlignCenter(m_hwnd);
 }
 
 

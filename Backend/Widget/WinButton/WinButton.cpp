@@ -1,14 +1,13 @@
-#include "NativeButton.h"
+#include "WinButton.h"
 
-#include "Backend/NativeWidget/NativeWidget.h"
-#include "Backend/Registry/ResourceRegistry/ResourceRegistry.h"
+#include "Registry/ResourceRegistry/ResourceRegistry.h"
 #include "Context/WidgetContext.h"
 
 
-namespace Blade {
+namespace Blade::Backend {
 
 
-auto NativeButton::create(
+auto WinButton::create(
     const WidgetContext& ctx,
     const WidgetId id,
     const ButtonProps& props,
@@ -26,7 +25,7 @@ auto NativeButton::create(
     applyFont(ResourceRegistry::GetFont("system"));
 }
 
-DWORD NativeButton::style() const
+DWORD WinButton::style() const
 {
     auto style = WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | WS_CLIPSIBLINGS;
 
@@ -41,9 +40,9 @@ DWORD NativeButton::style() const
     return style;
 }
 
-auto NativeButton::createNative(const Rect rect) -> HWND
+auto WinButton::createNative(const Rect rect) -> HWND
 {
-    NativeWidget::createNative(rect);
+    WinWidget::createNative(rect);
     if (m_ctx.hwnd == nullptr) return nullptr;
 
     m_hwnd = CreateWindowEx(
@@ -60,7 +59,7 @@ auto NativeButton::createNative(const Rect rect) -> HWND
 
     if (!m_hwnd)
     {
-        std::cerr << "[Error] NativeButton::CreateNative " << GetLastError() << std::endl;
+        std::cerr << "[Error] WinButton::CreateNative " << GetLastError() << std::endl;
     }
     return m_hwnd;
 }

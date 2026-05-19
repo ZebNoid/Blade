@@ -1,23 +1,17 @@
 #pragma once
 
-// #include <windows.h>
-
+#include "Widget/WinWidget/WinWidget.h"
 #include "WidgetsEvents/Widget/ButtonEvents.h"
 #include "WidgetsProps/Widget/ButtonProps.h"
 
 
-namespace Blade {
+namespace Blade::Backend {
 
 
-struct WidgetContext;
-class NativeWidget;
-class Button;
-
-
-class NativeButton : public NativeWidget
+class WinButton : public WinWidget
 {
 public:
-    NativeButton() = default;
+    WinButton() = default;
 
     auto create(
         const WidgetContext& ctx,
@@ -27,7 +21,7 @@ public:
     ) -> void;
 
 protected:
-    auto widgetName() const -> std::string override { return "NativeButton"; }
+    auto widgetName() const -> std::string override { return "WinButton"; }
 
     auto style() const -> DWORD override;
 

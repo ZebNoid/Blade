@@ -50,6 +50,18 @@ add_library(${PROJECT_NAME} STATIC
         Materializer/Materializer.cpp
         Materializer/Materializer.h
         Helpers/WinUtils.h
+        Widget/WinButton/WinButton.cpp
+        Widget/WinButton/WinButton.h
+        Widget/WinCheckbox/WinCheckbox.h
+        Widget/WinCheckbox/WinCheckbox.cpp
+        Widget/WinProgress/WinProgress.cpp
+        Widget/WinProgress/WinProgress.h
+        Widget/WinRadioButton/WinRadioButton.cpp
+        Widget/WinRadioButton/WinRadioButton.h
+        Widget/WinSlider/WinSlider.h
+        Widget/WinSlider/WinSlider.cpp
+        Widget/WinTextField/WinTextField.cpp
+        Widget/WinTextField/WinTextField.h
 )
 
 # use Unicode

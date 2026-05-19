@@ -1,12 +1,11 @@
-#include "NativeCheckbox.h"
-
-#include "Backend/Registry/ResourceRegistry/ResourceRegistry.h"
-
-
-namespace Blade {
+#include "WinCheckbox.h"
+#include "Registry/ResourceRegistry/ResourceRegistry.h"
 
 
-auto NativeCheckbox::create(const WidgetContext& ctx, const WidgetId id, const CheckboxProps& props,
+namespace Blade::Backend {
+
+
+auto WinCheckbox::create(const WidgetContext& ctx, const WidgetId id, const CheckboxProps& props,
                             const std::string& text) -> void
 {
     m_ctx = ctx;
@@ -18,7 +17,7 @@ auto NativeCheckbox::create(const WidgetContext& ctx, const WidgetId id, const C
     applyFont(ResourceRegistry::GetFont("system"));
 }
 
-DWORD NativeCheckbox::style() const
+DWORD WinCheckbox::style() const
 {
     // TODO BS_VCENTER?
     auto style = WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | BS_AUTOCHECKBOX;
@@ -32,9 +31,9 @@ DWORD NativeCheckbox::style() const
     return style;
 }
 
-auto NativeCheckbox::createNative(Rect rect) -> HWND
+auto WinCheckbox::createNative(Rect rect) -> HWND
 {
-    NativeWidget::createNative(rect);
+    WinWidget::createNative(rect);
     if (m_ctx.hwnd == nullptr) return nullptr;
 
     m_hwnd = CreateWindowEx(

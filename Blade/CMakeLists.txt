@@ -87,6 +87,7 @@ add_library(${PROJECT_NAME} STATIC
         Render/Render.h
         Core/Rect.h
         api.h
+        Api/ApiWidget.h
 )
 
 # use Unicode

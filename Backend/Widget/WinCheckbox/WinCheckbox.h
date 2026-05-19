@@ -1,22 +1,22 @@
 #pragma once
 
-#include "Backend/NativeWidget/NativeWidget.h"
+#include "Widget/WinWidget/WinWidget.h"
 #include "WidgetsProps/Widget/CheckboxProps.h"
 
 
-namespace Blade {
+namespace Blade::Backend {
 
 
-class NativeCheckbox : public NativeWidget
+class WinCheckbox : public WinWidget
 {
 
 public:
-    NativeCheckbox() = default;
+    WinCheckbox() = default;
 
     auto create(const WidgetContext& ctx, WidgetId id, const CheckboxProps& props, const std::string& string) -> void;
 
 protected:
-    auto widgetName() const -> std::string override { return "NativeCheckbox"; }
+    auto widgetName() const -> std::string override { return "WinCheckbox"; }
 
     auto style() const -> DWORD override;
 

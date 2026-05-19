@@ -1,22 +1,22 @@
 #pragma once
 
-#include "Backend/NativeWidget/NativeWidget.h"
+#include "Widget/WinWidget/WinWidget.h"
 #include "WidgetsProps/Widget/RadioButtonProps.h"
 
 
-namespace Blade {
+namespace Blade::Backend {
 
 
-class NativeRadioButton : public NativeWidget
+class WinRadioButton : public WinWidget
 {
 
 public:
-    NativeRadioButton() = default;
+    WinRadioButton() = default;
 
     auto create(const WidgetContext& ctx, WidgetId id, const RadioButtonProps& props, const std::string& string) -> void;
 
 protected:
-    auto widgetName() const -> std::string override { return "NativeRadioButton"; }
+    auto widgetName() const -> std::string override { return "WinRadioButton"; }
 
     auto style() const -> DWORD override;
 
