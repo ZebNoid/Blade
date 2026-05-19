@@ -30,13 +30,18 @@ protected:
 
     virtual auto handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT;
 
-    virtual auto createNative(Rect rect, HWND parent = nullptr) -> HWND
+    virtual auto createNative(Rect rect) -> HWND
     {
-        std::cerr << "[Error] " << name() << "::create not defined " << std::endl;
         return nullptr;
     }
 
     auto applyFont(HFONT font) const -> void;
+
+    auto parentHandle() const -> HWND
+    {
+        const auto parent = dynamic_cast<WinWidget*>(m_parent);
+        return parent->handle();
+    }
 
 public:
     auto clientSize() const -> Size

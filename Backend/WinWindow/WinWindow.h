@@ -25,7 +25,7 @@ protected:
 
     auto name() const -> std::string override { return "WinWindow"; }
 
-    auto createNative(Rect rect, HWND parent = nullptr) -> HWND override;
+    auto createNative(Rect rect) -> HWND override;
 
     auto initPosition() -> Point;
 

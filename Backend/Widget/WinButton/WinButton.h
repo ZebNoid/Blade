@@ -17,6 +17,7 @@ public:
 
     auto create(ApiWidget& parent) -> void override;
 
+
     auto create(
         WidgetId id,
         const ButtonProps& props,
@@ -28,7 +29,7 @@ protected:
 
     auto style() const -> DWORD override;
 
-    auto createNative(Rect rect, HWND parent = nullptr) -> HWND override;
+    auto createNative(Rect rect) -> HWND override;
 
 private:
     ButtonProps m_props{};

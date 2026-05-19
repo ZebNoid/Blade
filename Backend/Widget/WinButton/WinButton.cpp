@@ -1,6 +1,7 @@
 #include "WinButton.h"
 
 #include "Registry/ResourceRegistry/ResourceRegistry.h"
+#include "WinWindow/WinWindow.h"
 
 
 namespace Blade::Backend {
@@ -13,7 +14,17 @@ WinButton::WinButton(Widget& widget)
 
 auto WinButton::create(ApiWidget& parent) -> void
 {
-    std::cout << " -> WinButton::create ApiWidget&\n"; // TODO dev
+    // auto* winParent = dynamic_cast<WinWindow*>(&parent);
+    // m_hwndParent = winParent->handle();
+
+    if (!parentHandle())
+    {
+        return;
+    }
+
+    std::cout << " -> WinButton::create ApiWidget&  hwnd: " << parentHandle() << "\n"; // TODO dev
+
+    create(0, {}, L"");
 }
 
 auto WinButton::create(
@@ -47,11 +58,8 @@ DWORD WinButton::style() const
     return style;
 }
 
-auto WinButton::createNative(const Rect rect, HWND parent) -> HWND
+auto WinButton::createNative(const Rect rect) -> HWND
 {
-    WinWidget::createNative(rect);
-    if (parent == nullptr) return nullptr;
-
     m_hwnd = CreateWindowEx(
         0,
         TEXT("BUTTON"),
@@ -59,9 +67,9 @@ auto WinButton::createNative(const Rect rect, HWND parent) -> HWND
         style(),
         rect.x, rect.y,
         rect.width, rect.height,
-        parent,
+        parentHandle(),
         (HMENU)m_id, // Button ID
-        nullptr, // TODO m_ctx.app->hInstance,
+        GetModuleHandle(nullptr), // TODO m_ctx.app->hInstance,
         nullptr);
 
     if (!m_hwnd)

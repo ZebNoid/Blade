@@ -9,13 +9,8 @@ namespace Blade::Backend {
 #define CUSTOM_CLASS_KEY "WinCustom"
 #define NATIVE_CUSTOM_CLASS "WinCustomClass"
 
-// auto WinCustom::create(ApiWidget& parent) -> void
-// {
-// }
 
-auto WinCustom::create(
-    WidgetId id
-) -> void
+auto WinCustom::create(WidgetId id) -> void
 {
     m_id = id;
     m_systemFont = ResourceRegistry::GetFont("system");
@@ -45,22 +40,19 @@ DWORD WinCustom::exStyle() const
     return exStyle;
 }
 
-auto WinCustom::createNative(const Rect rect, HWND parent) -> HWND
+auto WinCustom::createNative(const Rect rect) -> HWND
 {
-    WinWidget::createNative(rect);
-    if (parent == nullptr) return nullptr;
-
     m_hwnd = CreateWindowEx(
         exStyle(),
         ClassRegistry::Get(NATIVE_CUSTOM_CLASS),
         TEXT(""),
         style(),
-        0,0,0,0, // TODO why?
+        0, 0, 0, 0, // TODO why?
         // rect.x, rect.y,
         // rect.width, rect.height,
-        parent,
+        parentHandle(),
         nullptr, // ID
-        nullptr, // TODO m_ctx.app->hInstance,
+        GetModuleHandle(nullptr), // TODO m_ctx.app->hInstance,
         this
     );
 

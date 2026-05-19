@@ -29,8 +29,7 @@ public:
 
     virtual auto create(ApiWidget& parent) -> void = 0;
 
-    virtual auto create()
-        -> void
+    virtual auto create() -> void
     {
     }
 

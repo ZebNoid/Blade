@@ -65,11 +65,8 @@ DWORD WinProgress::style() const
     return style;
 }
 
-auto WinProgress::createNative(Rect rect, HWND parent) -> HWND
+auto WinProgress::createNative(Rect rect) -> HWND
 {
-    WinWidget::createNative(rect);
-    if (parent == nullptr) return nullptr;
-
     m_hwnd = CreateWindowEx(
         0,
         PROGRESS_CLASS, // Predefined class
@@ -79,9 +76,9 @@ auto WinProgress::createNative(Rect rect, HWND parent) -> HWND
         rect.y,
         rect.width,
         rect.height,
-        parent,
+        parentHandle(),
         (HMENU)m_id, // Checkbox ID
-        nullptr, // TODO m_ctx.app->hInstance,
+        GetModuleHandle(nullptr), // TODO m_ctx.app->hInstance,
         this
     );
 

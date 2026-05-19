@@ -34,12 +34,8 @@ DWORD WinRadioButton::style() const
     return style;
 }
 
-auto WinRadioButton::createNative(Rect rect, HWND parent) -> HWND
+auto WinRadioButton::createNative(Rect rect) -> HWND
 {
-    WinWidget::createNative(rect);
-
-    if (parent == nullptr) return nullptr;
-
     // TODO grouping? CheckRadioButton(hwndDlg, IDC_FIRST_RADIO, IDC_LAST_RADIO, IDC_RADIO_ONE);
 
     m_hwnd = CreateWindowEx(
@@ -51,9 +47,9 @@ auto WinRadioButton::createNative(Rect rect, HWND parent) -> HWND
         rect.y,
         rect.width,
         rect.height,
-        parent,
+        parentHandle(),
         (HMENU)m_id, // Checkbox ID
-        nullptr, // TODO m_ctx.app->hInstance,
+        GetModuleHandle(nullptr), // TODO m_ctx.app->hInstance,
         this
     );
 

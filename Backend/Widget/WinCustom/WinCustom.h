@@ -19,7 +19,7 @@ protected:
 
     auto exStyle() const -> DWORD override;
 
-    auto createNative(Rect rect, HWND parent = nullptr) -> HWND override;
+    auto createNative(Rect rect) -> HWND override;
 
     auto handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT override;
 

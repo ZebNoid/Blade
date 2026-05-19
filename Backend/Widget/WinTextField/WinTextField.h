@@ -22,7 +22,7 @@ protected:
 
     auto exStyle() const -> DWORD override;
 
-    auto createNative(Rect rect, HWND parent = nullptr) -> HWND override;
+    auto createNative(Rect rect) -> HWND override;
 
     auto setPlaceholder() -> void;
 

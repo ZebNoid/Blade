@@ -84,11 +84,8 @@ DWORD WinTextField::exStyle() const
     return exStyle;
 }
 
-auto WinTextField::createNative(const Rect rect, HWND parent) -> HWND
+auto WinTextField::createNative(const Rect rect) -> HWND
 {
-    WinWidget::createNative(rect);
-    if (parent == nullptr) return nullptr;
-
     m_hwnd = CreateWindowEx(
         exStyle(),
         TEXT("Edit"),
@@ -96,9 +93,9 @@ auto WinTextField::createNative(const Rect rect, HWND parent) -> HWND
         style(),
         rect.x, rect.y,
         rect.width, rect.height,
-        parent,
+        parentHandle(),
         (HMENU)m_id, // ID
-        nullptr, // TODO m_ctx.app->hInstance, // <-- Must be NULL for global classes ?
+        GetModuleHandle(nullptr), // TODO m_ctx.app->hInstance, // <-- Must be NULL for global classes ?
         nullptr);
 
     if (!m_hwnd)

@@ -112,7 +112,7 @@ auto WinWindow::style() const -> DWORD
     return style;
 }
 
-auto WinWindow::createNative(const Rect rect, HWND parent) -> HWND
+auto WinWindow::createNative(const Rect rect) -> HWND
 {
     auto startPos = initPosition();
 
@@ -125,7 +125,7 @@ auto WinWindow::createNative(const Rect rect, HWND parent) -> HWND
         // TODO center
         startPos.x, startPos.y,
         m_props.size.width, m_props.size.height,
-        parent, // HWND_DESKTOP, //  create parent window?
+        parentHandle(), // HWND_DESKTOP, //  create parent window?
         nullptr,
         m_hInstance,
         this);
