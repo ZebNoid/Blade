@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Widget/WinWidget/WinWidget.h"
+#include "Widget/WinWidget/ApiWidget.h"
 #include "Widgets/Widget/Widget.h"
 
 
@@ -10,31 +10,33 @@ namespace Blade::Backend {
 class Materializer
 {
 public:
-    auto registerWidget(
-        Widget& widget,
-        WinWidget& native
-    ) -> void;
+    auto create(Widget& widget) -> std::unique_ptr<ApiWidget>;
 
-    // find()
-    auto native(
-        Widget& widget
-    ) -> WinWidget*;
-
-    auto unregisterWidget(
-        Widget& widget
-    ) -> void;
-
-
-    // TODO to WinWindow
-    // TODO no WidgetContext!
-    auto mount(Widget& widget, WidgetContext& ctx) -> void
-    {
-        // TODO mount
-        // widget.mount(*this, ctx);
-    }
+    // auto registerWidget(
+    //     Widget& widget,
+    //     ApiWidget& native
+    // ) -> void;
+    //
+    // // find()
+    // auto native(
+    //     Widget& widget
+    // ) -> ApiWidget*;
+    //
+    // auto unregisterWidget(
+    //     Widget& widget
+    // ) -> void;
+    //
+    //
+    // // TODO to WinWindow
+    // // TODO no WidgetContext!
+    // auto mount(Widget& widget, WidgetContext& ctx) -> void
+    // {
+    //     // TODO mount
+    //     // widget.mount(*this, ctx);
+    // }
 
 private:
-    std::unordered_map<Widget*, WinWidget*> m_widgets;
+    std::unordered_map<Widget*, ApiWidget*> m_widgets;
 };
 
 

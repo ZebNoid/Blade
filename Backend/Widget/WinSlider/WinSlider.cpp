@@ -53,7 +53,7 @@ DWORD WinSlider::style() const
 
 auto WinSlider::createNative(Rect rect) -> HWND
 {
-    WinWidget::createNative(rect);
+    ApiWidget::createNative(rect);
     if (m_ctx.hwnd == nullptr) return nullptr;
 
     m_hwnd = CreateWindowEx(

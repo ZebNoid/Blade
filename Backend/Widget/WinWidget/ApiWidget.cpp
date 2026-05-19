@@ -1,10 +1,10 @@
-#include "WinWidget.h"
+#include "ApiWidget.h"
 
 
 namespace Blade::Backend {
 
 
-WinWidget::~WinWidget()
+ApiWidget::~ApiWidget()
 {
     // TODO check for windows and children
     if (m_hwnd && IsWindow(m_hwnd))
@@ -14,57 +14,57 @@ WinWidget::~WinWidget()
     }
 }
 
-auto WinWidget::handle() const -> HWND
+auto ApiWidget::handle() const -> HWND
 {
     return m_hwnd;
 }
 
-auto WinWidget::style() const -> DWORD
+auto ApiWidget::style() const -> DWORD
 {
     return WS_CHILD | WS_VISIBLE;
 }
 
-auto WinWidget::exStyle() const -> DWORD
+auto ApiWidget::exStyle() const -> DWORD
 {
     return 0;
 }
 
-auto WinWidget::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
+auto ApiWidget::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
 {
     return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 
-auto WinWidget::applyFont(HFONT font) const -> void
+auto ApiWidget::applyFont(HFONT font) const -> void
 {
     // auto font = GetSystemUIFont();
     SendMessageW(m_hwnd, WM_SETFONT, (WPARAM)font, TRUE);
 }
 
-auto WinWidget::setRect(const Rect& rect) -> void
+auto ApiWidget::setRect(const Rect& rect) -> void
 {
     SetWindowPos(m_hwnd, nullptr, rect.x, rect.y, rect.width, rect.height, SWP_NONE);
     // SetWindowPos(m_hwnd, nullptr, rect.x, rect.y, rect.width, rect.height, SWP_NOZORDER);
 }
 
-auto WinWidget::show() -> void
+auto ApiWidget::show() -> void
 {
     ShowWindow(m_hwnd, SW_SHOW);
 }
 
-auto WinWidget::hide() -> void
+auto ApiWidget::hide() -> void
 {
     ShowWindow(m_hwnd, SW_HIDE);
 }
 
-auto CALLBACK WinWidget::WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
+auto CALLBACK ApiWidget::WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
 {
-    WinWidget* widget = nullptr;
+    ApiWidget* widget = nullptr;
 
     if (msg == WM_NCCREATE)
     {
         auto* cs = reinterpret_cast<CREATESTRUCT*>(lParam);
 
-        widget = static_cast<WinWidget*>(cs->lpCreateParams);
+        widget = static_cast<ApiWidget*>(cs->lpCreateParams);
 
         SetWindowLongPtr(
             hwnd,
@@ -75,7 +75,7 @@ auto CALLBACK WinWidget::WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM l
     }
     else
     {
-        widget = reinterpret_cast<WinWidget*>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
+        widget = reinterpret_cast<ApiWidget*>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
     }
 
     if (widget)

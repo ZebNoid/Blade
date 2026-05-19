@@ -2,13 +2,13 @@
 
 #include "Context/WidgetContext.h"
 #include "Widget/WinRender/WinRender.h"
-#include "Widget/WinWidget/WinWidget.h"
+#include "Widget/WinWidget/ApiWidget.h"
 
 
 namespace Blade::Backend {
 
 
-class WinCustom : public WinWidget
+class WinCustom : public ApiWidget
 {
 public:
     WinCustom() = default;

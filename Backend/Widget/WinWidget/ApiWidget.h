@@ -12,7 +12,7 @@
 namespace Blade::Backend {
 
 
-class WinWidget : public ApiWidget
+class ApiWidget : public ApiWidget
 {
 protected:
 #ifdef UNICODE
@@ -38,7 +38,7 @@ public:
     auto handle() const -> HWND;
 
 protected:
-    ~WinWidget() override;
+    ~ApiWidget() override;
 
     virtual auto style() const -> DWORD;
 

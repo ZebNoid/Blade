@@ -1,13 +1,13 @@
 #pragma once
 
 #include "Context/WidgetContext.h"
-#include "Widget/WinWidget/WinWidget.h"
+#include "Widget/WinWidget/ApiWidget.h"
 #include "WidgetsProps/Widget/ProgressProps.h"
 
 namespace Blade::Backend {
 
 
-class WinProgress : public WinWidget
+class WinProgress : public ApiWidget
 {
 
 public:

@@ -1,13 +1,13 @@
 #pragma once
 
-#include "Widget/WinWidget/WinWidget.h"
+#include "Widget/WinWidget/ApiWidget.h"
 #include "WidgetsProps/Widget/RadioButtonProps.h"
 
 
 namespace Blade::Backend {
 
 
-class WinRadioButton : public WinWidget
+class WinRadioButton : public ApiWidget
 {
 
 public:

@@ -33,8 +33,8 @@ add_library(${PROJECT_NAME} STATIC
         Debug/DebugProps.h
         Debug/DebugBrushProps.h
 
-        Widget/WinWidget/WinWidget.cpp
-        Widget/WinWidget/WinWidget.h
+        Widget/WinWidget/ApiWidget.cpp
+        Widget/WinWidget/ApiWidget.h
         Widget/WinCustom/WinCustom.h
         Widget/WinCustom/WinCustom.cpp
         Widget/WinRender/WinRender.cpp

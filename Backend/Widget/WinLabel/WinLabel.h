@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Widget/WinCustom/WinCustom.h"
-#include "Widget/WinWidget/WinWidget.h"
+#include "Widget/WinWidget/ApiWidget.h"
 #include "WidgetsProps/Widget/LabelProps.h"
 
 

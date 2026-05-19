@@ -2,7 +2,7 @@
 
 
 #include "Materializer/Materializer.h"
-#include "Widget/WinWidget/WinWidget.h"
+#include "Widget/WinWidget/ApiWidget.h"
 #include "WidgetsProps/Window/WindowProps.h"
 #include "Windows/Window/Window.h"
 
@@ -10,7 +10,7 @@
 namespace Blade::Backend {
 
 
-class WinWindow : public WinWidget
+class WinWindow : public ApiWidget
 {
 public:
     explicit WinWindow(Window& window, HINSTANCE hInstance);
