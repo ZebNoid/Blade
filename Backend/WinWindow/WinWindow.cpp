@@ -125,7 +125,8 @@ auto WinWindow::createNative(const Rect rect) -> HWND
         // TODO center
         startPos.x, startPos.y,
         m_props.size.width, m_props.size.height,
-        parentHandle(), // HWND_DESKTOP, //  create parent window?
+        parentHandle(),
+        // nullptr, // HWND_DESKTOP, //  create parent window?
         nullptr,
         m_hInstance,
         this);

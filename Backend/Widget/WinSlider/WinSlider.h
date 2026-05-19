@@ -15,9 +15,9 @@ public:
 
     auto create(WidgetId id, const SliderProps& props, const int value) -> void;
 
-protected:
     auto name() const -> std::string override { return "WinSlider"; }
 
+protected:
     auto style() const -> DWORD override;
 
     auto createNative(Rect rect) -> HWND override;

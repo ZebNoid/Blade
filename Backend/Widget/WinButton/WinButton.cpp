@@ -14,8 +14,12 @@ WinButton::WinButton(Widget& widget)
 
 auto WinButton::create(ApiWidget& parent) -> void
 {
+    m_parent = &parent;
+
     // auto* winParent = dynamic_cast<WinWindow*>(&parent);
     // m_hwndParent = winParent->handle();
+    // std::cout << " -> WinButton parentHandle " << parentHandle() << "\n"; // TODO dev
+    // std::cout << " -> WinButton winParent " << winParent->handle() << "\n"; // TODO dev
 
     if (!parentHandle())
     {
@@ -24,7 +28,7 @@ auto WinButton::create(ApiWidget& parent) -> void
 
     std::cout << " -> WinButton::create ApiWidget&  hwnd: " << parentHandle() << "\n"; // TODO dev
 
-    create(0, {}, L"");
+    create(0, {}, L"test Button"); //TODO
 }
 
 auto WinButton::create(

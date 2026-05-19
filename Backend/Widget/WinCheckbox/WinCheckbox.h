@@ -15,9 +15,9 @@ public:
 
     auto create(WidgetId id, const CheckboxProps& props, const std::wstring& string) -> void;
 
-protected:
     auto name() const -> std::string override { return "WinCheckbox"; }
 
+protected:
     auto style() const -> DWORD override;
 
     auto createNative(Rect rect) -> HWND override;

@@ -40,6 +40,7 @@ protected:
     auto parentHandle() const -> HWND
     {
         const auto parent = dynamic_cast<WinWidget*>(m_parent);
+        if (parent == nullptr) return  nullptr;
         return parent->handle();
     }
 

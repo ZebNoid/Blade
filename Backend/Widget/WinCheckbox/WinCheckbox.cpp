@@ -5,8 +5,11 @@
 namespace Blade::Backend {
 
 
-auto WinCheckbox::create(const WidgetId id, const CheckboxProps& props,
-                            const std::wstring& text) -> void
+auto WinCheckbox::create(
+    const WidgetId id,
+    const CheckboxProps& props,
+    const std::wstring& text
+) -> void
 {
     m_id = id;
     m_props = props;

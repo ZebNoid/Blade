@@ -15,11 +15,9 @@ public:
 
     auto create(WidgetId id, const NopProps& props, const std::wstring& text) -> void;
 
-    auto create(ApiWidget& parent) -> void override;
-
-protected:
     auto name() const -> std::string override { return "WinNop"; }
 
+protected:
     auto paint(HDC hdc, RECT rect) -> void override;
 
 private:

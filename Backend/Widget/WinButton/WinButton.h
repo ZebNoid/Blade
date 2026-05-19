@@ -17,7 +17,6 @@ public:
 
     auto create(ApiWidget& parent) -> void override;
 
-
     auto create(
         WidgetId id,
         const ButtonProps& props,

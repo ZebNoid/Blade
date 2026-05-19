@@ -9,9 +9,21 @@ namespace Blade::Backend {
 #define CUSTOM_CLASS_KEY "WinCustom"
 #define NATIVE_CUSTOM_CLASS "WinCustomClass"
 
+WinCustom::WinCustom(Widget& widget)
+{
+    std::cout << " - > WinCustom::create Widget&\n"; // TODO dev
+}
+
+auto WinCustom::create(ApiWidget& parent) -> void
+{
+    std::cout << " - > WinCustom::create ApiWidget&\n"; // TODO dev
+    m_parent = &parent;
+    // create(0);
+}
 
 auto WinCustom::create(WidgetId id) -> void
 {
+    std::cout << " - > WinCustom::create id\n"; // TODO dev
     m_id = id;
     m_systemFont = ResourceRegistry::GetFont("system");
 

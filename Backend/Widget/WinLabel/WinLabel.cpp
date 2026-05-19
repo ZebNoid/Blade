@@ -13,7 +13,10 @@ WinLabel::WinLabel(Widget& widget)
 
 auto WinLabel::create(ApiWidget& parent) -> void
 {
+    m_parent = &parent;
     std::cout << "WinLabel::create\n"; // TODO dev
+
+    create(0, {}, L"test Label"); //TODO
 }
 
 auto WinLabel::create(
@@ -22,7 +25,7 @@ auto WinLabel::create(
     const std::wstring& text
 ) -> void
 {
-    WinCustom::create(id);
+    // WinCustom::create(id);
     m_props = props;
     m_text = text;
     m_text = text;
