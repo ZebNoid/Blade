@@ -24,9 +24,7 @@ auto Window::destroy() -> void
 
 auto Window::resize(Size size) -> void
 {
-    // if (!m_root) return;
-    //
-    // m_root->arrange({0, 0, size.width, size.height});
+    // ->arrange({0, 0, size.width, size.height});
 }
 
 auto Window::mount(App* app) && -> void
