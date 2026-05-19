@@ -11,7 +11,7 @@
 namespace Blade {
 
 
-class Window
+class Window : public Widget
 {
 protected:
     auto router() -> EventRouter& { return m_router; }
@@ -32,6 +32,15 @@ public:
             std::move(child)
         );
     }
+
+
+    auto name() -> std::wstring override { return L"Window"; }
+
+    auto mount(Materializer& m, WidgetContext& ctx) -> void override
+    {
+    }
+
+    auto measure(Size available) -> Size override { return {0, 0}; }
 
     auto dispatchCommand(const WidgetId id, WidgetEvent event, const EventValue& value = {}) -> void
     {
