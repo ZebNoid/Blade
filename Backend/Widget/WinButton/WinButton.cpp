@@ -1,11 +1,20 @@
 #include "WinButton.h"
 
 #include "Registry/ResourceRegistry/ResourceRegistry.h"
-#include "Context/WidgetContext.h"
 
 
 namespace Blade::Backend {
 
+
+WinButton::WinButton(Widget& widget)
+{
+    // std::cout << "WinButton::WinButton\n"; // TODO dev
+}
+
+auto WinButton::create(ApiWidget& parent) -> void
+{
+    std::cout << "WinButton::create\n"; // TODO dev
+}
 
 auto WinButton::create(
     const WidgetId id,

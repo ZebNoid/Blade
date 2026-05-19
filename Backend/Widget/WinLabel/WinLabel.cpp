@@ -6,6 +6,16 @@
 namespace Blade::Backend {
 
 
+WinLabel::WinLabel(Widget& widget)
+{
+    // std::cout << "WinLabel::WinLabel\n"; // TODO dev
+}
+
+auto WinLabel::create(ApiWidget& parent) -> void
+{
+    std::cout << "WinLabel::create\n"; // TODO dev
+}
+
 auto WinLabel::create(
     WidgetId id,
     const LabelProps& props,
@@ -16,14 +26,14 @@ auto WinLabel::create(
     m_props = props;
     m_text = Utf8ToUtf16(text);
 
-    // ClassRegistry::Register(
-    //     "BladeLabel",
-    //     {
-    //         .name = L"BladeLabel",
-    //         .proc = WindowProc,
-    //         .background = nullptr
-    //     }
-    // );
+    ClassRegistry::Register(
+        "BladeLabel",
+        {
+            .name = L"BladeLabel",
+            .proc = WindowProc,
+            .background = nullptr
+        }
+    );
 
     // TODO size are ignoring and recalculated in
     createNative(Rect{});

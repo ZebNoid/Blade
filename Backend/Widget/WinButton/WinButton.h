@@ -13,6 +13,10 @@ class WinButton : public WinWidget
 public:
     WinButton() = default;
 
+    explicit WinButton(Widget& widget); // TODO in ApiWidget
+
+    auto create(ApiWidget& parent) -> void override;
+
     auto create(
         WidgetId id,
         const ButtonProps& props,

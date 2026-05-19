@@ -2,6 +2,7 @@
 
 #include "Widget/WinCustom/WinCustom.h"
 #include "Widget/WinWidget/WinWidget.h"
+#include "Widgets/Widget/Widget.h"
 #include "WidgetsProps/Widget/LabelProps.h"
 
 
@@ -11,7 +12,8 @@ namespace Blade::Backend {
 class WinLabel : public WinCustom
 {
 public:
-    WinLabel() = default;
+    explicit WinLabel(Widget& widget); // TODO in ApiWidget
+    auto create(ApiWidget& parent) -> void override;
 
     auto create(WidgetId id, const LabelProps& props, const std::string& text) -> void;
 

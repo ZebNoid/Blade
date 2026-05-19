@@ -2,8 +2,8 @@
 
 #include <windows.h>
 
+#include "Widgets/Widget/Widget.h"
 #include "Api/ApiWidget.h"
-#include "Context/WidgetContext.h"
 #include "Core/Core.h"
 #include "Core/Encoding.h"
 #include "WidgetsProps/Common/Size.h"
