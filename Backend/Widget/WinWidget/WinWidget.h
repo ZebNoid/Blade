@@ -31,13 +31,9 @@ public:
     // TODO ApiWidget!!
     auto setRect(const Rect& rect) -> void override;
 
-    auto show() -> void override
-    {
-    }
+    auto show() -> void override;
 
-    auto hide() -> void override
-    {
-    }
+    auto hide() -> void override;
 
     auto handle() const -> HWND;
 

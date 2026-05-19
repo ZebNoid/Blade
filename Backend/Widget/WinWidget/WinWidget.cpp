@@ -31,7 +31,6 @@ auto WinWidget::exStyle() const -> DWORD
 
 auto WinWidget::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
 {
-
     return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 
@@ -45,6 +44,16 @@ auto WinWidget::setRect(const Rect& rect) -> void
 {
     SetWindowPos(m_hwnd, nullptr, rect.x, rect.y, rect.width, rect.height, SWP_NONE);
     // SetWindowPos(m_hwnd, nullptr, rect.x, rect.y, rect.width, rect.height, SWP_NOZORDER);
+}
+
+auto WinWidget::show() -> void
+{
+    ShowWindow(m_hwnd, SW_SHOW);
+}
+
+auto WinWidget::hide() -> void
+{
+    ShowWindow(m_hwnd, SW_HIDE);
 }
 
 auto CALLBACK WinWidget::WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
