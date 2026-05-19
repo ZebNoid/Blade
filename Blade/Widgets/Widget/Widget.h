@@ -28,26 +28,6 @@ public:
 
     virtual auto name() -> std::wstring = 0;
 
-    auto add(
-        std::unique_ptr<Widget> child
-    ) -> void
-    {
-        m_children.push_back(
-            std::move(child)
-        );
-    }
-
-    template <typename TWidget>
-    auto addWidget(
-        TWidget&& widget
-    ) -> void
-    {
-        add(
-            std::make_unique<std::decay_t<TWidget>>(
-                std::forward<TWidget>(widget)
-            )
-        );
-    }
 
     // Todo use!
     // auto set(...) & -> T&
@@ -78,6 +58,19 @@ public:
     }
 
 protected:
+    auto add(std::unique_ptr<Widget> child) -> void
+    {
+        m_children.push_back(std::move(child));
+    }
+
+    template <typename TWidget>
+    auto addWidget(TWidget&& widget) -> void
+    {
+        add(std::make_unique<std::decay_t<TWidget>>(
+                std::forward<TWidget>(widget))
+        );
+    }
+
     static auto allocateId(const WidgetContext& ctx) -> WidgetId;
 
     auto bindEvent(const WidgetContext& ctx, WidgetEvent event, const EventHandler& fn) const -> void;
