@@ -15,9 +15,12 @@ public:
 
 protected:
     template <typename TBackend>
-    auto use(TBackend backend) -> void
+        requires std::derived_from<std::decay_t<TBackend>, Api::ApiBackend>
+    auto use(TBackend&& backend) -> void
     {
-        m_backend = std::make_unique<TBackend>(std::move(backend));
+        m_backend = std::make_unique<std::decay_t<TBackend>>(
+            std::forward<TBackend>(backend)
+        );
     }
 
     virtual auto setup() -> void = 0;
