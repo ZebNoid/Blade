@@ -20,7 +20,7 @@ WinWindow::WinWindow(Window& window) : m_window(window)
 
     // TODO move to app cycle
     ResourceRegistry::Init();
-    std::cout << "WinWindow::WinWindow\n"; // TODO dev
+    std::cout << "WinWindow::WinWindow Window&\n"; // TODO dev
 }
 
 auto WinWindow::create(HINSTANCE hInstance) -> void
@@ -44,12 +44,12 @@ auto WinWindow::create(HINSTANCE hInstance) -> void
 
     createNative({});
 
-    std::cout << "WinWindow::create\n"; // TODO dev
+    std::cout << "WinWindow::create hInstance\n"; // TODO dev
 }
 
 auto WinWindow::create(ApiWidget& parent) -> void
 {
-    std::cout << "WinWindow::create\n";
+    std::cout << "WinWindow::create ApiWidget&\n";
 
     auto& winParent = static_cast<WinWidget&>(parent);
     HWND hwndParent = winParent.handle();

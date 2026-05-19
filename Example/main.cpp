@@ -23,13 +23,14 @@ protected:
 
     auto ui() -> void override
     {
+        Window(Button("Button")).set(wProp).mount(this);
+
         // Window().set(wProp).mount(this);
-
         // Window(Nop("Nop")).set(wProp).mount(this);
-
         // Window(Label("Label")).set(wProp).mount(this);
         // Window(Column(Nop(), Nop())).set(wProp).mount(this);
-        Window(Column(Nop(), Label("Label"))).set(wProp).mount(this);
+
+        // Window(Column(Nop(), Label("Label"))).set(wProp).mount(this);
 
 
         // window(contentFlex()).set(wProp);

@@ -30,7 +30,7 @@ auto WinBackend::createWindow(Window& window) -> void
         std::cerr << "WinBackend::createWindow no root ApiWidget\n"; // TODO dev
         return;
     }
-    std::cout << "WinBackend::createWindow" << "" << "\n"; // TODO dev
+    // std::cout << "WinBackend::createWindow" << "" << "\n"; // TODO dev
 
     // TODO for Backand only
     // TODO ApiBackend::entryWidget

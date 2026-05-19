@@ -13,7 +13,7 @@ WinButton::WinButton(Widget& widget)
 
 auto WinButton::create(ApiWidget& parent) -> void
 {
-    std::cout << "WinButton::create\n"; // TODO dev
+    std::cout << "WinButton::create ApiWidget&\n"; // TODO dev
 }
 
 auto WinButton::create(
