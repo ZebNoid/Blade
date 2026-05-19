@@ -81,5 +81,4 @@ auto Materializer::buildChildren(Widget& widget, ApiWidget& nativeParent) -> voi
     }
 }
 
-
 } // namespace
