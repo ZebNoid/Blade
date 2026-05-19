@@ -24,19 +24,19 @@ auto WinBackend::runApp() -> int
 
 auto WinBackend::createWindow(Window& window) -> void
 {
-    std::cout << "WinBackend::createWindow" << "" << "\n"; // TODO dev
-
     auto root = m_materializer.mount(window);
-
     if (root == nullptr)
     {
-        std::cout << "WinBackend:: no WinWindow\n"; // TODO dev
+        std::cerr << "WinBackend::createWindow no root ApiWidget\n"; // TODO dev
         return;
     }
+    std::cout << "WinBackend::createWindow" << "" << "\n"; // TODO dev
 
+    // TODO for Backand only
+    // TODO ApiBackend::entryWidget
     auto* nativeWindow = dynamic_cast<WinWindow*>(root.get());
-
     nativeWindow->create(m_hInstance);
+    nativeWindow->createChildren();
 
     m_windows.push_back(std::move(root));
 }
