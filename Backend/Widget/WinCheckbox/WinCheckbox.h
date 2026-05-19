@@ -20,7 +20,7 @@ protected:
 
     auto style() const -> DWORD override;
 
-    auto createNative(Rect rect) -> HWND override;
+    auto createNative(Rect rect, HWND parent = nullptr) -> HWND override;
 
 private:
     CheckboxProps m_props{};

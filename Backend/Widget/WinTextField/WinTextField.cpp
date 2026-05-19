@@ -82,7 +82,7 @@ DWORD WinTextField::exStyle() const
     return exStyle;
 }
 
-auto WinTextField::createNative(const Rect rect) -> HWND
+auto WinTextField::createNative(const Rect rect, HWND parent) -> HWND
 {
     WinWidget::createNative(rect);
     if (m_ctx.hwnd == nullptr) return nullptr;

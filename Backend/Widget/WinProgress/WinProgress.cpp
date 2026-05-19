@@ -67,7 +67,7 @@ DWORD WinProgress::style() const
     return style;
 }
 
-auto WinProgress::createNative(Rect rect) -> HWND
+auto WinProgress::createNative(Rect rect, HWND parent) -> HWND
 {
     WinWidget::createNative(rect);
     if (m_ctx.hwnd == nullptr) return nullptr;

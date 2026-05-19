@@ -11,15 +11,13 @@
 namespace Blade::Backend {
 
 
-auto Materializer::create(Widget& widget) -> std::unique_ptr<WinWidget>
+auto Materializer::create(Widget& widget) -> std::unique_ptr<ApiWidget>
 {
     std::cout << "Materializer::create\n"; // TODO dev
 
     if (auto* window = dynamic_cast<Window*>(&widget))
     {
-        return std::make_unique<WinWindow>(
-            *window
-        );
+        return std::make_unique<WinWindow>(*window);
     }
 
     // if (auto* button = dynamic_cast<Button*>(&widget))
@@ -31,19 +29,32 @@ auto Materializer::create(Widget& widget) -> std::unique_ptr<WinWidget>
 
     if (auto* nop = dynamic_cast<Nop*>(&widget))
     {
-        return std::make_unique<WinNop>(
-            L"Nop"
-            // *nop
-        );
+        return std::make_unique<WinNop>(*nop);
     }
 
-    auto unknown =  std::make_unique<WinNop>(L"Unknown " + widget.name());
-    return unknown;
+    return std::make_unique<WinNop>(L"Unknown " + widget.name());;
 }
 
 auto Materializer::mount(Widget& root) -> std::unique_ptr<ApiWidget>
 {
     return create(root);
+}
+
+auto Materializer::buildChildren(Widget& widget, ApiWidget& native) -> void
+{
+    for (auto& child : widget.children())
+    {
+        auto nativeChild = create(*child);
+
+        buildChildren(
+            *child,
+            *nativeChild
+        );
+
+        native.addChild(
+            std::move(nativeChild)
+        );
+    }
 }
 
 

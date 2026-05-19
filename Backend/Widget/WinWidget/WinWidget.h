@@ -31,6 +31,8 @@ public:
     // TODO ApiWidget!!
     ~WinWidget() override;
 
+    // auto create(ApiWidget& parent) -> void override;
+
     auto setRect(const Rect& rect) -> void override;
 
     auto show() -> void override;
@@ -50,7 +52,7 @@ protected:
 
     virtual auto widgetName() const -> std::string = 0;
 
-    virtual auto createNative(Rect rect) -> HWND
+    virtual auto createNative(Rect rect, HWND parent = nullptr) -> HWND
     {
         if (m_ctx.hwnd == nullptr)
         {

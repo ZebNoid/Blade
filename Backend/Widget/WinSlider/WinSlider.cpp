@@ -51,7 +51,7 @@ DWORD WinSlider::style() const
     return style;
 }
 
-auto WinSlider::createNative(Rect rect) -> HWND
+auto WinSlider::createNative(Rect rect, HWND parent) -> HWND
 {
     WinWidget::createNative(rect);
     if (m_ctx.hwnd == nullptr) return nullptr;

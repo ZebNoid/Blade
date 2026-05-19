@@ -10,9 +10,12 @@ namespace Blade::Backend {
 class Materializer
 {
 public:
-    auto create(Widget& widget) -> std::unique_ptr<WinWidget>;
+    auto create(Widget& widget) -> std::unique_ptr<ApiWidget>;
 
     auto mount(Widget& root) -> std::unique_ptr<ApiWidget>;
+
+
+    auto buildChildren(Widget& widget, ApiWidget& native) -> void;
 
     // auto mount(Widget& root) -> WinWidget*;
 

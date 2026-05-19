@@ -1,7 +1,6 @@
 #pragma once
 
 
-#include "Materializer/Materializer.h"
 #include "Widget/WinWidget/WinWidget.h"
 #include "WidgetsProps/Window/WindowProps.h"
 #include "Windows/Window/Window.h"
@@ -17,6 +16,8 @@ public:
 
     auto create(HINSTANCE hInstance) -> void;
 
+    auto create(ApiWidget& parent) -> void override;
+
 protected:
     auto exStyle() const -> DWORD override;
 
@@ -24,7 +25,7 @@ protected:
 
     auto widgetName() const -> std::string override { return "WinWindow"; }
 
-    auto createNative(Rect rect) -> HWND override;
+    auto createNative(Rect rect, HWND parent = nullptr) -> HWND override;
 
     auto initPosition() -> Point;
 

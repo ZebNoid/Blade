@@ -2,6 +2,7 @@
 
 #include "Api/ApiBackend.h"
 #include "WinWindow/WinWindow.h"
+#include "Materializer/Materializer.h"
 
 
 namespace Blade::Backend {

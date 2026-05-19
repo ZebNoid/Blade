@@ -40,7 +40,7 @@ DWORD WinButton::style() const
     return style;
 }
 
-auto WinButton::createNative(const Rect rect) -> HWND
+auto WinButton::createNative(const Rect rect, HWND parent) -> HWND
 {
     WinWidget::createNative(rect);
     if (m_ctx.hwnd == nullptr) return nullptr;

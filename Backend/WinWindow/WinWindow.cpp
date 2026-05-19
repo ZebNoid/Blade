@@ -15,20 +15,18 @@ namespace Blade::Backend {
 WinWindow::WinWindow(Window& window) : m_window(window)
 {
     m_size = {800, 600};
+    // TODO id
+    m_props = m_window.getProps();
+
     // TODO move to app cycle
     ResourceRegistry::Init();
 }
 
-// auto WinWindow::create(const WidgetContext& ctx, Window* owner, const WindowProps& props) -> void
 auto WinWindow::create(HINSTANCE hInstance) -> void
 {
     m_hInstance = hInstance;
-    // m_ctx = ctx;
-    // TODO id
-    m_props = m_window.getProps();
-    // m_window = owner;
 
-
+    // TODO move to app cycle
     ClassRegistry::Init(m_hInstance);
 
     ClassRegistry::Register(
@@ -42,13 +40,17 @@ auto WinWindow::create(HINSTANCE hInstance) -> void
             // .icon = LoadIcon(m_hInstance, MAKEINTRESOURCE(IDI_APP_ICON)),
         }
     );
+}
+
+auto WinWindow::create(ApiWidget& parent) -> void
+{
+    auto& winParent = static_cast<WinWidget&>(parent);
+    HWND hwndParent = winParent.handle();
 
     createNative({});
 
     // TODO set Title
     // SetWindowText(m_hwnd, toNativeString(m_props.title).c_str());
-    // TODO force redraw
-    // SetWindowPos(m_hwnd, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
 }
 
 auto WinWindow::initPosition() -> Point
@@ -103,7 +105,7 @@ auto WinWindow::style() const -> DWORD
     return style;
 }
 
-auto WinWindow::createNative(const Rect rect) -> HWND
+auto WinWindow::createNative(const Rect rect, HWND parent) -> HWND
 {
     auto startPos = initPosition();
 

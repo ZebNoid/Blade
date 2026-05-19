@@ -31,7 +31,7 @@ DWORD WinCheckbox::style() const
     return style;
 }
 
-auto WinCheckbox::createNative(Rect rect) -> HWND
+auto WinCheckbox::createNative(Rect rect, HWND parent) -> HWND
 {
     WinWidget::createNative(rect);
     if (m_ctx.hwnd == nullptr) return nullptr;

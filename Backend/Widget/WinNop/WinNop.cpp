@@ -5,7 +5,10 @@
 namespace Blade::Backend {
 
 
-// WinNop::WinNop(Window& window)
+WinNop::WinNop(Widget& widget)
+{
+}
+
 WinNop::WinNop(const std::wstring& text) : m_text(text)
 {
 
@@ -16,6 +19,10 @@ auto WinNop::create(const WidgetContext& ctx, WidgetId id, const NopProps& props
     WinCustom::create(ctx, id);
     m_props = props;
     m_text = Utf8ToUtf16(text);
+}
+
+auto WinNop::create(ApiWidget& parent) -> void
+{
 }
 
 auto WinNop::paint(const HDC hdc, const RECT rect) -> void

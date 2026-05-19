@@ -13,6 +13,8 @@ class WinCustom : public WinWidget
 public:
     WinCustom() = default;
 
+    // auto create(ApiWidget& parent) -> void override;
+
     auto create(const WidgetContext& ctx, WidgetId id) -> void;
 
 protected:
@@ -20,7 +22,7 @@ protected:
 
     auto exStyle() const -> DWORD override;
 
-    auto createNative(Rect rect) -> HWND override;
+    auto createNative(Rect rect, HWND parent = nullptr) -> HWND override;
 
     auto handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT override;
 

@@ -9,6 +9,10 @@ namespace Blade::Backend {
 #define CUSTOM_CLASS_KEY "WinCustom"
 #define NATIVE_CUSTOM_CLASS "WinCustomClass"
 
+// auto WinCustom::create(ApiWidget& parent) -> void
+// {
+// }
+
 auto WinCustom::create(
     const WidgetContext& ctx,
     WidgetId id
@@ -43,7 +47,7 @@ DWORD WinCustom::exStyle() const
     return exStyle;
 }
 
-auto WinCustom::createNative(const Rect rect) -> HWND
+auto WinCustom::createNative(const Rect rect, HWND parent) -> HWND
 {
     WinWidget::createNative(rect);
     if (m_ctx.hwnd == nullptr) return nullptr;

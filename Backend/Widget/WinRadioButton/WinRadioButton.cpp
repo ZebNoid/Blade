@@ -35,7 +35,7 @@ DWORD WinRadioButton::style() const
     return style;
 }
 
-auto WinRadioButton::createNative(Rect rect) -> HWND
+auto WinRadioButton::createNative(Rect rect, HWND parent) -> HWND
 {
     WinWidget::createNative(rect);
 

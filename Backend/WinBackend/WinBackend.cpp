@@ -24,7 +24,7 @@ auto WinBackend::runApp() -> int
 
 auto WinBackend::createWindow(Window& window) -> void
 {
-    std::cout << "WinBackend::createWindow\n"; // TODO dev
+    std::cout << "WinBackend::createWindow" << "" <<"\n"; // TODO dev
 
     auto root = m_materializer.mount(window);
 
