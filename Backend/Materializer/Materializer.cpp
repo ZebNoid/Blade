@@ -38,7 +38,7 @@ auto Materializer::create(Widget& widget) -> std::unique_ptr<ApiWidget>
         return std::make_unique<WinNop>(*nop);
     }
 
-    // std::cerr << " -> Unknown Widget " << Utf16ToUtf8(widget.name()) << "\n"; // TODO dev
+    std::cerr << " -> Unknown Widget " << Utf16ToUtf8(widget.name()) << "\n"; // TODO dev
     return std::make_unique<WinNop>(L"Unknown " + widget.name());
 }
 
