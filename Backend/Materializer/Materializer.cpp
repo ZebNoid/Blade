@@ -42,6 +42,7 @@ auto Materializer::mount(Widget& root) -> std::unique_ptr<ApiWidget>
 
 auto Materializer::buildChildren(Widget& widget, ApiWidget& native) -> void
 {
+    std::cout << "WinBackend::buildChildren " << widget.children().size() <<"\n"; // TODO dev
     for (auto& child : widget.children())
     {
         auto nativeChild = create(*child);

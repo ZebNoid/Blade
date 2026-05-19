@@ -20,6 +20,7 @@ WinWindow::WinWindow(Window& window) : m_window(window)
 
     // TODO move to app cycle
     ResourceRegistry::Init();
+    std::cout << "WinWindow::WinWindow\n"; // TODO dev
 }
 
 auto WinWindow::create(HINSTANCE hInstance) -> void
@@ -40,7 +41,10 @@ auto WinWindow::create(HINSTANCE hInstance) -> void
             // .icon = LoadIcon(m_hInstance, MAKEINTRESOURCE(IDI_APP_ICON)),
         }
     );
+
     createNative({});
+
+    std::cout << "WinWindow::create\n"; // TODO dev
 }
 
 auto WinWindow::create(ApiWidget& parent) -> void

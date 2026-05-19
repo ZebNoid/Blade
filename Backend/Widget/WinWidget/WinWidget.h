@@ -50,8 +50,6 @@ protected:
 
     virtual auto handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT;
 
-    // virtual auto widgetName() const -> std::string = 0;
-
     virtual auto createNative(Rect rect, HWND parent = nullptr) -> HWND
     {
         std::cerr << "[Error] " << name() << "::create not defined " << std::endl;
