@@ -1,7 +1,6 @@
 #pragma once
 
-#include "Windows/Window/Window.h"
-#include "Windows/WindowBuilder/WindowBuilder.h"
+#include "Api/ApiBackend.h"
 #include "Windows/WindowManager/WindowManager.h"
 
 
@@ -11,51 +10,42 @@ namespace Blade {
 class App
 {
 public:
-    App();
-
     virtual ~App() = default;
+
+    template <typename TBackend>
+    auto use() -> void
+    {
+        m_backend = std::make_unique<TBackend>();
+    }
+
+    template <typename TBackend>
+    auto use(TBackend backend) -> void
+    {
+        m_backend = std::make_unique<TBackend>(std::move(backend));
+    }
 
     auto run() -> int;
 
-    template <typename T>
-    auto window(T&& widget) -> WindowBuilder&
+    auto wm() -> WindowManager&
     {
-        m_windowBuilders.emplace_back(
-            std::forward<T>(widget)
-        );
-
-        return m_windowBuilders.back();
-    }
-
-    // TODO Alert / Popup
-    static auto Alert(const std::string& text) -> void
-    {
-        // TODO Native alert builder
-        MessageBox(nullptr, Utf8ToUtf16(text).c_str(), L"Help!", MB_OK);
+        return m_wm;
     }
 
 protected:
+    virtual auto setup() -> void = 0;
+
     virtual auto ui() -> void = 0;
 
-    virtual auto uiLoop() -> void
-    {
-    }
-
 private:
-    auto build() -> void;
+    auto initBackend() -> void;
 
-private:
-    MSG m_msg = {};
+    auto buildUi() -> void;
 
 protected:
-    AppContext m_ctx{};
-
     WindowManager m_wm;
 
-    std::vector<WindowBuilder> m_windowBuilders;
-
 private:
-    auto init() -> void;
+    std::unique_ptr<ApiBackend> m_backend;
 };
 
 

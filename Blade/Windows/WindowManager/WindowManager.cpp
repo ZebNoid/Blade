@@ -1,55 +1,61 @@
 #include "WindowManager.h"
 
+#include <cassert>
+
 #include "Windows/Window/Window.h"
 
 
 namespace Blade {
 
 
-WindowManager::WindowManager(AppContext& ctx)
-    : m_appCtx(ctx)
+auto WindowManager::bind(ApiBackend& backend) -> void
 {
+    m_backend = &backend;
+    assert(m_backend && "WindowManager must be bound to backend before createWindows()");
 }
 
-auto WindowManager::createWindow(WindowBuilder&& builder) -> Window&
+auto WindowManager::add(std::unique_ptr<Window> window) -> void
 {
-    auto window = std::unique_ptr<Window>(
-        new Window(
-            m_appCtx,
-            *this
-        )
-    );
-
-    window->set(builder.m_props);
-    window->on(builder.m_events);
-    window->create();
-    window->setRoot(builder.takeRoot());
-    // TODO show window after? .set({.visible})?
-
-    auto& ref = *window;
-
     m_windows.push_back(
         std::move(window)
     );
+}
 
-    return ref;
+auto WindowManager::createWindow(Window& window) const -> void
+{
+    if (!m_backend) return;
+    m_backend->createWindow(window);
 }
 
 auto WindowManager::destroyWindow(Window* target) -> void
 {
+    // TODO WindowManager destroy window!
     std::erase_if(
         m_windows,
         [target](const std::unique_ptr<Window>& w)
+        -> bool
         {
             return w.get() == target;
         }
     );
 
+    // TODO WindowManager quit();
+
     std::cout << "windows count: " << m_windows.size() << "\n"; // TODO
 
     if (m_windows.empty())
     {
-        PostQuitMessage(0);
+        m_backend->quit();
+    }
+}
+
+auto WindowManager::createWindows() const -> void
+{
+    if (!m_backend) return;
+    for (auto& window : m_windows)
+    {
+        m_backend->createWindow(*window);
+        // createWindow(*window); // TODO WindowManager
     }
 }
 

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Backend/NativeLabel/NativeLabel.h"
 #include "WidgetsProps/Widget/LabelProps.h"
 #include "Widgets/Widget/Widget.h"
 
@@ -25,7 +24,7 @@ public:
     auto arrange(Rect rect) -> void override
     {
         Widget::arrange(rect);
-        m_native.setRect(rect);
+        // m_native.setRect(rect);
     }
 
     auto set(LabelProps props) -> Label&
@@ -42,7 +41,7 @@ public:
     }
 
 private:
-    NativeLabel m_native;
+    // NativeLabel m_native;
     LabelProps m_props;
 
     std::string m_text;

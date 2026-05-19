@@ -4,47 +4,30 @@
 namespace Blade {
 
 
-App::App() : m_wm(m_ctx)
-{
-    m_ctx.hInstance = GetModuleHandle(nullptr);
-    init();
-}
-
 auto App::run() -> int
 {
+    setup();
+    if (!m_backend)
+    {
+        std::cerr << "No Backend set" << std::endl;
+        return -1;
+    }
+    initBackend();
     ui();
+    buildUi();
 
-    build();
-
-    while (GetMessage(&m_msg, nullptr, 0, 0))
-    {
-        uiLoop();
-        TranslateMessage(&m_msg);
-        DispatchMessage(&m_msg);
-    }
-    return static_cast<int>(m_msg.wParam);
+    return m_backend->runApp();
 }
 
-auto App::build() -> void
+auto App::initBackend() -> void
 {
-    for (auto& builder : m_windowBuilders)
-    {
-        m_wm.createWindow(std::move(builder));
-    }
+    // m_backend->initialize(); // todo init
+    m_wm.bind(*m_backend);
 }
 
-auto App::init() -> void
+auto App::buildUi() -> void
 {
-    // TODO Native App
-    // DPI awareness
-    SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
-
-    // Optional good practice comctl32
-    INITCOMMONCONTROLSEX icc{};
-    icc.dwSize = sizeof(icc);
-    icc.dwICC = ICC_STANDARD_CLASSES;
-
-    InitCommonControlsEx(&icc);
+    m_wm.createWindows();
 }
 
 

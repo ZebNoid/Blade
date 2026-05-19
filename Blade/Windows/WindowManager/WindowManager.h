@@ -4,7 +4,6 @@
 #include <vector>
 
 #include "Windows/Window/Window.h"
-#include "Windows/WindowBuilder/WindowBuilder.h"
 
 
 namespace Blade {
@@ -13,20 +12,29 @@ namespace Blade {
 class WindowManager
 {
 public:
-    WindowManager(AppContext& ctx);
+    WindowManager() = default;
 
-    auto createWindow(WindowBuilder&& builder) -> Window&;
+private:
+    auto bind(ApiBackend& backend) -> void;
+
+    auto add(std::unique_ptr<Window> window) -> void;
+
+    auto createWindow(Window& window) const -> void;
 
     auto destroyWindow(Window* target) -> void;
+
+    auto createWindows() const -> void;
 
     auto empty() const -> bool;
 
 private:
-    AppContext& m_appCtx;
+    ApiBackend* m_backend = nullptr;
 
     std::vector<std::unique_ptr<Window>> m_windows;
 
-    friend class Window;
+    // TODO friends
+    friend App; // bind
+    friend Window; // destroy?
 };
 
 

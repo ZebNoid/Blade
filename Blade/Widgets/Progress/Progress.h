@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Backend/NativeProgress/NativeProgress.h"
 #include "WidgetsProps/Widget/ProgressProps.h"
 #include "Widgets/Widget/Widget.h"
 #include "WidgetsEvents/Widget/ProgressEvents.h"
@@ -27,7 +26,7 @@ public:
     auto arrange(Rect rect) -> void override
     {
         Widget::arrange(rect);
-        m_native.setRect(rect);
+        // m_native.setRect(rect);
     }
 
     auto set(ProgressProps props) -> Progress&
@@ -50,7 +49,7 @@ public:
     }
 
 private:
-    NativeProgress m_native;
+    // NativeProgress m_native;
     ProgressProps m_props;
     ProgressEvents m_events;
 

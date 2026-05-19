@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Backend/NativeButton/NativeButton.h"
 #include "WidgetsProps/Widget/ButtonProps.h"
 #include "Widgets/Widget/Widget.h"
 #include "WidgetsEvents/Widget/ButtonEvents.h"
@@ -26,7 +25,7 @@ public:
     auto arrange(Rect rect) -> void override
     {
         Widget::arrange(rect);
-        m_native.setRect(rect);
+        // m_native.setRect(rect);
     }
 
     auto set(ButtonProps props) -> Button&
@@ -49,7 +48,7 @@ public:
     }
 
 private:
-    NativeButton m_native;
+    // NativeButton m_native;
     ButtonProps m_props;
     ButtonEvents m_events;
 

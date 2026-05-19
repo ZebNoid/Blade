@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "blade.h"
+#include "WinBackend/WinBackend.h"
 
 using namespace Blade;
 
@@ -14,109 +15,40 @@ class Sandbox : public App
     };
 
 protected:
+    auto setup() -> void override
+    {
+        use<Backend::WinBackend>();
+    }
+
     auto ui() -> void override
     {
-        Blade::Debug::debug = false;
-        // .set({.layout = {.margin = 8,}})
+        // Window().set(wProp).mount(this);
+
+        Window(Nop("Nop")).set(wProp).mount(this);
+
+        // Window(Label("Label")).set(wProp).mount(this);
+
 
         // window(contentFlex()).set(wProp);
-
         // window(Label("132")).set(wProp);
-
-        // window(
-        //     Row(
-        //         // TextField()
-        //         // .set({.layout = {.padding = 8, .flex = 1,}})
-        //         // .on({
-        //         //     .change = [](const std::string& value)
-        //         //     {
-        //         //         std::cout << value << "\n";
-        //         //     },
-        //         // })
-        //         stack1()
-        //         ,stack2()
-        //         ,column1()
-        //     ).set({
-        //         .gap = 8,
-        //         .layout = {.padding = 8, .flex = 1,},
-        //         .crossAxisAlignment = CrossAxisAlignment::Stretch
-        //     })
-        // ).set(wProp);
-
-        window(
-            Row(
-                Stack(
-                    Nop("Nop")
-                    , Nop("Nop")
-                    , Nop("Nop").set({.layout = {100, 10,}})
-                )
-                , Stack(
-                    Label("Label")
-                    , Label("|-----+-----|")
-                )
-            )
-        ).set(wProp);
-
-        // window(contentBladeDemo()).id(windowId).set({
-        //     .title = "Blade",
-        //     .size = {800, 600},
-        //     .position = {3200,600},
-        // });
     }
 
-    auto stack1() -> auto
-    {
-        return
-            Stack(
-                Button("Test0").set({.layout = {.margin = 16,}})
-                , Button("Test1").set({.layout = {.margin = 32,}})
-                , Button("Test2").set({.layout = {.margin = 48,}})
-
-                , Label("|-----+-----|").set({.layout = {.margin = 64,}})
-                // ,Label("|---+---|").set({.layout = {.margin = 16,}})
-                // ,Label("|-+-|").set({.layout = {.margin = 32,}})
-            ).set({.layout = {.padding = 8, .flex = 1,}});
-    }
-
-    auto stack2() -> auto
-    {
-        return
-            Stack(
-                Label("|-----+-----|").set({.layout = {.padding = 8,}}),
-                Label("|---+---|").set({.layout = {.padding = 16,}})
-                // Label("|-+-|").set({.layout = {.padding = 24,}})
-            ).set({.layout = {.margin = 8, .padding = 8, .flex = 1,}});
-    }
-
-    auto column1() -> auto
-    {
-        return
-            Column(
-                Button("Test2").set({.layout = {.margin = 16, .padding = 16, .flex = 1,}}),
-                Button("Test1").set({.layout = {.margin = 16, .padding = 16, .flex = 1,}}),
-                Button("Callback!").set({.layout = {.margin = 8, .padding = 8, .flex = 1,}}).on({
-                    .click = []
-                    {
-                        std::cout << "!!!\n";
-                    }
-                }),
-                Label("TTTTTT")
-            ).set({
-                .gap = 8,
-                .layout = {.margin = 8, .padding = 8, .flex = 1,},
-                .mainAxisAlignment = MainAxisAlignment::Center,
-                .crossAxisAlignment = CrossAxisAlignment::Stretch,
-            });
-    }
 
     auto contentBladeDemo() -> auto
     {
         return Column(
                 Label("Blade Example").id(labelId),
-                TextField("Default text").set({
+                TextField("Default text")
+                .set({
                     .layout = layoutMarginH,
                     .textAlign = TextAlign::Start,
-                }).id(textFieldId),
+                })
+                .on({
+                    .change = [](const std::string& value)
+                    {
+                        std::cout << value << "\n";
+                    },
+                }),
                 Label("Radio Buttons").set(labelStyle),
                 Row(
                     RadioButton("RadioButton"),
@@ -154,22 +86,15 @@ protected:
                 Button("Button"),
                 Progress(100),
                 Button("Button"),
-                //  Row(
-                //      Slider(50).set({.layout = {.flex=1}})
-                // ).set({
-                //     .layout = layoutMarginH,
-                //     .mainAxisAlignment = MainAxisAlignment::Center,
-                //     .crossAxisAlignment = CrossAxisAlignment::Stretch,
-                // }),
                 Slider(50),
                 Button("Button"),
                 Label("Flex").set({.layout = {.flex = 1}}),
                 Row(
-                    Button("Debug"),
-                    // .onClick([]
-                    // {
-                    //     Blade::Debug::debug = !Blade::Debug::debug;
-                    // }),
+                    Button("Debug").on({
+                        .click = []
+                        {
+                        },
+                    }),
                     Progress(100).set({.marquee = true, .layout = {.flex = 1}}),
                     Label("Footer")
                 )

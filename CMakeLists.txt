@@ -5,5 +5,6 @@ set(CMAKE_CXX_STANDARD 20)
 
 include(cmake/Common.cmake)
 
+add_subdirectory(Backend)
 add_subdirectory(Blade)
 add_subdirectory(Example)

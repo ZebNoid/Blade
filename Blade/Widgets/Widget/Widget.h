@@ -20,6 +20,10 @@ public:
 
     virtual auto name() -> std::wstring = 0;
 
+    // Todo use!
+    // auto set(...) & -> T&
+    // auto set(...) && -> T&&
+
     virtual auto mount(class Materializer& m, struct WidgetContext& ctx) -> void = 0;
 
     virtual auto measure(Size available) -> Size = 0;

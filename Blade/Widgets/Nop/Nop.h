@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Backend/NativeNop/NativeNop.h"
 #include "Widgets/Widget/Widget.h"
 #include "WidgetsProps/Widget/NopProps.h"
 
@@ -25,7 +24,7 @@ public:
     auto arrange(Rect rect) -> void override
     {
         Widget::arrange(rect);
-        m_native.setRect(rect);
+        // m_native.setRect(rect);
     }
 
     auto set(NopProps props) -> Nop&
@@ -42,7 +41,7 @@ public:
     }
 
 private:
-    NativeNop m_native;
+    // NativeNop m_native;
     NopProps m_props;
 
     std::string m_text;

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Backend/NativeSlider/NativeSlider.h"
 #include "WidgetsProps/Widget/SliderProps.h"
 #include "Widgets/Widget/Widget.h"
 #include "WidgetsEvents/Widget/SliderEvents.h"
@@ -27,7 +26,7 @@ public:
     auto arrange(Rect rect) -> void override
     {
         Widget::arrange(rect);
-        m_native.setRect(rect);
+        // m_native.setRect(rect);
     }
 
     auto set(SliderProps props) -> Slider&
@@ -50,7 +49,7 @@ public:
     }
 
 private:
-    NativeSlider m_native;
+    // NativeSlider m_native;
     SliderProps m_props;
     SliderEvents m_events;
 

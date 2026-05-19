@@ -2,8 +2,6 @@
 
 #include <memory>
 
-#include "Backend/NativeWindow/NativeWindow.h"
-#include "Materializer/Materializer.h"
 #include "WidgetsProps/Window/WindowProps.h"
 #include "Widgets/Widget/Widget.h"
 #include "WidgetsEvents/Window/WindowEvents.h"
@@ -16,29 +14,29 @@ namespace Blade {
 class Window
 {
 protected:
-    Window(AppContext& appCtx, class WindowManager& manager);
-
-    auto create() -> void
-    {
-        WidgetContext w_ctx{
-            nullptr,
-            &m_appCtx,
-            this
-        };
-
-        m_native.create(w_ctx, this, m_props);
-    }
-
-
     auto router() -> EventRouter& { return m_router; }
 
 public:
+    Window() = default;
+
+    Window(std::unique_ptr<Widget> child)
+    {
+        m_root = std::move(child);
+    }
+
+    template <typename TWidget>
+        requires std::derived_from<TWidget, Widget>
+    Window(TWidget child)
+    {
+        m_root = std::make_unique<TWidget>(
+            std::move(child)
+        );
+    }
+
     auto dispatchCommand(const WidgetId id, WidgetEvent event, const EventValue& value = {}) -> void
     {
         m_router.dispatchCommand(id, event, value);
     }
-
-    Window(const Window&) = delete;
 
     auto show() -> void;
 
@@ -46,10 +44,17 @@ public:
 
     auto resize(Size size) -> void;
 
-    auto set(WindowProps props) -> Window&
+
+    auto set(WindowProps props) & -> Window&
     {
         m_props = std::move(props);
         return *this;
+    }
+
+    auto set(WindowProps props) && -> Window&&
+    {
+        m_props = std::move(props);
+        return std::move(*this);
     }
 
     auto on(WindowEvents events) -> Window&
@@ -65,46 +70,38 @@ public:
         return *this;
     }
 
+    auto mount(class App* app) && -> void;
+
     auto root() const -> Widget*
     {
         return m_root.get();
     }
 
-protected:
-    auto setRoot(std::unique_ptr<Widget> root) -> Window&
+    // TODO friend WindowManager?
+    auto getProps() -> WindowProps
     {
-        m_root = std::move(root);
-
-        WidgetContext ctx{
-            m_native.handle(),
-            &m_appCtx,
-            this
-        };
-
-        if (m_root == nullptr)
-        {
-            // TODO error no root logger?
-            return *this;
-        }
-
-        m_materializer.mount(*m_root, ctx);
-
-        // TODO padding
-        const auto [width, height] = m_native.clientSize();
-
-        m_root->measure({width, height}); // TODO
-
-        m_root->arrange({0, 0, width, height});
-
-        return *this;
+        return m_props;
     }
 
-private:
-    WindowManager& m_manager;
-    AppContext& m_appCtx;
+protected:
+    // auto setRoot(std::unique_ptr<Widget> root) -> Window&
+    // // TODO Window materializer mount
+    //     // m_materializer.mount(*m_root, ctx);
+    //
+    //     // TODO padding
+    //     const auto [width, height] = m_native.clientSize();
+    //
+    //     m_root->measure({width, height}); // TODO
+    //
+    //     m_root->arrange({0, 0, width, height});
+    //     return *this;
+    // }
 
-    NativeWindow m_native;
-    Materializer m_materializer;
+private:
+    App* m_app = nullptr;
+
+    // WinWindow m_native;
+    // Materializer m_materializer;
     EventRouter m_router;
 
     std::unique_ptr<Widget> m_root;
@@ -112,9 +109,7 @@ private:
     WindowProps m_props{};
     WindowEvents m_events{};
 
-    friend class WindowManager;
     friend class Widget;
-    friend class NativeWindow;
 };
 
 
