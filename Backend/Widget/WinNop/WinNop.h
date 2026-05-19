@@ -12,6 +12,7 @@ class WinNop : public WinCustom
 public:
     explicit WinNop(const std::wstring& text);
     explicit WinNop(Widget& widget); // TODO in ApiWidget
+    auto create(ApiWidget& parent) -> void override;
 
     auto create(WidgetId id, const NopProps& props, const std::wstring& text) -> void;
 

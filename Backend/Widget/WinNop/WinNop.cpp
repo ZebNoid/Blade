@@ -17,18 +17,24 @@ WinNop::WinNop(const std::wstring& text) : m_text(text)
     std::cout << "-> WinNop::WinNop TEXT: " << Utf16ToUtf8(m_text) << "\n"; // TODO dev
 }
 
-// auto WinNop::create(ApiWidget& parent) -> void
-// {
-//     create(0, {}, L"test Nop"); //TODO
-// }
+auto WinNop::create(ApiWidget& parent) -> void
+{
+    m_parent = &parent;
+    if (!parentHandle())
+    {
+        std::cerr << " -> WinNop::create no parent1\n"; // TODO dev
+        return;
+    }
+    create(0, {}, L"test Nop"); //TODO
+}
 
 auto WinNop::create(WidgetId id, const NopProps& props, const std::wstring& text) -> void
 {
-    // WinCustom::create(id);
+    WinCustom::create(id);
     m_props = props;
     m_text = text;
 
-    std::cout << "WinNop::create\n"; // TODO dev
+    std::cout << " -> WinNop::create  props2\n"; // TODO dev
 }
 
 auto WinNop::paint(const HDC hdc, const RECT rect) -> void

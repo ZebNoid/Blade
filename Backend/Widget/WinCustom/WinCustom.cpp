@@ -11,19 +11,30 @@ namespace Blade::Backend {
 
 WinCustom::WinCustom(Widget& widget)
 {
-    std::cout << " -> WinCustom::create Widget&\n"; // TODO dev
+    std::cout << "  -> WinCustom|" << name() << "::create Widget&\n"; // TODO dev
 }
 
-auto WinCustom::create(ApiWidget& parent) -> void
-{
-    std::cout << " -> WinCustom::create ApiWidget&\n"; // TODO dev
-    m_parent = &parent;
-    // create(0);
-}
+// auto WinCustom::create(ApiWidget& parent) -> void
+// {
+//     m_parent = &parent;
+//     if (!parentHandle())
+//     {
+//         std::cerr << "  -> !" << name() << "::create no parentHandle\n"; // TODO dev
+//         return;
+//     }
+//     // std::cout << "  -> !" << name() << "::create ApiWidget&\n"; // TODO dev
+//     // create(0);
+// }
 
 auto WinCustom::create(WidgetId id) -> void
 {
-    std::cout << " -> WinCustom::create id\n"; // TODO dev
+    if (!parentHandle())
+    {
+        std::cerr << "  -> WinCustom|" << name() << "::create no parentHandle\n"; // TODO dev
+        return;
+    }
+
+    std::cout << "  -> WinCustom|" << name() << "::create id\n"; // TODO dev
     m_id = id;
     m_systemFont = ResourceRegistry::GetFont("system");
 
@@ -70,7 +81,7 @@ auto WinCustom::createNative(const Rect rect) -> HWND
 
     if (!m_hwnd)
     {
-        std::cerr << "[Error] WinCustom::CreateNative " << GetLastError() << std::endl;
+        std::cerr << "  -> WinCustom|" << name() << "::CreateNative " << GetLastError() << std::endl;
     }
     return m_hwnd;
 }
