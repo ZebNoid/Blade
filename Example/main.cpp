@@ -9,11 +9,11 @@ using namespace Blade;
 class Sandbox : public App
 {
 
-    WindowProps wProp = {
-        .title = L"Blade Example",
-        .size = {600,200},
-        .position = {3200, 600},
-    };
+    // WindowProps wProp = {
+    //     .title = L"Blade Example",
+    //     .size = {600,200},
+    //     .position = {3200, 600},
+    // };
 
 protected:
     auto setup() -> void override
@@ -23,13 +23,9 @@ protected:
 
     auto ui() -> void override
     {
-        Window().set(wProp).mount(this);
-
-
+        // Window().set(wProp).mount(this);
 
         // Window(Button("Button")).set(wProp).mount(this);
-
-
 
 
         // Window(Nop("Nop")).set(wProp).mount(this);
@@ -40,120 +36,7 @@ protected:
         // Window(Column(Button("1"))).set(wProp).mount(this);
 
         // Window(Column(Nop(), Label("Label"))).set(wProp).mount(this);
-
-
-        // window(contentFlex()).set(wProp);
-        // window(Label("132")).set(wProp);
     }
-
-    //
-    // auto contentBladeDemo() -> auto
-    // {
-    //     return Column(
-    //             Label("Blade Example").id(labelId),
-    //             TextField("Default text")
-    //             .set({
-    //                 .layout = layoutMarginH,
-    //                 .textAlign = TextAlign::Start,
-    //             })
-    //             .on({
-    //                 .change = [](const std::string& value)
-    //                 {
-    //                     std::cout << value << "\n";
-    //                 },
-    //             }),
-    //             Label("Radio Buttons").set(labelStyle),
-    //             Row(
-    //                 RadioButton("RadioButton"),
-    //                 RadioButton("RadioButton").set({
-    //                     .layout = {.flex = 1}
-    //                 }),
-    //                 RadioButton("RadioButton")
-    //             ).set({
-    //                 .gap = gap,
-    //                 .layout = layoutMarginH,
-    //             }),
-    //             Label("Row Buttons").set(labelStyle),
-    //             Row(
-    //                 Button("Default Button").set({
-    //                     .defaultButton = true,
-    //                 }),
-    //                 Button("Button"),
-    //                 Button("Button")
-    //             ).set({
-    //                 .gap = gap,
-    //                 .layout = layoutMarginH,
-    //                 .mainAxisAlignment = MainAxisAlignment::Center,
-    //                 .crossAxisAlignment = CrossAxisAlignment::Stretch,
-    //             }),
-    //             Label("Checkboxes"),
-    //             Row(
-    //                 Checkbox("Checkbox"),
-    //                 Checkbox("Checkbox"),
-    //                 Checkbox("Checkbox")
-    //             ).set({
-    //                 .layout = layoutMarginH,
-    //                 .mainAxisAlignment = MainAxisAlignment::Center,
-    //                 .crossAxisAlignment = CrossAxisAlignment::Center,
-    //             }),
-    //             Button("Button"),
-    //             Progress(100),
-    //             Button("Button"),
-    //             Slider(50),
-    //             Button("Button"),
-    //             Label("Flex").set({.layout = {.flex = 1}}),
-    //             Row(
-    //                 Button("Debug").on({
-    //                     .click = []
-    //                     {
-    //                     },
-    //                 }),
-    //                 Progress(100).set({.marquee = true, .layout = {.flex = 1}}),
-    //                 Label("Footer")
-    //             )
-    //         )
-    //         .set({
-    //             .gap = gap,
-    //             .mainAxisAlignment = MainAxisAlignment::Start,
-    //             .crossAxisAlignment = CrossAxisAlignment::Stretch,
-    //         });
-    // }
-    //
-    // auto contentFlex() -> auto
-    // {
-    //     return Column(
-    //         Label("Header"),
-    //
-    //         Label("Content").set({
-    //             .layout = {
-    //                 .flex = 1
-    //             }
-    //         }),
-    //
-    //         Label("Footer")
-    //     ).set({
-    //         .mainAxisAlignment = MainAxisAlignment::Center,
-    //         .crossAxisAlignment = CrossAxisAlignment::Stretch,
-    //     });
-    // }
-
-public:
-    const int gap = 8;
-
-    const LayoutProps layoutMarginH = {
-        .margin = {gap, 0}
-    };
-
-    const LabelProps labelStyle = {
-        .layout = {
-            .margin = {gap, 0},
-        },
-        .textAlign = TextAlign::Start,
-    };
-
-    WidgetId windowId;
-    WidgetId textFieldId;
-    WidgetId labelId;
 };
 
 

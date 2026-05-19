@@ -8,63 +8,6 @@ endif ()
 add_library(${PROJECT_NAME} STATIC
         App/AppBackend.cpp
         App/AppBackend.h
-
-        #        WinBackend/WinBackend.cpp
-#        WinBackend/WinBackend.h
-
-#        WinInit/WinInit.cpp
-#        WinInit/WinInit.h
-#        WinWindow/WinWindow.cpp
-#        WinWindow/WinWindow.h
-#
-#        Handlers/CommandHandler/CommandHandler.cpp
-#        Handlers/CommandHandler/CommandHandler.h
-#        Handlers/InputHandler/InputHandler.cpp
-#        Handlers/InputHandler/InputHandler.h
-#        Handlers/WindowHandler/WindowHandler.cpp
-#        Handlers/WindowHandler/WindowHandler.h
-#        Handlers/PaintHandler/PaintHandler.cpp
-#        Handlers/PaintHandler/PaintHandler.h
-#
-#        Debug/LayoutDebugRenderer/LayoutDebugRenderer.cpp
-#        Debug/LayoutDebugRenderer/LayoutDebugRenderer.h
-#        Debug/LayoutDebugTheme.h
-#        Debug/DebugPainter/DebugPainter.cpp
-#        Debug/DebugPainter/DebugPainter.h
-#        Debug/NativeDraw/NativeDraw.cpp
-#        Debug/NativeDraw/NativeDraw.h
-#        Debug/DebugProps.h
-#        Debug/DebugBrushProps.h
-#
-#        Widget/WinWidget/WinWidget.cpp
-#        Widget/WinWidget/WinWidget.h
-#        Widget/WinCustom/WinCustom.h
-#        Widget/WinCustom/WinCustom.cpp
-#        Widget/WinRender/WinRender.cpp
-#        Widget/WinRender/WinRender.h
-#        Registry/ClassRegistry/ClassRegistry.cpp
-#        Registry/ClassRegistry/ClassRegistry.h
-#        Registry/ResourceRegistry/ResourceRegistry.h
-#        Registry/ResourceRegistry/ResourceRegistry.cpp
-#        Widget/WinLabel/WinLabel.h
-#        Widget/WinLabel/WinLabel.cpp
-#        Widget/WinNop/WinNop.h
-#        Widget/WinNop/WinNop.cpp
-#        Materializer/Materializer.cpp
-#        Materializer/Materializer.h
-#        Helpers/WinUtils.h
-#        Widget/WinButton/WinButton.cpp
-#        Widget/WinButton/WinButton.h
-#        Widget/WinCheckbox/WinCheckbox.h
-#        Widget/WinCheckbox/WinCheckbox.cpp
-#        Widget/WinProgress/WinProgress.cpp
-#        Widget/WinProgress/WinProgress.h
-#        Widget/WinRadioButton/WinRadioButton.cpp
-#        Widget/WinRadioButton/WinRadioButton.h
-#        Widget/WinSlider/WinSlider.h
-#        Widget/WinSlider/WinSlider.cpp
-#        Widget/WinTextField/WinTextField.cpp
-#        Widget/WinTextField/WinTextField.h
 )
 
 # use Unicode

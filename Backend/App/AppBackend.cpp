@@ -4,6 +4,10 @@
 namespace Blade::Backend {
 
 
+AppBackend::AppBackend() : m_hInstance(GetModuleHandle(nullptr))
+{
+}
+
 auto AppBackend::init() -> void
 {
 }
