@@ -72,13 +72,6 @@ public:
         return *this;
     }
 
-    auto id(WidgetId& id) -> Window&
-    {
-        // TODO get id
-        // id = m_id;
-        return *this;
-    }
-
     auto mount(class App* app) && -> void;
 
     auto root() const -> Widget*
@@ -86,31 +79,14 @@ public:
         return m_root.get();
     }
 
-    // TODO friend WindowManager?
     auto getProps() -> WindowProps
     {
         return m_props;
     }
 
-protected:
-    // auto setRoot(std::unique_ptr<Widget> root) -> Window&
-    // // TODO Window materializer mount
-    //     // m_materializer.mount(*m_root, ctx);
-    //
-    //     // TODO padding
-    //     const auto [width, height] = m_native.clientSize();
-    //
-    //     m_root->measure({width, height}); // TODO
-    //
-    //     m_root->arrange({0, 0, width, height});
-    //     return *this;
-    // }
-
 private:
     App* m_app = nullptr;
 
-    // WinWindow m_native;
-    // Materializer m_materializer;
     EventRouter m_router;
 
     std::unique_ptr<Widget> m_root;
