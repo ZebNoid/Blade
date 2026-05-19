@@ -6,7 +6,7 @@ namespace Blade::Backend {
 
 
 auto WinCheckbox::create(const WidgetId id, const CheckboxProps& props,
-                            const std::string& text) -> void
+                            const std::wstring& text) -> void
 {
     m_id = id;
     m_props = props;
@@ -38,7 +38,7 @@ auto WinCheckbox::createNative(Rect rect, HWND parent) -> HWND
     m_hwnd = CreateWindowEx(
         0,
         TEXT("BUTTON"), // Predefined class
-        toNativeString(m_text).c_str(), // Label
+        m_text.c_str(), // Label
         style(),
         rect.x,
         rect.y,

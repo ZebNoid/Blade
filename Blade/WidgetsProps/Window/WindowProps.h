@@ -12,7 +12,7 @@ namespace Blade {
 
 struct WindowProps
 {
-    std::string title = "Blade";
+    std::wstring title = L"Blade"; // TODO later
     // TODO remember size/position
     // TODO minSize / maxSize
     Size size{800, 600};

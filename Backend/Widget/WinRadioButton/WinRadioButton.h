@@ -13,7 +13,7 @@ class WinRadioButton : public WinWidget
 public:
     WinRadioButton() = default;
 
-    auto create(WidgetId id, const RadioButtonProps& props, const std::string& string) -> void;
+    auto create(WidgetId id, const RadioButtonProps& props, const std::wstring& string) -> void;
 
 protected:
     auto name() const -> std::string override { return "WinRadioButton"; }
@@ -24,7 +24,7 @@ protected:
 
 private:
     RadioButtonProps m_props{};
-    std::string m_text;
+    std::wstring m_text;
 };
 
 

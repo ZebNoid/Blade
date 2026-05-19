@@ -6,7 +6,7 @@
 namespace Blade::Backend {
 
 
-auto WinRadioButton::create(const WidgetId id, const RadioButtonProps& props, const std::string& text) -> void
+auto WinRadioButton::create(const WidgetId id, const RadioButtonProps& props, const std::wstring& text) -> void
 {
     m_id = id;
     m_props = props;
@@ -45,7 +45,7 @@ auto WinRadioButton::createNative(Rect rect, HWND parent) -> HWND
     m_hwnd = CreateWindowEx(
         0,
         TEXT("BUTTON"), // Predefined class
-        toNativeString(m_text).c_str(), // Label
+        m_text.c_str(), // Label
         style(),
         rect.x,
         rect.y,

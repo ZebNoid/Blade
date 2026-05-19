@@ -19,7 +19,7 @@ auto WinButton::create(ApiWidget& parent) -> void
 auto WinButton::create(
     const WidgetId id,
     const ButtonProps& props,
-    const std::string& text
+    const std::wstring& text
 ) -> void
 {
     m_id = id;
@@ -55,7 +55,7 @@ auto WinButton::createNative(const Rect rect, HWND parent) -> HWND
     m_hwnd = CreateWindowEx(
         0,
         TEXT("BUTTON"),
-        toNativeString(m_text).c_str(),
+        m_text.c_str(),
         style(),
         rect.x, rect.y,
         rect.width, rect.height,

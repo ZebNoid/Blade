@@ -19,12 +19,13 @@ auto WinLabel::create(ApiWidget& parent) -> void
 auto WinLabel::create(
     WidgetId id,
     const LabelProps& props,
-    const std::string& text
+    const std::wstring& text
 ) -> void
 {
     WinCustom::create(id);
     m_props = props;
-    m_text = Utf8ToUtf16(text);
+    m_text = text;
+    m_text = text;
 
     ClassRegistry::Register(
         "BladeLabel",

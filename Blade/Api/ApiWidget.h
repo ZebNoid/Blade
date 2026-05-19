@@ -1,8 +1,10 @@
 #pragma once
 #include "Core/Rect.h"
+#include "Widgets/Widget/Widget.h"
 
 
 namespace Blade {
+
 
 class ApiWidget
 {
@@ -31,7 +33,6 @@ public:
         -> void
     {
     }
-
 
     auto createChildren() -> void
     {

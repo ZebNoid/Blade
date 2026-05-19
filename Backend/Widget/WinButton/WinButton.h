@@ -20,7 +20,7 @@ public:
     auto create(
         WidgetId id,
         const ButtonProps& props,
-        const std::string& text
+        const std::wstring& text
     ) -> void;
 
 protected:
@@ -33,7 +33,7 @@ protected:
 private:
     ButtonProps m_props{};
     ButtonEvents m_callbacks{};
-    std::string m_text;
+    std::wstring m_text;
 };
 
 

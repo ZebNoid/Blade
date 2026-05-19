@@ -56,10 +56,10 @@ auto Materializer::buildChildren(Widget& widget, ApiWidget& native) -> void
 
         nativeChild->create(native);
 
-        buildChildren(
-            *child,
-            *nativeChild
-        );
+        // buildChildren(
+        //     *child,
+        //     *nativeChild
+        // );
 
         native.addChild(
             std::move(nativeChild)

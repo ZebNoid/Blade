@@ -15,7 +15,7 @@ public:
     explicit WinLabel(Widget& widget); // TODO in ApiWidget
     auto create(ApiWidget& parent) -> void override;
 
-    auto create(WidgetId id, const LabelProps& props, const std::string& text) -> void;
+    auto create(WidgetId id, const LabelProps& props, const std::wstring& text) -> void;
 
 protected:
     // auto style() const -> DWORD override;

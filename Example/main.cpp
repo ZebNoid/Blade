@@ -10,7 +10,7 @@ class Sandbox : public App
 {
 
     WindowProps wProp = {
-        .title = "Blade",
+        .title = L"Blade",
         // .size = {600,200},
         .position = {3200, 600},
     };

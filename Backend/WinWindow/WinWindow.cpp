@@ -44,7 +44,7 @@ auto WinWindow::create(HINSTANCE hInstance) -> void
 
     createNative({});
 
-    std::cout << "WinWindow::create hInstance\n"; // TODO dev
+    std::cout << "> WinWindow::create hInstance\n"; // TODO dev
 }
 
 auto WinWindow::create(ApiWidget& parent) -> void
@@ -119,7 +119,7 @@ auto WinWindow::createNative(const Rect rect, HWND parent) -> HWND
     m_hwnd = CreateWindowEx(
         exStyle(),
         ClassRegistry::Get(CUSTOM_CLASS_KEY),
-        toNativeString(m_props.title).c_str(),
+        m_props.title.c_str(),
         style(),
         // TODO remember size / position
         // TODO center

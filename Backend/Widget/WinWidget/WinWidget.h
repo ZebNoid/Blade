@@ -2,10 +2,8 @@
 
 #include <windows.h>
 
-#include "Widgets/Widget/Widget.h"
 #include "Api/ApiWidget.h"
 #include "Core/Core.h"
-#include "Core/Encoding.h"
 #include "WidgetsProps/Common/Size.h"
 
 
@@ -14,31 +12,8 @@ namespace Blade::Backend {
 
 class WinWidget : public ApiWidget
 {
-protected:
-#ifdef UNICODE
-    using NativeString = std::wstring;
-    using NativeChar = wchar_t;
-#else
-    using NativeString = std::string;
-    using NativeChar = char;
-#endif
-    static auto toNativeString(const std::string& text) -> NativeString
-    {
-        return Utf8ToUtf16(text);
-    }
-
 public:
-    // TODO ApiWidget!!
     ~WinWidget() override;
-
-    auto createChildren() -> void
-    {
-        for (auto& child : m_children)
-        {
-            child->create(*this);
-            child->createChildren();
-        }
-    }
 
     auto setRect(const Rect& rect) -> void override;
 
@@ -46,8 +21,7 @@ public:
 
     auto hide() -> void override;
 
-    // TODO other
-    auto handle() const -> HWND;
+    auto handle() const -> HWND; // TODO other
 
 protected:
     virtual auto style() const -> DWORD;

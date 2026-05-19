@@ -15,11 +15,11 @@ WinNop::WinNop(const std::wstring& text) : m_text(text)
     // std::cout << "WinNop::WinNop" << Utf16ToUtf8(m_text) << "\n"; // TODO dev
 }
 
-auto WinNop::create(WidgetId id, const NopProps& props, const std::string& text) -> void
+auto WinNop::create(WidgetId id, const NopProps& props, const std::wstring& text) -> void
 {
     WinCustom::create(id);
     m_props = props;
-    m_text = Utf8ToUtf16(text);
+    m_text = text;
 
     std::cout << "WinNop::create\n"; // TODO dev
 }

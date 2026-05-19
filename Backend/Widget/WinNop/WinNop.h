@@ -13,7 +13,7 @@ public:
     explicit WinNop(const std::wstring& text);
     explicit WinNop(Widget& widget); // TODO in ApiWidget
 
-    auto create(WidgetId id, const NopProps& props, const std::string& text) -> void;
+    auto create(WidgetId id, const NopProps& props, const std::wstring& text) -> void;
 
     auto create(ApiWidget& parent) -> void override;
 

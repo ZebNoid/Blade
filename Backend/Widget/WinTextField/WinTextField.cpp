@@ -10,7 +10,7 @@ namespace Blade::Backend {
 auto WinTextField::create(
     const WidgetId id,
     const TextFieldProps& props,
-    const std::string& text
+    const std::wstring& text
 ) -> void
 {
     m_id = id;
@@ -92,7 +92,7 @@ auto WinTextField::createNative(const Rect rect, HWND parent) -> HWND
     m_hwnd = CreateWindowEx(
         exStyle(),
         TEXT("Edit"),
-        toNativeString(m_text).c_str(),
+        m_text.c_str(),
         style(),
         rect.x, rect.y,
         rect.width, rect.height,

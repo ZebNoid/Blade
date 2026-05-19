@@ -13,7 +13,7 @@ class WinCheckbox : public WinWidget
 public:
     WinCheckbox() = default;
 
-    auto create(WidgetId id, const CheckboxProps& props, const std::string& string) -> void;
+    auto create(WidgetId id, const CheckboxProps& props, const std::wstring& string) -> void;
 
 protected:
     auto name() const -> std::string override { return "WinCheckbox"; }
@@ -24,7 +24,7 @@ protected:
 
 private:
     CheckboxProps m_props{};
-    std::string m_text;
+    std::wstring m_text;
 };
 
 
