@@ -28,24 +28,24 @@ auto WinBackend::runApp() -> int
 }
 
 // TODO ApiBackend::entryWidget
-auto WinBackend::createWindow(Window& window) -> void
-{
-    auto root = m_materializer.mount(window);
-    auto* nativeWindow = dynamic_cast<WinWindow*>(root.get());
-
-    if (nativeWindow == nullptr)
-    {
-        std::cerr << "WinBackend::createWindow no native Window\n"; // TODO dev
-        return;
-    }
-
-    nativeWindow->create(m_hInstance);
-    nativeWindow->createChildren();
-
-    m_materializer.syncLayout(window);
-
-    m_windows.push_back(std::move(root));
-}
+// auto WinBackend::createWindow(Window& window) -> void
+// {
+//     auto root = m_materializer.mount(window);
+//     auto* nativeWindow = dynamic_cast<WinWindow*>(root.get());
+//
+//     if (nativeWindow == nullptr)
+//     {
+//         std::cerr << "WinBackend::createWindow no native Window\n"; // TODO dev
+//         return;
+//     }
+//
+//     nativeWindow->create(m_hInstance);
+//     nativeWindow->createChildren();
+//
+//     m_materializer.syncLayout(window);
+//
+//     m_windows.push_back(std::move(root));
+// }
 
 auto WinBackend::quit() -> void
 {

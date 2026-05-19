@@ -1,4 +1,4 @@
-project(Blade VERSION 0.2.3)
+project(Blade VERSION 0.2.4)
 
 # Use the names to logic check
 if (NOT PROJECT_IS_TOP_LEVEL)
@@ -84,8 +84,6 @@ add_library(${PROJECT_NAME} STATIC
         Render/Render.cpp
         Render/Render.h
         Core/Rect.h
-        api.h
-        Api/ApiWidget.h
 )
 
 # use Unicode
@@ -99,6 +97,7 @@ target_include_directories(${PROJECT_NAME}
 # Link required WinAPI libraries
 target_link_libraries(${PROJECT_NAME}
         PUBLIC
+        Api
         user32
         gdi32
         comctl32

@@ -1,6 +1,7 @@
 #pragma once
-#include "Core/Rect.h"
-#include "Widgets/Widget/Widget.h"
+
+// #include "Core/Rect.h"
+// #include "Widgets/Widget/Widget.h"
 
 
 namespace Blade {
@@ -12,7 +13,7 @@ public:
     virtual ~ApiWidget() = default;
 
 
-    virtual auto setRect(const Rect& rect) -> void = 0;
+    // virtual auto setRect(const Rect& rect) -> void = 0;
 
     virtual auto name() const -> std::string = 0;
 

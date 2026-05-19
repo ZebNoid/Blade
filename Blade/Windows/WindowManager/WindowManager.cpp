@@ -39,7 +39,7 @@ auto WindowManager::createWindow(Window& window) const -> void
         size.height
     });
 
-    m_backend->createWindow(window);
+    // m_backend->createWindow(window);
 }
 
 auto WindowManager::destroyWindow(Window* target) -> void

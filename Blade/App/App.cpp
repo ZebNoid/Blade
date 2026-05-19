@@ -21,7 +21,7 @@ auto App::run() -> int
 
 auto App::initBackend() -> void
 {
-    // m_backend->initialize(); // todo init
+    m_backend->init();
     m_wm.bind(*m_backend);
 }
 
