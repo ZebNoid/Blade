@@ -5,7 +5,8 @@
 namespace Blade::Backend {
 
 
-WinNop::WinNop(Window& window)
+// WinNop::WinNop(Window& window)
+WinNop::WinNop(const std::wstring& text) : m_text(text)
 {
 
 }

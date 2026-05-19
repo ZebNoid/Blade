@@ -36,12 +36,8 @@ auto Materializer::create(Widget& widget) -> std::unique_ptr<WinWidget>
     //     );
     // }
 
-    return std::make_unique<WinNop>(
-        widget
-    );
-
-
-    return nullptr;
+    auto unknown =  std::make_unique<WinNop>(L"Unknown " + widget.name());
+    return unknown;
 }
 
 auto Materializer::mount(Widget& root) -> std::unique_ptr<ApiWidget>

@@ -28,11 +28,26 @@ auto WinBackend::createWindow(Window& window) -> void
 
     auto root = m_materializer.mount(window);
 
+    if (root == nullptr)
+    {
+        std::cout << "WinBackend:: root == nullptr\n"; // TODO dev
+        return;
+    }
+
     auto* native = dynamic_cast<WinWindow*>(root.get());
+
+    if (root == nullptr)
+    {
+        std::cout << "WinBackend:: root != WinWindow\n"; // TODO dev
+        return;
+    }
 
     native->create(m_hInstance);
 
     m_windows.push_back(std::move(root));
+
+    // m_windows.push_back(std::move(*native));
+    // m_windows.push_back(root);
 
     // auto native = std::make_unique<WinWindow>(
     //     window,

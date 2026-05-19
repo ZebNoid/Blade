@@ -10,7 +10,8 @@ namespace Blade::Backend {
 class WinNop : public WinCustom
 {
 public:
-    explicit WinNop(Window& window);
+    explicit WinNop(const std::wstring& text);
+    // explicit WinNop(Window& window);
 
     auto create(const WidgetContext& ctx, WidgetId id, const NopProps& props, const std::string& text) -> void;
 

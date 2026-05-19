@@ -24,7 +24,8 @@ private:
 
     Materializer m_materializer;
 
-    std::vector<std::unique_ptr<WinWindow>> m_windows;
+    // std::vector<std::unique_ptr<WinWindow>> m_windows;
+    std::vector<std::unique_ptr<ApiWidget>> m_windows;
 };
 
 
