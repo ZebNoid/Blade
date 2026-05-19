@@ -16,7 +16,7 @@ public:
     auto create(WidgetId id, const RadioButtonProps& props, const std::string& string) -> void;
 
 protected:
-    auto widgetName() const -> std::string override { return "WinRadioButton"; }
+    auto name() const -> std::string override { return "WinRadioButton"; }
 
     auto style() const -> DWORD override;
 

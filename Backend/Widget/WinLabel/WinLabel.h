@@ -20,7 +20,7 @@ protected:
     //
     // auto exStyle() const -> DWORD override;
 
-    auto widgetName() const -> std::string override { return "WinLabel"; }
+    auto name() const -> std::string override { return "WinLabel"; }
 
     auto paint(HDC hdc, RECT rect) -> void override;
 

@@ -23,7 +23,7 @@ protected:
 
     auto style() const -> DWORD override;
 
-    auto widgetName() const -> std::string override { return "WinWindow"; }
+    auto name() const -> std::string override { return "WinWindow"; }
 
     auto createNative(Rect rect, HWND parent = nullptr) -> HWND override;
 

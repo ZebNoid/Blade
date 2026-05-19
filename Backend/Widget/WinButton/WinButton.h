@@ -20,7 +20,7 @@ public:
     ) -> void;
 
 protected:
-    auto widgetName() const -> std::string override { return "WinButton"; }
+    auto name() const -> std::string override { return "WinButton"; }
 
     auto style() const -> DWORD override;
 

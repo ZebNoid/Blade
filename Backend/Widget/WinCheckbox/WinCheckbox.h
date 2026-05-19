@@ -16,7 +16,7 @@ public:
     auto create(WidgetId id, const CheckboxProps& props, const std::string& string) -> void;
 
 protected:
-    auto widgetName() const -> std::string override { return "WinCheckbox"; }
+    auto name() const -> std::string override { return "WinCheckbox"; }
 
     auto style() const -> DWORD override;
 

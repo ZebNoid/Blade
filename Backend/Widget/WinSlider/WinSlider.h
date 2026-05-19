@@ -16,7 +16,7 @@ public:
     auto create(WidgetId id, const SliderProps& props, const int value) -> void;
 
 protected:
-    auto widgetName() const -> std::string override { return "WinSlider"; }
+    auto name() const -> std::string override { return "WinSlider"; }
 
     auto style() const -> DWORD override;
 

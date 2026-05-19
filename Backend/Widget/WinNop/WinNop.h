@@ -18,7 +18,7 @@ public:
     auto create(ApiWidget& parent) -> void override;
 
 protected:
-    auto widgetName() const -> std::string override { return "WinNop"; }
+    auto name() const -> std::string override { return "WinNop"; }
 
     auto paint(HDC hdc, RECT rect) -> void override;
 

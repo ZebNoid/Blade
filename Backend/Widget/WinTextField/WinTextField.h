@@ -16,7 +16,7 @@ public:
     auto create(WidgetId id, const TextFieldProps& props, const std::string& text) -> void;
 
 protected:
-    auto widgetName() const -> std::string override { return "WinTextField"; }
+    auto name() const -> std::string override { return "WinTextField"; }
 
     auto style() const -> DWORD override;
 
