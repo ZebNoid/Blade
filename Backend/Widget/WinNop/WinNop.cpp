@@ -14,9 +14,9 @@ WinNop::WinNop(const std::wstring& text) : m_text(text)
 
 }
 
-auto WinNop::create(const WidgetContext& ctx, WidgetId id, const NopProps& props, const std::string& text) -> void
+auto WinNop::create(WidgetId id, const NopProps& props, const std::string& text) -> void
 {
-    WinCustom::create(ctx, id);
+    WinCustom::create(id);
     m_props = props;
     m_text = Utf8ToUtf16(text);
 }

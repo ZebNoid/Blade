@@ -13,7 +13,7 @@ class WinLabel : public WinCustom
 public:
     WinLabel() = default;
 
-    auto create(const WidgetContext& ctx, WidgetId id, const LabelProps& props, const std::string& text) -> void;
+    auto create(WidgetId id, const LabelProps& props, const std::string& text) -> void;
 
 protected:
     // auto style() const -> DWORD override;

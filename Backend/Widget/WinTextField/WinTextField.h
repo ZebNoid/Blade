@@ -13,7 +13,7 @@ class WinTextField : public WinWidget
 public:
     WinTextField() = default;
 
-    auto create(const WidgetContext& ctx, WidgetId id, const TextFieldProps& props, const std::string& text) -> void;
+    auto create(WidgetId id, const TextFieldProps& props, const std::string& text) -> void;
 
 protected:
     auto widgetName() const -> std::string override { return "WinTextField"; }

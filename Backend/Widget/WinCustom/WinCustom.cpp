@@ -14,11 +14,9 @@ namespace Blade::Backend {
 // }
 
 auto WinCustom::create(
-    const WidgetContext& ctx,
     WidgetId id
 ) -> void
 {
-    m_ctx = ctx;
     m_id = id;
     m_systemFont = ResourceRegistry::GetFont("system");
 
@@ -50,7 +48,7 @@ DWORD WinCustom::exStyle() const
 auto WinCustom::createNative(const Rect rect, HWND parent) -> HWND
 {
     WinWidget::createNative(rect);
-    if (m_ctx.hwnd == nullptr) return nullptr;
+    if (parent == nullptr) return nullptr;
 
     m_hwnd = CreateWindowEx(
         exStyle(),
@@ -60,9 +58,9 @@ auto WinCustom::createNative(const Rect rect, HWND parent) -> HWND
         0,0,0,0, // TODO why?
         // rect.x, rect.y,
         // rect.width, rect.height,
-        m_ctx.hwnd,
+        parent,
         nullptr, // ID
-        m_ctx.app->hInstance,
+        nullptr, // TODO m_ctx.app->hInstance,
         this
     );
 

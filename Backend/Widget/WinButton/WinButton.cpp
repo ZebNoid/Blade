@@ -8,13 +8,11 @@ namespace Blade::Backend {
 
 
 auto WinButton::create(
-    const WidgetContext& ctx,
     const WidgetId id,
     const ButtonProps& props,
     const std::string& text
 ) -> void
 {
-    m_ctx = ctx;
     m_id = id;
     m_props = props;
     m_text = text;
@@ -43,7 +41,7 @@ DWORD WinButton::style() const
 auto WinButton::createNative(const Rect rect, HWND parent) -> HWND
 {
     WinWidget::createNative(rect);
-    if (m_ctx.hwnd == nullptr) return nullptr;
+    if (parent == nullptr) return nullptr;
 
     m_hwnd = CreateWindowEx(
         0,
@@ -52,9 +50,9 @@ auto WinButton::createNative(const Rect rect, HWND parent) -> HWND
         style(),
         rect.x, rect.y,
         rect.width, rect.height,
-        m_ctx.hwnd,
+        parent,
         (HMENU)m_id, // Button ID
-        m_ctx.app->hInstance,
+        nullptr, // TODO m_ctx.app->hInstance,
         nullptr);
 
     if (!m_hwnd)

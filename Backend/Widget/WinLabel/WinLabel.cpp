@@ -7,13 +7,12 @@ namespace Blade::Backend {
 
 
 auto WinLabel::create(
-    const WidgetContext& ctx,
     WidgetId id,
     const LabelProps& props,
     const std::string& text
 ) -> void
 {
-    WinCustom::create(ctx, id);
+    WinCustom::create(id);
     m_props = props;
     m_text = Utf8ToUtf16(text);
 

@@ -13,7 +13,7 @@ class WinProgress : public WinWidget
 public:
     WinProgress() = default;
 
-    auto create(const WidgetContext& ctx, WidgetId id, const ProgressProps& props, const int value) -> void;
+    auto create(WidgetId id, const ProgressProps& props, const int value) -> void;
 
 protected:
     auto widgetName() const -> std::string override { return "WinProgress"; }

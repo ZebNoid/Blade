@@ -9,7 +9,6 @@ namespace Blade::Backend {
 
 
 auto WinSlider::create(
-    const WidgetContext& ctx,
     const WidgetId id,
     const SliderProps& props,
     const int value
@@ -17,7 +16,6 @@ auto WinSlider::create(
 {
     // TODO force redraw on resize?
     // TODO fix vertical align!
-    m_ctx = ctx;
     m_id = id;
     m_props = props;
     m_value = value;
@@ -54,7 +52,7 @@ DWORD WinSlider::style() const
 auto WinSlider::createNative(Rect rect, HWND parent) -> HWND
 {
     WinWidget::createNative(rect);
-    if (m_ctx.hwnd == nullptr) return nullptr;
+    if (parent == nullptr) return nullptr;
 
     m_hwnd = CreateWindowEx(
         0,
@@ -65,9 +63,9 @@ auto WinSlider::createNative(Rect rect, HWND parent) -> HWND
         rect.y,
         rect.width,
         rect.height,
-        m_ctx.hwnd,
+        parent,
         (HMENU)m_id, // Checkbox ID
-        m_ctx.app->hInstance,
+        nullptr, // TODO m_ctx.app->hInstance,
         this
     );
 

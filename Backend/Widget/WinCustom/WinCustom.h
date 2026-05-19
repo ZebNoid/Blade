@@ -13,9 +13,7 @@ class WinCustom : public WinWidget
 public:
     WinCustom() = default;
 
-    // auto create(ApiWidget& parent) -> void override;
-
-    auto create(const WidgetContext& ctx, WidgetId id) -> void;
+    auto create(WidgetId id) -> void;
 
 protected:
     auto style() const -> DWORD override;

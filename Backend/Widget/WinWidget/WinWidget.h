@@ -54,10 +54,7 @@ protected:
 
     virtual auto createNative(Rect rect, HWND parent = nullptr) -> HWND
     {
-        if (m_ctx.hwnd == nullptr)
-        {
-            std::cerr << "[Error] " << widgetName() << "::create no parent HWND " << std::endl;
-        }
+        std::cerr << "[Error] " << widgetName() << "::create not defined " << std::endl;
         return nullptr;
     }
 
@@ -76,7 +73,6 @@ public:
 
 protected:
     HWND m_hwnd = nullptr;
-    WidgetContext m_ctx{};
     Size m_size{};
     WidgetId m_id{};
 

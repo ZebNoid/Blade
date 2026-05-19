@@ -7,10 +7,12 @@
 namespace Blade::Backend {
 
 
-auto WinTextField::create(const WidgetContext& ctx, const WidgetId id, const TextFieldProps& props,
-                          const std::string& text) -> void
+auto WinTextField::create(
+    const WidgetId id,
+    const TextFieldProps& props,
+    const std::string& text
+) -> void
 {
-    m_ctx = ctx;
     m_id = id;
     m_props = props;
     m_text = text;
@@ -85,7 +87,7 @@ DWORD WinTextField::exStyle() const
 auto WinTextField::createNative(const Rect rect, HWND parent) -> HWND
 {
     WinWidget::createNative(rect);
-    if (m_ctx.hwnd == nullptr) return nullptr;
+    if (parent == nullptr) return nullptr;
 
     m_hwnd = CreateWindowEx(
         exStyle(),
@@ -94,9 +96,9 @@ auto WinTextField::createNative(const Rect rect, HWND parent) -> HWND
         style(),
         rect.x, rect.y,
         rect.width, rect.height,
-        m_ctx.hwnd,
+        parent,
         (HMENU)m_id, // ID
-        m_ctx.app->hInstance, // <-- Must be NULL for global classes ?
+        nullptr, // TODO m_ctx.app->hInstance, // <-- Must be NULL for global classes ?
         nullptr);
 
     if (!m_hwnd)

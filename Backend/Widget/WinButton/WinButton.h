@@ -14,7 +14,6 @@ public:
     WinButton() = default;
 
     auto create(
-        const WidgetContext& ctx,
         WidgetId id,
         const ButtonProps& props,
         const std::string& text

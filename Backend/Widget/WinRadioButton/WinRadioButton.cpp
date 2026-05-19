@@ -6,9 +6,8 @@
 namespace Blade::Backend {
 
 
-auto WinRadioButton::create(const WidgetContext& ctx, const WidgetId id, const RadioButtonProps& props, const std::string& text) -> void
+auto WinRadioButton::create(const WidgetId id, const RadioButtonProps& props, const std::string& text) -> void
 {
-    m_ctx = ctx;
     m_id = id;
     m_props = props;
     m_text = text;
@@ -39,7 +38,7 @@ auto WinRadioButton::createNative(Rect rect, HWND parent) -> HWND
 {
     WinWidget::createNative(rect);
 
-    if (m_ctx.hwnd == nullptr) return nullptr;
+    if (parent == nullptr) return nullptr;
 
     // TODO grouping? CheckRadioButton(hwndDlg, IDC_FIRST_RADIO, IDC_LAST_RADIO, IDC_RADIO_ONE);
 
@@ -52,9 +51,9 @@ auto WinRadioButton::createNative(Rect rect, HWND parent) -> HWND
         rect.y,
         rect.width,
         rect.height,
-        m_ctx.hwnd,
+        parent,
         (HMENU)m_id, // Checkbox ID
-        m_ctx.app->hInstance,
+        nullptr, // TODO m_ctx.app->hInstance,
         this
     );
 

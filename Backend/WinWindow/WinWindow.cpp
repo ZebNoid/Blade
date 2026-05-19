@@ -40,6 +40,7 @@ auto WinWindow::create(HINSTANCE hInstance) -> void
             // .icon = LoadIcon(m_hInstance, MAKEINTRESOURCE(IDI_APP_ICON)),
         }
     );
+    createNative({});
 }
 
 auto WinWindow::create(ApiWidget& parent) -> void
@@ -120,7 +121,7 @@ auto WinWindow::createNative(const Rect rect, HWND parent) -> HWND
         // TODO center
         startPos.x, startPos.y,
         m_props.size.width, m_props.size.height,
-        HWND_DESKTOP, // m_ctx.hwnd, create parent window?
+        parent, // HWND_DESKTOP, //  create parent window?
         nullptr,
         m_hInstance,
         this);
