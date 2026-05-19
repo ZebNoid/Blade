@@ -14,7 +14,7 @@ public:
 
     virtual auto setRect(const Rect& rect) -> void = 0;
 
-    virtual auto name() const -> std::string = 0;
+    virtual auto name() const -> std::string { return "ApiWidget"; }
 
     virtual auto show() -> void = 0;
 

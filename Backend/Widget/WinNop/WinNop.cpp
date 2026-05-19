@@ -22,7 +22,6 @@ auto WinNop::create(ApiWidget& parent) -> void
     m_parent = &parent;
     if (!parentHandle())
     {
-        std::cerr << " -> WinNop::create no parent1\n"; // TODO dev
         return;
     }
     create(0, {}, L"test Nop"); //TODO
@@ -33,8 +32,6 @@ auto WinNop::create(WidgetId id, const NopProps& props, const std::wstring& text
     WinCustom::create(id);
     m_props = props;
     m_text = text;
-
-    std::cout << " -> WinNop::create  props2\n"; // TODO dev
 }
 
 auto WinNop::paint(const HDC hdc, const RECT rect) -> void

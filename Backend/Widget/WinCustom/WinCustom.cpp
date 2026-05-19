@@ -70,9 +70,8 @@ auto WinCustom::createNative(const Rect rect) -> HWND
         ClassRegistry::Get(NATIVE_CUSTOM_CLASS),
         TEXT(""),
         style(),
-        0, 0, 0, 0, // TODO why?
-        // rect.x, rect.y,
-        // rect.width, rect.height,
+        rect.x, rect.y,
+        rect.width, rect.height,
         parentHandle(),
         nullptr, // ID
         GetModuleHandle(nullptr), // TODO m_ctx.app->hInstance,
