@@ -8,6 +8,8 @@ endif ()
 add_library(${PROJECT_NAME} STATIC
         App/App.cpp
         App/App.h
+        Widget/Widget.cpp
+        Widget/Widget.h
 )
 
 # use Unicode

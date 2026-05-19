@@ -1,10 +1,10 @@
 #pragma once
 
-#include "WidgetsProps/Common/Thickness.h"
 
 
 namespace Blade {
 
+using namespace Api;
 
 struct LayoutProps
 {

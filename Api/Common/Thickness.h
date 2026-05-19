@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Blade {
+namespace Blade::Api {
 
 
 struct Thickness

@@ -4,3 +4,4 @@
 #include "Common/Point.h"
 #include "Common/Rect.h"
 #include "Common/Rect.h"
+#include "Common/Thickness.h"
