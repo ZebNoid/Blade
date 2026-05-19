@@ -1,5 +1,7 @@
 #include "WinBackend.h"
 
+#include "Registry/ClassRegistry/ClassRegistry.h"
+#include "Registry/ResourceRegistry/ResourceRegistry.h"
 #include "WinInit/WinInit.h"
 
 
@@ -10,6 +12,9 @@ WinBackend::WinBackend()
     WinInit::InitDpi();
 
     m_hInstance = GetModuleHandle(nullptr);
+
+    ResourceRegistry::Init();
+    ClassRegistry::Init(m_hInstance);
 }
 
 auto WinBackend::runApp() -> int

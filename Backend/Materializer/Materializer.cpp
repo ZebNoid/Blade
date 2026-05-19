@@ -93,8 +93,9 @@ auto Materializer::syncLayout(Widget& widget) -> void
     if (it != m_widgets.end())
     {
         auto* native = it->second;
-        if (native!=nullptr)
+        if (native != nullptr)
         {
+            std::cout << "syncLayout  " << Utf16ToUtf8(widget.name()) << " "<< native->name() << "\n"; // TODO dev
             native->setRect(widget.rect());
         }
     }

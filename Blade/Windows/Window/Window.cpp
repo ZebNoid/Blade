@@ -18,8 +18,7 @@ auto Window::destroy() -> void
 
 auto Window::resize(Size size) -> void
 {
-    std::cout << "Window::resize\n";
-    arrange({0, 0, size.width, size.height});
+    // arrange({0, 0, size.width, size.height});
     // ->arrange({0, 0, size.width, size.height});
 }
 

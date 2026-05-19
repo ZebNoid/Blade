@@ -4,7 +4,6 @@
 #include "Handlers/WindowHandler/WindowHandler.h"
 #include "Helpers/Helpers.h"
 #include "Registry/ClassRegistry/ClassRegistry.h"
-#include "Registry/ResourceRegistry/ResourceRegistry.h"
 
 
 namespace Blade::Backend {
@@ -18,17 +17,12 @@ WinWindow::WinWindow(Window& window) : m_window(window)
     // TODO id
     m_props = m_window.getProps();
 
-    // TODO move to app cycle
-    ResourceRegistry::Init();
     std::cout << "> WinWindow::WinWindow Window&\n"; // TODO dev
 }
 
 auto WinWindow::create(HINSTANCE hInstance) -> void
 {
     m_hInstance = hInstance;
-
-    // TODO move to app cycle
-    ClassRegistry::Init(m_hInstance);
 
     ClassRegistry::Register(
         CUSTOM_CLASS_KEY,
@@ -44,18 +38,16 @@ auto WinWindow::create(HINSTANCE hInstance) -> void
 
     createNative({});
 
-    std::cout << "> WinWindow::create hInstance\n"; // TODO dev
+    // std::cout << "> WinWindow::create hInstance\n"; // TODO dev
 }
 
 auto WinWindow::create(ApiWidget& parent) -> void
 {
-    std::cout << "WinWindow::create ApiWidget&\n";
-
-    auto& winParent = static_cast<WinWidget&>(parent);
-    HWND hwndParent = winParent.handle();
-
+    // manual create
+    // std::cout << "WinWindow::create ApiWidget&\n";
+    // auto& winParent = static_cast<WinWidget&>(parent);
+    // HWND hwndParent = winParent.handle();
     // createNative({});
-
     // TODO set Title
     // SetWindowText(m_hwnd, toNativeString(m_props.title).c_str());
 }
