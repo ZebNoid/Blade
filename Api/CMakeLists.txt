@@ -13,6 +13,7 @@ add_library(${PROJECT_NAME} INTERFACE
         Common/Size.h
         Common/Point.h
         Common/Common.h
+        api.h
 )
 
 # use Unicode

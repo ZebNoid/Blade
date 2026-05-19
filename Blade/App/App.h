@@ -12,19 +12,12 @@ public:
     virtual ~App() = default;
 
     template <typename TBackend>
-    auto use() -> void
-    {
-        m_backend = std::make_unique<TBackend>();
-    }
-
-    template <typename TBackend>
     auto use(TBackend backend) -> void
     {
         m_backend = std::make_unique<TBackend>(std::move(backend));
     }
 
     auto run() -> int;
-
 
 
 protected:
@@ -40,7 +33,7 @@ private:
 protected:
 
 private:
-    std::unique_ptr<ApiBackend> m_backend;
+    std::unique_ptr<Api::ApiBackend> m_backend;
 };
 
 

@@ -6,7 +6,6 @@ if (NOT PROJECT_IS_TOP_LEVEL)
 endif ()
 
 add_library(${PROJECT_NAME} STATIC
-        #        blade.h
         App/App.cpp
         App/App.h
 )

@@ -8,17 +8,15 @@ using namespace Blade;
 
 class Sandbox : public App
 {
-
 protected:
     auto setup() -> void override
     {
-        use<Backend::AppBackend>();
+        use(Backend::AppBackend{});
     }
 
     auto ui() -> void override
     {
         // Window().set(wProp).mount(this);
-
         // Window(Button("Button")).set(wProp).mount(this);
     }
 };
@@ -26,10 +24,6 @@ protected:
 
 auto main() -> int
 {
-    std::cout << "Welcome to a WinAPI Hell! " << "\n";
-
     Sandbox app;
-    app.run();
-
-    return 0;
+    return app.run();
 }

@@ -13,7 +13,7 @@ public:
 
     virtual auto runApp() -> int = 0;
 
-    // virtual auto createWindow(Window& window) -> void = 0;
+    virtual auto createWindow() -> void = 0;
 
     virtual auto quit() -> void = 0;
 };

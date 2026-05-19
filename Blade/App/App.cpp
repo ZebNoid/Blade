@@ -3,7 +3,6 @@
 
 namespace Blade {
 
-
 auto App::run() -> int
 {
     setup();
