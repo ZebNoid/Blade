@@ -35,14 +35,16 @@ auto Materializer::create(Widget& widget) -> std::unique_ptr<ApiWidget>
     return std::make_unique<WinNop>(L"Unknown " + widget.name());;
 }
 
-auto Materializer::mount(Widget& root) -> std::unique_ptr<ApiWidget>
+auto Materializer::mount(Widget& widget) -> std::unique_ptr<ApiWidget>
 {
-    return create(root);
+    auto native = create(widget);
+    buildChildren(widget, *native);
+    return native;
 }
 
 auto Materializer::buildChildren(Widget& widget, ApiWidget& native) -> void
 {
-    std::cout << "WinBackend::buildChildren " << widget.children().size() <<"\n"; // TODO dev
+    std::cout << "Materializer::buildChildren " << widget.children().size() << "\n"; // TODO dev
     for (auto& child : widget.children())
     {
         auto nativeChild = create(*child);

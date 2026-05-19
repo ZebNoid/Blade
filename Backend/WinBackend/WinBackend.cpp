@@ -24,27 +24,19 @@ auto WinBackend::runApp() -> int
 
 auto WinBackend::createWindow(Window& window) -> void
 {
-    std::cout << "WinBackend::createWindow" << "" <<"\n"; // TODO dev
+    std::cout << "WinBackend::createWindow" << "" << "\n"; // TODO dev
 
     auto root = m_materializer.mount(window);
 
     if (root == nullptr)
     {
-        std::cout << "WinBackend:: root == nullptr\n"; // TODO dev
+        std::cout << "WinBackend:: no WinWindow\n"; // TODO dev
         return;
     }
 
-    auto* native = dynamic_cast<WinWindow*>(root.get());
+    auto* nativeWindow = dynamic_cast<WinWindow*>(root.get());
 
-    if (root == nullptr)
-    {
-        std::cout << "WinBackend:: not WinWindow\n"; // TODO dev
-        return;
-    }
-
-    native->create(m_hInstance);
-
-    m_materializer.buildChildren(window, *native);
+    nativeWindow->create(m_hInstance);
 
     m_windows.push_back(std::move(root));
 }
