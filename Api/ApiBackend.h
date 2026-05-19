@@ -1,7 +1,7 @@
 #pragma once
 
 
-namespace Blade {
+namespace Blade::Api {
 
 
 class ApiBackend

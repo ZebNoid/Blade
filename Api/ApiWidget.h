@@ -1,7 +1,11 @@
 #pragma once
+#include <memory>
+#include <vector>
+
+#include "Data/CommonTypes.h"
 
 
-namespace Blade {
+namespace Blade::Api {
 
 
 class ApiWidget
@@ -9,37 +13,30 @@ class ApiWidget
 public:
     virtual ~ApiWidget() = default;
 
-
-    virtual auto name() const -> std::string = 0;
-
+    // --- lifecycle ---
     virtual auto show() -> void = 0;
 
     virtual auto hide() -> void = 0;
 
+    virtual auto destroy() -> void = 0;
+
+    // --- geometry ---
+    virtual auto setRect(const Rect& rect) -> void = 0;
+
+    // --- identity ---
+    auto id() const -> Id { return m_id; }
+
+    // --- children (backend-side tree mirror) ---
     auto addChild(std::unique_ptr<ApiWidget> child) -> void
     {
-        m_children.push_back(
-            std::move(child)
-        );
+        m_children.push_back(std::move(child));
     }
 
-    virtual auto create(ApiWidget& parent) -> void = 0;
-
-    virtual auto create() -> void
-    {
-    }
-
-    auto createChildren() -> void
-    {
-        for (auto& child : m_children)
-        {
-            child->create(*this);
-            child->createChildren();
-        }
-    }
+    auto& children() const { return m_children; }
 
 protected:
-    ApiWidget* m_parent = nullptr;
+    BladeId m_id = 0;
+
     std::vector<std::unique_ptr<ApiWidget>> m_children;
 };
 

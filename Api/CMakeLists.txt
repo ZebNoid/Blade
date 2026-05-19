@@ -8,6 +8,8 @@ endif ()
 add_library(${PROJECT_NAME} INTERFACE
         ApiWidget.h
         ApiBackend.h
+        Struct/Rect.h
+        Common/CommonTypes.h
 )
 
 # use Unicode
