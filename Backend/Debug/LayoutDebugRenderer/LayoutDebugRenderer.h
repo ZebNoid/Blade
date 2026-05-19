@@ -5,7 +5,7 @@
 #include "Widgets/Widget/Widget.h"
 
 
-namespace Blade {
+namespace Blade::Backend {
 
 /// Legend
 ///

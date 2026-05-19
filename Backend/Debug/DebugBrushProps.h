@@ -3,7 +3,7 @@
 #include <string>
 
 
-namespace Blade {
+namespace Blade::Backend {
 
 
 struct DebugBrushProps

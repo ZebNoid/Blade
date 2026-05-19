@@ -2,10 +2,10 @@
 
 #include <windows.h>
 
-#include "Backend/Utils/WinApiUtils.h"
 #include "Context/WidgetContext.h"
 #include "Core/Core.h"
 #include "Core/Encoding.h"
+#include "WidgetsProps/Common/Size.h"
 
 
 namespace Blade::Backend {

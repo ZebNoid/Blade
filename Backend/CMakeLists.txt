@@ -23,6 +23,16 @@ add_library(${PROJECT_NAME} STATIC
         Handlers/PaintHandler/PaintHandler.cpp
         Handlers/PaintHandler/PaintHandler.h
 
+        Debug/LayoutDebugRenderer/LayoutDebugRenderer.cpp
+        Debug/LayoutDebugRenderer/LayoutDebugRenderer.h
+        Debug/LayoutDebugTheme.h
+        Debug/DebugPainter/DebugPainter.cpp
+        Debug/DebugPainter/DebugPainter.h
+        Debug/NativeDraw/NativeDraw.cpp
+        Debug/NativeDraw/NativeDraw.h
+        Debug/DebugProps.h
+        Debug/DebugBrushProps.h
+
         Widget/WinWidget/WinWidget.cpp
         Widget/WinWidget/WinWidget.h
         Widget/WinCustom/WinCustom.h
@@ -39,6 +49,7 @@ add_library(${PROJECT_NAME} STATIC
         Widget/WinNop/WinNop.cpp
         Materializer/Materializer.cpp
         Materializer/Materializer.h
+        Helpers/WinUtils.h
 )
 
 # use Unicode

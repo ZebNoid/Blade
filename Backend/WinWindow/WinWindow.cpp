@@ -2,7 +2,7 @@
 #include "Handlers/InputHandler/InputHandler.h"
 #include "Handlers/PaintHandler/PaintHandler.h"
 #include "Handlers/WindowHandler/WindowHandler.h"
-#include "Backend/Helpers/Helpers.h"
+#include "Helpers/Helpers.h"
 #include "Registry/ClassRegistry/ClassRegistry.h"
 #include "Registry/ResourceRegistry/ResourceRegistry.h"
 

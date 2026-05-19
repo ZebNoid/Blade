@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Backend/NativeCheckbox/NativeCheckbox.h"
 #include "WidgetsProps/Widget/CheckboxProps.h"
 #include "Widgets/Widget/Widget.h"
 #include "WidgetsEvents/Widget/CheckboxEvents.h"
@@ -26,7 +25,7 @@ public:
     auto arrange(Rect rect) -> void override
     {
         Widget::arrange(rect);
-        m_native.setRect(rect);
+        // m_native.setRect(rect);
     }
 
     auto set(CheckboxProps props) -> Checkbox&
@@ -49,7 +48,7 @@ public:
     }
 
 private:
-    NativeCheckbox m_native;
+    // NativeCheckbox m_native;
     CheckboxProps m_props;
     CheckboxEvents m_events;
 

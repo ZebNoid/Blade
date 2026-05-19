@@ -1,11 +1,11 @@
 #include "DebugPainter.h"
 
-#include "Backend/Registry/ResourceRegistry/ResourceRegistry.h"
-#include "../LayoutDebugTheme.h"
+#include "Debug/LayoutDebugTheme.h"
 #include "Debug/NativeDraw/NativeDraw.h"
+#include "Registry/ResourceRegistry/ResourceRegistry.h"
 
 
-namespace Blade {
+namespace Blade::Backend {
 
 
 auto DebugPainter::DrawBounds(HDC hdc, Rect rect) -> void
@@ -24,7 +24,7 @@ auto DebugPainter::DrawBounds(HDC hdc, Rect rect) -> void
     NativeDraw::DrawOutlineRect(
         hdc,
         widgetRect,
-        ResourceRegistry::GetPen("debug_bounds", LayoutDebugTheme::Bounds, LayoutDebugTheme::WidthBounds),
+        Backend::ResourceRegistry::GetPen("debug_bounds", LayoutDebugTheme::Bounds, LayoutDebugTheme::WidthBounds),
         LayoutDebugTheme::Inflate
     );
 }

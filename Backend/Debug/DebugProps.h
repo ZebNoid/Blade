@@ -2,7 +2,7 @@
 #include "DebugBrushProps.h"
 
 
-namespace Blade {
+namespace Blade::Backend {
 
 
 struct DebugProps

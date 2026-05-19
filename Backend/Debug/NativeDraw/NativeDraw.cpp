@@ -1,7 +1,7 @@
 #include "NativeDraw.h"
 
 
-namespace Blade {
+namespace Blade::Backend {
 
 
 auto NativeDraw::DrawDebugText(

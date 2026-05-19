@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Backend/NativeTextField/NativeTextField.h"
 #include "WidgetsProps/Widget/TextFieldProps.h"
 #include "Widgets/Widget/Widget.h"
 #include "WidgetsEvents/Widget/TextFieldEvents.h"
@@ -26,8 +25,7 @@ public:
     auto arrange(Rect rect) -> void override
     {
         Widget::arrange(rect);
-
-        m_native.setRect(rect);
+        // m_native.setRect(rect);
     }
 
     auto set(TextFieldProps props) -> TextField&
@@ -50,7 +48,7 @@ public:
     }
 
 private:
-    NativeTextField m_native;
+    // NativeTextField m_native;
     TextFieldProps m_props;
     TextFieldEvents m_events;
     std::string m_text;

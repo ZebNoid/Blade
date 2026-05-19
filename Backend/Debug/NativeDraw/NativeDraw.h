@@ -1,9 +1,12 @@
 #pragma once
 
+#include <string>
 #include <windows.h>
 
+#include "Core/Rect.h"
 
-namespace Blade {
+
+namespace Blade::Backend {
 
 
 class NativeDraw

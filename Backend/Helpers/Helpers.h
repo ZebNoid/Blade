@@ -4,9 +4,10 @@
 #include <windowsx.h>
 
 #include "WidgetsProps/Common/Point.h"
+#include "WidgetsProps/Common/Size.h"
 
 
-namespace Blade {
+namespace Blade::Backend {
 
 struct Helpers
 {

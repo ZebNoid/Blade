@@ -3,10 +3,11 @@
 #include <string>
 #include <windows.h>
 
+#include "Core/Rect.h"
 #include "WidgetsProps/LayoutProps/LayoutProps.h"
 
 
-namespace Blade {
+namespace Blade::Backend {
 
 
 class DebugPainter

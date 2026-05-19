@@ -1,6 +1,6 @@
 #include "InputHandler.h"
 
-#include "Backend/Helpers/Helpers.h"
+#include "Helpers/Helpers.h"
 #include "WinWindow/WinWindow.h"
 
 

@@ -21,10 +21,6 @@ add_library(${PROJECT_NAME} STATIC
         Widgets/Layout/Column/Column.h
         Windows/Window/Window.cpp
         Windows/Window/Window.h
-        Backend/NativeWidget/NativeWidget.cpp
-        Backend/NativeWidget/NativeWidget.h
-        Backend/NativeButton/NativeButton.cpp
-        Backend/NativeButton/NativeButton.h
         Widgets/Layout/Container/Container.cpp
         Widgets/Layout/Container/Container.h
         Core/Core.h
@@ -32,21 +28,13 @@ add_library(${PROJECT_NAME} STATIC
         Core/Encoding.h
         Widgets/Label/Label.cpp
         Widgets/Label/Label.h
-        Backend/NativeLabel/NativeLabel.cpp
-        Backend/NativeLabel/NativeLabel.h
-        Backend/Registry/ClassRegistry/ClassRegistry.cpp
-        Backend/Registry/ClassRegistry/ClassRegistry.h
         Windows/EventRouter/EventRouter.cpp
         Windows/EventRouter/EventRouter.h
         Widgets/Layout/Row/Row.cpp
-        Backend/NativeTextField/NativeTextField.cpp
         Widgets/TextField/TextField.cpp
         Widgets/TextField/TextField.h
         Events/WidgetEvent/WidgetEvent.h
         Events/WidgetEvent/EventKey.h
-        Backend/Utils/WinApiUtils.h
-        Backend/Registry/ResourceRegistry/ResourceRegistry.cpp
-        Backend/Registry/ResourceRegistry/ResourceRegistry.h
         WidgetsProps/Widget/ColumnProps.h
         WidgetsProps/Widget/LabelProps.h
         WidgetsProps/Window/WindowProps.h
@@ -56,13 +44,9 @@ add_library(${PROJECT_NAME} STATIC
         WidgetsProps/Common/TextAlign.h
         WidgetsProps/Widget/ButtonProps.h
         WidgetsProps/Common/StyleProps.h
-        Backend/NativeCheckbox/NativeCheckbox.cpp
-        Backend/NativeCheckbox/NativeCheckbox.h
         Widgets/Checkbox/Checkbox.cpp
         Widgets/Checkbox/Checkbox.h
         WidgetsProps/Widget/CheckboxProps.h
-        Backend/NativeRadioButton/NativeRadioButton.cpp
-        Backend/NativeRadioButton/NativeRadioButton.h
         Widgets/RadioButton/RadioButton.cpp
         Widgets/RadioButton/RadioButton.h
         WidgetsProps/Widget/RadioButtonProps.h
@@ -72,26 +56,12 @@ add_library(${PROJECT_NAME} STATIC
         Layout/LayoutFlex/LayoutFlex.cpp
         Layout/LayoutFlex/LayoutFlex.h
         Layout/LayoutFlex/FlexDirection.h
-        Debug/LayoutDebugRenderer/LayoutDebugRenderer.cpp
-        Debug/LayoutDebugRenderer/LayoutDebugRenderer.h
-        Debug/LayoutDebugTheme.h
-        Debug/DebugPainter/DebugPainter.cpp
-        Debug/DebugPainter/DebugPainter.h
-        Debug/NativeDraw/NativeDraw.cpp
-        Debug/NativeDraw/NativeDraw.h
-        Debug/DebugProps.h
-        Debug/DebugBrushProps.h
-        Backend/NativeProgress/NativeProgress.cpp
-        Backend/NativeProgress/NativeProgress.h
         Widgets/Progress/Progress.cpp
         Widgets/Progress/Progress.h
         WidgetsProps/Widget/ProgressProps.h
-        Backend/NativeSlider/NativeSlider.cpp
-        Backend/NativeSlider/NativeSlider.h
         Widgets/Slider/Slider.cpp
         Widgets/Slider/Slider.h
         WidgetsProps/Widget/SliderProps.h
-        Backend/Helpers/Helpers.h
 
         Widgets/Layout/Stack/Stack.cpp
         Widgets/Layout/Stack/Stack.h
@@ -110,17 +80,11 @@ add_library(${PROJECT_NAME} STATIC
         Layout/LayoutEngine/LayoutType.h
         Layout/LayoutContext/LayoutContext.cpp
         Layout/LayoutContext/LayoutContext.h
-        Backend/NativeCustom/NativeCustom.cpp
-        Backend/NativeCustom/NativeCustom.h
-        Backend/NativeNop/NativeNop.cpp
-        Backend/NativeNop/NativeNop.h
         Widgets/Nop/Nop.cpp
         Widgets/Nop/Nop.h
         WidgetsProps/Widget/NopProps.h
         Render/Render.cpp
         Render/Render.h
-        Backend/NativeRender/NativeRender.cpp
-        Backend/NativeRender/NativeRender.h
         Core/Rect.h
         api.h
 )

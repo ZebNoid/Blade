@@ -1,5 +1,6 @@
 #include "CommandHandler.h"
 
+#include "Helpers/WinUtils.h"
 
 
 namespace Blade::Backend {
@@ -24,7 +25,7 @@ auto CommandHandler::Handle(WinWindow& window, WPARAM wParam, LPARAM lParam) -> 
 
             // window.owner()->dispatchCommand(id, WidgetEvent::Change, Utf16ToUtf8(buffer)); // TODO!!!
 
-            VerticalAlignCenter(currentHwnd); // TODO dev
+            WinUtils::VerticalAlignCenter(currentHwnd); // TODO dev
         }
         break;
 

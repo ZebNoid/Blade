@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Backend/NativeRadioButton/NativeRadioButton.h"
 #include "WidgetsProps/Widget/RadioButtonProps.h"
 #include "Widgets/Widget/Widget.h"
 #include "WidgetsEvents/Widget/RadioButtonEvents.h"
@@ -26,7 +25,7 @@ public:
     auto arrange(Rect rect) -> void override
     {
         Widget::arrange(rect);
-        m_native.setRect(rect);
+        // m_native.setRect(rect);
     }
 
     auto set(RadioButtonProps props) -> RadioButton&
@@ -49,7 +48,7 @@ public:
     }
 
 private:
-    NativeRadioButton m_native;
+    // NativeRadioButton m_native;
     RadioButtonProps m_props;
     RadioButtonEvents m_events;
 

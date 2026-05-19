@@ -1,6 +1,6 @@
 #include "WindowHandler.h"
 
-#include "Backend/Helpers/Helpers.h"
+#include "Helpers/Helpers.h"
 #include "WinWindow/WinWindow.h"
 
 namespace Blade::Backend {
