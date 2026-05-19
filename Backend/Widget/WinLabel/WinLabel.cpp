@@ -8,14 +8,16 @@ namespace Blade::Backend {
 
 WinLabel::WinLabel(Widget& widget)
 {
-    // std::cout << "WinLabel::WinLabel\n"; // TODO dev
+    std::cout << "WinLabel::WinLabel\n"; // TODO dev
 }
 
 auto WinLabel::create(ApiWidget& parent) -> void
 {
     m_parent = &parent;
-    std::cout << "WinLabel::create\n"; // TODO dev
-
+    if (!parentHandle())
+    {
+        return;
+    }
     create(0, {}, L"test Label"); //TODO
 }
 
@@ -25,22 +27,22 @@ auto WinLabel::create(
     const std::wstring& text
 ) -> void
 {
-    // WinCustom::create(id);
+    WinCustom::create(id);
     m_props = props;
     m_text = text;
     m_text = text;
 
-    ClassRegistry::Register(
-        "BladeLabel",
-        {
-            .name = L"BladeLabel",
-            .proc = WindowProc,
-            .background = nullptr
-        }
-    );
+    // ClassRegistry::Register(
+    //     "BladeLabel",
+    //     {
+    //         .name = L"BladeLabel",
+    //         .proc = WindowProc,
+    //         .background = nullptr
+    //     }
+    // );
 
     // TODO size are ignoring and recalculated in
-    createNative(Rect{});
+    // createNative(Rect{});
 }
 
 auto WinLabel::paint(HDC hdc, RECT rect) -> void

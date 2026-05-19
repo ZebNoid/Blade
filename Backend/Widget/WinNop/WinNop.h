@@ -11,12 +11,15 @@ class WinNop : public WinCustom
 {
 public:
     explicit WinNop(const std::wstring& text);
-    explicit WinNop(Widget& widget); // TODO in ApiWidget
+
+    // TODO in ApiWidget
+    explicit WinNop(Widget& widget);
+
     auto create(ApiWidget& parent) -> void override;
 
-    auto create(WidgetId id, const NopProps& props, const std::wstring& text) -> void;
-
     auto name() const -> std::string override { return "WinNop"; }
+
+    auto create(WidgetId id, const NopProps& props, const std::wstring& text) -> void;
 
 protected:
     auto paint(HDC hdc, RECT rect) -> void override;

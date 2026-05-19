@@ -6,15 +6,14 @@
 namespace Blade::Backend {
 
 
+WinNop::WinNop(const std::wstring& text) : m_text(text)
+{
+    std::cout << "-> WinNop::WinNop TEXT: " << Utf16ToUtf8(m_text) << "\n"; // TODO dev
+}
+
 WinNop::WinNop(Widget& widget)
 {
     std::cout << "-> WinNop::WinNop Widget&\n"; // TODO dev
-}
-
-WinNop::WinNop(const std::wstring& text) : m_text(text)
-{
-
-    std::cout << "-> WinNop::WinNop TEXT: " << Utf16ToUtf8(m_text) << "\n"; // TODO dev
 }
 
 auto WinNop::create(ApiWidget& parent) -> void

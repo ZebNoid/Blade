@@ -12,8 +12,11 @@ namespace Blade::Backend {
 class WinLabel : public WinCustom
 {
 public:
-    explicit WinLabel(Widget& widget); // TODO in ApiWidget
+    // TODO in ApiWidget
+    explicit WinLabel(Widget& widget);
     auto create(ApiWidget& parent) -> void override;
+
+    auto name() const -> std::string override { return "WinLabel"; }
 
     auto create(WidgetId id, const LabelProps& props, const std::wstring& text) -> void;
 
@@ -22,7 +25,6 @@ protected:
     //
     // auto exStyle() const -> DWORD override;
 
-    auto name() const -> std::string override { return "WinLabel"; }
 
     auto paint(HDC hdc, RECT rect) -> void override;
 

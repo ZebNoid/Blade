@@ -12,9 +12,10 @@ class WinCustom : public WinWidget
 public:
     WinCustom() = default;
 
-    WinCustom(Widget& widget); // TODO in ApiWidget
+    // TODO in ApiWidget
+    WinCustom(Widget& widget);
 
-    // auto create(ApiWidget& parent) -> void override;
+    auto name() const -> std::string override { return "WinCustom"; }
 
     auto create(WidgetId id) -> void;
 
