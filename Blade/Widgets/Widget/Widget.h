@@ -16,6 +16,8 @@ enum class WidgetEvent;
 class Widget
 {
 public:
+    Widget() = default;
+
     virtual ~Widget() = default;
 
     Widget(const Widget&) = delete;
@@ -62,6 +64,11 @@ protected:
     template <typename TWidget>
     auto addWidget(TWidget&& widget) -> void
     {
+        static_assert(
+            !std::is_lvalue_reference_v<TWidget>,
+            "Widgets are move-only"
+        );
+
         add(std::make_unique<std::decay_t<TWidget>>(
                 std::forward<TWidget>(widget))
         );

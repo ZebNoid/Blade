@@ -25,106 +25,106 @@ protected:
     {
         // Window().set(wProp).mount(this);
 
-        // Window(Nop("Nop")).set(wProp).mount(this);
+        Window(Nop("Nop")).set(wProp).mount(this);
 
         // Window(Label("Label")).set(wProp).mount(this);
-        Window(Column(Nop(), Nop())).set(wProp).mount(this);
+        // Window(Column(Nop(), Nop())).set(wProp).mount(this);
 
 
         // window(contentFlex()).set(wProp);
         // window(Label("132")).set(wProp);
     }
 
-
-    auto contentBladeDemo() -> auto
-    {
-        return Column(
-                Label("Blade Example").id(labelId),
-                TextField("Default text")
-                .set({
-                    .layout = layoutMarginH,
-                    .textAlign = TextAlign::Start,
-                })
-                .on({
-                    .change = [](const std::string& value)
-                    {
-                        std::cout << value << "\n";
-                    },
-                }),
-                Label("Radio Buttons").set(labelStyle),
-                Row(
-                    RadioButton("RadioButton"),
-                    RadioButton("RadioButton").set({
-                        .layout = {.flex = 1}
-                    }),
-                    RadioButton("RadioButton")
-                ).set({
-                    .gap = gap,
-                    .layout = layoutMarginH,
-                }),
-                Label("Row Buttons").set(labelStyle),
-                Row(
-                    Button("Default Button").set({
-                        .defaultButton = true,
-                    }),
-                    Button("Button"),
-                    Button("Button")
-                ).set({
-                    .gap = gap,
-                    .layout = layoutMarginH,
-                    .mainAxisAlignment = MainAxisAlignment::Center,
-                    .crossAxisAlignment = CrossAxisAlignment::Stretch,
-                }),
-                Label("Checkboxes"),
-                Row(
-                    Checkbox("Checkbox"),
-                    Checkbox("Checkbox"),
-                    Checkbox("Checkbox")
-                ).set({
-                    .layout = layoutMarginH,
-                    .mainAxisAlignment = MainAxisAlignment::Center,
-                    .crossAxisAlignment = CrossAxisAlignment::Center,
-                }),
-                Button("Button"),
-                Progress(100),
-                Button("Button"),
-                Slider(50),
-                Button("Button"),
-                Label("Flex").set({.layout = {.flex = 1}}),
-                Row(
-                    Button("Debug").on({
-                        .click = []
-                        {
-                        },
-                    }),
-                    Progress(100).set({.marquee = true, .layout = {.flex = 1}}),
-                    Label("Footer")
-                )
-            )
-            .set({
-                .gap = gap,
-                .mainAxisAlignment = MainAxisAlignment::Start,
-                .crossAxisAlignment = CrossAxisAlignment::Stretch,
-            });
-    }
-
-    auto contentFlex() -> auto
-    {
-        return Column(
-            Label("Header"),
-
-            Label("Content").set({
-                .layout = {
-                    .flex = 1
-                }
-            }),
-
-            Label("Footer")
-        ).set({
-            .mainAxisAlignment = MainAxisAlignment::Center,
-            .crossAxisAlignment = CrossAxisAlignment::Stretch,
-        });
-    }
+    //
+    // auto contentBladeDemo() -> auto
+    // {
+    //     return Column(
+    //             Label("Blade Example").id(labelId),
+    //             TextField("Default text")
+    //             .set({
+    //                 .layout = layoutMarginH,
+    //                 .textAlign = TextAlign::Start,
+    //             })
+    //             .on({
+    //                 .change = [](const std::string& value)
+    //                 {
+    //                     std::cout << value << "\n";
+    //                 },
+    //             }),
+    //             Label("Radio Buttons").set(labelStyle),
+    //             Row(
+    //                 RadioButton("RadioButton"),
+    //                 RadioButton("RadioButton").set({
+    //                     .layout = {.flex = 1}
+    //                 }),
+    //                 RadioButton("RadioButton")
+    //             ).set({
+    //                 .gap = gap,
+    //                 .layout = layoutMarginH,
+    //             }),
+    //             Label("Row Buttons").set(labelStyle),
+    //             Row(
+    //                 Button("Default Button").set({
+    //                     .defaultButton = true,
+    //                 }),
+    //                 Button("Button"),
+    //                 Button("Button")
+    //             ).set({
+    //                 .gap = gap,
+    //                 .layout = layoutMarginH,
+    //                 .mainAxisAlignment = MainAxisAlignment::Center,
+    //                 .crossAxisAlignment = CrossAxisAlignment::Stretch,
+    //             }),
+    //             Label("Checkboxes"),
+    //             Row(
+    //                 Checkbox("Checkbox"),
+    //                 Checkbox("Checkbox"),
+    //                 Checkbox("Checkbox")
+    //             ).set({
+    //                 .layout = layoutMarginH,
+    //                 .mainAxisAlignment = MainAxisAlignment::Center,
+    //                 .crossAxisAlignment = CrossAxisAlignment::Center,
+    //             }),
+    //             Button("Button"),
+    //             Progress(100),
+    //             Button("Button"),
+    //             Slider(50),
+    //             Button("Button"),
+    //             Label("Flex").set({.layout = {.flex = 1}}),
+    //             Row(
+    //                 Button("Debug").on({
+    //                     .click = []
+    //                     {
+    //                     },
+    //                 }),
+    //                 Progress(100).set({.marquee = true, .layout = {.flex = 1}}),
+    //                 Label("Footer")
+    //             )
+    //         )
+    //         .set({
+    //             .gap = gap,
+    //             .mainAxisAlignment = MainAxisAlignment::Start,
+    //             .crossAxisAlignment = CrossAxisAlignment::Stretch,
+    //         });
+    // }
+    //
+    // auto contentFlex() -> auto
+    // {
+    //     return Column(
+    //         Label("Header"),
+    //
+    //         Label("Content").set({
+    //             .layout = {
+    //                 .flex = 1
+    //             }
+    //         }),
+    //
+    //         Label("Footer")
+    //     ).set({
+    //         .mainAxisAlignment = MainAxisAlignment::Center,
+    //         .crossAxisAlignment = CrossAxisAlignment::Stretch,
+    //     });
+    // }
 
 public:
     const int gap = 8;
