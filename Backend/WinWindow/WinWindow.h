@@ -1,6 +1,7 @@
 #pragma once
 
 
+#include "Materializer/Materializer.h"
 #include "Widget/WinWidget/WinWidget.h"
 #include "WidgetsProps/Window/WindowProps.h"
 #include "Windows/Window/Window.h"
@@ -46,6 +47,8 @@ protected:
     WindowProps m_props{};
 
     HINSTANCE m_hInstance;
+
+    Materializer m_materializer;
 };
 
 
