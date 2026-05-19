@@ -1,8 +1,5 @@
 #pragma once
 
-// #include "Core/Rect.h"
-// #include "Widgets/Widget/Widget.h"
-
 
 namespace Blade {
 

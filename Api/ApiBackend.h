@@ -9,9 +9,9 @@ namespace Blade {
 class ApiBackend
 {
 public:
-    virtual auto init() -> void = 0;
-
     virtual ~ApiBackend() = default;
+
+    virtual auto init() -> void = 0;
 
     virtual auto runApp() -> int = 0;
 
