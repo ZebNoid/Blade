@@ -31,7 +31,14 @@ public:
     // TODO ApiWidget!!
     ~WinWidget() override;
 
-    // auto create(ApiWidget& parent) -> void override;
+    auto createChildren() -> void
+    {
+        for (auto& child : m_children)
+        {
+            child->create(*this);
+            child->createChildren();
+        }
+    }
 
     auto setRect(const Rect& rect) -> void override;
 
@@ -43,7 +50,6 @@ public:
     auto handle() const -> HWND;
 
 protected:
-
     virtual auto style() const -> DWORD;
 
     virtual auto exStyle() const -> DWORD;

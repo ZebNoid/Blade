@@ -9,7 +9,6 @@ class ApiWidget
 public:
     virtual ~ApiWidget() = default;
 
-    virtual auto create(ApiWidget& parent) -> void = 0;
 
     virtual auto setRect(const Rect& rect) -> void = 0;
 
@@ -26,11 +25,20 @@ public:
         );
     }
 
+    virtual auto create(ApiWidget& parent) -> void = 0;
+
+    virtual auto create()
+        -> void
+    {
+    }
+
+
     auto createChildren() -> void
     {
         for (auto& child : m_children)
         {
             child->create(*this);
+            child->createChildren();
         }
     }
 

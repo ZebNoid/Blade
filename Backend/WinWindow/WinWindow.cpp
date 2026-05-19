@@ -20,7 +20,7 @@ WinWindow::WinWindow(Window& window) : m_window(window)
 
     // TODO move to app cycle
     ResourceRegistry::Init();
-    std::cout << "WinWindow::WinWindow Window&\n"; // TODO dev
+    std::cout << "> WinWindow::WinWindow Window&\n"; // TODO dev
 }
 
 auto WinWindow::create(HINSTANCE hInstance) -> void

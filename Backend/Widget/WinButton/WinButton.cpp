@@ -8,12 +8,12 @@ namespace Blade::Backend {
 
 WinButton::WinButton(Widget& widget)
 {
-    // std::cout << "WinButton::WinButton\n"; // TODO dev
+    std::cout << " -> WinButton::WinButton  Widget&\n"; // TODO dev
 }
 
 auto WinButton::create(ApiWidget& parent) -> void
 {
-    std::cout << "WinButton::create ApiWidget&\n"; // TODO dev
+    std::cout << " -> WinButton::create ApiWidget&\n"; // TODO dev
 }
 
 auto WinButton::create(
