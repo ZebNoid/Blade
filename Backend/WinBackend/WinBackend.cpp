@@ -44,6 +44,8 @@ auto WinBackend::createWindow(Window& window) -> void
 
     native->create(m_hInstance);
 
+    m_materializer.buildChildren(window, *native);
+
     m_windows.push_back(std::move(root));
 }
 

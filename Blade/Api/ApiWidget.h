@@ -17,7 +17,12 @@ public:
 
     virtual auto hide() -> void = 0;
 
-    auto addChild(std::unique_ptr<ApiWidget> child) -> void;
+    auto addChild(std::unique_ptr<ApiWidget> child) -> void
+    {
+        m_children.push_back(
+            std::move(child)
+        );
+    }
 
     auto createChildren() -> void
     {

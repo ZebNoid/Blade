@@ -44,10 +44,12 @@ auto WinWindow::create(HINSTANCE hInstance) -> void
 
 auto WinWindow::create(ApiWidget& parent) -> void
 {
+    std::cout << "WinWindow::create\n";
+
     auto& winParent = static_cast<WinWidget&>(parent);
     HWND hwndParent = winParent.handle();
 
-    createNative({});
+    // createNative({});
 
     // TODO set Title
     // SetWindowText(m_hwnd, toNativeString(m_props.title).c_str());
