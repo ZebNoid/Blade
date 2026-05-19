@@ -10,8 +10,6 @@ public:
     virtual ~ApiWidget() = default;
 
 
-    // virtual auto setRect(const Rect& rect) -> void = 0;
-
     virtual auto name() const -> std::string = 0;
 
     virtual auto show() -> void = 0;
