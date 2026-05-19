@@ -29,8 +29,8 @@ protected:
         // Window(Nop("Nop")).set(wProp).mount(this);
         // Window(Label("Label")).set(wProp).mount(this);
         // Window(Column(Nop(), Nop())).set(wProp).mount(this);
-        // Window(Column(Label("Label"), Label("Label"))).set(wProp).mount(this);
-        Window(Column(Button("1"), Button("2"))).set(wProp).mount(this);
+        Window(Column(Label("Label"), Label("Label"))).set(wProp).mount(this);
+        // Window(Column(Button("1"), Button("2"))).set(wProp).mount(this);
         // Window(Column(Button("1"))).set(wProp).mount(this);
 
         // Window(Column(Nop(), Label("Label"))).set(wProp).mount(this);

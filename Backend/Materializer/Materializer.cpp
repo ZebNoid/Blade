@@ -38,6 +38,8 @@ auto Materializer::create(Widget& widget) -> std::unique_ptr<ApiWidget>
         return std::make_unique<WinNop>(*nop);
     }
 
+    return nullptr;
+
     std::cerr << "! Unknown Widget " << Utf16ToUtf8(widget.name()) << "\n"; // TODO dev
     return std::make_unique<WinNop>(L"Unknown " + widget.name());
 }
@@ -45,22 +47,37 @@ auto Materializer::create(Widget& widget) -> std::unique_ptr<ApiWidget>
 auto Materializer::mount(Widget& widget) -> std::unique_ptr<ApiWidget>
 {
     auto native = create(widget);
+    if (!native)
+    {
+        return nullptr;
+    }
+
     buildChildren(widget, *native);
     return native;
 }
 
-auto Materializer::buildChildren(Widget& widget, ApiWidget& native) -> void
+auto Materializer::buildChildren(Widget& widget, ApiWidget& nativeParent) -> void
 {
-    // std::cout << "Materializer::buildChildren " << widget.children().size() << "\n"; // TODO dev
     for (auto& child : widget.children())
     {
-        auto nativeChild = create(*child);
+        auto childNative = create(*child);
 
-        nativeChild->create(native);
-
-        native.addChild(
-            std::move(nativeChild)
-        );
+        //
+        // Native-backed widget
+        //
+        if (childNative)
+        {
+            auto* childNativePtr = childNative.get();
+            buildChildren(*child, *childNativePtr);
+            nativeParent.addChild(std::move(childNative));
+        }
+        //
+        // Layout-only widget
+        //
+        else
+        {
+            buildChildren(*child, nativeParent);
+        }
     }
 }
 
