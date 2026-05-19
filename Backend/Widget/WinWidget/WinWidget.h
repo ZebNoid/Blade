@@ -2,6 +2,7 @@
 
 #include <windows.h>
 
+#include "Api/ApiWidget.h"
 #include "Context/WidgetContext.h"
 #include "Core/Core.h"
 #include "Core/Encoding.h"
@@ -11,7 +12,7 @@
 namespace Blade::Backend {
 
 
-class WinWidget
+class WinWidget : public ApiWidget
 {
 protected:
 #ifdef UNICODE
