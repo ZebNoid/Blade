@@ -42,12 +42,13 @@ public:
         return m_layout;
     }
 
-    auto rect() -> Rect
+    auto rect() const -> const Rect&
     {
         return m_rect;
     }
 
-    auto children() -> const std::vector<std::unique_ptr<Widget>>&
+
+    auto children() -> const auto&
     {
         return m_children;
     }
