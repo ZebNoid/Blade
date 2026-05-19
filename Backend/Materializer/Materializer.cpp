@@ -51,6 +51,10 @@ auto Materializer::mount(Widget& widget) -> std::unique_ptr<ApiWidget>
     {
         return nullptr;
     }
+    //
+    // STORE MAPPING
+    //
+    m_widgets[&widget] = native.get();
 
     buildChildren(widget, *native);
     return native;
@@ -61,6 +65,8 @@ auto Materializer::buildChildren(Widget& widget, ApiWidget& nativeParent) -> voi
     for (auto& child : widget.children())
     {
         auto childNative = create(*child);
+
+        m_widgets[child.get()] = childNative.get();
 
         //
         // Native-backed widget
@@ -78,6 +84,24 @@ auto Materializer::buildChildren(Widget& widget, ApiWidget& nativeParent) -> voi
         {
             buildChildren(*child, nativeParent);
         }
+    }
+}
+
+auto Materializer::syncLayout(Widget& widget) -> void
+{
+    auto it = m_widgets.find(&widget);
+    if (it != m_widgets.end())
+    {
+        auto* native = it->second;
+        if (native!=nullptr)
+        {
+            native->setRect(widget.rect());
+        }
+    }
+
+    for (const auto& child : widget.children())
+    {
+        syncLayout(*child);
     }
 }
 

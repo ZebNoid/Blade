@@ -23,7 +23,7 @@ private:
 
     auto destroyWindow(Window* target) -> void;
 
-    auto createWindows() const -> void;
+    auto createAllWindows() const -> void;
 
     auto empty() const -> bool;
 

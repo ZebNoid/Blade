@@ -27,7 +27,7 @@ auto App::initBackend() -> void
 
 auto App::buildUi() -> void
 {
-    m_wm.createWindows();
+    m_wm.createAllWindows();
 }
 
 

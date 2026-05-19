@@ -37,6 +37,8 @@ auto WinBackend::createWindow(Window& window) -> void
     nativeWindow->create(m_hInstance);
     nativeWindow->createChildren();
 
+    m_materializer.syncLayout(window);
+
     m_windows.push_back(std::move(root));
 }
 

@@ -24,6 +24,18 @@ auto WindowManager::add(std::unique_ptr<Window> window) -> void
 auto WindowManager::createWindow(Window& window) const -> void
 {
     if (!m_backend) return;
+
+    auto size = window.measure({
+        800,
+        600
+    });
+
+    window.arrange({
+        0,
+        0,
+        size.width,
+        size.height
+    });
     m_backend->createWindow(window);
 }
 
@@ -49,13 +61,13 @@ auto WindowManager::destroyWindow(Window* target) -> void
     }
 }
 
-auto WindowManager::createWindows() const -> void
+auto WindowManager::createAllWindows() const -> void
 {
     if (!m_backend) return;
     for (auto& window : m_windows)
     {
-        m_backend->createWindow(*window);
-        // createWindow(*window); // TODO WindowManager
+        // m_backend->createWindow(*window);
+        createWindow(*window); // TODO WindowManager
     }
 }
 
