@@ -15,37 +15,38 @@ auto Materializer::create(Widget& widget) -> std::unique_ptr<WinWidget>
 {
     std::cout << "Materializer::create\n"; // TODO dev
 
-    return nullptr;
-    // if (auto* window = dynamic_cast<Window*>(&widget))
-    // {
-    //     return std::make_unique<WinWindow>(
-    //         *window
-    //     );
-    // }
-    //
+    if (auto* window = dynamic_cast<Window*>(&widget))
+    {
+        return std::make_unique<WinWindow>(
+            *window
+        );
+    }
+
     // if (auto* button = dynamic_cast<Button*>(&widget))
     // {
     //     return std::make_unique<WinButton>(
     //         *button
     //     );
     // }
-    //
+
     // if (auto* nop = dynamic_cast<Nop*>(&widget))
     // {
     //     return std::make_unique<WinNop>(
     //         *nop
     //     );
     // }
-    //
-    // return std::make_unique<WinNop>(
-    //     widget
-    // );
+
+    return std::make_unique<WinNop>(
+        widget
+    );
+
+
+    return nullptr;
 }
 
-auto Materializer::mount(Widget& root) -> WinWidget*
+auto Materializer::mount(Widget& root) -> std::unique_ptr<ApiWidget>
 {
-    // return create(root);
-    return nullptr;
+    return create(root);
 }
 
 

@@ -12,7 +12,9 @@ class Materializer
 public:
     auto create(Widget& widget) -> std::unique_ptr<WinWidget>;
 
-    auto mount(Widget& root) -> WinWidget*;
+    auto mount(Widget& root) -> std::unique_ptr<ApiWidget>;
+
+    // auto mount(Widget& root) -> WinWidget*;
 
     // auto registerWidget(
     //     Widget& widget,

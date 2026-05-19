@@ -5,6 +5,11 @@
 namespace Blade::Backend {
 
 
+WinNop::WinNop(Window& window)
+{
+
+}
+
 auto WinNop::create(const WidgetContext& ctx, WidgetId id, const NopProps& props, const std::string& text) -> void
 {
     WinCustom::create(ctx, id);

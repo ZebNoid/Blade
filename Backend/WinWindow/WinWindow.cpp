@@ -12,7 +12,7 @@ namespace Blade::Backend {
 #define CUSTOM_CLASS_KEY "WinWindowKey"
 #define NATIVE_CUSTOM_CLASS "WinWindowClass"
 
-WinWindow::WinWindow(Window& window, HINSTANCE hInstance) : m_window(window), m_hInstance(hInstance)
+WinWindow::WinWindow(Window& window) : m_window(window)
 {
     m_size = {800, 600};
     // TODO move to app cycle
@@ -20,8 +20,9 @@ WinWindow::WinWindow(Window& window, HINSTANCE hInstance) : m_window(window), m_
 }
 
 // auto WinWindow::create(const WidgetContext& ctx, Window* owner, const WindowProps& props) -> void
-auto WinWindow::create() -> void
+auto WinWindow::create(HINSTANCE hInstance) -> void
 {
+    m_hInstance = hInstance;
     // m_ctx = ctx;
     // TODO id
     m_props = m_window.getProps();

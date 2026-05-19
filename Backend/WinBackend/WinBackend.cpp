@@ -26,18 +26,24 @@ auto WinBackend::createWindow(Window& window) -> void
 {
     std::cout << "WinBackend::createWindow\n"; // TODO dev
 
-    m_materializer.create(window); // TODO
+    auto root = m_materializer.mount(window);
 
-    auto native = std::make_unique<WinWindow>(
-        window,
-        m_hInstance
-    );
+    auto* native = dynamic_cast<WinWindow*>(root.get());
 
-    native->create();
+    native->create(m_hInstance);
 
-    m_windows.push_back(
-        std::move(native)
-    );
+    m_windows.push_back(std::move(root));
+
+    // auto native = std::make_unique<WinWindow>(
+    //     window,
+    //     m_hInstance
+    // );
+    //
+    // native->create();
+
+    // m_windows.push_back(
+    //     std::move(native)
+    // );
 }
 
 auto WinBackend::quit() -> void

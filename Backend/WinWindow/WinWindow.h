@@ -13,9 +13,9 @@ namespace Blade::Backend {
 class WinWindow : public WinWidget
 {
 public:
-    explicit WinWindow(Window& window, HINSTANCE hInstance);
+    explicit WinWindow(Window& window);
 
-    auto create() -> void;
+    auto create(HINSTANCE hInstance) -> void;
 
 protected:
     auto exStyle() const -> DWORD override;
@@ -46,9 +46,9 @@ protected:
     Window& m_window;
     WindowProps m_props{};
 
-    HINSTANCE m_hInstance;
+    HINSTANCE m_hInstance = nullptr;
 
-    Materializer m_materializer;
+    // Materializer m_materializer;
 };
 
 

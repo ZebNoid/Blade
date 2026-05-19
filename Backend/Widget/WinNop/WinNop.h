@@ -1,6 +1,7 @@
 #pragma once
 #include "Widget/WinCustom/WinCustom.h"
 #include "WidgetsProps/Widget/NopProps.h"
+#include "Windows/Window/Window.h"
 
 
 namespace Blade::Backend {
@@ -9,6 +10,8 @@ namespace Blade::Backend {
 class WinNop : public WinCustom
 {
 public:
+    explicit WinNop(Window& window);
+
     auto create(const WidgetContext& ctx, WidgetId id, const NopProps& props, const std::string& text) -> void;
 
 protected:
