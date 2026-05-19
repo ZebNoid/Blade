@@ -115,8 +115,7 @@ auto WinTextField::setPlaceholder() -> void
     // SendMessage(m_hwnd, EM_SETCUEBANNER, (WPARAM)FALSE, (LPARAM)toNativeString(m_props.placeholder).c_str());
 }
 
-
-auto WinTextField::setRect(const Rect rect) -> void
+void WinTextField::setRect(const Rect& rect)
 {
     WinWidget::setRect(rect);
     // SetWindowPos(m_hwnd, nullptr, rect.x, rect.y, rect.width, rect.height, SWP_NOZORDER);

@@ -27,7 +27,7 @@ protected:
     auto setPlaceholder() -> void;
 
 public:
-    auto setRect(Rect rect) -> void override;
+    auto setRect(const Rect& rect) -> void override;
 
 private:
     TextFieldProps m_props{};

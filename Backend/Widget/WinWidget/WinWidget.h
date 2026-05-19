@@ -28,12 +28,21 @@ protected:
     }
 
 public:
-    virtual ~WinWidget();
+    // TODO ApiWidget!!
+    auto setRect(const Rect& rect) -> void override;
+
+    auto show() -> void override
+    {
+    }
+
+    auto hide() -> void override
+    {
+    }
 
     auto handle() const -> HWND;
 
 protected:
-    WinWidget() = default;
+    ~WinWidget() override;
 
     virtual auto style() const -> DWORD;
 
@@ -59,8 +68,6 @@ public:
     {
         return m_size;
     }
-
-    virtual auto setRect(Rect rect) -> void;
 
     auto handle() -> HWND
     {

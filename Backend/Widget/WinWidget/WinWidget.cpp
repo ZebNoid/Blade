@@ -41,7 +41,7 @@ auto WinWidget::applyFont(HFONT font) const -> void
     SendMessageW(m_hwnd, WM_SETFONT, (WPARAM)font, TRUE);
 }
 
-auto WinWidget::setRect(Rect rect) -> void
+auto WinWidget::setRect(const Rect& rect) -> void
 {
     SetWindowPos(m_hwnd, nullptr, rect.x, rect.y, rect.width, rect.height, SWP_NONE);
     // SetWindowPos(m_hwnd, nullptr, rect.x, rect.y, rect.width, rect.height, SWP_NOZORDER);
