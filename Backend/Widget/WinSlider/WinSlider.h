@@ -1,13 +1,13 @@
 #pragma once
 
-#include "Widget/WinWidget/ApiWidget.h"
+#include "Widget/WinWidget/WinWidget.h"
 #include "WidgetsProps/Widget/SliderProps.h"
 
 
 namespace Blade::Backend {
 
 
-class WinSlider : public ApiWidget
+class WinSlider : public WinWidget
 {
 
 public:

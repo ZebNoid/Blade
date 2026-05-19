@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Widget/WinWidget/ApiWidget.h"
+#include "Widget/WinWidget/WinWidget.h"
 #include "WidgetsEvents/Widget/ButtonEvents.h"
 #include "WidgetsProps/Widget/ButtonProps.h"
 
@@ -8,7 +8,7 @@
 namespace Blade::Backend {
 
 
-class WinButton : public ApiWidget
+class WinButton : public WinWidget
 {
 public:
     WinButton() = default;

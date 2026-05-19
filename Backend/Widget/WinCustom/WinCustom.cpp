@@ -45,7 +45,7 @@ DWORD WinCustom::exStyle() const
 
 auto WinCustom::createNative(const Rect rect) -> HWND
 {
-    ApiWidget::createNative(rect);
+    WinWidget::createNative(rect);
     if (m_ctx.hwnd == nullptr) return nullptr;
 
     m_hwnd = CreateWindowEx(
@@ -98,7 +98,7 @@ auto WinCustom::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         return HTTRANSPARENT; // All hits pass through
     }
 
-    return ApiWidget::handleMessage(hwnd, msg, wParam, lParam);
+    return WinWidget::handleMessage(hwnd, msg, wParam, lParam);
 }
 
 

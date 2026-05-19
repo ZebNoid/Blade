@@ -26,6 +26,8 @@ auto WinBackend::createWindow(Window& window) -> void
 {
     std::cout << "WinBackend::createWindow\n"; // TODO dev
 
+    m_materializer.create(window); // TODO
+
     auto native = std::make_unique<WinWindow>(
         window,
         m_hInstance

@@ -22,6 +22,8 @@ private:
     HINSTANCE m_hInstance;
     MSG m_msg = {};
 
+    Materializer m_materializer;
+
     std::vector<std::unique_ptr<WinWindow>> m_windows;
 };
 

@@ -37,7 +37,7 @@ DWORD WinRadioButton::style() const
 
 auto WinRadioButton::createNative(Rect rect) -> HWND
 {
-    ApiWidget::createNative(rect);
+    WinWidget::createNative(rect);
 
     if (m_ctx.hwnd == nullptr) return nullptr;
 

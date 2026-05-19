@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Widget/WinWidget/ApiWidget.h"
+#include "Widget/WinWidget/WinWidget.h"
 #include "WidgetsProps/Widget/TextFieldProps.h"
 #include "Widgets/TextField/TextField.h"
 
@@ -8,7 +8,7 @@
 namespace Blade::Backend {
 
 
-class WinTextField : public ApiWidget
+class WinTextField : public WinWidget
 {
 public:
     WinTextField() = default;

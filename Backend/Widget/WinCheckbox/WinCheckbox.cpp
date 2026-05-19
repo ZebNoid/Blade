@@ -33,7 +33,7 @@ DWORD WinCheckbox::style() const
 
 auto WinCheckbox::createNative(Rect rect) -> HWND
 {
-    ApiWidget::createNative(rect);
+    WinWidget::createNative(rect);
     if (m_ctx.hwnd == nullptr) return nullptr;
 
     m_hwnd = CreateWindowEx(

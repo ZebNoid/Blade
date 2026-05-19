@@ -69,7 +69,7 @@ DWORD WinProgress::style() const
 
 auto WinProgress::createNative(Rect rect) -> HWND
 {
-    ApiWidget::createNative(rect);
+    WinWidget::createNative(rect);
     if (m_ctx.hwnd == nullptr) return nullptr;
 
     m_hwnd = CreateWindowEx(

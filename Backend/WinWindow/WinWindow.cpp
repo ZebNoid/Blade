@@ -250,7 +250,7 @@ auto WinWindow::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         }
     }
 
-    return ApiWidget::handleMessage(hwnd, msg, wParam, lParam);
+    return WinWidget::handleMessage(hwnd, msg, wParam, lParam);
 }
 
 auto WinWindow::show() const -> void

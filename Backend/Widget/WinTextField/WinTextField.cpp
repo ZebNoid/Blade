@@ -84,7 +84,7 @@ DWORD WinTextField::exStyle() const
 
 auto WinTextField::createNative(const Rect rect) -> HWND
 {
-    ApiWidget::createNative(rect);
+    WinWidget::createNative(rect);
     if (m_ctx.hwnd == nullptr) return nullptr;
 
     m_hwnd = CreateWindowEx(
@@ -117,7 +117,7 @@ auto WinTextField::setPlaceholder() -> void
 
 void WinTextField::setRect(const Rect& rect)
 {
-    ApiWidget::setRect(rect);
+    WinWidget::setRect(rect);
     // SetWindowPos(m_hwnd, nullptr, rect.x, rect.y, rect.width, rect.height, SWP_NOZORDER);
     // // TODO hack vAlign
     WinUtils::VerticalAlignCenter(m_hwnd);

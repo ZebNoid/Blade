@@ -12,7 +12,7 @@
 namespace Blade::Backend {
 
 
-class ApiWidget : public ApiWidget
+class WinWidget : public ApiWidget
 {
 protected:
 #ifdef UNICODE
@@ -29,16 +29,18 @@ protected:
 
 public:
     // TODO ApiWidget!!
+    ~WinWidget() override;
+
     auto setRect(const Rect& rect) -> void override;
 
     auto show() -> void override;
 
     auto hide() -> void override;
 
+    // TODO other
     auto handle() const -> HWND;
 
 protected:
-    ~ApiWidget() override;
 
     virtual auto style() const -> DWORD;
 

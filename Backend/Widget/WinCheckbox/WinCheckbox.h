@@ -1,13 +1,13 @@
 #pragma once
 
-#include "Widget/WinWidget/ApiWidget.h"
+#include "Widget/WinWidget/WinWidget.h"
 #include "WidgetsProps/Widget/CheckboxProps.h"
 
 
 namespace Blade::Backend {
 
 
-class WinCheckbox : public ApiWidget
+class WinCheckbox : public WinWidget
 {
 
 public:
