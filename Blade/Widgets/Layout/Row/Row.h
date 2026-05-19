@@ -16,12 +16,16 @@ public:
     template <typename... T>
     Row(T&&... widgets)
     {
-        (m_children.push_back(std::make_unique<std::decay_t<T>>(
-                std::forward<T>(widgets))
+        (addWidget(
+            std::forward<T>(widgets)
         ), ...);
+
+        // (m_children.push_back(std::make_unique<std::decay_t<T>>(
+        //         std::forward<T>(widgets))
+        // ), ...);
     }
 
-    auto name() -> std::wstring override  { return L"Row"; }
+    auto name() -> std::wstring override { return L"Row"; }
 
     auto mount(Materializer& m, WidgetContext& ctx) -> void override
     {

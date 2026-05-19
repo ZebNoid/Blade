@@ -19,18 +19,19 @@ protected:
 public:
     Window() = default;
 
-    Window(std::unique_ptr<Widget> child)
-    {
-        m_root = std::move(child);
-    }
+    // Window(std::unique_ptr<Widget> child)
+    // {
+    //     // m_root = std::move(child);
+    // }
 
+    // template <typename TWidget>
+    //     requires std::derived_from<TWidget, Widget>
     template <typename TWidget>
-        requires std::derived_from<TWidget, Widget>
     Window(TWidget child)
     {
-        m_root = std::make_unique<TWidget>(
-            std::move(child)
-        );
+        // m_root = std::make_unique<TWidget>(
+        //     std::move(child)
+        // );
     }
 
 
@@ -74,10 +75,10 @@ public:
 
     auto mount(class App* app) && -> void;
 
-    auto root() const -> Widget*
-    {
-        return m_root.get();
-    }
+    // auto root() const -> Widget*
+    // {
+    //     return m_root.get();
+    // }
 
     auto getProps() -> WindowProps
     {
@@ -89,7 +90,7 @@ private:
 
     EventRouter m_router;
 
-    std::unique_ptr<Widget> m_root;
+    // std::unique_ptr<Widget> m_root;
 
     WindowProps m_props{};
     WindowEvents m_events{};

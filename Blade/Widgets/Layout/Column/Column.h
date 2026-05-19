@@ -15,10 +15,19 @@ public:
     template <typename... T>
     Column(T&&... widgets)
     {
-        (m_children.push_back(std::make_unique<std::decay_t<T>>(std::forward<T>(widgets))), ...);
+        (addWidget(
+            std::forward<T>(widgets)
+        ), ...);
+        // (add(
+        //     std::make_unique<std::decay_t<T>>(
+        //         std::forward<T>(widgets)
+        //     )
+        // ), ...);
+
+        // (m_children.push_back(std::make_unique<std::decay_t<T>>(std::forward<T>(widgets))), ...);
     }
 
-    auto name() -> std::wstring override  { return L"Column"; }
+    auto name() -> std::wstring override { return L"Column"; }
 
     auto mount(Materializer& m, WidgetContext& ctx) -> void override
     {

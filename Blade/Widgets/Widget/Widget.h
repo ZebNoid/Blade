@@ -18,6 +18,14 @@ class Widget
 public:
     virtual ~Widget() = default;
 
+    Widget(const Widget&) = delete;
+
+    auto operator=(const Widget&) -> Widget& = delete;
+
+    Widget(Widget&&) = default;
+
+    auto operator=(Widget&&) -> Widget& = default;
+
     virtual auto name() -> std::wstring = 0;
 
     auto add(
@@ -26,6 +34,18 @@ public:
     {
         m_children.push_back(
             std::move(child)
+        );
+    }
+
+    template <typename TWidget>
+    auto addWidget(
+        TWidget&& widget
+    ) -> void
+    {
+        add(
+            std::make_unique<std::decay_t<TWidget>>(
+                std::forward<TWidget>(widget)
+            )
         );
     }
 
