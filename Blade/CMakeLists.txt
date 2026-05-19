@@ -21,8 +21,6 @@ add_library(${PROJECT_NAME} STATIC
         Widgets/Layout/Column/Column.h
         Windows/Window/Window.cpp
         Windows/Window/Window.h
-        Widgets/Layout/Container/Container.cpp
-        Widgets/Layout/Container/Container.h
         Core/Core.h
         Core/Encoding.cpp
         Core/Encoding.h

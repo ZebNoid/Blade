@@ -1,7 +1,5 @@
 #pragma once
 
-#include <memory>
-
 #include "WidgetsProps/Window/WindowProps.h"
 #include "Widgets/Widget/Widget.h"
 #include "WidgetsEvents/Window/WindowEvents.h"

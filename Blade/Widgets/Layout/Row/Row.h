@@ -1,7 +1,6 @@
 #pragma once
 
 #include "WidgetsProps/Widget/RowProps.h"
-#include "Widgets/Layout/Container/Container.h"
 #include "Widgets/Widget/Widget.h"
 
 
@@ -19,10 +18,6 @@ public:
         (addWidget(
             std::forward<T>(widgets)
         ), ...);
-
-        // (m_children.push_back(std::make_unique<std::decay_t<T>>(
-        //         std::forward<T>(widgets))
-        // ), ...);
     }
 
     auto name() -> std::wstring override { return L"Row"; }
