@@ -20,6 +20,15 @@ public:
 
     virtual auto name() -> std::wstring = 0;
 
+    auto add(
+        std::unique_ptr<Widget> child
+    ) -> void
+    {
+        m_children.push_back(
+            std::move(child)
+        );
+    }
+
     // Todo use!
     // auto set(...) & -> T&
     // auto set(...) && -> T&&
@@ -43,10 +52,9 @@ public:
         return m_rect;
     }
 
-    virtual auto children() -> const std::vector<std::unique_ptr<Widget>>&
+    auto children() -> const std::vector<std::unique_ptr<Widget>>&
     {
-        static std::vector<std::unique_ptr<Widget>> empty; // TODO why?
-        return empty;
+        return m_children;
     }
 
 protected:
@@ -55,6 +63,8 @@ protected:
     auto bindEvent(const WidgetContext& ctx, WidgetEvent event, const EventHandler& fn) const -> void;
 
 protected:
+    std::vector<std::unique_ptr<Widget>> m_children;
+
     WidgetId m_id = -1;
     Rect m_rect{};
     LayoutProps m_layout;

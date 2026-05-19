@@ -7,7 +7,7 @@
 namespace Blade {
 
 
-class Column : public Container
+class Column : public Widget
 {
 public:
     Column() = default;

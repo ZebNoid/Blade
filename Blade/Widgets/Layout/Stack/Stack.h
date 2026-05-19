@@ -9,7 +9,7 @@
 namespace Blade {
 
 
-class Stack : public Container
+class Stack : public Widget
 {
 public:
     Stack() = default;

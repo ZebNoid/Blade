@@ -8,7 +8,7 @@
 namespace Blade {
 
 
-class Row : public Container
+class Row : public Widget
 {
 public:
     Row() = default;
