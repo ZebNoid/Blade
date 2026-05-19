@@ -2,7 +2,7 @@
 #include <memory>
 #include <vector>
 
-#include "Data/CommonTypes.h"
+#include "Common/Common.h"
 
 
 namespace Blade::Api {
@@ -35,7 +35,7 @@ public:
     auto& children() const { return m_children; }
 
 protected:
-    BladeId m_id = 0;
+    Id m_id = 0;
 
     std::vector<std::unique_ptr<ApiWidget>> m_children;
 };
