@@ -29,12 +29,13 @@ auto Materializer::create(Widget& widget) -> std::unique_ptr<WinWidget>
     //     );
     // }
 
-    // if (auto* nop = dynamic_cast<Nop*>(&widget))
-    // {
-    //     return std::make_unique<WinNop>(
-    //         *nop
-    //     );
-    // }
+    if (auto* nop = dynamic_cast<Nop*>(&widget))
+    {
+        return std::make_unique<WinNop>(
+            L"Nop"
+            // *nop
+        );
+    }
 
     auto unknown =  std::make_unique<WinNop>(L"Unknown " + widget.name());
     return unknown;

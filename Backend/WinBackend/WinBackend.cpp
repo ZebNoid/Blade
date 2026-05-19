@@ -38,27 +38,13 @@ auto WinBackend::createWindow(Window& window) -> void
 
     if (root == nullptr)
     {
-        std::cout << "WinBackend:: root != WinWindow\n"; // TODO dev
+        std::cout << "WinBackend:: not WinWindow\n"; // TODO dev
         return;
     }
 
     native->create(m_hInstance);
 
     m_windows.push_back(std::move(root));
-
-    // m_windows.push_back(std::move(*native));
-    // m_windows.push_back(root);
-
-    // auto native = std::make_unique<WinWindow>(
-    //     window,
-    //     m_hInstance
-    // );
-    //
-    // native->create();
-
-    // m_windows.push_back(
-    //     std::move(native)
-    // );
 }
 
 auto WinBackend::quit() -> void
