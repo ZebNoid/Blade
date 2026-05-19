@@ -1,5 +1,6 @@
 #include "Materializer.h"
 
+#include "Core/Encoding.h"
 #include "Widget/WinButton/WinButton.h"
 #include "Widget/WinLabel/WinLabel.h"
 #include "Widget/WinNop/WinNop.h"
@@ -37,7 +38,8 @@ auto Materializer::create(Widget& widget) -> std::unique_ptr<ApiWidget>
         return std::make_unique<WinNop>(*nop);
     }
 
-    return std::make_unique<WinNop>(L"Unknown " + widget.name());;
+    std::cerr << " -> Unknown Widget " << Utf16ToUtf8(widget.name()) << "\n"; // TODO dev
+    return std::make_unique<WinNop>(L"Unknown " + widget.name());
 }
 
 auto Materializer::mount(Widget& widget) -> std::unique_ptr<ApiWidget>

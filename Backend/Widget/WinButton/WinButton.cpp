@@ -43,7 +43,7 @@ auto WinButton::create(
 
     // TODO native size?
     // size are ignoring and recalculated in Widget->Measure
-    createNative(Rect{0, 0, 140, 32});
+    createNative(Rect{0, 0, 200, 100});
     applyFont(ResourceRegistry::GetFont("system"));
 }
 
