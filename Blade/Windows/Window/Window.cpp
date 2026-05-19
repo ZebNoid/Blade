@@ -6,19 +6,6 @@
 namespace Blade {
 
 
-auto Window::show() -> void
-{
-    // TODO wm +id
-    // m_native.show();
-
-    // auto size = measure();
-    // arrange(
-    //     Rect{0, 0, size.width, size.height}
-    // );
-    //
-    // backend.createWindow(*this);
-}
-
 auto Window::destroy() -> void
 {
     if (m_app == nullptr)
@@ -32,6 +19,7 @@ auto Window::destroy() -> void
 auto Window::resize(Size size) -> void
 {
     std::cout << "Window::resize\n";
+    arrange({0, 0, size.width, size.height});
     // ->arrange({0, 0, size.width, size.height});
 }
 

@@ -30,14 +30,12 @@ public:
     {
     }
 
-    auto measure(Size available) -> Size override { return {0, 0}; }
+    auto measure(Size available) -> Size override { return available; }
 
     auto dispatchCommand(const WidgetId id, WidgetEvent event, const EventValue& value = {}) -> void
     {
         m_router.dispatchCommand(id, event, value);
     }
-
-    auto show() -> void;
 
     auto destroy() -> void;
 

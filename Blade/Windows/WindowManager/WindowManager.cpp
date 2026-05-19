@@ -30,12 +30,15 @@ auto WindowManager::createWindow(Window& window) const -> void
         600
     });
 
+    auto position = window.getProps().position;
+
     window.arrange({
-        0,
-        0,
+        position.x,
+        position.y,
         size.width,
         size.height
     });
+
     m_backend->createWindow(window);
 }
 
