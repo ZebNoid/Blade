@@ -26,8 +26,7 @@ private:
     HINSTANCE m_hInstance;
     MSG m_msg = {};
 
-
-    std::unique_ptr<NativeWindow> m_window;
+    std::vector<std::unique_ptr<NativeWindow>> m_windows;
 };
 
 

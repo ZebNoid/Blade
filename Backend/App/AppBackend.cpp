@@ -37,15 +37,20 @@ auto AppBackend::quit() -> void
 
 auto AppBackend::createWindow() -> void
 {
-    m_window = std::make_unique<NativeWindow>();
+    auto window = std::make_unique<NativeWindow>();
 
-    m_window->create(m_hInstance);
+    window->create(m_hInstance);
 
-    m_window->router().on(WM_DESTROY, [](HWND, UINT, WPARAM, LPARAM)
+    window->router().on(WM_DESTROY, [](HWND, UINT, WPARAM, LPARAM)
     {
         PostQuitMessage(0);
         return 0;
     });
+
+    m_windows.push_back(std::move(window));
+
+    // auto* ptr = window.get();
+    // return ptr; // -> NativeWindow*
 }
 
 } // namespace
