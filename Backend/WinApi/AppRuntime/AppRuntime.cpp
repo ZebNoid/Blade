@@ -6,7 +6,7 @@
 namespace Blade::Backend {
 
 
-auto AppRuntime::run() -> int
+auto AppRuntime::run(Tick tick) -> int
 {
     std::cout << "App Start!" << std::endl;
 
@@ -14,6 +14,11 @@ auto AppRuntime::run() -> int
     {
         TranslateMessage(&m_msg);
         DispatchMessage(&m_msg);
+
+        if (tick)
+        {
+            tick();
+        }
     }
 
     return static_cast<int>(m_msg.wParam);

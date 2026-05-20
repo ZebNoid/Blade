@@ -20,7 +20,15 @@ auto AppBackend::init() -> void
 
 auto AppBackend::runApp() -> int
 {
-    return m_runtime.run();
+    return m_runtime.run(
+        [&]
+        {
+            if (m_windows.count() == 0)
+            {
+                quit();
+            }
+        }
+    );
 }
 
 auto AppBackend::quit() -> void
@@ -36,30 +44,16 @@ auto AppBackend::createWindow() -> void
         WM_CLOSE,
         [](HWND hwnd, UINT, WPARAM, LPARAM)
         {
-            std::cout << "WM_CLOSE::DestroyWindow" << std::endl;
             DestroyWindow(hwnd);
-
-            std::cout << "WM_CLOSE::return" << std::endl;
             return 0;
         }
     );
 
     window->router().on(
         WM_DESTROY,
-        [&](HWND, UINT, WPARAM, LPARAM)
+        [window](HWND, UINT, WPARAM, LPARAM)
         {
-            std::cout << "WM_DESTROY::markDead" << std::endl;
             window->markDead();
-
-            std::cout << "WM_DESTROY::destroyClosedWindows" << std::endl;
-            m_windows.destroyClosedWindows();
-
-            if (m_windows.count() == 0)
-            {
-                std::cout << "WM_DESTROY::quit" << std::endl;
-                quit();
-            }
-
             return 0;
         }
     );
