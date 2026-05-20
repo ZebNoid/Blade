@@ -16,10 +16,11 @@ protected:
 
     auto ui() -> Api::WidgetTree override
     {
-        // return Window(
-        //     Button(L"Button").set({.defaultButton = true,})
-        // ).buildTree();
-        return Window().buildTree();
+        return Window(
+            Button(L"Button").set({.defaultButton = true,})
+        ).buildTree();
+
+        // return Window().buildTree();
         // return Button(L"Button").buildTree();
 
         // Window(Nop()).mount(this);

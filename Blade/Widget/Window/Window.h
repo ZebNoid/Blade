@@ -13,23 +13,29 @@ namespace Blade {
 class Window : public Widget
 {
 public:
-    Window() = default;
+    Window()
+    {
+        m_tree.type = L"Window";
+    }
 
-    explicit Window(Widget child);
+    explicit Window(Widget child)
+    {
+        m_tree.type = L"Window";
+        m_tree.children.push_back(child.buildTree());
+    }
 
-    auto set(WindowProps props) -> Window&;
+    auto set(WindowProps props) -> Window&
+    {
+        m_tree.props = std::move(props);
+        return *this;
+    }
 
-    auto on(WindowEvents events) -> Window&;
+    auto on(WindowEvents events) -> Window&
+    {
+        m_tree.events = std::move(events);
+        return *this;
+    }
 
-    auto type() const -> Api::Text override;
-
-    auto buildTree() const -> Api::WidgetTree override;
-
-private:
-    std::optional<std::unique_ptr<Widget>> m_child;
-
-    WindowProps m_props{};
-    WindowEvents m_events{};
 };
 
 

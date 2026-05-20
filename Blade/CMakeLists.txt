@@ -24,9 +24,6 @@ add_library(${PROJECT_NAME} STATIC
         WidgetNode/WidgetNode.cpp
         WidgetNode/WidgetNode.h
 
-        Mixin/PropsMixin.h
-        Mixin/EventMixin.h
-
 )
 
 # use Unicode
