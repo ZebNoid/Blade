@@ -8,6 +8,9 @@ endif ()
 add_library(${PROJECT_NAME} STATIC
         App/AppBackend.cpp
         App/AppBackend.h
+
+        WinApi/ClassRegistry/ClassRegistry.cpp
+        WinApi/ClassRegistry/ClassRegistry.h
 )
 
 # use Unicode

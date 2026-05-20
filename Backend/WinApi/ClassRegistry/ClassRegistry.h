@@ -13,7 +13,6 @@ using WndProc = LRESULT (CALLBACK*)(HWND, UINT, WPARAM, LPARAM);
 class ClassRegistry
 {
 public:
-    // TODO move
     struct ClassDesc
     {
         std::wstring name;
