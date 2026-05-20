@@ -41,8 +41,10 @@ auto AppBackend::createWindow() -> void
 
     window->router().on(
         WM_DESTROY,
-        [](HWND, UINT, WPARAM, LPARAM)
+        [&](HWND, UINT, WPARAM, LPARAM)
         {
+            // window->destroy();
+
             PostQuitMessage(0);
             return 0;
         }
