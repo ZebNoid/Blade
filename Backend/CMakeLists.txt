@@ -9,17 +9,19 @@ add_library(${PROJECT_NAME} STATIC
         App/AppBackend.cpp
         App/AppBackend.h
 
-        WinApi/ClassRegistry/ClassRegistry.cpp
-        WinApi/ClassRegistry/ClassRegistry.h
+        WinApi/ClassRegistry/WindowClass.cpp
+        WinApi/ClassRegistry/WindowClass.h
         WinApi/Hwnd/Hwnd.cpp
         WinApi/Hwnd/Hwnd.h
 
-        Window/Window.cpp
-        Window/Window.h
+        Window/NativeWindow.cpp
+        Window/NativeWindow.h
         Node/WinNode/WinNode.cpp
         Node/WinNode/WinNode.h
         Node/NativeNode/NativeNode.cpp
         Node/NativeNode/NativeNode.h
+        WinApi/WindowProc/WindowProc.cpp
+        WinApi/WindowProc/WindowProc.h
 )
 
 # use Unicode

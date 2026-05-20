@@ -4,19 +4,20 @@
 #include <unordered_map>
 #include <windows.h>
 
+#include "WinApi/WindowProc/WindowProc.h"
+
 
 namespace Blade::Backend {
 
 using WndProc = LRESULT (CALLBACK*)(HWND, UINT, WPARAM, LPARAM);
 
 
-class ClassRegistry
+class WindowClass
 {
 public:
     struct ClassDesc
     {
-        std::wstring name;
-        WndProc proc;
+        WndProc proc = WindowProc;
         HBRUSH background = nullptr;
         HCURSOR cursor = nullptr;
         HICON icon = nullptr;
@@ -28,13 +29,13 @@ public:
 
     // TODO free
 
-    static auto Get(const std::string& key) -> const wchar_t*;
+    static auto Get(const std::wstring& className) -> const wchar_t*;
 
-    static auto Register(const std::string& key, const ClassDesc& desc) -> void;
+    static auto Register(const std::wstring& className, const ClassDesc& desc) -> void;
 
 private:
     static inline HINSTANCE m_hInstance = nullptr;
-    static inline std::unordered_map<std::string, std::wstring> m_names;
+    static inline std::unordered_map<std::wstring, std::wstring> m_names;
 };
 
 

@@ -1,30 +1,32 @@
-#include "ClassRegistry.h"
+#include "WindowClass.h"
 
 
 namespace Blade::Backend {
 
 
-auto ClassRegistry::Init(const HINSTANCE hInstance) -> void
+auto WindowClass::Init(const HINSTANCE hInstance) -> void
 {
     if (m_hInstance != nullptr) return;
     m_hInstance = hInstance;
 }
 
-auto ClassRegistry::Get(const std::string& key) -> const wchar_t*
+auto WindowClass::Get(const std::wstring& className) -> const wchar_t*
 {
-    const auto it = m_names.find(key);
-    if (it == m_names.end()) return L"";
+    const auto it = m_names.find(className);
+    if (it == m_names.end())
+    {
+        std::wcerr << "[Error] WindowClass::Get[" << className << "] " << "not found" << std::endl;
+        return L"";
+    }
     return it->second.c_str();
 }
 
-auto ClassRegistry::Register(const std::string& key, const ClassDesc& desc) -> void
+auto WindowClass::Register(const std::wstring& className, const ClassDesc& desc) -> void
 {
     if (m_hInstance == nullptr) return;
 
     // already registered
-    if (m_names.contains(key)) return;
-
-    std::wstring className = desc.name;
+    if (m_names.contains(className)) return;
 
     WNDCLASSW wc{};
     wc.lpfnWndProc = desc.proc;
@@ -38,7 +40,7 @@ auto ClassRegistry::Register(const std::string& key, const ClassDesc& desc) -> v
 
     RegisterClassW(&wc);
 
-    m_names[key] = std::move(className);
+    m_names[className] = std::move(className);
 }
 
 
