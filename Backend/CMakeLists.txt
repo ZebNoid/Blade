@@ -19,17 +19,18 @@ add_library(${PROJECT_NAME} STATIC
         WinApi/MessageRouter/MessageRouter.cpp
         WinApi/MessageRouter/MessageRouter.h
 
-        Window/NativeWindow.cpp
-        Window/NativeWindow.h
+        WinApi/WindowHost/WindowHost.cpp
+        WinApi/WindowHost/WindowHost.h
+        WinApi/AppRuntime/AppRuntime.cpp
+        WinApi/AppRuntime/AppRuntime.h
+
+        WinApi/Window/NativeWindow.cpp
+        WinApi/Window/NativeWindow.h
 
         Node/WinNode/WinNode.cpp
         Node/WinNode/WinNode.h
         Node/NativeNode/NativeNode.cpp
         Node/NativeNode/NativeNode.h
-        WinApi/WindowHost/WindowHost.cpp
-        WinApi/WindowHost/WindowHost.h
-        WinApi/AppRuntime/AppRuntime.cpp
-        WinApi/AppRuntime/AppRuntime.h
 
 )
 
