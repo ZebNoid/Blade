@@ -6,8 +6,8 @@ if (NOT PROJECT_IS_TOP_LEVEL)
 endif ()
 
 add_library(${PROJECT_NAME} INTERFACE
-        ApiWidget.h
-        ApiBackend.h
+        Api/ApiWidget.h
+        Api/ApiBackend.h
         Common/Rect.h
         Common/CommonTypes.h
         Common/Size.h
