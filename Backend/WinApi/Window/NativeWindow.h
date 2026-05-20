@@ -21,6 +21,7 @@ public:
     auto router() -> MessageRouter&;
 
     auto destroy() -> void;
+    auto markDead() -> void;
     auto isAlive() const -> bool;
 
 private:

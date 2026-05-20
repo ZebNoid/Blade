@@ -50,10 +50,14 @@ auto NativeWindow::destroy() -> void
     if (m_hwnd != nullptr)
     {
         DestroyWindow(m_hwnd);
-
         m_hwnd = nullptr;
     }
 
+    m_alive = false;
+}
+
+auto NativeWindow::markDead() -> void
+{
     m_alive = false;
 }
 

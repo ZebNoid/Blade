@@ -33,6 +33,11 @@ auto WindowHost::destroyClosedWindows() -> void
     );
 }
 
+auto WindowHost::count() const -> size_t
+{
+    return m_windows.size();
+}
+
 auto WindowHost::windows() -> const auto&
 {
     return m_windows;

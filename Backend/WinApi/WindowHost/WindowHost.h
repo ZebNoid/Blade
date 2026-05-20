@@ -3,7 +3,7 @@
 #include <memory>
 #include <windows.h>
 
-#include "Window/NativeWindow.h"
+#include "WinApi/Window/NativeWindow.h"
 
 
 namespace Blade::Backend {
@@ -19,6 +19,8 @@ public:
     auto destroyClosedWindows() -> void;
 
     auto windows() -> const auto&;
+
+    auto count() const -> size_t;
 
 private:
     HINSTANCE m_hInstance = nullptr;

@@ -5,7 +5,6 @@
 #include "api.h"
 #include "WinApi/AppRuntime/AppRuntime.h"
 #include "WinApi/WindowHost/WindowHost.h"
-#include "Window/NativeWindow.h"
 
 
 namespace Blade::Backend {
