@@ -8,23 +8,21 @@ endif ()
 add_library(${PROJECT_NAME} INTERFACE
         Api/ApiWidget.h
         Api/ApiBackend.h
+
         Common/Types.h
         Common/Thickness.h
         Common/LayoutProps.h
         Common/Rect.h
         Common/Size.h
         Common/Point.h
-        Common/Common.h
         Common/Property.h
+        Common/Callbacks.h
 
-        api.h
 
         Api/WidgetTree.h
         Api/RenderCommand.h
 
-        Backend/BackendNode.h
-        Backend/export.h
-        Common/Callbacks.h
+        Common/Common.h
 )
 
 # use Unicode
