@@ -15,6 +15,7 @@ AppBackend::AppBackend() : m_hInstance(GetModuleHandle(nullptr))
 auto AppBackend::init() -> void
 {
     createWindow();
+    createWindow();
 }
 
 auto AppBackend::runApp() -> int
