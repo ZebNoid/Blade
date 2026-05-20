@@ -37,6 +37,13 @@ auto AppBackend::quit() -> void
 
 auto AppBackend::createWindow() -> void
 {
+    createNativeWindow();
+    createNativeWindow();
+}
+
+
+auto AppBackend::createNativeWindow() -> NativeWindow*
+{
     auto window = std::make_unique<NativeWindow>();
 
     window->create(m_hInstance);
@@ -47,10 +54,10 @@ auto AppBackend::createWindow() -> void
         return 0;
     });
 
+    auto* ptr = window.get();
+
     m_windows.push_back(std::move(window));
 
-    // auto* ptr = window.get();
-    // return ptr; // -> NativeWindow*
+    return ptr;
 }
-
 } // namespace

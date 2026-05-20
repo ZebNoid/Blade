@@ -22,6 +22,8 @@ public:
 
     auto createWindow() -> void override;
 
+    auto createNativeWindow() -> NativeWindow*;
+
 private:
     HINSTANCE m_hInstance;
     MSG m_msg = {};

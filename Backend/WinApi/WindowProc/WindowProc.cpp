@@ -16,7 +16,6 @@ auto CALLBACK WindowProc(
     if (msg == WM_NCCREATE)
     {
         auto* cs = reinterpret_cast<CREATESTRUCT*>(lParam);
-
         auto* window = static_cast<NativeWindow*>(cs->lpCreateParams);
 
         SetWindowLongPtr(
@@ -32,11 +31,12 @@ auto CALLBACK WindowProc(
         GetWindowLongPtr(hwnd, GWLP_USERDATA)
     );
 
-    std::cout << "window ptr: " << window << std::endl;
-    if (window != nullptr)
-    {
-        std::cout << "message: " << msg << std::endl;
-    }
+    // std::cout << "window ptr: " << window << std::endl;
+    // if (window != nullptr)
+    // {
+    //     std::cout << "message: " << msg << std::endl;
+    // }
+
     if (window)
     {
         if (auto result = window->router().dispatch(
