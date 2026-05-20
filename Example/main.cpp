@@ -16,8 +16,9 @@ protected:
 
     auto ui() -> Api::WidgetTree override
     {
-        return Window(Button(L"Button")).buildTree();
+        // return Window(Button(L"Button")).buildTree();
         // return Window().buildTree();
+        return Button(L"Button").buildTree();
 
         // Window(Nop()).mount(this);
         // Window().set(wProp).mount(this);

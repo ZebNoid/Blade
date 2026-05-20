@@ -8,17 +8,16 @@ namespace Blade {
 class Window : public Widget
 {
 public:
-    Window() = default;
+    Window();
 
-    template <typename TWidget>
-    Window(TWidget child)
-    {
-        add(std::move(child));
-    }
+    Window(std::unique_ptr<Widget> child);
 
-    auto type() const -> Api::Text override { return L"Window"; }
+    auto type() const -> Api::Text override;
 
     auto buildTree() const -> Api::WidgetTree override;
+
+private:
+    std::unique_ptr<Widget> m_child;
 };
 
 

@@ -8,10 +8,14 @@ namespace Blade {
 class Button : public Widget
 {
 public:
-    Button(Api::Text text);
+    explicit Button(Api::Text text);
 
-    auto type() const -> Api::Text override { return L"Button"; }
+    auto type() const -> Api::Text override;
+
+    auto buildTree() const -> Api::WidgetTree override;
+
+private:
+    Api::Text m_text;
 };
-
 
 } // namespace
