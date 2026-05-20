@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 
+#include "Common/Property.h"
 #include "Common/Types.h"
 
 
@@ -16,9 +17,10 @@ struct WidgetTree
 
     Api::Text type; // "Window", "Button", "Column"
 
-    std::any props; // или typed variant later
-    std::any events;
-    std::any custom;
+    Api::PropertyMap props;
+    Api::EventMap events;
+    // TODO std::any custom; ?
+    Api::PropertyValue custom;
 
     std::vector<WidgetTree> children;
 };

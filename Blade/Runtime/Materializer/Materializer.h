@@ -9,7 +9,10 @@ namespace Blade {
 class Materializer
 {
 public:
-    explicit Materializer(Api::ApiBackend* backend);
+    explicit Materializer(Api::ApiBackend* backend)
+    {
+        m_backend = backend;
+    }
 
     auto mount(const Api::WidgetTree& tree) -> void;
 
@@ -18,8 +21,6 @@ public:
         std::vector<Api::RenderCommand>& out,
         Api::Id parent
     ) -> void;
-
-private:
 
 private:
     Api::ApiBackend* m_backend = nullptr;

@@ -25,7 +25,7 @@ public:
 
     auto on(ButtonEvents events) -> Button&
     {
-        m_tree.props = Normalize::Events(events);
+        m_tree.events = Normalize::Events(events);
         return *this;
     }
 };

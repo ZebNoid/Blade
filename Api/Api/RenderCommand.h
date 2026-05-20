@@ -23,8 +23,8 @@ struct RenderCommand
 
     Api::Text widgetType; // "Button", "Window", "Column"
 
-    std::any props;
-    std::any events;
+    Api::PropertyMap props;
+    Api::EventMap events;
 };
 
 

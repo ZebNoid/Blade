@@ -2,6 +2,7 @@
 
 #include "../../Api/Api/ApiBackend.h"
 #include "Api/WidgetTree.h"
+#include "Runtime/Materializer/Materializer.h"
 
 
 namespace Blade {
@@ -35,6 +36,8 @@ private:
 
 private:
     std::unique_ptr<Api::ApiBackend> m_backend;
+    // разделить ответственность?
+    std::unique_ptr<Materializer> m_materializer;
 };
 
 

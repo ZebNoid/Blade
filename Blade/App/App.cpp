@@ -12,7 +12,7 @@ auto App::run() -> int
         return -1;
     }
     initBackend();
-    ui();
+    // ui();
     buildUi();
 
     return m_backend->runApp();
@@ -21,11 +21,12 @@ auto App::run() -> int
 auto App::initBackend() -> void
 {
     m_backend->init();
+    m_materializer = std::make_unique<Materializer>(m_backend.get());
 }
 
 auto App::buildUi() -> void
 {
-
+    m_materializer->mount(ui());
 }
 
 

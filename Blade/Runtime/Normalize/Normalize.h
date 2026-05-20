@@ -16,7 +16,7 @@ public:
     {
         PropertyVisitor visitor;
         src.visit(visitor);
-        return visitor.map();
+        return visitor.map(); // Todo Move?
     }
 
 
@@ -25,7 +25,7 @@ public:
     {
         EventVisitor visitor;
         src.visit(visitor);
-        return visitor.map();
+        return visitor.map(); // Todo Move?
     }
 };
 
