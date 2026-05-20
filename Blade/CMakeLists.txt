@@ -13,6 +13,8 @@ add_library(${PROJECT_NAME} STATIC
 
         Widget/Window/Window.cpp
         Widget/Window/Window.h
+        Widget/Window/WindowProps.h
+        Widget/Window/WindowEvents.h
 
         Widget/Button/Button.cpp
         Widget/Button/Button.h
@@ -25,7 +27,6 @@ add_library(${PROJECT_NAME} STATIC
         Mixin/PropsMixin.h
         Mixin/EventMixin.h
 
-        Widget/Window/WindowEvents.h
 )
 
 # use Unicode

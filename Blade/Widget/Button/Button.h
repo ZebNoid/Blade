@@ -10,10 +10,7 @@
 namespace Blade {
 
 
-class Button
-    : public Widget
-      , public PropsMixin<Button>
-      , public EventMixin<Button>
+class Button : public Widget
 {
 public:
     Button(Api::Text text)
@@ -21,15 +18,26 @@ public:
     {
     }
 
-    void applyProp(ButtonProps props) {}
-    void addHandler(ButtonEvents events) {}
+    auto set(ButtonProps props) -> Button&
+    {
+        m_props = std::move(props);
+        return *this;
+    }
 
-    auto type() const -> Api::Text override;
+    auto on(ButtonEvents events) -> Button&
+    {
+        m_events = std::move(events);
+        return *this;
+    }
+
+    auto type() const -> Api::Text override { return L"Button"; }
 
     auto buildTree() const -> Api::WidgetTree override;
 
 private:
     Api::Text m_text;
+    ButtonProps m_props{};
+    ButtonEvents m_events{};
 };
 
 } // namespace

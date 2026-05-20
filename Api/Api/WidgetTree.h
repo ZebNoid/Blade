@@ -16,6 +16,8 @@ struct WidgetTree
     Api::Text type;   // "Window", "Button", "Column"
 
     std::any props;      // или typed variant later
+    std::any events;
+    std::any custom;
 
     std::vector<WidgetTree> children;
 };

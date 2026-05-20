@@ -1,29 +1,35 @@
 #pragma once
+
+#include <optional>
+
+#include "WindowProps.h"
+#include "WindowEvents.h"
 #include "Widget/Widget.h"
 #include "WidgetNode/WidgetNode.h"
 
 
 namespace Blade {
 
-
-class Window
+class Window : public Widget
 {
 public:
     Window() = default;
 
-    template <typename... TWidgets>
-    Window(TWidgets&&... widgets)
-    {
-        (m_children.add(std::forward<TWidgets>(widgets)), ...);
-    }
+    explicit Window(Widget child);
 
-    auto buildTree() const -> Api::WidgetTree
-    {
-        return m_children.tree();
-    }
+    auto set(WindowProps props) -> Window&;
+
+    auto on(WindowEvents events) -> Window&;
+
+    auto type() const -> Api::Text override;
+
+    auto buildTree() const -> Api::WidgetTree override;
 
 private:
-    WidgetNode m_children;
+    std::optional<std::unique_ptr<Widget>> m_child;
+
+    WindowProps m_props{};
+    WindowEvents m_events{};
 };
 
 

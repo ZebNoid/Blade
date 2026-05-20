@@ -3,21 +3,15 @@
 
 namespace Blade {
 
-
-auto Button::type() const -> Api::Text
-{
-    return L"Button";
-}
-
 auto Button::buildTree() const -> Api::WidgetTree
 {
-    Api::WidgetTree node;
-
-    node.id = m_id;
-    node.type = type();
-    node.props = m_text;
-
-    return node;
+    return {
+        .id = m_id,
+        .type = type(),
+        .props = m_props,
+        .events = m_events,
+        .custom = m_text,
+    };
 }
 
 } // namespace
