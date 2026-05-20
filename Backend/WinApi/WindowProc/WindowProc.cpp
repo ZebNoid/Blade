@@ -14,6 +14,16 @@ auto CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> L
         }
     }
 
+    // if (auto result = g_router.dispatch(
+    //     hwnd,
+    //     msg,
+    //     wParam,
+    //     lParam
+    // ))
+    // {
+    //     return *result;
+    // }
+
     return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 

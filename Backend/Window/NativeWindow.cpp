@@ -39,5 +39,10 @@ auto NativeWindow::handle() const -> HWND
     return m_hwnd;
 }
 
+auto NativeWindow::router() -> MessageRouter&
+{
+    return m_router;
+}
+
 
 } // namespace
