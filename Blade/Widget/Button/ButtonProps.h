@@ -1,6 +1,7 @@
 #pragma once
 
-#include "../../../Api/Common/LayoutProps.h"
+#include "Common/Common.h"
+#include "Runtime/VisitCallback.h"
 
 
 namespace Blade {
@@ -9,7 +10,13 @@ namespace Blade {
 struct ButtonProps
 {
     LayoutProps layout{};
-    bool defaultButton = false;
+    bool isDefault = false;
+
+    auto visit(const VisitCallback& v) const -> void
+    {
+        v(L"layout", layout);
+        v(L"isDefault", isDefault);
+    }
 };
 
 

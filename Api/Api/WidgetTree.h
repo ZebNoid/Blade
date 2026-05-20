@@ -9,6 +9,7 @@
 namespace Blade::Api {
 
 
+// TODO move to Blade?
 struct WidgetTree
 {
     Id id = 0;

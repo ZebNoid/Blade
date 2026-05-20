@@ -15,12 +15,15 @@ add_library(${PROJECT_NAME} INTERFACE
         Common/Size.h
         Common/Point.h
         Common/Common.h
+        Common/Property.h
 
         api.h
+
         Api/WidgetTree.h
         Api/RenderCommand.h
-        Api/PropertyMap.h
-        Api/EventMap.h
+
+        Backend/BackendNode.h
+        Backend/export.h
 )
 
 # use Unicode

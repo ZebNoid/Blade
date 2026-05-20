@@ -1,11 +1,16 @@
 #pragma once
-
-#include <unordered_map>
+#include <functional>
 #include <variant>
 
 #include "Common/Common.h"
 
+
+
 namespace Blade::Api {
+
+using EventCallback = std::function<void()>;
+
+using EventMap = std::unordered_map<Api::Text, EventCallback>;
 
 
 using PropertyValue = std::variant<

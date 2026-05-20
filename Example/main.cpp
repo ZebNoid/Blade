@@ -17,7 +17,7 @@ protected:
     auto ui() -> Api::WidgetTree override
     {
         return Window(
-            Button(L"Button").set({.defaultButton = true,})
+            Button(L"Button").set({.isDefault = true,})
         ).buildTree();
 
         // return Window().buildTree();
