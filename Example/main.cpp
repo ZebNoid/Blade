@@ -14,8 +14,11 @@ protected:
         use(Backend::AppBackend{});
     }
 
-    auto ui() -> void override
+    auto ui() -> Api::WidgetTree override
     {
+        return Window(Button(L"Button")).buildTree();
+        // return Window().buildTree();
+
         // Window(Nop()).mount(this);
         // Window().set(wProp).mount(this);
         // Window(Button("Button")).set(wProp).mount(this);

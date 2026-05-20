@@ -10,6 +10,10 @@ add_library(${PROJECT_NAME} STATIC
         App/App.h
         Widget/Widget.cpp
         Widget/Widget.h
+        Widget/Window/Window.cpp
+        Widget/Window/Window.h
+        Widget/Button/Button.cpp
+        Widget/Button/Button.h
 )
 
 # use Unicode

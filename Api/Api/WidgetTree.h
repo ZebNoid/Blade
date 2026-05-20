@@ -13,7 +13,7 @@ struct WidgetTree
 {
     Id id = 0;
 
-    std::wstring type;   // "Window", "Button", "Column"
+    Api::Text type;   // "Window", "Button", "Column"
 
     std::any props;      // или typed variant later
 

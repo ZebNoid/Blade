@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../Api/Api/ApiBackend.h"
+#include "Api/WidgetTree.h"
 
 
 namespace Blade {
@@ -25,7 +26,7 @@ protected:
 
     virtual auto setup() -> void = 0;
 
-    virtual auto ui() -> void = 0;
+    virtual auto ui() -> Api::WidgetTree = 0;
 
 private:
     auto initBackend() -> void;

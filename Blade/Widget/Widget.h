@@ -24,12 +24,14 @@ public:
     auto operator=(Widget&&) -> Widget& = default;
 
     // --- Widget interface ---
-    virtual auto name() const -> Api::Text = 0;
+    virtual auto type() const -> Api::Text = 0;
 
     auto id() const -> Api::Id
     {
         return m_id;
     }
+
+    virtual auto buildTree() const -> Api::WidgetTree;
 
     // --- Widget children ---
     auto add(std::unique_ptr<Widget> child) -> void
