@@ -7,6 +7,7 @@
 #include "Common/Rect.h"
 #include "Common/Size.h"
 #include "Common/Thickness.h"
+#include "Common/LayoutProps.h"
 
 
 using CallbackVoid = std::function<void()>;

@@ -5,7 +5,6 @@
 #include "WindowProps.h"
 #include "WindowEvents.h"
 #include "Widget/Widget.h"
-#include "WidgetNode/WidgetNode.h"
 
 
 namespace Blade {
@@ -13,6 +12,7 @@ namespace Blade {
 class Window : public Widget
 {
     Api::Text m_type = L"Window";
+
 public:
     Window()
     {

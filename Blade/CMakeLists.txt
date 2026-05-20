@@ -20,9 +20,8 @@ add_library(${PROJECT_NAME} STATIC
         Widget/Button/Button.h
         Widget/Button/ButtonProps.h
         Widget/Button/ButtonEvents.h
-
-        WidgetNode/WidgetNode.cpp
-        WidgetNode/WidgetNode.h
+        Runtime/Materializer/Materializer.cpp
+        Runtime/Materializer/Materializer.h
 
 )
 
