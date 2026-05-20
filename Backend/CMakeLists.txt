@@ -11,6 +11,15 @@ add_library(${PROJECT_NAME} STATIC
 
         WinApi/ClassRegistry/ClassRegistry.cpp
         WinApi/ClassRegistry/ClassRegistry.h
+        WinApi/Hwnd/Hwnd.cpp
+        WinApi/Hwnd/Hwnd.h
+
+        Window/Window.cpp
+        Window/Window.h
+        Node/WinNode/WinNode.cpp
+        Node/WinNode/WinNode.h
+        Node/NativeNode/NativeNode.cpp
+        Node/NativeNode/NativeNode.h
 )
 
 # use Unicode

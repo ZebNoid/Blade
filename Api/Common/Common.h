@@ -3,5 +3,5 @@
 #include "Common/CommonTypes.h"
 #include "Common/Point.h"
 #include "Common/Rect.h"
-#include "Common/Rect.h"
+#include "Common/Size.h"
 #include "Common/Thickness.h"
