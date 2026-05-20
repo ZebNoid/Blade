@@ -19,7 +19,7 @@ auto AppBackend::init() -> void
 
 auto AppBackend::runApp() -> int
 {
-    std::cout << "App Start!" << std::endl;
+    std::cout << "App Start while GetMessage!" << std::endl;
 
     while (GetMessage(&m_msg, nullptr, 0, 0))
     {
@@ -37,8 +37,15 @@ auto AppBackend::quit() -> void
 
 auto AppBackend::createWindow() -> void
 {
-    NativeWindow wnd{};
-    wnd.create(m_hInstance);
+    m_window = std::make_unique<NativeWindow>();
+
+    m_window->create(m_hInstance);
+
+    m_window->router().on(WM_DESTROY, [](HWND, UINT, WPARAM, LPARAM)
+    {
+        PostQuitMessage(0);
+        return 0;
+    });
 }
 
 } // namespace

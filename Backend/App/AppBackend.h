@@ -3,6 +3,7 @@
 #include <windows.h>
 
 #include "api.h"
+#include "Window/NativeWindow.h"
 
 
 namespace Blade::Backend {
@@ -24,6 +25,9 @@ public:
 private:
     HINSTANCE m_hInstance;
     MSG m_msg = {};
+
+
+    std::unique_ptr<NativeWindow> m_window;
 };
 
 

@@ -22,9 +22,11 @@ auto NativeWindow::create(HINSTANCE hInstance) -> bool
         .className = WindowClass::Get(CUSTOM_CLASS),
         .windowName = L"Blade",
         .style = WS_OVERLAPPEDWINDOW | WS_VISIBLE,
-        .hInstance = hInstance
+        .hInstance = hInstance,
+        .lpParam = this,
     });
 
+    // std::cout << "NativeWindow::create: " << m_hwnd << std::endl;
     return m_hwnd != nullptr;
 }
 

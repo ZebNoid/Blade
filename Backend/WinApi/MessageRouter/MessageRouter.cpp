@@ -23,6 +23,11 @@ auto MessageRouter::dispatch(
         return std::nullopt;
     }
 
+    if (!it->second)
+    {
+        return std::nullopt;
+    }
+
     return it->second(
         hwnd,
         msg,
