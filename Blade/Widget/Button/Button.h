@@ -19,14 +19,13 @@ public:
 
     auto set(ButtonProps props) -> Button&
     {
-        // m_tree.props = std::move(props);
         m_tree.props = Normalize::Props(props);
         return *this;
     }
 
     auto on(ButtonEvents events) -> Button&
     {
-        m_tree.events = std::move(events);
+        m_tree.props = Normalize::Events(events);
         return *this;
     }
 };

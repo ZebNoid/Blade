@@ -1,9 +1,8 @@
 #pragma once
 
-#include <optional>
-
 #include "WindowProps.h"
 #include "WindowEvents.h"
+#include "Runtime/Normalize/Normalize.h"
 #include "Widget/Widget.h"
 
 
@@ -27,13 +26,13 @@ public:
 
     auto set(WindowProps props) -> Window&
     {
-        m_tree.props = std::move(props);
+        m_tree.props = Normalize::Props(props);
         return *this;
     }
 
     auto on(WindowEvents events) -> Window&
     {
-        m_tree.events = std::move(events);
+        m_tree.events = Normalize::Events(events);
         return *this;
     }
 

@@ -12,6 +12,12 @@
 
 namespace Blade::Api {
 
+using EventsValue = std::variant<
+    CallbackVoid,
+    CallbackString,
+    CallbackBool
+>;
+
 using PropertyValue = std::variant<
     bool,
     int,
@@ -27,7 +33,7 @@ using PropertyValue = std::variant<
 
 using PropertyMap = std::unordered_map<Api::Text, PropertyValue>;
 
-using EventMap = std::unordered_map<Api::Text, CallbackVoid>; // TODO variant
+using EventMap = std::unordered_map<Api::Text, EventsValue>;
 
 
 } // namespace
