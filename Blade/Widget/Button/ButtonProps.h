@@ -9,12 +9,12 @@ namespace Blade {
 
 struct ButtonProps
 {
-    LayoutProps layout{};
+    Api::LayoutProps layout{};
     bool isDefault = false;
 
-    auto visit(const VisitCallback& v) const -> void
+    auto visit(const VisitFn& v) const -> void
     {
-        v(L"layout", layout);
+        // v(L"layout", layout);
         v(L"isDefault", isDefault);
     }
 };

@@ -8,7 +8,7 @@ endif ()
 add_library(${PROJECT_NAME} INTERFACE
         Api/ApiWidget.h
         Api/ApiBackend.h
-        Common/CommonTypes.h
+        Common/Types.h
         Common/Thickness.h
         Common/LayoutProps.h
         Common/Rect.h
@@ -24,6 +24,7 @@ add_library(${PROJECT_NAME} INTERFACE
 
         Backend/BackendNode.h
         Backend/export.h
+        Common/Callbacks.h
 )
 
 # use Unicode

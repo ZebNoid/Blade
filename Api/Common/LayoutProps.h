@@ -1,10 +1,7 @@
 #pragma once
 
 
-
-namespace Blade {
-
-using namespace Api;
+namespace Blade::Api {
 
 struct LayoutProps
 {

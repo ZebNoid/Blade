@@ -2,15 +2,16 @@
 #include <functional>
 #include <variant>
 
-#include "Common/Common.h"
-
+#include "LayoutProps.h"
+#include "Point.h"
+#include "Rect.h"
+#include "Size.h"
+#include "Types.h"
 
 
 namespace Blade::Api {
 
 using EventCallback = std::function<void()>;
-
-using EventMap = std::unordered_map<Api::Text, EventCallback>;
 
 
 using PropertyValue = std::variant<
@@ -25,6 +26,8 @@ using PropertyValue = std::variant<
     LayoutProps
 >;
 
+
+using EventMap = std::unordered_map<Api::Text, EventCallback>;
 using PropertyMap = std::unordered_map<Api::Text, PropertyValue>;
 
 
