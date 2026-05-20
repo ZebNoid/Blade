@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Common/Types.h"
 #include "Common/Property.h"
 
 
@@ -12,10 +13,10 @@ public:
     template <typename T>
     static auto Props(const T& src) -> Api::PropertyMap
     {
-        PropertyMap map;
+        Api::PropertyMap map;
 
         src.visit(
-            [&](const Api::Text& key, const PropertyValue& value)
+            [&](const Api::Text& key, const Api::PropertyValue& value)
             {
                 map[key] = value;
             }
@@ -23,22 +24,6 @@ public:
 
         return map;
     }
-
-    //
-    // template <typename T>
-    // static auto Props(const T& src) -> PropertyMap
-    // {
-    //     PropertyMap map;
-    //
-    //     src.visit(
-    //         [&](const Api::Text& name, auto&& value)
-    //         {
-    //             map[name] = value;
-    //         }
-    //     );
-    //
-    //     return map;
-    // }
 
     template <typename T>
     static auto Events(const T& src) -> EventMap

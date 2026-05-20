@@ -24,6 +24,7 @@ add_library(${PROJECT_NAME} STATIC
         Runtime/Materializer/Materializer.h
         Runtime/Normalize.h
         Runtime/PropertyVisitor.h
+        Runtime/EventVisitor.h
 
 )
 
