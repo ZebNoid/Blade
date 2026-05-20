@@ -15,7 +15,7 @@ AppBackend::AppBackend() : m_hInstance(GetModuleHandle(nullptr))
 auto AppBackend::init() -> void
 {
     createWindow();
-    createWindow();
+    // createWindow();
 }
 
 auto AppBackend::runApp() -> int
@@ -23,6 +23,8 @@ auto AppBackend::runApp() -> int
     return m_runtime.run(
         [&]
         {
+            m_windows.destroyClosedWindows();
+
             if (m_windows.count() == 0)
             {
                 quit();

@@ -2,7 +2,7 @@
 #include <memory>
 #include <vector>
 
-#include "../Common/Common.h"
+#include "Common/Common.h"
 
 
 namespace Blade::Api {

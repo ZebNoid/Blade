@@ -16,6 +16,7 @@ protected:
 
     auto ui() -> void override
     {
+        // Window(Nop()).mount(this);
         // Window().set(wProp).mount(this);
         // Window(Button("Button")).set(wProp).mount(this);
     }

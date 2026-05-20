@@ -10,8 +10,6 @@ add_library(${PROJECT_NAME} STATIC
         App/App.h
         Widget/Widget.cpp
         Widget/Widget.h
-        UiNode/UiNode.cpp
-        UiNode/UiNode.h
 )
 
 # use Unicode

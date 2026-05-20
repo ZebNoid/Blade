@@ -14,6 +14,7 @@ add_library(${PROJECT_NAME} INTERFACE
         Common/Point.h
         Common/Common.h
         api.h
+        Api/WidgetTree.h
 )
 
 # use Unicode
