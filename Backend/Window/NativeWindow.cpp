@@ -45,5 +45,22 @@ auto NativeWindow::router() -> MessageRouter&
     return m_router;
 }
 
+auto NativeWindow::destroy() -> void
+{
+    if (m_hwnd != nullptr)
+    {
+        DestroyWindow(m_hwnd);
+
+        m_hwnd = nullptr;
+    }
+
+    m_alive = false;
+}
+
+auto NativeWindow::isAlive() const -> bool
+{
+    return m_alive;
+}
+
 
 } // namespace

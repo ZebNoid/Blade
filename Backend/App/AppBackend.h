@@ -3,6 +3,7 @@
 #include <windows.h>
 
 #include "api.h"
+#include "WinApi/WindowHost/WindowHost.h"
 #include "Window/NativeWindow.h"
 
 
@@ -28,7 +29,7 @@ private:
     HINSTANCE m_hInstance;
     MSG m_msg = {};
 
-    std::vector<std::unique_ptr<NativeWindow>> m_windows;
+    WindowHost m_windows;
 };
 
 

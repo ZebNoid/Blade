@@ -1,7 +1,6 @@
 #include "AppBackend.h"
 
 #include "WinApi/ClassRegistry/WindowClass.h"
-#include "Window/NativeWindow.h"
 
 
 namespace Blade::Backend {
@@ -10,6 +9,7 @@ namespace Blade::Backend {
 AppBackend::AppBackend() : m_hInstance(GetModuleHandle(nullptr))
 {
     WindowClass::Init(m_hInstance);
+    m_windows.init(m_hInstance);
 }
 
 auto AppBackend::init() -> void
@@ -37,27 +37,17 @@ auto AppBackend::quit() -> void
 
 auto AppBackend::createWindow() -> void
 {
-    createNativeWindow();
-    createNativeWindow();
+    auto* window = m_windows.createWindow();
+
+    window->router().on(
+        WM_DESTROY,
+        [](HWND, UINT, WPARAM, LPARAM)
+        {
+            PostQuitMessage(0);
+            return 0;
+        }
+    );
 }
 
 
-auto AppBackend::createNativeWindow() -> NativeWindow*
-{
-    auto window = std::make_unique<NativeWindow>();
-
-    window->create(m_hInstance);
-
-    window->router().on(WM_DESTROY, [](HWND, UINT, WPARAM, LPARAM)
-    {
-        PostQuitMessage(0);
-        return 0;
-    });
-
-    auto* ptr = window.get();
-
-    m_windows.push_back(std::move(window));
-
-    return ptr;
-}
 } // namespace

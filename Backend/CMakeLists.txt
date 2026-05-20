@@ -29,6 +29,8 @@ add_library(${PROJECT_NAME} STATIC
         Node/WinNode/WinNode.h
         Node/NativeNode/NativeNode.cpp
         Node/NativeNode/NativeNode.h
+        WinApi/WindowHost/WindowHost.cpp
+        WinApi/WindowHost/WindowHost.h
 
 )
 

@@ -17,11 +17,15 @@ public:
 
     auto handle() const -> HWND;
 
-public:
+
     auto router() -> MessageRouter&;
+
+    auto destroy() -> void;
+    auto isAlive() const -> bool;
 
 private:
     HWND m_hwnd = nullptr;
+    bool m_alive = true;
 
     MessageRouter m_router;
 };
