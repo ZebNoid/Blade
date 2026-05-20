@@ -18,7 +18,7 @@ auto WindowClass::Get(const std::wstring& className) -> const wchar_t*
         std::wcerr << "[Error] WindowClass::Get[" << className << "] " << "not found" << std::endl;
         return L"";
     }
-    return it->second.c_str();
+    return it->c_str();
 }
 
 auto WindowClass::Register(const std::wstring& className, const ClassDesc& desc) -> void
@@ -40,7 +40,7 @@ auto WindowClass::Register(const std::wstring& className, const ClassDesc& desc)
 
     RegisterClassW(&wc);
 
-    m_names[className] = std::move(className);
+    m_names.insert(className);
 }
 
 

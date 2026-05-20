@@ -38,4 +38,6 @@ auto NativeWindow::handle() const -> HWND
 {
     return m_hwnd;
 }
+
+
 } // namespace

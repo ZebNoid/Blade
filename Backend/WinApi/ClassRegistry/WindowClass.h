@@ -2,6 +2,7 @@
 
 #include <string>
 #include <unordered_map>
+#include <unordered_set>
 #include <windows.h>
 
 #include "WinApi/WindowProc/WindowProc.h"
@@ -27,15 +28,13 @@ public:
 public:
     static auto Init(HINSTANCE hInstance) -> void;
 
-    // TODO free
-
     static auto Get(const std::wstring& className) -> const wchar_t*;
 
     static auto Register(const std::wstring& className, const ClassDesc& desc) -> void;
 
 private:
     static inline HINSTANCE m_hInstance = nullptr;
-    static inline std::unordered_map<std::wstring, std::wstring> m_names;
+    static inline std::unordered_set<std::wstring> m_names;;
 };
 
 

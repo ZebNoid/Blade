@@ -22,6 +22,8 @@ add_library(${PROJECT_NAME} STATIC
         Node/NativeNode/NativeNode.h
         WinApi/WindowProc/WindowProc.cpp
         WinApi/WindowProc/WindowProc.h
+        WinApi/NativeApp/NativeApp.cpp
+        WinApi/NativeApp/NativeApp.h
 )
 
 # use Unicode
