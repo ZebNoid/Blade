@@ -16,7 +16,7 @@ auto WindowClass::Get(const std::wstring& className) -> const wchar_t*
     if (it == m_names.end())
     {
         std::wcerr << "[Error] WindowClass::Get[" << className << "] " << "not found" << std::endl;
-        return L"";
+        return nullptr;
     }
     return it->c_str();
 }
@@ -38,7 +38,11 @@ auto WindowClass::Register(const std::wstring& className, const ClassDesc& desc)
     wc.hbrBackground = desc.background != nullptr ? desc.background : (HBRUSH)(COLOR_WINDOW);
     wc.style = desc.style;
 
-    RegisterClassW(&wc);
+    if (!RegisterClassW(&wc))
+    {
+        std::wcerr << "[Error] WindowClass::Register[" << className << "] " << GetLastError() << std::endl;
+        return;
+    }
 
     m_names.insert(className);
 }
