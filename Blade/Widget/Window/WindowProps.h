@@ -3,7 +3,7 @@
 #include "Common/Point.h"
 #include "Common/Size.h"
 #include "Common/Types.h"
-#include "Runtime/PropertyVisitor.h"
+#include "../../Runtime/Normalize/PropertyVisitor.h"
 
 
 namespace Blade {

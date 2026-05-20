@@ -22,9 +22,9 @@ add_library(${PROJECT_NAME} STATIC
         Widget/Button/ButtonEvents.h
         Runtime/Materializer/Materializer.cpp
         Runtime/Materializer/Materializer.h
-        Runtime/Normalize.h
-        Runtime/PropertyVisitor.h
-        Runtime/EventVisitor.h
+        Runtime/Normalize/Normalize.h
+        Runtime/Normalize/PropertyVisitor.h
+        Runtime/Normalize/EventVisitor.h
 
 )
 

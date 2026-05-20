@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Runtime/PropertyVisitor.h"
+#include "../../Runtime/Normalize/PropertyVisitor.h"
 
 
 namespace Blade {

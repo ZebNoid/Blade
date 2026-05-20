@@ -2,6 +2,7 @@
 
 #include "ButtonProps.h"
 #include "ButtonEvents.h"
+#include "../../Runtime/Normalize/Normalize.h"
 #include "Widget/Widget.h"
 
 
@@ -18,7 +19,8 @@ public:
 
     auto set(ButtonProps props) -> Button&
     {
-        m_tree.props = std::move(props);
+        // m_tree.props = std::move(props);
+        m_tree.props = Normalize::Props(props);
         return *this;
     }
 
