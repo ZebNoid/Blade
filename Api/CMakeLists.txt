@@ -21,8 +21,6 @@ add_library(${PROJECT_NAME} INTERFACE
 
         Api/WidgetTree.h
         Api/RenderCommand.h
-
-        Common/Common.h
 )
 
 # use Unicode

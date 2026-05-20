@@ -1,6 +1,7 @@
 #pragma once
 #include <functional>
 
+#include "Types.h"
 
 namespace Blade::Api {
 

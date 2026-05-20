@@ -2,7 +2,8 @@
 #include <memory>
 #include <vector>
 
-#include "Common/Common.h"
+#include "Common/Rect.h"
+#include "Common/Types.h"
 
 
 namespace Blade::Api {
@@ -24,7 +25,7 @@ public:
     virtual auto setRect(const Rect& rect) -> void = 0;
 
     // --- identity ---
-    auto id() const -> Id { return m_id; }
+    auto id() const -> Api::Id { return m_id; }
 
     // --- children (backend-side tree mirror) ---
     auto addChild(std::unique_ptr<ApiWidget> child) -> void

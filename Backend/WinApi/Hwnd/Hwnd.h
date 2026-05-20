@@ -2,7 +2,8 @@
 
 #include <windows.h>
 
-#include "Common/Common.h"
+#include "Common/Point.h"
+#include "Common/Size.h"
 
 
 namespace Blade::Backend {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Common/Common.h"
+#include "Common/Property.h"
 
 
 namespace Blade {
@@ -10,7 +10,7 @@ class Normalize
 {
 public:
     template <typename T>
-    static auto Props(const T& src) -> PropertyMap
+    static auto Props(const T& src) -> Api::PropertyMap
     {
         PropertyMap map;
 

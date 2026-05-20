@@ -23,7 +23,7 @@ add_library(${PROJECT_NAME} STATIC
         Runtime/Materializer/Materializer.cpp
         Runtime/Materializer/Materializer.h
         Runtime/Normalize.h
-        Runtime/VisitCallback.h
+        Runtime/PropertyVisitor.h
 
 )
 

@@ -1,4 +1,5 @@
 #pragma once
+#include "Thickness.h"
 
 
 namespace Blade::Api {

@@ -3,7 +3,8 @@
 #include <string>
 #include <windows.h>
 
-#include "Common/Common.h"
+#include "Common/Rect.h"
+#include "Common/Types.h"
 
 
 namespace Blade::Backend {

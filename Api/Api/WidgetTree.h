@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-#include "Common/Common.h"
+#include "Common/Types.h"
 
 
 namespace Blade::Api {
@@ -12,11 +12,11 @@ namespace Blade::Api {
 // TODO move to Blade?
 struct WidgetTree
 {
-    Id id = 0;
+    Api::Id id = 0;
 
-    Api::Text type;   // "Window", "Button", "Column"
+    Api::Text type; // "Window", "Button", "Column"
 
-    std::any props;      // или typed variant later
+    std::any props; // или typed variant later
     std::any events;
     std::any custom;
 

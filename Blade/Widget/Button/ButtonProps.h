@@ -1,7 +1,6 @@
 #pragma once
 
-#include "Common/Common.h"
-#include "Runtime/VisitCallback.h"
+#include "Runtime/PropertyVisitor.h"
 
 
 namespace Blade {
@@ -12,10 +11,10 @@ struct ButtonProps
     Api::LayoutProps layout{};
     bool isDefault = false;
 
-    auto visit(const VisitFn& v) const -> void
+    auto visit(PropertyVisitor& v) const -> void
     {
-        // v(L"layout", layout);
-        v(L"isDefault", isDefault);
+        v.set(L"layout", layout);
+        v.set(L"isDefault", isDefault);
     }
 };
 

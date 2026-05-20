@@ -1,6 +1,5 @@
 #pragma once
-
-#include "Common/Common.h"
+#include "Common/Types.h"
 
 
 namespace Blade::Backend {

@@ -1,6 +1,5 @@
 #pragma once
-
-#include "Common/Common.h"
+#include "Common/Callbacks.h"
 
 
 namespace Blade {
@@ -9,7 +8,7 @@ namespace Blade {
 struct WindowEvents
 {
 
-    CallbackVoid close = nullptr;
+    Api::CallbackVoid close = nullptr;
 };
 
 

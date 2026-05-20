@@ -17,7 +17,7 @@ auto Materializer::visit(
 ) -> void
 {
     out.push_back({
-        .type = RenderCommand::Type::Create,
+        .type = Api::RenderCommand::Type::Create,
         .id = node.id,
         .parent = parent,
         .widgetType = node.type,
