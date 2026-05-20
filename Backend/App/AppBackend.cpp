@@ -20,20 +20,12 @@ auto AppBackend::init() -> void
 
 auto AppBackend::runApp() -> int
 {
-    std::cout << "App Start while GetMessage!" << std::endl;
-
-    while (GetMessage(&m_msg, nullptr, 0, 0))
-    {
-        TranslateMessage(&m_msg);
-        DispatchMessage(&m_msg);
-    }
-    return static_cast<int>(m_msg.wParam);
+    return m_runtime.run();
 }
 
 auto AppBackend::quit() -> void
 {
-    std::cout << "App Quit!";
-    PostQuitMessage(0);
+    m_runtime.quit();
 }
 
 auto AppBackend::createWindow() -> void
@@ -46,7 +38,7 @@ auto AppBackend::createWindow() -> void
         {
             // window->destroy();
 
-            PostQuitMessage(0);
+            quit();
             return 0;
         }
     );

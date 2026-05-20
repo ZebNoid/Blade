@@ -9,9 +9,6 @@ add_library(${PROJECT_NAME} STATIC
         App/AppBackend.cpp
         App/AppBackend.h
 
-        WinApi/NativeApp/NativeApp.cpp
-        WinApi/NativeApp/NativeApp.h
-
         WinApi/ClassRegistry/WindowClass.cpp
         WinApi/ClassRegistry/WindowClass.h
         WinApi/Hwnd/Hwnd.cpp
@@ -31,6 +28,8 @@ add_library(${PROJECT_NAME} STATIC
         Node/NativeNode/NativeNode.h
         WinApi/WindowHost/WindowHost.cpp
         WinApi/WindowHost/WindowHost.h
+        WinApi/AppRuntime/AppRuntime.cpp
+        WinApi/AppRuntime/AppRuntime.h
 
 )
 

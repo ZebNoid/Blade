@@ -3,6 +3,7 @@
 #include <windows.h>
 
 #include "api.h"
+#include "WinApi/AppRuntime/AppRuntime.h"
 #include "WinApi/WindowHost/WindowHost.h"
 #include "Window/NativeWindow.h"
 
@@ -25,7 +26,8 @@ public:
 
 private:
     HINSTANCE m_hInstance;
-    MSG m_msg = {};
+
+    AppRuntime m_runtime;
 
     WindowHost m_windows;
 };
