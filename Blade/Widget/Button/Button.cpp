@@ -3,10 +3,6 @@
 
 namespace Blade {
 
-Button::Button(Api::Text text)
-    : m_text(std::move(text))
-{
-}
 
 auto Button::type() const -> Api::Text
 {
