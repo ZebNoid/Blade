@@ -25,8 +25,15 @@ auto App::initBackend() -> void
 
 auto App::buildUi() -> void
 {
-    // ui();
-    // m_materializer->mount(ui());
+    auto tree = ui();
+    m_commands = m_materializer.build(tree);
+
+    for (auto& cmd : m_commands)
+    {
+        m_backend->process(cmd);
+    }
+
+    m_commands.clear();
 }
 
 

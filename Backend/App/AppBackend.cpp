@@ -63,6 +63,7 @@ auto AppBackend::createWindow() -> void
 
 auto AppBackend::process(const Api::BackendCommand& command) -> void
 {
+    std::cout << "/n";
 }
 
 

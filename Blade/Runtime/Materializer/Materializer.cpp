@@ -12,7 +12,6 @@ auto Materializer::build(
 
     buildNode(
         tree,
-        std::nullopt,
         commands
     );
 
@@ -48,8 +47,8 @@ auto Materializer::buildNode(
     {
         buildNode(
             child,
-            node.id,
-            out
+            out,
+            node.id
         );
     }
 }

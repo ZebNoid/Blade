@@ -36,7 +36,9 @@ private:
 
 private:
     std::unique_ptr<Api::ApiBackend> m_backend;
-    std::unique_ptr<Materializer> m_materializer;
+    Materializer m_materializer;
+    // TODO remove
+    std::vector<Api::BackendCommand> m_commands;
 };
 
 
