@@ -29,6 +29,8 @@ public:
 
     auto nodes() -> NodeRegistry&;
 
+    auto testCreate() -> void;
+
 private:
     HINSTANCE m_hInstance;
 
