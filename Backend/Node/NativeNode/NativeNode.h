@@ -1,5 +1,7 @@
 #pragma once
 
+
+#include <windows.h>
 #include "Common/Types.h"
 
 
@@ -13,6 +15,8 @@ struct NativeNode
     Api::Text type;
 
     HWND hwnd = nullptr;
+
+    Api::Id parent = Api::InvalidId;
 };
 
 

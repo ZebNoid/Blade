@@ -3,11 +3,11 @@
 #include <windows.h>
 
 #include "Api/ApiBackend.h"
-#include "CommandDispatcher/CommandDispatcher.h"
 #include "Node/NodeRegistry/NodeRegistry.h"
 #include "WinApi/AppRuntime/AppRuntime.h"
 #include "WinApi/WindowHost/WindowHost.h"
 
+#include "CommandDispatcher/CommandDispatcher.h"
 
 namespace Blade::Backend {
 
@@ -24,6 +24,10 @@ public:
     auto quit() -> void override;
 
     auto process(const Api::BackendCommand& command) -> void override;
+
+    auto windows() -> WindowHost&;
+
+    auto nodes() -> NodeRegistry&;
 
 private:
     HINSTANCE m_hInstance;

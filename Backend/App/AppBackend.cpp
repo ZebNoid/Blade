@@ -1,6 +1,8 @@
 #include "AppBackend.h"
 
 #include "WinApi/ClassRegistry/WindowClass.h"
+#include "CommandDispatcher/CommandDispatcher.h"
+
 
 namespace Blade::Backend {
 
@@ -67,5 +69,14 @@ auto AppBackend::process(const Api::BackendCommand& command) -> void
     m_dispatcher.dispatch(command);
 }
 
+auto AppBackend::windows() -> WindowHost&
+{
+    return m_windows;
+}
+
+auto AppBackend::nodes() -> NodeRegistry&
+{
+    return m_nodes;
+}
 
 } // namespace

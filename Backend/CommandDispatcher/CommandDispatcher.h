@@ -4,11 +4,13 @@
 
 namespace Blade::Backend {
 
+class AppBackend;
+
 
 class CommandDispatcher
 {
 public:
-    explicit CommandDispatcher(Api::ApiBackend* backend);
+    explicit CommandDispatcher(AppBackend* backend);
 
     auto dispatch(
         const Api::BackendCommand& command
@@ -28,7 +30,7 @@ private:
     ) -> void;
 
 private:
-    Api::ApiBackend* m_backend = nullptr;
+    AppBackend* m_backend = nullptr;
 };
 
 
