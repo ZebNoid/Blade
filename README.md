@@ -21,7 +21,7 @@
 
 > [!IMPORTANT]
 > 
-> **LLM** assisted in writing this code
+> This code written with **LLM** assistance
 > 
 
 ## Example
@@ -64,45 +64,4 @@ auto main() -> int
     Sandbox app;
     return app.run();
 }
-```
-
-
-## User Space
-
-```
-App
-│
-└── Window > (NativeWindow)
-
-Widget
-│
-├── Label > (NativeLabel)
-├── Button > (NativeButton)
-├── RadioButton > (NativeRadioButton)
-├── Checkbox > (NativeCheckbox)
-├── Progress > (NativeProgress)
-├── Slider > (NativeSlider)
-├── TextField > (NativeTextField)
-│
-└── Container
-	├── Stack
-	├── Colum
-	└── Row
-```
-
-## Backend
-
-```
-Backend
-│    
-└── NativeWidget
-    │
-	├── NativeWindow
-	├── NativeLabel
-	├── NativeButton
-	├── NativeRadioButton
-	├── NativeCheckbox
-	├── NativeProgress
-	├── NativeSlider
-	└── NativeTextField
 ```
