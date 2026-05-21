@@ -39,7 +39,7 @@ auto Materializer::buildNode(
         out.push_back({
             .command = Api::CommandType::Attach,
             .id = node.id,
-            // .parent = parent,
+            .parent = parent,
         });
     }
 

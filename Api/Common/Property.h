@@ -5,6 +5,7 @@
 #include "Callbacks.h"
 #include "LayoutProps.h"
 #include "Point.h"
+#include "Props.h"
 #include "Rect.h"
 #include "Size.h"
 #include "Types.h"
@@ -31,7 +32,7 @@ using PropertyValue = std::variant<
 >;
 
 
-using PropertyMap = std::unordered_map<Api::Text, PropertyValue>;
+using PropertyMap = std::unordered_map<Api::Props, PropertyValue>;
 
 using EventId = Api::Id;
 // TODO backend doesn't know about EventMap

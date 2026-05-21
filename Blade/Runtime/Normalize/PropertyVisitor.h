@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Common/Types.h"
 #include "Common/Property.h"
 
 
@@ -9,9 +8,9 @@ namespace Blade {
 class PropertyVisitor
 {
 public:
-    auto set(const Api::Text& key, const Api::PropertyValue& value) -> void
+    auto set(const Api::Props& prop, const Api::PropertyValue& value) -> void
     {
-        m_map[key] = value;
+        m_map[prop] = value;
     }
 
     auto take() const -> const Api::PropertyMap&

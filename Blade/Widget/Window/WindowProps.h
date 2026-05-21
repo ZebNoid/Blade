@@ -17,9 +17,9 @@ struct WindowProps
 
     auto visit(PropertyVisitor& v) const -> void
     {
-        v.set(L"title", title);
-        v.set(L"size", size);
-        v.set(L"position", position);
+        v.set(Api::Props::Title, title);
+        v.set(Api::Props::Size, size);
+        v.set(Api::Props::Position, position);
     }
 };
 
