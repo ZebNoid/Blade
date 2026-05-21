@@ -27,7 +27,8 @@ auto App::initBackend() -> void
 
 auto App::materialize() -> void
 {
-    auto tree = ui();
+    // TODO separate?
+    const auto tree = ui();
     m_commands = m_materializer.build(tree);
 
     for (auto& cmd : m_commands)
