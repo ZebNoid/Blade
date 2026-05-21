@@ -7,6 +7,8 @@
 
 namespace Blade {
 
+class RootWidget;
+
 
 class App
 {
@@ -14,8 +16,6 @@ public:
     virtual ~App() = default;
 
     auto run() -> int;
-
-    auto addToTree(const Api::WidgetTree& widgetTree) -> void;
 
 protected:
     template <typename TBackend, typename... Args>
@@ -27,22 +27,24 @@ protected:
         );
     }
 
-    virtual auto setup() -> void = 0;
+    virtual auto onSetup() -> void = 0;
 
-    virtual auto buildUi() -> Api::WidgetTree = 0; // TODO remove
+    virtual auto onCreate() -> void = 0;
 
-    virtual auto ui() -> void = 0;
+protected:
 
 private:
-    auto initBackend() -> void;
+    auto addToTree(const RootWidget& rootWidget) -> void;
 
-    auto materialize() -> void;
+    auto initBackend() -> int;
+
+    auto materialize(const Api::WidgetTree& tree) -> void;
 
 private:
     std::unique_ptr<Api::ApiBackend> m_backend;
     Materializer m_materializer;
 
-    Api::WidgetTree m_rootTree{.type = L"Root"};
+    friend class RootWidget;
 };
 
 

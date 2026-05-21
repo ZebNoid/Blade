@@ -8,8 +8,9 @@ endif ()
 add_library(${PROJECT_NAME} STATIC
         App/App.cpp
         App/App.h
-        Base/Widget/Widget.cpp
-        Base/Widget/Widget.h
+
+        Base/Widget.h
+        Base/RootWidget.h
 
         Widget/Window/Window.cpp
         Widget/Window/Window.h
@@ -20,12 +21,12 @@ add_library(${PROJECT_NAME} STATIC
         Widget/Button/Button.h
         Widget/Button/ButtonProps.h
         Widget/Button/ButtonEvents.h
+
         Runtime/Materializer/Materializer.cpp
         Runtime/Materializer/Materializer.h
         Runtime/Normalize/Normalize.h
         Runtime/Normalize/PropertyVisitor.h
         Runtime/Normalize/EventVisitor.h
-
 )
 
 # use Unicode

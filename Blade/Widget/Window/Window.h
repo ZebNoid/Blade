@@ -2,13 +2,13 @@
 
 #include "WindowProps.h"
 #include "WindowEvents.h"
+#include "Base/RootWidget.h"
 #include "Runtime/Normalize/Normalize.h"
-#include "Base/Widget/Widget.h"
 
 
 namespace Blade {
 
-class Window : public Widget
+class Window : public RootWidget
 {
     Api::Text m_type = L"Window";
 
@@ -35,12 +35,6 @@ public:
         m_tree.events = Normalize::Events(events);
         return *this;
     }
-
-    auto build(App* app) -> void
-    {
-        app->addToTree(buildTree());
-    }
-
 };
 
 
