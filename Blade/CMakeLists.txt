@@ -1,4 +1,4 @@
-project(Blade VERSION 0.2.4)
+project(Blade VERSION 0.3.1)
 
 # Use the names to logic check
 if (NOT PROJECT_IS_TOP_LEVEL)

@@ -12,7 +12,6 @@ auto App::run() -> int
         return -1;
     }
     initBackend();
-    // ui();
     buildUi();
 
     return m_backend->runApp();
@@ -26,6 +25,7 @@ auto App::initBackend() -> void
 
 auto App::buildUi() -> void
 {
+    // ui();
     m_materializer->mount(ui());
 }
 

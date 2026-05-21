@@ -14,7 +14,7 @@ public:
         m_map[key] = value;
     }
 
-    auto map() const -> const Api::PropertyMap&
+    auto take() const -> const Api::PropertyMap&
     {
         return m_map;
     }

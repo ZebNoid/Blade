@@ -9,6 +9,8 @@ auto Materializer::mount(const Api::WidgetTree& tree) -> void
     // TODO Materializer::mount
     // createNode(tree, nullptr);
     std::cout << "Materializer::mount" << std::endl;
+    
+    // visit(tree, {Api::RenderCommand::Type::Create}, 0);
 }
 
 auto Materializer::visit(

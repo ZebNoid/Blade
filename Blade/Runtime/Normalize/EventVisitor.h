@@ -16,7 +16,7 @@ public:
         m_map[key] = value;
     }
 
-    auto map() const -> const Api::EventMap&
+    auto take() const -> const Api::EventMap&
     {
         return m_map;
     }
