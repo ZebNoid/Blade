@@ -27,8 +27,6 @@ add_library(${PROJECT_NAME} STATIC
         WinApi/Window/NativeWindow.cpp
         WinApi/Window/NativeWindow.h
 
-        Node/WinNode/WinNode.cpp
-        Node/WinNode/WinNode.h
         Node/NativeNode/NativeNode.cpp
         Node/NativeNode/NativeNode.h
         Node/NodeRegistry/NodeRegistry.cpp
@@ -40,6 +38,8 @@ add_library(${PROJECT_NAME} STATIC
         WinApi/NativeApi/NativeApi.h
         Property/NativePropertyMapper/NativePropertyMapper.cpp
         Property/NativePropertyMapper/NativePropertyMapper.h
+        Node/NativeNodeFactory/NativeNodeFactory.cpp
+        Node/NativeNodeFactory/NativeNodeFactory.h
 
 )
 

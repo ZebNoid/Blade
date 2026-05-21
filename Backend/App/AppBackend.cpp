@@ -9,15 +9,15 @@ namespace Blade::Backend {
 
 AppBackend::AppBackend()
     : m_hInstance(GetModuleHandle(nullptr))
-      , m_dispatcher(this)
+      , m_dispatcher(this),
+      m_factory(this)
 {
-    WindowClass::Init(m_hInstance);
-    m_windows.init(m_hInstance);
 }
 
 auto AppBackend::init() -> void
 {
-    // testCreate(); // No Error!
+    WindowClass::Init(m_hInstance);
+    m_host.init(m_hInstance);
 }
 
 auto AppBackend::runApp() -> int
@@ -25,9 +25,9 @@ auto AppBackend::runApp() -> int
     return m_runtime.run(
         [&]
         {
-            m_windows.destroyClosedWindows();
+            m_host.destroyClosedWindows();
 
-            if (m_windows.count() == 0)
+            if (m_host.count() == 0)
             {
                 quit();
             }
@@ -45,9 +45,9 @@ auto AppBackend::process(const Api::BackendCommand& command) -> void
     m_dispatcher.dispatch(command); // With Error !
 }
 
-auto AppBackend::windows() -> WindowHost&
+auto AppBackend::host() -> WindowHost&
 {
-    return m_windows;
+    return m_host;
 }
 
 auto AppBackend::nodes() -> NodeRegistry&
@@ -55,27 +55,9 @@ auto AppBackend::nodes() -> NodeRegistry&
     return m_nodes;
 }
 
-// auto AppBackend::testCreate() -> void
-// {
-//     auto* window = m_windows.createWindow();
-//
-//     window->router().on(
-//         WM_CLOSE,
-//         [](HWND hwnd, UINT, WPARAM, LPARAM)
-//         {
-//             DestroyWindow(hwnd);
-//             return 0;
-//         }
-//     );
-//
-//     window->router().on(
-//         WM_DESTROY,
-//         [window](HWND, UINT, WPARAM, LPARAM)
-//         {
-//             window->markDead();
-//             return 0;
-//         }
-//     );
-// }
+auto AppBackend::factory() -> NativeNodeFactory&
+{
+    return m_factory;
+}
 
 } // namespace

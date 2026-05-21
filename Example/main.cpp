@@ -22,7 +22,8 @@ protected:
                )
                .set({
                    .title = L"test",
-                   .size = {300, 300},
+                   .size = {800, 300},
+                   .position = {3300,20},
                })
                .buildTree();
 

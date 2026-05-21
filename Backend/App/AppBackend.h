@@ -8,6 +8,8 @@
 #include "WinApi/WindowHost/WindowHost.h"
 
 #include "CommandDispatcher/CommandDispatcher.h"
+#include "Node/NativeNodeFactory/NativeNodeFactory.h"
+
 
 namespace Blade::Backend {
 
@@ -19,10 +21,13 @@ public:
 
     // -- non movable
     AppBackend(const AppBackend&) = delete;
+
     auto operator=(const AppBackend&) -> AppBackend& = delete;
 
     AppBackend(AppBackend&&) = delete;
+
     auto operator=(AppBackend&&) -> AppBackend& = delete;
+
     // -- non movable
 
 
@@ -34,20 +39,24 @@ public:
 
     auto process(const Api::BackendCommand& command) -> void override;
 
-    auto windows() -> WindowHost&;
+    auto host() -> WindowHost&;
 
     auto nodes() -> NodeRegistry&;
+
+    auto factory() -> NativeNodeFactory&;
 
 private:
     HINSTANCE m_hInstance;
 
     AppRuntime m_runtime;
 
-    WindowHost m_windows;// TODO rename m_windowHost
+    WindowHost m_host;
 
     NodeRegistry m_nodes;
 
     CommandDispatcher m_dispatcher;
+
+    NativeNodeFactory m_factory;
 };
 
 
