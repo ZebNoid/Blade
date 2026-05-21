@@ -27,9 +27,8 @@
 ## Example
 
 ```c++
-#include <iostream>
-
 #include "blade.h"
+#include "App/AppBackend.h"
 
 using namespace Blade;
 
@@ -37,50 +36,33 @@ using namespace Blade;
 class Sandbox : public App
 {
 protected:
-    auto ui() -> void override
+    auto onSetup() -> void override
     {
-        window(
-            Column(
-                Label("Label"),
-                Button("Button"),
-                Row(
-                    TextField("TextField").set({.layout = {.flex = 1,}}).on({
-                        .change = [](const std::string& value)
-                        {
-                            std::cout << value << "\n";
-                        },
-                    }),
-                    RadioButton("RadioButton"),
-                    RadioButton("RadioButton"),
-                    Checkbox("Checkbox")
-                ).set({.gap = 8, .crossAxisAlignment = CrossAxisAlignment::Center,}),
-                Row(
-                    Progress(10).set({.layout = {.flex = 1,}}),
-                    Slider(90).set({.layout = {.flex = 2,}})
-                ).set({.gap = 8, .crossAxisAlignment = CrossAxisAlignment::Center,}),
-                Column().set({.layout = {.flex = 1,},}),
-                Label("Footer")
-            ).set({
-                .gap = 8,
-                .layout = {.padding = 8,},
-                .crossAxisAlignment = CrossAxisAlignment::Stretch,
-            })
+        use<Backend::AppBackend>();
+    }
+
+    auto onCreate() -> void override
+    {
+        Window(
+            Button(L"Button").set({.isDefault = true,})
         ).set({
-            .title = "Blade",
-            .size = {800, 600},
-        });
+            .title = L"Window",
+            .size = {800, 300},
+            .position = {500, 400},
+        }).build(this);
+
+        Window().set({
+            .title = L"Window 2",
+            .size = {400, 500},
+        }).build(this);
     }
 };
 
 
 auto main() -> int
 {
-    std::cout << "Welcome to a WinAPI Hell! " << "\n";
-
     Sandbox app;
-    app.run();
-
-    return 0;
+    return app.run();
 }
 ```
 
