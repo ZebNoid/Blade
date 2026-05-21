@@ -18,6 +18,7 @@ auto WindowClass::Get(const std::wstring& className) -> const wchar_t*
         std::wcerr << "[Error] WindowClass::Get[" << className << "] " << "not found" << std::endl;
         return nullptr;
     }
+    std::wcout << "WindowClass::Get[" << it->c_str() << "]\n";
     return it->c_str();
 }
 
@@ -27,6 +28,8 @@ auto WindowClass::Register(const std::wstring& className, const ClassDesc& desc)
 
     // already registered
     if (m_names.contains(className)) return;
+
+    std::wcout << "WindowClass::Register[" << className<< "]\n";
 
     WNDCLASSW wc{};
     wc.lpfnWndProc = desc.proc;

@@ -41,17 +41,19 @@ auto CommandDispatcher::create(const Api::BackendCommand& command) -> void
     {
         auto* nativeWindow = m_backend->windows().createWindow();
 
-        NativeNode node = {
-            .id = command.id,
-            .type = command.nodeType,
-            .hwnd = nativeWindow->handle(),
-            .parent = command.parent,
-        };
+        // NativeNode node = {
+        //     .id = command.id,
+        //     .type = command.nodeType,
+        //     .hwnd = nativeWindow->handle(),
+        //     .parent = command.parent,
+        // };
 
-        // node.id = command.id;
-        // node.type = command.nodeType;
-        // node.parent = command.parent;
-        // node.hwnd = nativeWindow->handle();
+        NativeNode node;
+
+        node.id = command.id;
+        node.type = command.nodeType;
+        node.parent = command.parent;
+        node.hwnd = nativeWindow->handle();
 
         m_backend->nodes().add(
             std::move(node)

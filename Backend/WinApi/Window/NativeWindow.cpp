@@ -27,6 +27,8 @@ auto NativeWindow::create(HINSTANCE hInstance) -> bool
         .lpParam = this,
     });
 
+    std::wcout << "NativeWindow::create[" << CUSTOM_CLASS << "]\n";
+
     return m_hwnd != nullptr;
 }
 

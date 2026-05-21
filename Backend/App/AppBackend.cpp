@@ -11,6 +11,7 @@ AppBackend::AppBackend()
     : m_hInstance(GetModuleHandle(nullptr))
       , m_dispatcher(this)
 {
+    std::wcout << "AppBackend::AppBackend" << "\n";
 }
 
 auto AppBackend::init() -> void
@@ -18,11 +19,12 @@ auto AppBackend::init() -> void
     WindowClass::Init(m_hInstance);
     m_windows.init(m_hInstance);
     // createWindow();
-    // createWindow();
+    std::wcout << "AppBackend::init" << "\n";
 }
 
 auto AppBackend::runApp() -> int
 {
+    std::wcout << "AppBackend::runApp" << "\n";
     return m_runtime.run(
         [&]
         {
@@ -66,6 +68,7 @@ auto AppBackend::quit() -> void
 
 auto AppBackend::process(const Api::BackendCommand& command) -> void
 {
+    std::wcout << "AppBackend::process" << "\n";
     m_dispatcher.dispatch(command);
 }
 
