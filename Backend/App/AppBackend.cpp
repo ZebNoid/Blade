@@ -17,7 +17,7 @@ AppBackend::AppBackend()
 
 auto AppBackend::init() -> void
 {
-    testCreate();
+    // testCreate(); // No Error!
 }
 
 auto AppBackend::runApp() -> int
@@ -42,7 +42,7 @@ auto AppBackend::quit() -> void
 
 auto AppBackend::process(const Api::BackendCommand& command) -> void
 {
-    // m_dispatcher.dispatch(command);
+    m_dispatcher.dispatch(command); // With Error !
 }
 
 auto AppBackend::windows() -> WindowHost&

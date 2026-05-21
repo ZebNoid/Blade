@@ -11,7 +11,8 @@ class Sandbox : public App
 protected:
     auto setup() -> void override
     {
-        use(Backend::AppBackend{});
+        // use(Backend::AppBackend{});
+        use<Backend::AppBackend>();
     }
 
     auto ui() -> Api::WidgetTree override
