@@ -9,6 +9,9 @@ add_library(${PROJECT_NAME} STATIC
         App/AppBackend.cpp
         App/AppBackend.h
 
+        WindowHost/WindowHost.cpp
+        WindowHost/WindowHost.h
+
         WinApi/ClassRegistry/WindowClass.cpp
         WinApi/ClassRegistry/WindowClass.h
         WinApi/Hwnd/Hwnd.cpp
@@ -19,27 +22,26 @@ add_library(${PROJECT_NAME} STATIC
         WinApi/MessageRouter/MessageRouter.cpp
         WinApi/MessageRouter/MessageRouter.h
 
-        WinApi/WindowHost/WindowHost.cpp
-        WinApi/WindowHost/WindowHost.h
         WinApi/AppRuntime/AppRuntime.cpp
         WinApi/AppRuntime/AppRuntime.h
 
         WinApi/Window/NativeWindow.cpp
         WinApi/Window/NativeWindow.h
 
+        WinApi/NativeApi/NativeApi.cpp
+        WinApi/NativeApi/NativeApi.h
+
         Node/NativeNode/NativeNode.cpp
         Node/NativeNode/NativeNode.h
         Node/NodeRegistry/NodeRegistry.cpp
         Node/NodeRegistry/NodeRegistry.h
+        Node/NativeNodeFactory/NativeNodeFactory.cpp
+        Node/NativeNodeFactory/NativeNodeFactory.h
 
         CommandDispatcher/CommandDispatcher.cpp
         CommandDispatcher/CommandDispatcher.h
-        WinApi/NativeApi/NativeApi.cpp
-        WinApi/NativeApi/NativeApi.h
         Property/NativePropertyMapper/NativePropertyMapper.cpp
         Property/NativePropertyMapper/NativePropertyMapper.h
-        Node/NativeNodeFactory/NativeNodeFactory.cpp
-        Node/NativeNodeFactory/NativeNodeFactory.h
 
 )
 

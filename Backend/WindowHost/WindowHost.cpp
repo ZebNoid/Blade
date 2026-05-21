@@ -38,7 +38,7 @@ auto WindowHost::count() const -> size_t
     return m_windows.size();
 }
 
-auto WindowHost::windows() -> const auto&
+auto WindowHost::windows() -> const std::vector<std::unique_ptr<NativeWindow>>&
 {
     return m_windows;
 }

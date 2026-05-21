@@ -5,7 +5,7 @@
 #include "Api/ApiBackend.h"
 #include "Node/NodeRegistry/NodeRegistry.h"
 #include "WinApi/AppRuntime/AppRuntime.h"
-#include "WinApi/WindowHost/WindowHost.h"
+#include "WindowHost/WindowHost.h"
 
 #include "CommandDispatcher/CommandDispatcher.h"
 #include "Node/NativeNodeFactory/NativeNodeFactory.h"

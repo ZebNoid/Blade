@@ -18,7 +18,7 @@ auto NativePropertyMapper::apply(
             if (const auto* text =
                 std::get_if<Api::Text>(&value))
             {
-                NativeApi::setTitle(node.hwnd, *text);
+                NativeApi::SetTitle(node.hwnd, *text);
             }
 
             continue;
@@ -29,7 +29,7 @@ auto NativePropertyMapper::apply(
             if (const auto* size =
                 std::get_if<Api::Size>(&value))
             {
-                NativeApi::setSize(node.hwnd, *size);
+                NativeApi::SetSize(node.hwnd, *size);
             }
 
             continue;

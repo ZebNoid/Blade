@@ -18,7 +18,7 @@ public:
 
     auto destroyClosedWindows() -> void;
 
-    auto windows() -> const auto&;
+    auto windows() -> const std::vector<std::unique_ptr<NativeWindow>>&;
 
     auto count() const -> size_t;
 
