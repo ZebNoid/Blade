@@ -19,8 +19,9 @@ struct WidgetTree
 
     Api::PropertyMap props;
     Api::EventMap events;
-    // TODO std::any custom; ?
+    // TODO map std::any custom; ?
     Api::PropertyValue custom;
+    // std::unordered_map<Api::Text, Api::PropertyValue> custom;
 
     std::vector<WidgetTree> children;
 };

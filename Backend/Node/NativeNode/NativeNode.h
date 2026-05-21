@@ -7,8 +7,11 @@ namespace Blade::Backend {
 
 struct NativeNode
 {
-    HWND hwnd{};
-    Api::Id id{};
+    Api::Id id;
+
+    Api::Text type;
+
+    HWND hwnd = nullptr;
 };
 
 

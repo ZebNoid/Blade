@@ -13,8 +13,6 @@ namespace Blade::Backend {
 class AppBackend : public Api::ApiBackend
 {
 public:
-
-
     AppBackend();
 
     auto init() -> void override;
@@ -23,7 +21,7 @@ public:
 
     auto quit() -> void override;
 
-    auto createWindow() -> void override;
+    // auto createWindow() -> void override;
 
     auto process(const Api::BackendCommand& command) -> void override;
 
@@ -32,6 +30,7 @@ private:
 
     AppRuntime m_runtime;
 
+    // TODO rename m_windowHost
     WindowHost m_windows;
 };
 

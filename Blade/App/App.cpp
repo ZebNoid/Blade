@@ -29,14 +29,12 @@ auto App::materialize() -> void
 {
     // TODO separate?
     const auto tree = ui();
-    m_commands = m_materializer.build(tree);
+    auto commands = m_materializer.build(tree);
 
-    for (auto& cmd : m_commands)
+    for (auto& cmd : commands)
     {
         m_backend->process(cmd);
     }
-
-    m_commands.clear();
 }
 
 
