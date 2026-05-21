@@ -36,8 +36,10 @@ add_library(${PROJECT_NAME} STATIC
 
         CommandDispatcher/CommandDispatcher.cpp
         CommandDispatcher/CommandDispatcher.h
-        Property/PropertyMapUtils/PropertyMapUtils.cpp
-        Property/PropertyMapUtils/PropertyMapUtils.h
+        WinApi/NativeApi/NativeApi.cpp
+        WinApi/NativeApi/NativeApi.h
+        Property/NativePropertyMapper/NativePropertyMapper.cpp
+        Property/NativePropertyMapper/NativePropertyMapper.h
 
 )
 

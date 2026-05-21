@@ -30,12 +30,6 @@ private:
         const Api::BackendCommand& command
     ) -> void;
 
-    // todo move out
-    auto applyWindowProps(
-        NativeWindow* window,
-        const Api::PropertyMap& props
-    ) -> void;
-
 private:
     AppBackend* m_backend = nullptr;
 };
