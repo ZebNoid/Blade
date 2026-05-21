@@ -2,11 +2,12 @@
 
 #include "WinApi/ClassRegistry/WindowClass.h"
 
-
 namespace Blade::Backend {
 
 
-AppBackend::AppBackend() : m_hInstance(GetModuleHandle(nullptr))
+AppBackend::AppBackend()
+    : m_hInstance(GetModuleHandle(nullptr))
+      , m_dispatcher(this)
 {
 }
 
@@ -63,9 +64,7 @@ auto AppBackend::quit() -> void
 
 auto AppBackend::process(const Api::BackendCommand& command) -> void
 {
-    std::wcout << "BackendCommand::" << to_string(command.command) << " -> " << command.nodeType << "\n";
-
-    // TODO CommandDispatcher
+    m_dispatcher.dispatch(command);
 }
 
 

@@ -3,6 +3,8 @@
 #include <windows.h>
 
 #include "Api/ApiBackend.h"
+#include "CommandDispatcher/CommandDispatcher.h"
+#include "Node/NodeRegistry/NodeRegistry.h"
 #include "WinApi/AppRuntime/AppRuntime.h"
 #include "WinApi/WindowHost/WindowHost.h"
 
@@ -21,8 +23,6 @@ public:
 
     auto quit() -> void override;
 
-    // auto createWindow() -> void override;
-
     auto process(const Api::BackendCommand& command) -> void override;
 
 private:
@@ -30,8 +30,11 @@ private:
 
     AppRuntime m_runtime;
 
-    // TODO rename m_windowHost
-    WindowHost m_windows;
+    WindowHost m_windows;// TODO rename m_windowHost
+
+    NodeRegistry m_nodes;
+
+    CommandDispatcher m_dispatcher;
 };
 
 

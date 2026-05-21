@@ -31,6 +31,11 @@ add_library(${PROJECT_NAME} STATIC
         Node/WinNode/WinNode.h
         Node/NativeNode/NativeNode.cpp
         Node/NativeNode/NativeNode.h
+        Node/NodeRegistry/NodeRegistry.cpp
+        Node/NodeRegistry/NodeRegistry.h
+
+        CommandDispatcher/CommandDispatcher.cpp
+        CommandDispatcher/CommandDispatcher.h
 
 )
 
