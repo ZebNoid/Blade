@@ -17,6 +17,15 @@ class AppBackend : public Api::ApiBackend
 public:
     AppBackend();
 
+    // -- non movable
+    AppBackend(const AppBackend&) = delete;
+    auto operator=(const AppBackend&) -> AppBackend& = delete;
+
+    AppBackend(AppBackend&&) = delete;
+    auto operator=(AppBackend&&) -> AppBackend& = delete;
+    // -- non movable
+
+
     auto init() -> void override;
 
     auto runApp() -> int override;

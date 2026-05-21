@@ -41,6 +41,24 @@ auto CommandDispatcher::create(const Api::BackendCommand& command) -> void
     {
         auto* nativeWindow = m_backend->windows().createWindow();
 
+        nativeWindow->router().on(
+            WM_CLOSE,
+            [](HWND hwnd, UINT, WPARAM, LPARAM)
+            {
+                DestroyWindow(hwnd);
+                return 0;
+            }
+        );
+
+        nativeWindow->router().on(
+            WM_DESTROY,
+            [nativeWindow](HWND, UINT, WPARAM, LPARAM)
+            {
+                nativeWindow->markDead();
+                return 0;
+            }
+        );
+
         NativeNode node = {
             .id = command.id,
             .type = command.nodeType,
