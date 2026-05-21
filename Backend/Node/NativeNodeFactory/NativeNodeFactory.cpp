@@ -33,23 +33,8 @@ auto NativeNodeFactory::createWindow(
         return std::nullopt;
     }
 
-    nativeWindow->router().on(
-        WM_CLOSE,
-        [](HWND hwnd, UINT, WPARAM, LPARAM)
-        {
-            DestroyWindow(hwnd);
-            return 0;
-        }
-    );
-
-    nativeWindow->router().on(
-        WM_DESTROY,
-        [nativeWindow](HWND, UINT, WPARAM, LPARAM)
-        {
-            nativeWindow->markDead();
-            return 0;
-        }
-    );
+    nativeWindow->applyProps(command.props);
+    nativeWindow->applyEvents(command.events);
 
     NativeNode node = {
         .id = command.id,
@@ -57,11 +42,6 @@ auto NativeNodeFactory::createWindow(
         .hwnd = nativeWindow->handle(),
         .parent = command.parent,
     };
-
-    NativePropertyMapper::apply(
-        node,
-        command.props
-    );
 
     return node;
 }

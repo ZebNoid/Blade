@@ -20,7 +20,7 @@ public:
         DWORD exStyle = 0;
         DWORD style = 0;
         Api::Point position = {CW_USEDEFAULT, CW_USEDEFAULT};
-        Api::Size size = {800,600}; // {CW_USEDEFAULT,CW_USEDEFAULT};
+        Api::Size size = {CW_USEDEFAULT,CW_USEDEFAULT};
         HMENU menu = nullptr;
         HINSTANCE hInstance = nullptr;
         LPVOID lpParam = nullptr;

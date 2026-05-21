@@ -2,6 +2,7 @@
 
 #include <windows.h>
 
+#include "Common/Property.h"
 #include "WinApi/MessageRouter/MessageRouter.h"
 
 
@@ -23,6 +24,10 @@ public:
     auto destroy() -> void;
     auto markDead() -> void;
     auto isAlive() const -> bool;
+
+    auto applyEvents(const Api::EventMap& eventMap) -> void;
+
+    auto applyProps(const Api::PropertyMap& propertyMap) -> void;
 
 private:
     HWND m_hwnd = nullptr;

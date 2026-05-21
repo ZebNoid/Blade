@@ -16,7 +16,7 @@ public:
     {
         PropertyVisitor visitor;
         src.visit(visitor);
-        return visitor.take(); // Todo Move?
+        return visitor.take(); // Todo move or copy?
     }
 
 
@@ -25,7 +25,7 @@ public:
     {
         EventVisitor visitor;
         src.visit(visitor);
-        return visitor.take(); // Todo Move?
+        return visitor.take(); // Todo move or copy?
     }
 };
 

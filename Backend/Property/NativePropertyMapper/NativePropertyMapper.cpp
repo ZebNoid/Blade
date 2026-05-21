@@ -6,39 +6,45 @@
 namespace Blade::Backend {
 
 
-auto NativePropertyMapper::apply(
-    NativeNode& node,
+auto NativePropertyMapper::Apply(
+    HWND hwnd,
     const Api::PropertyMap& props
 ) -> void
 {
     for (const auto& [key, value] : props)
     {
+
+        // std::visit(overloaded {})
+
         switch (key)
         {
         case Api::Props::Title:
             {
-                if (const auto* text =
-                    std::get_if<Api::Text>(&value))
+                if (const auto* text = std::get_if<Api::Text>(&value))
                 {
-                    NativeApi::SetTitle(node.hwnd, *text);
+                    NativeApi::SetTitle(hwnd, *text);
                 }
             }
             break;
         case Api::Props::Size:
             {
-                if (const auto* size =
-                    std::get_if<Api::Size>(&value))
+                if (const auto* size = std::get_if<Api::Size>(&value))
                 {
-                    NativeApi::SetSize(node.hwnd, *size);
+                    NativeApi::SetSize(hwnd, *size);
+                    // TODO
+                    // auto oldSize = NativeApi::GetSize(hwnd);
+                    // NativeApi::SetSize(hwnd, {
+                    //     .width = size->width > 0 ? size->width : oldSize.width,
+                    //     .height = size->height > 0 ? size->height : oldSize.height,
+                    // });
                 }
             }
             break;
         case Api::Props::Position:
             {
-                if (const auto* point =
-                    std::get_if<Api::Point>(&value))
+                if (const auto* point = std::get_if<Api::Point>(&value))
                 {
-                    NativeApi::SetPosition(node.hwnd, *point);
+                    NativeApi::SetPosition(hwnd, *point);
                 }
             }
             break;

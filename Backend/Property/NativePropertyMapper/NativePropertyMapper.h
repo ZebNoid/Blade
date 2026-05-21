@@ -1,6 +1,8 @@
 #pragma once
+
+#include <windows.h>
+
 #include "Common/Property.h"
-#include "Node/NativeNode/NativeNode.h"
 
 
 namespace Blade::Backend {
@@ -9,8 +11,8 @@ namespace Blade::Backend {
 class NativePropertyMapper
 {
 public:
-    static auto apply(
-        NativeNode& node,
+    static auto Apply(
+        HWND hwnd, // TODO NativeComponent
         const Api::PropertyMap& props
     ) -> void;
 };

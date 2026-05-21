@@ -1,7 +1,9 @@
 #include "NativeWindow.h"
 
+#include "Property/NativePropertyMapper/NativePropertyMapper.h"
 #include "WinApi/ClassRegistry/WindowClass.h"
 #include "WinApi/Hwnd/Hwnd.h"
+#include "WinApi/NativeApi/NativeApi.h"
 
 
 namespace Blade::Backend {
@@ -22,7 +24,6 @@ auto NativeWindow::create(HINSTANCE hInstance) -> bool
         .className = WindowClass::Get(CUSTOM_CLASS),
         .windowName = L"Blade",
         .style = WS_OVERLAPPEDWINDOW | WS_VISIBLE,
-        // .position = {3200,400}, // TODO remove dev position!!!!
         .hInstance = hInstance,
         .lpParam = this,
     });
@@ -32,8 +33,8 @@ auto NativeWindow::create(HINSTANCE hInstance) -> bool
 
 auto NativeWindow::show(int cmdShow) -> void
 {
-    ShowWindow(m_hwnd, cmdShow);
-    UpdateWindow(m_hwnd);
+    NativeApi::Show(m_hwnd, cmdShow);
+    NativeApi::Update(m_hwnd);
 }
 
 auto NativeWindow::handle() const -> HWND
@@ -50,7 +51,7 @@ auto NativeWindow::destroy() -> void
 {
     if (m_hwnd != nullptr)
     {
-        DestroyWindow(m_hwnd);
+        NativeApi::Destroy(m_hwnd);
         m_hwnd = nullptr;
     }
 
@@ -65,6 +66,37 @@ auto NativeWindow::markDead() -> void
 auto NativeWindow::isAlive() const -> bool
 {
     return m_alive;
+}
+
+auto NativeWindow::applyEvents(const Api::EventMap& eventMap) -> void
+{
+    // TODO leave in applyEvents?
+    m_router.on(
+        WM_DESTROY,
+        [this](HWND, UINT, WPARAM, LPARAM) -> int
+        {
+            // close default behavior
+            // step 1 -> markDead
+            this->markDead();
+            return 0;
+        }
+    );
+
+    m_router.on(
+        WM_CLOSE,
+        [](HWND hwnd, UINT, WPARAM, LPARAM) -> int
+        {
+            // close default behavior
+            // step 2 -> DestroyWindow
+            NativeApi::Destroy(hwnd);
+            return 0;
+        }
+    );
+}
+
+auto NativeWindow::applyProps(const Api::PropertyMap& propertyMap) -> void
+{
+    NativePropertyMapper::Apply(m_hwnd, propertyMap);
 }
 
 
