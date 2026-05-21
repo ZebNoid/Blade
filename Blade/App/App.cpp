@@ -13,22 +13,28 @@ auto App::run() -> int
     }
     initBackend();
 
+    ui();
+
     materialize();
 
     return m_backend->runApp();
 }
 
+auto App::addToRootTree(const Api::WidgetTree& widgetTree) -> void
+{
+    m_rootTree.children.push_back(widgetTree);
+}
+
 auto App::initBackend() -> void
 {
     m_backend->init();
-    // m_materializer = std::make_unique<Materializer>(m_backend.get());
 }
 
 
 auto App::materialize() -> void
 {
-    // TODO separate?
-    const auto tree = ui();
+    // const auto tree = buildUi();
+    const auto tree = m_rootTree;
     auto commands = m_materializer.build(tree);
 
     for (auto& cmd : commands)

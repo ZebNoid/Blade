@@ -36,6 +36,11 @@ public:
         return *this;
     }
 
+    auto build(App* app) -> void
+    {
+        app->addToRootTree(buildTree());
+    }
+
 };
 
 

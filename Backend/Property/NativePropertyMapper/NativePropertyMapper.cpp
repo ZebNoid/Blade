@@ -13,26 +13,37 @@ auto NativePropertyMapper::apply(
 {
     for (const auto& [key, value] : props)
     {
-        if (key == Api::Props::Title)
+        switch (key)
         {
-            if (const auto* text =
-                std::get_if<Api::Text>(&value))
+        case Api::Props::Title:
             {
-                NativeApi::SetTitle(node.hwnd, *text);
+                if (const auto* text =
+                    std::get_if<Api::Text>(&value))
+                {
+                    NativeApi::SetTitle(node.hwnd, *text);
+                }
             }
-
-            continue;
-        }
-
-        if (key == Api::Props::Size)
-        {
-            if (const auto* size =
-                std::get_if<Api::Size>(&value))
+            break;
+        case Api::Props::Size:
             {
-                NativeApi::SetSize(node.hwnd, *size);
+                if (const auto* size =
+                    std::get_if<Api::Size>(&value))
+                {
+                    NativeApi::SetSize(node.hwnd, *size);
+                }
             }
-
-            continue;
+            break;
+        case Api::Props::Position:
+            {
+                if (const auto* point =
+                    std::get_if<Api::Point>(&value))
+                {
+                    NativeApi::SetPosition(node.hwnd, *point);
+                }
+            }
+            break;
+        default:
+            std::wcout << "Props::" << to_string(key) << std::endl;;
         }
     }
 }

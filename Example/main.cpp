@@ -15,7 +15,24 @@ protected:
         use<Backend::AppBackend>();
     }
 
-    auto ui() -> Api::WidgetTree override
+    auto ui() -> void override
+    {
+        Window(
+            Button(L"Button").set({.isDefault = true,})
+        ).set({
+            .title = L"Test",
+            .size = {800, 300},
+            .position = {3300, 400},
+        }).build(this);
+
+        Window().set({
+            .title = L"Test 2",
+            .size = {400, 500},
+            .position = {3400, 300},
+        }).build(this);
+    }
+
+    auto buildUi() -> Api::WidgetTree override
     {
         return Window(
                    Button(L"Button").set({.isDefault = true,})
@@ -23,7 +40,7 @@ protected:
                .set({
                    .title = L"test",
                    .size = {800, 300},
-                   .position = {3300,20},
+                   .position = {3300, 20},
                })
                .buildTree();
 

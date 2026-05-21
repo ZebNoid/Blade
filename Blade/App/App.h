@@ -15,6 +15,8 @@ public:
 
     auto run() -> int;
 
+    auto addToRootTree(const Api::WidgetTree& widgetTree) -> void;
+
 protected:
     template <typename TBackend, typename... Args>
         requires std::derived_from<TBackend, Api::ApiBackend>
@@ -25,18 +27,11 @@ protected:
         );
     }
 
-    // template <typename TBackend>
-    //     requires std::derived_from<std::decay_t<TBackend>, Api::ApiBackend>
-    // auto use(TBackend&& backend) -> void
-    // {
-    //     m_backend = std::make_unique<std::decay_t<TBackend>>(
-    //         std::forward<TBackend>(backend)
-    //     );
-    // }
-
     virtual auto setup() -> void = 0;
 
-    virtual auto ui() -> Api::WidgetTree = 0;
+    virtual auto buildUi() -> Api::WidgetTree = 0;
+
+    virtual auto ui() -> void = 0;
 
 private:
     auto initBackend() -> void;
@@ -46,6 +41,9 @@ private:
 private:
     std::unique_ptr<Api::ApiBackend> m_backend;
     Materializer m_materializer;
+
+    Api::WidgetTree m_rootTree{.type = L"Root"};
+
 };
 
 
