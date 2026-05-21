@@ -18,8 +18,13 @@ protected:
     auto ui() -> Api::WidgetTree override
     {
         return Window(
-            Button(L"Button").set({.isDefault = true,})
-        ).buildTree();
+                   Button(L"Button").set({.isDefault = true,})
+               )
+               .set({
+                   .title = L"test",
+                   .size = {300, 300},
+               })
+               .buildTree();
 
         // return Window().buildTree();
         // return Button(L"Button").buildTree();

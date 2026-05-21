@@ -1,5 +1,6 @@
 #pragma once
 #include "Api/ApiBackend.h"
+#include "WinApi/Window/NativeWindow.h"
 
 
 namespace Blade::Backend {
@@ -27,6 +28,12 @@ private:
 
     auto remove(
         const Api::BackendCommand& command
+    ) -> void;
+
+    // todo move out
+    auto applyWindowProps(
+        NativeWindow* window,
+        const Api::PropertyMap& props
     ) -> void;
 
 private:

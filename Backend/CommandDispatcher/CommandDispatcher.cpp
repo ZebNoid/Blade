@@ -2,6 +2,7 @@
 
 #include "App/AppBackend.h"
 #include "Node/NativeNode/NativeNode.h"
+#include "Property/PropertyMapUtils/PropertyMapUtils.h"
 
 
 namespace Blade::Backend {
@@ -40,6 +41,11 @@ auto CommandDispatcher::create(const Api::BackendCommand& command) -> void
     if (command.nodeType == L"Window")
     {
         auto* nativeWindow = m_backend->windows().createWindow();
+
+        applyWindowProps(
+           nativeWindow,
+           command.props
+        );
 
         nativeWindow->router().on(
             WM_CLOSE,
@@ -86,6 +92,41 @@ auto CommandDispatcher::attach(const Api::BackendCommand& command) -> void
 
 auto CommandDispatcher::remove(const Api::BackendCommand& command) -> void
 {
+}
+
+auto CommandDispatcher::applyWindowProps(
+    NativeWindow* window,
+    const Api::PropertyMap& props
+) -> void
+{
+    if (const auto* title =
+        PropertyMapUtils::get<Api::Text>(
+            props,
+            Api::Props::Title
+        ))
+    {
+        SetWindowTextW(
+            window->handle(),
+            title->c_str()
+        );
+    }
+
+    if (const auto* size =
+        PropertyMapUtils::get<Api::Size>(
+            props,
+            Api::Props::Size
+        ))
+    {
+        SetWindowPos(
+            window->handle(),
+            nullptr,
+            0,
+            0,
+            size->width,
+            size->height,
+            SWP_NOMOVE | SWP_NOZORDER
+        );
+    }
 }
 
 

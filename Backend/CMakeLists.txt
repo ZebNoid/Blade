@@ -36,6 +36,8 @@ add_library(${PROJECT_NAME} STATIC
 
         CommandDispatcher/CommandDispatcher.cpp
         CommandDispatcher/CommandDispatcher.h
+        Property/PropertyMapUtils/PropertyMapUtils.cpp
+        Property/PropertyMapUtils/PropertyMapUtils.h
 
 )
 

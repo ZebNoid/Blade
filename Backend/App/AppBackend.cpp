@@ -55,27 +55,27 @@ auto AppBackend::nodes() -> NodeRegistry&
     return m_nodes;
 }
 
-auto AppBackend::testCreate() -> void
-{
-    auto* window = m_windows.createWindow();
-
-    window->router().on(
-        WM_CLOSE,
-        [](HWND hwnd, UINT, WPARAM, LPARAM)
-        {
-            DestroyWindow(hwnd);
-            return 0;
-        }
-    );
-
-    window->router().on(
-        WM_DESTROY,
-        [window](HWND, UINT, WPARAM, LPARAM)
-        {
-            window->markDead();
-            return 0;
-        }
-    );
-}
+// auto AppBackend::testCreate() -> void
+// {
+//     auto* window = m_windows.createWindow();
+//
+//     window->router().on(
+//         WM_CLOSE,
+//         [](HWND hwnd, UINT, WPARAM, LPARAM)
+//         {
+//             DestroyWindow(hwnd);
+//             return 0;
+//         }
+//     );
+//
+//     window->router().on(
+//         WM_DESTROY,
+//         [window](HWND, UINT, WPARAM, LPARAM)
+//         {
+//             window->markDead();
+//             return 0;
+//         }
+//     );
+// }
 
 } // namespace
