@@ -33,6 +33,8 @@ using PropertyValue = std::variant<
 
 using PropertyMap = std::unordered_map<Api::Text, PropertyValue>;
 
+using EventId = Api::Id;
+// TODO backend doesn't know about EventMap
 using EventMap = std::unordered_map<Api::Text, EventsValue>;
 
 

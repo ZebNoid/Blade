@@ -1,4 +1,5 @@
 #pragma once
+#include "BackendCommand.h"
 
 
 namespace Blade::Api {
@@ -16,6 +17,10 @@ public:
     virtual auto createWindow() -> void = 0;
 
     virtual auto quit() -> void = 0;
+
+    virtual auto process(
+        const Api::BackendCommand& command
+    ) -> void = 0;
 };
 
 

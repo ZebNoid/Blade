@@ -9,21 +9,21 @@ auto Materializer::mount(const Api::WidgetTree& tree) -> void
     // TODO Materializer::mount
     // createNode(tree, nullptr);
     std::cout << "Materializer::mount" << std::endl;
-    
+
     // visit(tree, {Api::RenderCommand::Type::Create}, 0);
 }
 
 auto Materializer::visit(
     const Api::WidgetTree& node,
-    std::vector<Api::RenderCommand>& out,
+    std::vector<Api::BackendCommand>& out,
     Api::Id parent
 ) -> void
 {
     out.push_back({
-        .type = Api::RenderCommand::Type::Create,
+        .command = Api::CommandType::Create,
         .id = node.id,
         .parent = parent,
-        .widgetType = node.type,
+        .nodeType = node.type,
         .props = node.props,
         .events = node.events
     });

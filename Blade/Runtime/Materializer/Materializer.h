@@ -1,6 +1,6 @@
 #pragma once
 #include "Api/ApiBackend.h"
-#include "Api/RenderCommand.h"
+#include "Api/BackendCommand.h"
 
 
 namespace Blade {
@@ -18,7 +18,7 @@ public:
 
     auto visit(
         const Api::WidgetTree& node,
-        std::vector<Api::RenderCommand>& out,
+        std::vector<Api::BackendCommand>& out,
         Api::Id parent
     ) -> void;
 
