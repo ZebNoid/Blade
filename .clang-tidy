@@ -43,7 +43,7 @@ CheckOptions:
   # For static member functions (methods) inside a class
   - key: readability-identifier-naming.ClassMethodCase
     value: CamelCase
-#  # For free functions (including those marked 'static' in a .cpp file)
+##  # For free functions (including those marked 'static' in a .cpp file)
 #  - key: readability-identifier-naming.FunctionCase
 #    value: CamelCase
 

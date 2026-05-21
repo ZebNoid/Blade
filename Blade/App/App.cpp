@@ -3,31 +3,40 @@
 
 namespace Blade {
 
-
 auto App::run() -> int
 {
-    setup();
+    onSetup();
+    if (const auto code = initBackend(); code < 0) return code;
+
+    onCreate();
+
+    return m_backend->runApp();
+}
+
+auto App::addToTree(const RootWidget& rootWidget) -> void
+{
+    materialize(rootWidget.buildTree());
+}
+
+auto App::initBackend() -> int
+{
     if (!m_backend)
     {
         std::cerr << "No Backend set" << std::endl;
         return -1;
     }
-    initBackend();
-    ui();
-    buildUi();
-
-    return m_backend->runApp();
+    m_backend->init();
+    return 0;
 }
 
-auto App::initBackend() -> void
+auto App::materialize(const Api::WidgetTree& tree) -> void
 {
-    // m_backend->initialize(); // todo init
-    m_wm.bind(*m_backend);
-}
+    auto commands = m_materializer.build(tree);
 
-auto App::buildUi() -> void
-{
-    m_wm.createWindows();
+    for (auto& cmd : commands)
+    {
+        m_backend->process(cmd);
+    }
 }
 
 

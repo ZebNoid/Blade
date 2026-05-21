@@ -1,10 +1,13 @@
 #pragma once
 
 #include "Api/ApiBackend.h"
-#include "Windows/WindowManager/WindowManager.h"
+#include "Api/WidgetTree.h"
+#include "Runtime/Materializer/Materializer.h"
 
 
 namespace Blade {
+
+class RootWidget;
 
 
 class App
@@ -12,40 +15,36 @@ class App
 public:
     virtual ~App() = default;
 
-    template <typename TBackend>
-    auto use() -> void
-    {
-        m_backend = std::make_unique<TBackend>();
-    }
-
-    template <typename TBackend>
-    auto use(TBackend backend) -> void
-    {
-        m_backend = std::make_unique<TBackend>(std::move(backend));
-    }
-
     auto run() -> int;
 
-    auto wm() -> WindowManager&
+protected:
+    template <typename TBackend, typename... Args>
+        requires std::derived_from<TBackend, Api::ApiBackend>
+    auto use(Args&&... args) -> void
     {
-        return m_wm;
+        m_backend = std::make_unique<TBackend>(
+            std::forward<Args>(args)...
+        );
     }
 
-protected:
-    virtual auto setup() -> void = 0;
+    virtual auto onSetup() -> void = 0;
 
-    virtual auto ui() -> void = 0;
-
-private:
-    auto initBackend() -> void;
-
-    auto buildUi() -> void;
+    virtual auto onCreate() -> void = 0;
 
 protected:
-    WindowManager m_wm;
 
 private:
-    std::unique_ptr<ApiBackend> m_backend;
+    auto addToTree(const RootWidget& rootWidget) -> void;
+
+    auto initBackend() -> int;
+
+    auto materialize(const Api::WidgetTree& tree) -> void;
+
+private:
+    std::unique_ptr<Api::ApiBackend> m_backend;
+    Materializer m_materializer;
+
+    friend class RootWidget;
 };
 
 
