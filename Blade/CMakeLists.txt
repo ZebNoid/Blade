@@ -8,8 +8,8 @@ endif ()
 add_library(${PROJECT_NAME} STATIC
         App/App.cpp
         App/App.h
-        Widget/Widget.cpp
-        Widget/Widget.h
+        Base/Widget/Widget.cpp
+        Base/Widget/Widget.h
 
         Widget/Window/Window.cpp
         Widget/Window/Window.h

@@ -2,8 +2,8 @@
 
 #include "ButtonProps.h"
 #include "ButtonEvents.h"
-#include "../../Runtime/Normalize/Normalize.h"
-#include "Widget/Widget.h"
+#include "Runtime/Normalize/Normalize.h"
+#include "Base/Widget/Widget.h"
 
 
 namespace Blade {

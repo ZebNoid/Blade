@@ -20,7 +20,7 @@ auto App::run() -> int
     return m_backend->runApp();
 }
 
-auto App::addToRootTree(const Api::WidgetTree& widgetTree) -> void
+auto App::addToTree(const Api::WidgetTree& widgetTree) -> void
 {
     m_rootTree.children.push_back(widgetTree);
 }
@@ -29,7 +29,6 @@ auto App::initBackend() -> void
 {
     m_backend->init();
 }
-
 
 auto App::materialize() -> void
 {

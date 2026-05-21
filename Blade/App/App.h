@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../Api/Api/ApiBackend.h"
+#include "Api/ApiBackend.h"
 #include "Api/WidgetTree.h"
 #include "Runtime/Materializer/Materializer.h"
 
@@ -15,7 +15,7 @@ public:
 
     auto run() -> int;
 
-    auto addToRootTree(const Api::WidgetTree& widgetTree) -> void;
+    auto addToTree(const Api::WidgetTree& widgetTree) -> void;
 
 protected:
     template <typename TBackend, typename... Args>
@@ -29,7 +29,7 @@ protected:
 
     virtual auto setup() -> void = 0;
 
-    virtual auto buildUi() -> Api::WidgetTree = 0;
+    virtual auto buildUi() -> Api::WidgetTree = 0; // TODO remove
 
     virtual auto ui() -> void = 0;
 
@@ -43,7 +43,6 @@ private:
     Materializer m_materializer;
 
     Api::WidgetTree m_rootTree{.type = L"Root"};
-
 };
 
 

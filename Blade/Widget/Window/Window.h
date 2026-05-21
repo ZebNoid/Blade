@@ -3,7 +3,7 @@
 #include "WindowProps.h"
 #include "WindowEvents.h"
 #include "Runtime/Normalize/Normalize.h"
-#include "Widget/Widget.h"
+#include "Base/Widget/Widget.h"
 
 
 namespace Blade {
@@ -38,7 +38,7 @@ public:
 
     auto build(App* app) -> void
     {
-        app->addToRootTree(buildTree());
+        app->addToTree(buildTree());
     }
 
 };
