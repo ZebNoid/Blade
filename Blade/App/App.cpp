@@ -12,7 +12,8 @@ auto App::run() -> int
         return -1;
     }
     initBackend();
-    buildUi();
+
+    materialize();
 
     return m_backend->runApp();
 }
@@ -23,7 +24,8 @@ auto App::initBackend() -> void
     // m_materializer = std::make_unique<Materializer>(m_backend.get());
 }
 
-auto App::buildUi() -> void
+
+auto App::materialize() -> void
 {
     auto tree = ui();
     m_commands = m_materializer.build(tree);

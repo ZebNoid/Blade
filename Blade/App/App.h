@@ -32,7 +32,7 @@ protected:
 private:
     auto initBackend() -> void;
 
-    auto buildUi() -> void;
+    auto materialize() -> void;
 
 private:
     std::unique_ptr<Api::ApiBackend> m_backend;
