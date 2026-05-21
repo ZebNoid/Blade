@@ -1,5 +1,6 @@
 #pragma once
-#include "Api/ApiBackend.h"
+#include <optional>
+
 #include "Api/BackendCommand.h"
 
 
@@ -9,21 +10,17 @@ namespace Blade {
 class Materializer
 {
 public:
-    explicit Materializer(Api::ApiBackend* backend)
-    {
-        m_backend = backend;
-    }
-
-    auto mount(const Api::WidgetTree& tree) -> void;
-
-    auto visit(
-        const Api::WidgetTree& node,
-        std::vector<Api::BackendCommand>& out,
-        Api::Id parent
-    ) -> void;
+    auto build(
+        const Api::WidgetTree& tree
+    ) -> std::vector<Api::BackendCommand>;
 
 private:
-    Api::ApiBackend* m_backend = nullptr;
+    auto buildNode(
+        const Api::WidgetTree& node,
+        std::vector<Api::BackendCommand>& out,
+        Api::Id parent = Api::InvalidId
+    ) -> void;
+
 };
 
 

@@ -4,16 +4,23 @@
 namespace Blade {
 
 
-auto Materializer::mount(const Api::WidgetTree& tree) -> void
+auto Materializer::build(
+    const Api::WidgetTree& tree
+) -> std::vector<Api::BackendCommand>
 {
-    // TODO Materializer::mount
-    // createNode(tree, nullptr);
-    std::cout << "Materializer::mount" << std::endl;
+    std::vector<Api::BackendCommand> commands;
 
-    // visit(tree, {Api::RenderCommand::Type::Create}, 0);
+    buildNode(
+        tree,
+        std::nullopt,
+        commands
+    );
+
+    return commands;
 }
 
-auto Materializer::visit(
+
+auto Materializer::buildNode(
     const Api::WidgetTree& node,
     std::vector<Api::BackendCommand>& out,
     Api::Id parent
@@ -25,12 +32,25 @@ auto Materializer::visit(
         .parent = parent,
         .nodeType = node.type,
         .props = node.props,
-        .events = node.events
+        .events = node.events,
     });
 
-    for (auto& child : node.children)
+    if (parent != Api::InvalidId)
     {
-        visit(child, out, node.id);
+        out.push_back({
+            .command = Api::CommandType::Attach,
+            .id = node.id,
+            // .parent = parent,
+        });
+    }
+
+    for (const auto& child : node.children)
+    {
+        buildNode(
+            child,
+            node.id,
+            out
+        );
     }
 }
 

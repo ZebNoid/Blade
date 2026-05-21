@@ -20,13 +20,13 @@ auto App::run() -> int
 auto App::initBackend() -> void
 {
     m_backend->init();
-    m_materializer = std::make_unique<Materializer>(m_backend.get());
+    // m_materializer = std::make_unique<Materializer>(m_backend.get());
 }
 
 auto App::buildUi() -> void
 {
     // ui();
-    m_materializer->mount(ui());
+    // m_materializer->mount(ui());
 }
 
 
