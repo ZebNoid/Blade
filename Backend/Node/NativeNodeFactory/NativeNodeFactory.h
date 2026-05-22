@@ -26,6 +26,10 @@ private:
         const Api::BackendCommand& command
     ) -> std::optional<NativeNode>;
 
+    auto createButton(
+        const Api::BackendCommand& command
+    ) -> std::optional<NativeNode>;
+
 private:
     AppBackend* m_backend = nullptr;
 };

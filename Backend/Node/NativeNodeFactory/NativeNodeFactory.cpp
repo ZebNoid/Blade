@@ -2,6 +2,7 @@
 
 #include "App/AppBackend.h"
 #include "Property/NativePropertyMapper/NativePropertyMapper.h"
+#include "WinApi/Components/Button/NativeButton.h"
 
 
 namespace Blade::Backend {
@@ -17,6 +18,11 @@ auto NativeNodeFactory::create(
     if (command.nodeType == L"Window")
     {
         return createWindow(command);
+    }
+
+    if (command.nodeType == L"Button")
+    {
+        return createButton(command);
     }
 
     return std::nullopt;
@@ -40,6 +46,35 @@ auto NativeNodeFactory::createWindow(
         .id = command.id,
         .type = command.nodeType,
         .hwnd = nativeWindow->handle(),
+        .parent = command.parent,
+    };
+
+    return node;
+}
+
+auto NativeNodeFactory::createButton(const Api::BackendCommand& command) -> std::optional<NativeNode>
+{
+    auto* parent = m_backend->nodes().get(command.parent);
+
+    if (!parent)
+    {
+        return std::nullopt;
+    }
+
+    NativeButton button;
+
+    if (!button.create(parent->hwnd))
+    {
+        return std::nullopt;
+    }
+
+    button.applyProps(command.props);
+    button.applyEvents(command.events);
+
+    NativeNode node = {
+        .id = command.id,
+        .type = command.nodeType,
+        .hwnd = button.handle(),
         .parent = command.parent,
     };
 

@@ -1,5 +1,6 @@
 #include "NativeButton.h"
 
+#include "Property/NativePropertyMapper/NativePropertyMapper.h"
 #include "WinApi/Hwnd/Hwnd.h"
 
 
@@ -14,6 +15,7 @@ auto NativeButton::create(HWND parent) -> bool
         .windowName = TEXT("Button"),
         .parent = parent,
         .style = WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+        .hInstance = GetModuleHandle(nullptr),
     });
 
     return m_hwnd != nullptr;
@@ -22,6 +24,16 @@ auto NativeButton::create(HWND parent) -> bool
 auto NativeButton::handle() const -> HWND
 {
     return m_hwnd;
+}
+
+auto NativeButton::applyProps(const Api::PropertyMap& propertyMap) -> void
+{
+    NativePropertyMapper::Apply(m_hwnd, propertyMap);
+}
+
+auto NativeButton::applyEvents(const Api::EventMap& eventMap) -> void
+{
+    // TODO later. there is no WM_COMMAND router
 }
 
 
