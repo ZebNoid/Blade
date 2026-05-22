@@ -16,7 +16,7 @@ struct LayoutNode
 
     Api::Text type; // TODO ?
 
-    LayoutProps layout;
+    Api::LayoutProps layout;
 
     Api::Size desiredSize{};
 

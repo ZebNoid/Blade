@@ -7,6 +7,8 @@ namespace Blade {
 class Widget
 {
 public:
+    virtual ~Widget() = default; // TODO ?
+
     Widget() = default;
 
     Widget(Api::WidgetTree tree)
@@ -14,7 +16,12 @@ public:
     {
     }
 
-    auto buildTree() const -> Api::WidgetTree
+    virtual auto type() const -> Api::Text
+    {
+        return L"Widget";
+    }
+
+    virtual auto buildTree() const -> Api::WidgetTree
     {
         return m_tree;
     }

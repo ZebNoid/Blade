@@ -31,6 +31,11 @@ add_library(${PROJECT_NAME} STATIC
         Runtime/LayoutEngine/LayoutContext.h
         Runtime/LayoutEngine/LayoutEngine/LayoutEngine.cpp
         Runtime/LayoutEngine/LayoutEngine/LayoutEngine.h
+
+        Props/LayoutProps/CrossAxisAlignment.h
+        Props/LayoutProps/MainAxisAlignment.h
+        Widget/Layout/Column/ColumnProps.h
+        Widget/Layout/Container.h
 )
 
 # use Unicode

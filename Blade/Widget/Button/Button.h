@@ -13,8 +13,13 @@ class Button : public Widget
 public:
     Button(Api::Text text)
     {
-        m_tree.type = L"Button";
+        m_tree.type = Button::type();
         m_tree.custom = std::move(text);
+    }
+
+    auto type() const -> Api::Text override
+    {
+        return L"Button";
     }
 
     auto set(ButtonProps props) -> Button&

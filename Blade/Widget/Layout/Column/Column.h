@@ -1,54 +1,67 @@
 #pragma once
 
-#include "WidgetsProps/Widget/ColumnProps.h"
+#include <memory>
+
+#include "Api/WidgetTree.h"
+#include "Common/LayoutProps.h"
+#include "Widget/Layout/Container.h"
 
 
 namespace Blade {
 
-
-class Column : public Widget
+class Column : public Container
 {
 public:
     Column() = default;
 
-    template <typename... T>
-    Column(T&&... widgets)
+    template <typename... TChildren>
+    explicit Column(TChildren&&... children)
     {
-        (addWidget(
-            std::forward<T>(widgets)
-        ), ...);
+        (
+            add(
+                std::forward<TChildren>(children)
+            ),
+            ...
+        );
     }
 
-    auto name() -> std::wstring override { return L"Column"; }
-
-    auto mount(Materializer& m, WidgetContext& ctx) -> void override
+    // TODO ColumnProps
+    auto set(Api::LayoutProps props) -> Column&
     {
-        for (const auto& child : m_children)
-        {
-            child->mount(m, ctx);
-        }
-    }
-
-    auto measure(Size available) -> Size override;
-
-    auto arrange(Rect rect) -> void override;
-
-    auto set(ColumnProps props) & -> Column&
-    {
-        m_layout = props.layout;
-        m_props = std::move(props);
+        m_layout = std::move(props);
         return *this;
     }
 
-    auto set(ColumnProps props) && -> Column&&
+    auto type() const -> Api::Text override
     {
-        m_layout = props.layout;
-        m_props = std::move(props);
-        return std::move(*this);
+        return L"Column";
     }
 
-protected:
-    ColumnProps m_props;
+    auto buildTree() const
+        -> Api::WidgetTree override
+    {
+        Api::WidgetTree tree;
+
+        tree.type = type();
+
+        buildChildren(tree);
+
+        return tree;
+
+        // tree.props = Normalize::Props(m_layout);
+
+        // for (const auto& child : m_children)
+        // {
+        //     tree.children.push_back(
+        //         child->buildTree()
+        //     );
+        // }
+
+        // return tree;
+    }
+
+private:
+    Api::LayoutProps m_layout{};
 };
 
 

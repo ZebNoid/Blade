@@ -18,7 +18,10 @@ protected:
     auto onCreate() -> void override
     {
         Window(
-            Button(L"Button").set({.isDefault = true,})
+            Column(
+                Button(L"Button"),
+                Button(L"Button").set({.isDefault = true,})
+            )
         ).set({
             .title = L"Test",
             .size = {800, 600},
