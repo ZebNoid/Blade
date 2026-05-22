@@ -31,6 +31,10 @@ private:
         const Api::BackendCommand& command
     ) -> void;
 
+    auto update(
+        const Api::BackendCommand& command
+    ) -> void;
+
 private:
     AppBackend* m_backend = nullptr;
 };

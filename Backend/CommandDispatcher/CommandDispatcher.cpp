@@ -28,6 +28,10 @@ auto CommandDispatcher::dispatch(
         remove(command);
         break;
 
+    case Api::CommandType::Update:
+        update(command);
+        break;
+
     default:
         break;
     }
@@ -59,7 +63,7 @@ auto CommandDispatcher::attach(const Api::BackendCommand& command) -> void
         return;
     }
 
-    std::wcout << "Command::" << to_string(command.command) << " ["<< child->type << " -> " << parent->type << "]\n";
+    std::wcout << "Command::" << to_string(command.command) << " [" << child->type << " -> " << parent->type << "]\n";
 
     child->parent = command.parent;
 
@@ -73,7 +77,34 @@ auto CommandDispatcher::attach(const Api::BackendCommand& command) -> void
 
 auto CommandDispatcher::remove(const Api::BackendCommand& command) -> void
 {
+    m_backend->nodes().remove(
+        command.id
+    );
 }
 
+auto CommandDispatcher::update(
+    const Api::BackendCommand& command
+) -> void
+{
+    auto* node = m_backend->nodes().get(command.id);
+
+    if (!node)
+    {
+        return;
+    }
+
+    if (!node->native)
+    {
+        return;
+    }
+
+    node->native->applyProps(
+        command.props
+    );
+
+    node->native->applyEvents(
+        command.events
+    );
+}
 
 } // namespace
