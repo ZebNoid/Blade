@@ -2,6 +2,7 @@
 
 #include "WinApi/ClassRegistry/WindowClass.h"
 #include "CommandDispatcher/CommandDispatcher.h"
+#include "WinApi/CommonControls/CommonControls.h"
 
 
 namespace Blade::Backend {
@@ -16,6 +17,7 @@ AppBackend::AppBackend()
 
 auto AppBackend::init() -> void
 {
+    CommonControls::DpiAwareness();
     WindowClass::Init(m_hInstance);
     m_host.init(m_hInstance);
 }

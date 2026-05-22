@@ -95,5 +95,13 @@ auto NativeApi::Destroy(HWND hwnd) -> void
     DestroyWindow(hwnd);
 }
 
+auto NativeApi::ScreenSize() -> Api::Size
+{
+    return {
+        .width = GetSystemMetrics(SM_CXSCREEN),
+        .height = GetSystemMetrics(SM_CYSCREEN),
+    };
+}
+
 
 } // namespace

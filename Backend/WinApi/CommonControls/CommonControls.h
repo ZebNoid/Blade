@@ -3,11 +3,11 @@
 
 namespace Blade::Backend {
 
-// TODO rename
-class WinInit
+
+class CommonControls
 {
 public:
-    static auto InitDpi() -> void;
+    static auto DpiAwareness() -> void;
 };
 
 

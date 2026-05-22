@@ -13,9 +13,6 @@ auto NativePropertyMapper::Apply(
 {
     for (const auto& [key, value] : props)
     {
-
-        // std::visit(overloaded {})
-
         switch (key)
         {
         case Api::Props::Title:

@@ -16,7 +16,7 @@ public:
     static auto SetTitle(
         HWND hwnd,
         const Api::Text& text
-        ) -> void;
+    ) -> void;
 
     static auto GetTitle(
         HWND hwnd
@@ -35,7 +35,7 @@ public:
     static auto SetPosition(
         HWND hwnd,
         const Api::Point& position
-        ) -> void;
+    ) -> void;
 
     static auto GetPosition(
         HWND hwnd
@@ -53,6 +53,8 @@ public:
     static auto Destroy(
         HWND hwnd
     ) -> void;
+
+    static auto ScreenSize() -> Api::Size;
 };
 
 

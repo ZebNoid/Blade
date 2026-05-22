@@ -42,6 +42,8 @@ add_library(${PROJECT_NAME} STATIC
         CommandDispatcher/CommandDispatcher.h
         Property/NativePropertyMapper/NativePropertyMapper.cpp
         Property/NativePropertyMapper/NativePropertyMapper.h
+        WinApi/CommonControls/CommonControls.cpp
+        WinApi/CommonControls/CommonControls.h
 
 )
 

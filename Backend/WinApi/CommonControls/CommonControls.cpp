@@ -1,9 +1,10 @@
-#include "WinInit.h"
+#include "CommonControls.h"
 
 
 namespace Blade::Backend {
 
-auto WinInit::InitDpi() -> void
+
+auto CommonControls::DpiAwareness() -> void
 {
     // DPI awareness
     SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
@@ -15,5 +16,6 @@ auto WinInit::InitDpi() -> void
 
     InitCommonControlsEx(&icc);
 }
+
 
 } // namespace
