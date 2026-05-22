@@ -28,6 +28,9 @@ add_library(${PROJECT_NAME} STATIC
         Runtime/Normalize/PropertyVisitor.h
         Runtime/Normalize/EventVisitor.h
         Runtime/LayoutEngine/LayoutNode.h
+        Runtime/LayoutEngine/LayoutContext.h
+        Runtime/LayoutEngine/LayoutEngine/LayoutEngine.cpp
+        Runtime/LayoutEngine/LayoutEngine/LayoutEngine.h
 )
 
 # use Unicode

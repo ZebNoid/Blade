@@ -12,13 +12,15 @@ namespace Blade {
 
 struct LayoutNode
 {
-    Api::Id id;
+    Api::Id id = Api::InvalidId;
 
-    Api::LayoutProps layout;
+    Api::Text type; // TODO ?
 
-    Api::Size desiredSize;
+    LayoutProps layout;
 
-    Api::Rect rect;
+    Api::Size desiredSize{};
+
+    Api::Rect rect{};
 
     bool isNative = false;
 
