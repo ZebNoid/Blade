@@ -3,6 +3,7 @@
 #include "App/AppBackend.h"
 #include "Node/NativeNode/NativeNode.h"
 #include "Property/NativePropertyMapper/NativePropertyMapper.h"
+#include "WinApi/NativeApi/NativeApi.h"
 
 
 namespace Blade::Backend {
@@ -52,10 +53,38 @@ auto CommandDispatcher::create(const Api::BackendCommand& command) -> void
 
 auto CommandDispatcher::attach(const Api::BackendCommand& command) -> void
 {
+    auto* child = m_backend->nodes().get(command.id);
+    auto* parent = m_backend->nodes().get(command.parent);
+
+    if (!child || !parent)
+    {
+        return;
+    }
+
+    child->parent = command.parent;
+
+    attachNative(
+        *parent,
+        *child
+    );
 }
 
 auto CommandDispatcher::remove(const Api::BackendCommand& command) -> void
 {
+}
+
+auto CommandDispatcher::attachNative(NativeNode& parent, NativeNode& child) -> void
+{
+    if (!parent.native || !child.native)
+    {
+        return;
+    }
+
+    parent.native->attachChild(
+        child.native.get()
+    );
+    // TODO dev
+    // NativeApi::SetSize(child.native->handle(), {100, 50});
 }
 
 

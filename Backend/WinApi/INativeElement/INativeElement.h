@@ -24,6 +24,8 @@ public:
     ) -> void = 0;
 
     virtual auto isAlive() const -> bool = 0;
+
+    virtual auto attachChild(INativeElement* child) -> void = 0;
 };
 
 

@@ -25,9 +25,11 @@ auto Materializer::buildNode(
     Api::Id parent
 ) -> void
 {
+    const Api::Id id = nextId();
+
     out.push_back({
         .command = Api::CommandType::Create,
-        .id = node.id,
+        .id = id,
         .parent = parent,
         .nodeType = node.type,
         .props = node.props,
@@ -38,19 +40,20 @@ auto Materializer::buildNode(
     {
         out.push_back({
             .command = Api::CommandType::Attach,
-            .id = node.id,
+            .id = id,
             .parent = parent,
         });
     }
 
     for (const auto& child : node.children)
     {
-        buildNode(
-            child,
-            out,
-            node.id
-        );
+        buildNode(child, out, id);
     }
+}
+
+Api::Id Materializer::nextId()
+{
+    return m_nextId++;
 }
 
 

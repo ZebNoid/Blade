@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Api/BackendCommand.h"
+#include "Api/WidgetTree.h"
 
 
 namespace Blade {
@@ -20,6 +21,12 @@ private:
         Api::Id parent = Api::InvalidId
     ) -> void;
 
+private:
+    Api::Id nextId();
+
+private:
+    // TODO persistent widget IDs (assigned at construction)
+    Api::Id m_nextId = 1;
 };
 
 

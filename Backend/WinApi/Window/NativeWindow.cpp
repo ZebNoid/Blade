@@ -24,7 +24,8 @@ auto NativeWindow::create(HINSTANCE hInstance) -> bool
         .className = WindowClass::Get(CUSTOM_CLASS),
         .windowName = L"Blade",
         .style = WS_OVERLAPPEDWINDOW | WS_VISIBLE,
-        .hInstance = hInstance,
+        .size = {200, 100},
+        .hInstance = hInstance,// TODO dev
         .lpParam = this,
     });
 
@@ -66,6 +67,20 @@ auto NativeWindow::markDead() -> void
 auto NativeWindow::isAlive() const -> bool
 {
     return m_alive;
+}
+
+auto NativeWindow::attachChild(INativeElement* child) -> void
+{
+    if (!child)
+    {
+        std::wcerr << "[Error] NativeWindow::attachChild no child" << std::endl;
+        return;
+    }
+
+    if (NativeApi::SetParent(child->handle(), m_hwnd) == nullptr)
+    {
+        std::wcerr << "[Error] NativeWindow::attachChild [" << CUSTOM_CLASS << "] " << GetLastError() << std::endl;
+    }
 }
 
 auto NativeWindow::applyEvents(const Api::EventMap& eventMap) -> void

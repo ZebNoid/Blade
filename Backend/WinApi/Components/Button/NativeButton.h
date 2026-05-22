@@ -23,6 +23,10 @@ public:
 
     auto isAlive() const -> bool override;
 
+    auto attachChild(INativeElement* child) -> void override
+    {
+    }
+
 private:
     HWND m_hwnd = nullptr;
 };

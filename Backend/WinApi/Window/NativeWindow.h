@@ -20,6 +20,8 @@ public:
 
     auto isAlive() const -> bool override;
 
+    auto attachChild(INativeElement* child) -> void override;
+
     auto show(int cmdShow = SW_SHOW) -> void;
 
     auto router() -> MessageRouter&;

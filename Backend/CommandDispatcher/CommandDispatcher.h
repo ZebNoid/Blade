@@ -1,5 +1,6 @@
 #pragma once
 #include "Api/ApiBackend.h"
+#include "Node/NativeNode/NativeNode.h"
 #include "WinApi/Window/NativeWindow.h"
 
 
@@ -28,6 +29,12 @@ private:
 
     auto remove(
         const Api::BackendCommand& command
+    ) -> void;
+
+    // TODO remove
+    auto attachNative(
+        NativeNode& parent,
+        NativeNode& child
     ) -> void;
 
 private:
