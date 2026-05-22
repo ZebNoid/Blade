@@ -65,6 +65,16 @@ auto NativeApi::GetPosition(HWND hwnd) -> Api::Point
     return {};
 }
 
+auto NativeApi::SetFont(HWND hwnd, HFONT font) -> void
+{
+    SendMessageW(hwnd, WM_SETFONT, (WPARAM)font, TRUE);
+}
+
+auto NativeApi::GetFont(HWND hwnd) -> HFONT
+{
+    return (HFONT)SendMessage(hwnd, WM_GETFONT, 0, 0);
+}
+
 auto NativeApi::Show(HWND hwnd, int cmdShow) -> void
 {
     // SW_HIDE             0

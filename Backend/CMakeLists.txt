@@ -44,6 +44,8 @@ add_library(${PROJECT_NAME} STATIC
         Property/NativePropertyMapper/NativePropertyMapper.h
         WinApi/CommonControls/CommonControls.cpp
         WinApi/CommonControls/CommonControls.h
+        WinApi/Components/Button/NativeButton.cpp
+        WinApi/Components/Button/NativeButton.h
 
 )
 
