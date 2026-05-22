@@ -9,7 +9,7 @@ auto WindowHost::init(HINSTANCE hInstance) -> void
     m_hInstance = hInstance;
 }
 
-auto WindowHost::createWindow() -> NativeWindow*
+auto WindowHost::createWindow() -> std::unique_ptr<NativeWindow>
 {
     auto window = std::make_unique<NativeWindow>();
 
@@ -17,13 +17,15 @@ auto WindowHost::createWindow() -> NativeWindow*
 
     auto* ptr = window.get();
 
-    m_windows.push_back(std::move(window));
+    // m_windows.push_back(std::move(window)); // TODO
 
     return ptr;
+    // return std::move(window);
 }
 
 auto WindowHost::destroyClosedWindows() -> void
 {
+    // TODO counts alive nativewindows
     std::erase_if(
         m_windows,
         [](const auto& window)

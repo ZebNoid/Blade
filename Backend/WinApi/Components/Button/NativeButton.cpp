@@ -36,5 +36,10 @@ auto NativeButton::applyEvents(const Api::EventMap& eventMap) -> void
     // TODO later. there is no WM_COMMAND router
 }
 
+auto NativeButton::isAlive() const -> bool
+{
+    return true; // TODO later
+}
+
 
 } // namespace

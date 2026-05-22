@@ -21,15 +21,15 @@ protected:
             Button(L"Button").set({.isDefault = true,})
         ).set({
             .title = L"Test",
-            .size = {800, 300},
+            .size = {800, 600},
             .position = {3300, 400},
         }).build(this);
 
-        Window().set({
-            .title = L"Test 2",
-            .size = {400, 500},
-            .position = {3400, 300},
-        }).build(this);
+        // Window().set({
+        //     .title = L"Test 2",
+        //     .size = {400, 500},
+        //     .position = {3400, 300},
+        // }).build(this);
 
         // return Window().buildTree();
         // return Button(L"Button").buildTree();

@@ -1,33 +1,31 @@
 #pragma once
 
-#include <windows.h>
-
-#include "Common/Property.h"
+#include "WinApi/INativeElement/INativeElement.h"
 #include "WinApi/MessageRouter/MessageRouter.h"
 
 
 namespace Blade::Backend {
 
 
-class NativeWindow
+class NativeWindow : public INativeElement
 {
 public:
     auto create(HINSTANCE hInstance) -> bool;
 
+    auto handle() const -> HWND override;
+
+    auto applyEvents(const Api::EventMap& eventMap) -> void override;
+
+    auto applyProps(const Api::PropertyMap& propertyMap) -> void override;
+
+    auto isAlive() const -> bool override;
+
     auto show(int cmdShow = SW_SHOW) -> void;
-
-    auto handle() const -> HWND;
-
 
     auto router() -> MessageRouter&;
 
     auto destroy() -> void;
     auto markDead() -> void;
-    auto isAlive() const -> bool;
-
-    auto applyEvents(const Api::EventMap& eventMap) -> void;
-
-    auto applyProps(const Api::PropertyMap& propertyMap) -> void;
 
 private:
     HWND m_hwnd = nullptr;

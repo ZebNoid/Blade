@@ -14,7 +14,7 @@ class WindowHost
 public:
     auto init(HINSTANCE hInstance) -> void;
 
-    auto createWindow() -> NativeWindow*;
+    auto createWindow() -> std::unique_ptr<NativeWindow>;
 
     auto destroyClosedWindows() -> void;
 

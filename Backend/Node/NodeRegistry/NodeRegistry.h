@@ -12,9 +12,15 @@ class NodeRegistry
 public:
     auto add(NativeNode node) -> void;
 
+    auto get(Api::Id id) -> NativeNode*;
+
     auto remove(Api::Id id) -> void;
 
-    auto get(Api::Id id) -> NativeNode*;
+    auto clear() -> void;
+
+    auto count() const -> size_t;
+
+    auto collectGarbage() -> void;
 
 private:
     std::unordered_map<Api::Id, NativeNode> m_nodes;

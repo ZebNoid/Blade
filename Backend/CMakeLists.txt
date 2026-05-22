@@ -46,6 +46,7 @@ add_library(${PROJECT_NAME} STATIC
         WinApi/CommonControls/CommonControls.h
         WinApi/Components/Button/NativeButton.cpp
         WinApi/Components/Button/NativeButton.h
+        WinApi/INativeElement/INativeElement.h
 
 )
 

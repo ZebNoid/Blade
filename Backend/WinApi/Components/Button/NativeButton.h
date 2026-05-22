@@ -1,27 +1,27 @@
 #pragma once
 
-#include <windows.h>
-
-#include "Common/Property.h"
+#include "WinApi/INativeElement/INativeElement.h"
 
 
 namespace Blade::Backend {
 
 
-class NativeButton
+class NativeButton : public INativeElement
 {
 public:
     auto create(HWND parent) -> bool;
 
-    auto handle() const -> HWND;
+    auto handle() const -> HWND override;
 
     auto applyProps(
         const Api::PropertyMap& propertyMap
-    ) -> void;
+    ) -> void override;
 
     auto applyEvents(
         const Api::EventMap& eventMap
-    ) -> void;
+    ) -> void override;
+
+    auto isAlive() const -> bool override;
 
 private:
     HWND m_hwnd = nullptr;

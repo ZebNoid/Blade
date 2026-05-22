@@ -45,8 +45,8 @@ auto NativeNodeFactory::createWindow(
     NativeNode node = {
         .id = command.id,
         .type = command.nodeType,
-        .hwnd = nativeWindow->handle(),
         .parent = command.parent,
+        .native = std::move(nativeWindow),
     };
 
     return node;
@@ -63,7 +63,7 @@ auto NativeNodeFactory::createButton(const Api::BackendCommand& command) -> std:
 
     NativeButton button;
 
-    if (!button.create(parent->hwnd))
+    if (!button.create(parent->native->handle()))
     {
         return std::nullopt;
     }
@@ -74,8 +74,8 @@ auto NativeNodeFactory::createButton(const Api::BackendCommand& command) -> std:
     NativeNode node = {
         .id = command.id,
         .type = command.nodeType,
-        .hwnd = button.handle(),
         .parent = command.parent,
+        // .native = std::move(button),
     };
 
     return node;
