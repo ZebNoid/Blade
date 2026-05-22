@@ -31,12 +31,6 @@ private:
         const Api::BackendCommand& command
     ) -> void;
 
-    // TODO remove
-    auto attachNative(
-        NativeNode& parent,
-        NativeNode& child
-    ) -> void;
-
 private:
     AppBackend* m_backend = nullptr;
 };

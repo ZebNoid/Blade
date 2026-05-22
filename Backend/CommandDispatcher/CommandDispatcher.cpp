@@ -63,28 +63,14 @@ auto CommandDispatcher::attach(const Api::BackendCommand& command) -> void
 
     child->parent = command.parent;
 
-    attachNative(
-        *parent,
-        *child
-    );
+    parent->native->attachChild(child->native.get());
+
+    // TODO dev
+    // NativeApi::SetSize(child->native->handle(), {100, 50});
 }
 
 auto CommandDispatcher::remove(const Api::BackendCommand& command) -> void
 {
-}
-
-auto CommandDispatcher::attachNative(NativeNode& parent, NativeNode& child) -> void
-{
-    if (!parent.native || !child.native)
-    {
-        return;
-    }
-
-    parent.native->attachChild(
-        child.native.get()
-    );
-    // TODO dev
-    // NativeApi::SetSize(child.native->handle(), {100, 50});
 }
 
 

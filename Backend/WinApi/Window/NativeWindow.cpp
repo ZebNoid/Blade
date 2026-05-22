@@ -24,8 +24,7 @@ auto NativeWindow::create(HINSTANCE hInstance) -> bool
         .className = WindowClass::Get(CUSTOM_CLASS),
         .windowName = L"Blade",
         .style = WS_OVERLAPPEDWINDOW | WS_VISIBLE,
-        .size = {200, 100},
-        .hInstance = hInstance,// TODO dev
+        .hInstance = hInstance,
         .lpParam = this,
     });
 
