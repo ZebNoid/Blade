@@ -1,36 +1,36 @@
 #include "WindowHost.h"
 
+#include <algorithm>
+
 
 namespace Blade::Backend {
 
 
-auto WindowHost::init(HINSTANCE hInstance) -> void
+auto WindowHost::attach(NativeWindow* window) -> void
 {
-    m_hInstance = hInstance;
+    if (!window)
+    {
+        return;
+    }
+
+    m_windows.push_back(window);
 }
 
-auto WindowHost::createWindow() -> std::unique_ptr<NativeWindow>
+auto WindowHost::detach(NativeWindow* window) -> void
 {
-    auto window = std::make_unique<NativeWindow>();
-
-    window->create(m_hInstance);
-
-    auto* ptr = window.get();
-
-    // m_windows.push_back(std::move(window)); // TODO
-
-    return ptr;
-    // return std::move(window);
+    std::erase(
+        m_windows,
+        window
+    );
 }
 
 auto WindowHost::destroyClosedWindows() -> void
 {
-    // TODO counts alive nativewindows
     std::erase_if(
         m_windows,
-        [](const auto& window)
+        [](NativeWindow* window)
         {
-            return !window->isAlive();
+            return !window || !window->isAlive();
         }
     );
 }
@@ -40,7 +40,8 @@ auto WindowHost::count() const -> size_t
     return m_windows.size();
 }
 
-auto WindowHost::windows() -> const std::vector<std::unique_ptr<NativeWindow>>&
+auto WindowHost::windows() const
+    -> const std::vector<NativeWindow*>&
 {
     return m_windows;
 }

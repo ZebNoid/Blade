@@ -42,6 +42,7 @@ auto NodeRegistry::count() const -> size_t
 
 auto NodeRegistry::collectGarbage() -> void
 {
+    // TODO where to use?
     std::erase_if(
         m_nodes,
         [](const auto& pair)

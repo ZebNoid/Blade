@@ -32,7 +32,13 @@ auto NativeNodeFactory::createWindow(
     const Api::BackendCommand& command
 ) -> std::optional<NativeNode>
 {
-    auto* nativeWindow = m_backend->host().createWindow();
+    auto nativeWindow = std::make_unique<NativeWindow>();
+
+    nativeWindow->create(m_backend->handle());
+
+    m_backend->host().attach(
+        nativeWindow.get()
+    );
 
     if (!nativeWindow)
     {
@@ -61,21 +67,21 @@ auto NativeNodeFactory::createButton(const Api::BackendCommand& command) -> std:
         return std::nullopt;
     }
 
-    NativeButton button;
+    auto button = std::make_unique<NativeButton>();
 
-    if (!button.create(parent->native->handle()))
+    if (!button->create(parent->native->handle()))
     {
         return std::nullopt;
     }
 
-    button.applyProps(command.props);
-    button.applyEvents(command.events);
+    button->applyProps(command.props);
+    button->applyEvents(command.events);
 
     NativeNode node = {
         .id = command.id,
         .type = command.nodeType,
         .parent = command.parent,
-        // .native = std::move(button),
+        .native = std::move(button),
     };
 
     return node;

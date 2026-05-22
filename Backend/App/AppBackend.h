@@ -45,6 +45,8 @@ public:
 
     auto factory() -> NativeNodeFactory&;
 
+    auto handle() -> HINSTANCE;
+
 private:
     HINSTANCE m_hInstance;
 

@@ -1,7 +1,7 @@
 #include "AppBackend.h"
 
-#include "WinApi/ClassRegistry/WindowClass.h"
 #include "CommandDispatcher/CommandDispatcher.h"
+#include "WinApi/ClassRegistry/WindowClass.h"
 #include "WinApi/CommonControls/CommonControls.h"
 
 
@@ -19,7 +19,6 @@ auto AppBackend::init() -> void
 {
     CommonControls::DpiAwareness();
     WindowClass::Init(m_hInstance);
-    m_host.init(m_hInstance);
 }
 
 auto AppBackend::runApp() -> int
@@ -60,6 +59,11 @@ auto AppBackend::nodes() -> NodeRegistry&
 auto AppBackend::factory() -> NativeNodeFactory&
 {
     return m_factory;
+}
+
+auto AppBackend::handle() -> HINSTANCE
+{
+    return m_hInstance;
 }
 
 } // namespace
