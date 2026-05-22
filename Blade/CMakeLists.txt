@@ -27,6 +27,7 @@ add_library(${PROJECT_NAME} STATIC
         Runtime/Normalize/Normalize.h
         Runtime/Normalize/PropertyVisitor.h
         Runtime/Normalize/EventVisitor.h
+        Runtime/LayoutEngine/LayoutNode.h
 )
 
 # use Unicode
