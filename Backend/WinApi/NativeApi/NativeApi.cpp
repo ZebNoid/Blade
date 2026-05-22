@@ -4,6 +4,16 @@
 namespace Blade::Backend {
 
 
+auto NativeApi::SetParent(HWND hwnd, HWND hwndParent) -> HWND
+{
+    return ::SetParent(hwnd, hwndParent);
+}
+
+auto NativeApi::GetParent(HWND hwnd) -> HWND
+{
+    return ::GetParent(hwnd);
+}
+
 auto NativeApi::SetTitle(
     HWND hwnd,
     const Api::Text& text
@@ -105,7 +115,7 @@ auto NativeApi::Destroy(HWND hwnd) -> void
     DestroyWindow(hwnd);
 }
 
-auto NativeApi::ScreenSize() -> Api::Size
+auto NativeApi::GetScreenSize() -> Api::Size
 {
     return {
         .width = GetSystemMetrics(SM_CXSCREEN),

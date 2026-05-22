@@ -34,16 +34,16 @@ auto NativeNodeFactory::createWindow(
 {
     auto nativeWindow = std::make_unique<NativeWindow>();
 
+    if (!nativeWindow)
+    {
+        return std::nullopt;
+    }
+
     nativeWindow->create(m_backend->handle());
 
     m_backend->host().attach(
         nativeWindow.get()
     );
-
-    if (!nativeWindow)
-    {
-        return std::nullopt;
-    }
 
     nativeWindow->applyProps(command.props);
     nativeWindow->applyEvents(command.events);
@@ -64,6 +64,7 @@ auto NativeNodeFactory::createButton(const Api::BackendCommand& command) -> std:
 
     if (!parent)
     {
+        std::wcerr << "[Error] createButton no parent " << std::endl;
         return std::nullopt;
     }
 

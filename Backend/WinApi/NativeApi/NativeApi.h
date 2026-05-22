@@ -13,6 +13,24 @@ namespace Blade::Backend {
 class NativeApi
 {
 public:
+    /// @brief
+    ///
+    /// If hwndParent == NULL, the window becomes a top-level window (parented to the desktop).
+    /// If hwndParent == HWND_MESSAGE, the window becomes a message-only window
+    ///
+    /// @param hwnd
+    /// @param hwndParent
+    /// @return previous parent window
+    /// on failure: Returns NULL. Detailed error info can be found by calling GetLastError
+    static auto SetParent(
+        HWND hwnd,
+        HWND hwndParent
+    ) -> HWND;
+
+    static auto GetParent(
+        HWND hwnd
+    ) -> HWND;
+
     static auto SetTitle(
         HWND hwnd,
         const Api::Text& text
@@ -63,7 +81,7 @@ public:
         HWND hwnd
     ) -> void;
 
-    static auto ScreenSize() -> Api::Size;
+    static auto GetScreenSize() -> Api::Size;
 };
 
 
