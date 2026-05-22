@@ -123,5 +123,12 @@ auto NativeApi::GetScreenSize() -> Api::Size
     };
 }
 
+auto NativeApi::SetIcon(HWND hwnd, const Api::Text& icon) -> HICON
+{
+    HICON hIcon = (HICON)LoadImage(NULL, icon.c_str(), IMAGE_ICON, 32, 32, LR_LOADFROMFILE);
+    SendMessage(hwnd, WM_SETICON, ICON_BIG, (LPARAM)hIcon);
+    return (HICON)SendMessage(hwnd, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
+}
+
 
 } // namespace

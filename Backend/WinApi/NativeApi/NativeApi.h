@@ -82,6 +82,8 @@ public:
     ) -> void;
 
     static auto GetScreenSize() -> Api::Size;
+
+    static auto SetIcon(HWND hwnd, const Api::Text& icon) -> HICON;
 };
 
 

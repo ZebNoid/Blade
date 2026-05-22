@@ -2,8 +2,6 @@
 
 #include "App/AppBackend.h"
 #include "Node/NativeNode/NativeNode.h"
-#include "Property/NativePropertyMapper/NativePropertyMapper.h"
-#include "WinApi/NativeApi/NativeApi.h"
 
 
 namespace Blade::Backend {
@@ -16,8 +14,6 @@ auto CommandDispatcher::dispatch(
     const Api::BackendCommand& command
 ) -> void
 {
-    std::wcout << "BackendCommand::" << to_string(command.command) << " -> " << command.nodeType << "\n";
-
     switch (command.command)
     {
     case Api::CommandType::Create:
@@ -39,6 +35,8 @@ auto CommandDispatcher::dispatch(
 
 auto CommandDispatcher::create(const Api::BackendCommand& command) -> void
 {
+    std::wcout << "Command::" << to_string(command.command) << " [" << command.nodeType << "]\n";
+
     auto node = m_backend->factory().create(command);
 
     if (!node)
@@ -61,9 +59,13 @@ auto CommandDispatcher::attach(const Api::BackendCommand& command) -> void
         return;
     }
 
+    std::wcout << "Command::" << to_string(command.command) << " ["<< child->type << " -> " << parent->type << "]\n";
+
     child->parent = command.parent;
 
-    parent->native->attachChild(child->native.get());
+    parent->native->attachChild(
+        child->native.get()
+    );
 
     // TODO dev
     // NativeApi::SetSize(child->native->handle(), {100, 50});
