@@ -75,7 +75,7 @@ inline auto PrintFormat(
 #define LOG_W(message) ::Blade::Log::Print(::Blade::Log::Color::Warning, message)
 #define LOG_E(message) ::Blade::Log::Print(::Blade::Log::Color::Error, message)
 
-#define LOG_F(format, ...) ::Blade::Log::PrintFormat(::Blade::Log::Color::Info, format, __VA_ARGS__)
-#define LOG_DF(format, ...) ::Blade::Log::PrintFormat(::Blade::Log::Color::Debug, format, __VA_ARGS__)
-#define LOG_WF(format, ...) ::Blade::Log::PrintFormat(::Blade::Log::Color::Warning, format, __VA_ARGS__)
-#define LOG_EF(format, ...) ::Blade::Log::PrintFormat(::Blade::Log::Color::Error, format, __VA_ARGS__)
+#define LOGF(format, ...) ::Blade::Log::PrintFormat(::Blade::Log::Color::Info, format, __VA_ARGS__)
+#define LOGF_D(format, ...) ::Blade::Log::PrintFormat(::Blade::Log::Color::Debug, format, __VA_ARGS__)
+#define LOGF_W(format, ...) ::Blade::Log::PrintFormat(::Blade::Log::Color::Warning, format, __VA_ARGS__)
+#define LOGF_E(format, ...) ::Blade::Log::PrintFormat(::Blade::Log::Color::Error, format, __VA_ARGS__)

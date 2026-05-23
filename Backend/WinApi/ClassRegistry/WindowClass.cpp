@@ -17,7 +17,7 @@ auto WindowClass::Get(const std::wstring& className) -> const wchar_t*
     const auto it = m_names.find(className);
     if (it == m_names.end())
     {
-        LOG_EF(L"[Error] WindowClass::Get[%s] not found", className.c_str());
+        LOGF_E(L"[Error] WindowClass::Get[%s] not found", className.c_str());
         return nullptr;
     }
     return it->c_str();
@@ -42,7 +42,7 @@ auto WindowClass::Register(const std::wstring& className, const ClassDesc& desc)
 
     if (!RegisterClassW(&wc))
     {
-        LOG_EF(L"[Error] WindowClass::Register[%s] %lu", className.c_str(), GetLastError());
+        LOGF_E(L"[Error] WindowClass::Register[%s] %lu", className.c_str(), GetLastError());
         return;
     }
 

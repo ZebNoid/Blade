@@ -79,7 +79,7 @@ auto NativeWindow::attachChild(INativeElement* child) -> void
 
     if (NativeApi::SetParent(child->handle(), m_hwnd) == nullptr)
     {
-        LOG_EF(L"[Error] NativeWindow::attachChild [%s] %lu", CUSTOM_CLASS, GetLastError());
+        LOGF_E(L"[Error] NativeWindow::attachChild [%s] %lu", CUSTOM_CLASS, GetLastError());
     }
 }
 
@@ -120,8 +120,9 @@ auto NativeWindow::applyProps(const Api::PropertyMap& propertyMap) -> void
         case Api::Props::Rect:
             if (const auto* rect = std::get_if<Api::Rect>(&value))
             {
-                LOG_DF(L" -> Apply::%s %s", to_string(key).c_str(), to_string(*rect).c_str());
+                LOGF_D(L" -> Apply::%s %s", to_string(key).c_str(), to_string(*rect).c_str());
 
+                // TODO client rect
                 NativeApi::SetClientRect(m_hwnd, *rect);
             }
             break;
@@ -129,7 +130,7 @@ auto NativeWindow::applyProps(const Api::PropertyMap& propertyMap) -> void
         case Api::Props::Size:
             if (const auto* size = std::get_if<Api::Size>(&value))
             {
-                LOG_DF(L" -> Apply::%s %s", to_string(key).c_str(), to_string(*size).c_str());
+                LOGF_D(L" -> Apply::%s %s", to_string(key).c_str(), to_string(*size).c_str());
 
                 NativeApi::SetClientSize(m_hwnd, *size);
             }

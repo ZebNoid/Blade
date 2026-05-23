@@ -23,7 +23,7 @@ auto Hwnd::Create(const HwndDesc& desc) -> HWND
 
     if (!hwnd)
     {
-        LOG_EF(L"[Error] Hwnd::Create[%s] %lu", desc.className, GetLastError());
+        LOGF_E(L"[Error] Hwnd::Create[%s] %lu", desc.className, GetLastError());
     }
 
     return hwnd;
