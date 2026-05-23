@@ -2,6 +2,8 @@
 
 #include "Runtime/LayoutEngine/Algorithm/LayoutColumn.h"
 #include "Runtime/LayoutEngine/Algorithm/LayoutLeaf.h"
+#include "Runtime/LayoutEngine/Algorithm/LayoutRow.h"
+#include "Runtime/LayoutEngine/Algorithm/LayoutStack.h"
 
 
 namespace Blade {
@@ -18,11 +20,11 @@ auto LayoutEngine::Measure(
     case LayoutType::Column:
         return LayoutColumn::Measure(ctx);
 
-    // case LayoutType::Row:
-    //     return MeasureRow(ctx);
-    //
-    // case LayoutType::Stack:
-    //     return MeasureStack(ctx);
+    case LayoutType::Row:
+        return LayoutRow::Measure(ctx);
+
+    case LayoutType::Stack:
+        return LayoutStack::Measure(ctx);
 
     case LayoutType::None:
     default:
@@ -44,13 +46,13 @@ auto LayoutEngine::Arrange(
         LayoutColumn::Arrange(ctx);
         break;
 
-    // case LayoutType::Row:
-    //     ArrangeRow(ctx);
-    //     break;
-    //
-    // case LayoutType::Stack:
-    //     ArrangeStack(ctx);
-    //     break;
+    case LayoutType::Row:
+        LayoutRow::Arrange(ctx);
+        break;
+
+    case LayoutType::Stack:
+        LayoutStack::Arrange(ctx);
+        break;
 
     default:
         LayoutLeaf::Arrange(ctx);

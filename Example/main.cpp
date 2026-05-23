@@ -27,8 +27,10 @@ protected:
 
         Window(
             Column(
-                Button(L"Button"),
-                Button(L"Button").set({.isDefault = true,})
+                Button(L"Button C1"),
+                Button(L"Button C2").set({.isDefault = true,}),
+                Row(Button(L"Button R1"), Button(L"Button R2")),
+                Button(L"Button")
             )
         ).set({
             .title = L"Test",

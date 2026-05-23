@@ -4,6 +4,7 @@
 
 #include "Api/ApiBackend.h"
 #include "Base/WidgetTree.h"
+#include "Runtime/LayoutEngine/Data/LayoutNode.h"
 #include "Runtime/Materializer/Materializer.h"
 
 

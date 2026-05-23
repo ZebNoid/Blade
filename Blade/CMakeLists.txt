@@ -23,6 +23,10 @@ add_library(${PROJECT_NAME} STATIC
 
         Widget/Layout/Column/Column.h
         Widget/Layout/Column/ColumnProps.h
+        Widget/Layout/Row/Row.h
+        Widget/Layout/Row/RowProps.h
+        Widget/Layout/Stack/Stack.h
+        Widget/Layout/Stack/StackProps.h
 
         Runtime/Materializer/Materializer.cpp
         Runtime/Materializer/Materializer.h
@@ -37,6 +41,10 @@ add_library(${PROJECT_NAME} STATIC
         Runtime/LayoutEngine/Algorithm/LayoutLeaf.h
         Runtime/LayoutEngine/Algorithm/LayoutColumn.cpp
         Runtime/LayoutEngine/Algorithm/LayoutColumn.h
+        Runtime/LayoutEngine/Algorithm/LayoutRow.cpp
+        Runtime/LayoutEngine/Algorithm/LayoutRow.h
+        Runtime/LayoutEngine/Algorithm/LayoutStack.cpp
+        Runtime/LayoutEngine/Algorithm/LayoutStack.h
         Runtime/LayoutEngine/LayoutEngine/LayoutEngine.cpp
         Runtime/LayoutEngine/LayoutEngine/LayoutEngine.h
         Runtime/LayoutEngine/LayoutTreeBuilder/LayoutTreeBuilder.cpp
