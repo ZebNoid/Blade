@@ -1,4 +1,6 @@
 #pragma once
+#include <string>
+
 #include "Point.h"
 #include "Size.h"
 
@@ -53,5 +55,18 @@ struct Rect
         };
     }
 };
+
+inline auto to_string(const Rect& rect) -> std::wstring
+{
+    return L"[" +
+        std::to_wstring(rect.x) +
+        L" x " +
+        std::to_wstring(rect.y) +
+        L" | " +
+        std::to_wstring(rect.width) +
+        L" x " +
+        std::to_wstring(rect.height) +
+        L"]";
+}
 
 } // namespace

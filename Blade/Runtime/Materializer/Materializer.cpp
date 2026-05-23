@@ -91,7 +91,7 @@ auto Materializer::buildNode(
             .id = id,
             .parent = parent,
             .nodeType = widget.type,
-            .props = widget.props,
+            .props = buildBackendProps(widget.props),
             .events = widget.events
         });
 
@@ -108,31 +108,12 @@ auto Materializer::buildNode(
 
         // UPDATE RECT
 
-        Api::PropertyMap props;
-
-        if (parent == Api::InvalidId)
-        {
-            if (const auto it =
-                    widget.props.find(Api::Props::Position);
-                it != widget.props.end())
-            {
-                props[Api::Props::Position] = it->second;
-            }
-        }
-        else
-        {
-            props[Api::Props::Position] =
-                Api::Point{
-                    layout.rect.x,
-                    layout.rect.y
-                };
-        }
-
-        props[Api::Props::Size] =
-            Api::Size{
-                layout.rect.width,
-                layout.rect.height
-            };
+        auto props =
+            buildRectProps(
+                layout,
+                widget,
+                parent
+            );
 
         out.push_back({
             .command = Api::CommandType::Update,
@@ -176,22 +157,12 @@ auto Materializer::buildUpdateNode(
     {
         if (includeCurrent)
         {
-            Api::PropertyMap props;
-
-            if (parent != Api::InvalidId)
-            {
-                props[Api::Props::Position] =
-                    Api::Point{
-                        layout.rect.x,
-                        layout.rect.y
-                    };
-            }
-
-            props[Api::Props::Size] =
-                Api::Size{
-                    layout.rect.width,
-                    layout.rect.height
-                };
+            auto props =
+                buildRectProps(
+                    layout,
+                    widget,
+                    parent
+                );
 
             out.push_back({
                 .command = Api::CommandType::Update,
@@ -215,6 +186,63 @@ auto Materializer::buildUpdateNode(
             true
         );
     }
+}
+
+auto Materializer::buildBackendProps(
+    const Api::PropertyMap& props
+) -> Api::PropertyMap
+{
+    Api::PropertyMap out;
+
+    for (const auto& [key, value] : props)
+    {
+        switch (key)
+        {
+        case Api::Props::Title:
+        case Api::Props::Default:
+            out.insert_or_assign(key, value);
+            break;
+
+        default:
+            break;
+        }
+    }
+
+    return out;
+}
+
+auto Materializer::buildRectProps(
+    const LayoutNode& layout,
+    const WidgetTree& widget,
+    Api::Id parent
+) -> Api::PropertyMap
+{
+    Api::PropertyMap props;
+
+    if (parent == Api::InvalidId)
+    {
+        auto rect = layout.rect;
+
+        if (const auto it =
+                widget.props.find(Api::Props::Position);
+            it != widget.props.end())
+        {
+            if (const auto* position =
+                    std::get_if<Api::Point>(&it->second))
+            {
+                rect.x = position->x;
+                rect.y = position->y;
+            }
+        }
+
+        props[Api::Props::Rect] = rect;
+    }
+    else
+    {
+        props[Api::Props::Rect] = layout.rect;
+    }
+
+    return props;
 }
 
 Api::Id Materializer::nextId()
