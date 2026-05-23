@@ -29,11 +29,7 @@ public:
 
     auto set(WindowProps props) -> Window&
     {
-        auto normalized = Normalize::Props(props);
-        for (auto& [key, value] : normalized)
-        {
-            m_tree.props.insert_or_assign(key, std::move(value));
-        }
+        Normalize::PropsMerge(m_tree.props, props);
         return *this;
     }
 

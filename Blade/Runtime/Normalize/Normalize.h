@@ -20,6 +20,19 @@ public:
     }
 
     template <typename T>
+    static auto PropsMerge(
+        Api::PropertyMap& target,
+        const T& src
+    ) -> void
+    {
+        auto normalized = Props(src);
+        for (auto& [key, value] : normalized)
+        {
+            target.insert_or_assign(key, std::move(value));
+        }
+    }
+
+    template <typename T>
     static auto Events(const T& src) -> Api::EventMap
     {
         EventVisitor visitor;
