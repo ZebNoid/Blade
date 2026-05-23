@@ -12,12 +12,14 @@ public:
     Column()
     {
         m_tree.type = L"Column";
+        m_tree.layoutType = LayoutType::Column;
     }
 
     template <typename... TChildren>
     explicit Column(TChildren&&... children)
     {
         m_tree.type = L"Column";
+        m_tree.layoutType = LayoutType::Column;
 
         (
             m_tree.children.push_back(

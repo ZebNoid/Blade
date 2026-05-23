@@ -1,5 +1,5 @@
 #pragma once
-#include "Runtime/LayoutEngine/LayoutContext.h"
+#include "Runtime/LayoutEngine/Data/LayoutContext.h"
 
 
 namespace Blade {
@@ -13,6 +13,19 @@ public:
     ) -> Api::Size;
 
     static auto Arrange(
+        LayoutContext& ctx
+    ) -> void;
+
+
+    static auto MeasureLeaf(
+        LayoutContext& ctx
+    ) -> Api::Size;
+
+    static auto MeasureColumn(
+        LayoutContext& ctx
+    ) -> Api::Size;
+
+    static auto ArrangeColumn(
         LayoutContext& ctx
     ) -> void;
 };

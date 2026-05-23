@@ -25,7 +25,13 @@ auto LayoutTreeBuilder::BuildNode(
 
     node.layout = ExtractLayoutData(tree.props);
 
-    node.isNative = IsNativeWidget(tree.type);
+    // -------------------------------------------------
+    // Layout type
+    // -------------------------------------------------
+
+    node.layoutType = tree.layoutType;
+
+    node.isNative = node.layoutType == LayoutType::None;
 
     for (const auto& child : tree.children)
     {
@@ -73,16 +79,6 @@ auto LayoutTreeBuilder::ExtractLayoutData(
     }
 
     return data;
-}
-
-auto LayoutTreeBuilder::IsNativeWidget(
-    const Api::Text& type
-) -> bool
-{
-    return
-        type != L"Column" &&
-        type != L"Row" &&
-        type != L"Stack";
 }
 
 

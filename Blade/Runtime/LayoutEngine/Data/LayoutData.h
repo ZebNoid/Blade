@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Common/LayoutProps.h"
+
 namespace Blade {
 
 struct LayoutData

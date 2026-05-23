@@ -29,16 +29,17 @@ add_library(${PROJECT_NAME} STATIC
         Runtime/Normalize/Normalize.h
         Runtime/Normalize/PropertyVisitor.h
         Runtime/Normalize/EventVisitor.h
-        Runtime/LayoutEngine/LayoutNode.h
-        Runtime/LayoutEngine/LayoutContext.h
+        Runtime/LayoutEngine/Data/LayoutNode.h
+        Runtime/LayoutEngine/Data/LayoutContext.h
         Runtime/LayoutEngine/LayoutEngine/LayoutEngine.cpp
         Runtime/LayoutEngine/LayoutEngine/LayoutEngine.h
         Runtime/LayoutEngine/LayoutTreeBuilder/LayoutTreeBuilder.cpp
         Runtime/LayoutEngine/LayoutTreeBuilder/LayoutTreeBuilder.h
-        Runtime/LayoutEngine/LayoutData.h
+        Runtime/LayoutEngine/Data/LayoutData.h
 
         Props/LayoutProps/CrossAxisAlignment.h
         Props/LayoutProps/MainAxisAlignment.h
+        Runtime/LayoutEngine/Data/LayoutType.h
 )
 
 # use Unicode

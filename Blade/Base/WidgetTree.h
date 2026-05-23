@@ -5,6 +5,7 @@
 
 #include "Common/Property.h"
 #include "Common/Types.h"
+#include "Runtime/LayoutEngine/Data/LayoutType.h"
 
 
 namespace Blade {
@@ -17,12 +18,11 @@ struct WidgetTree
 
     Api::Text type; // "Window", "Button", "Column"
 
+    LayoutType layoutType = LayoutType::None;
+
     // backend
     Api::PropertyMap props;
     Api::EventMap events;
-    // TODO map std::any custom; ?
-    Api::PropertyValue custom;
-    // std::unordered_map<Api::Text, Api::PropertyValue> custom;
 
     std::vector<WidgetTree> children;
 };
