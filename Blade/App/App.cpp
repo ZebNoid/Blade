@@ -62,8 +62,8 @@ auto App::materialize(const WidgetTree& tree) -> void
     LayoutContext arrangeCtx{
         .node = &layoutTree,
         .rect = {
-            3200,
-            400,
+            0,
+            0,
             1280,
             720
         }

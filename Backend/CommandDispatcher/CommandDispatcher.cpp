@@ -98,7 +98,7 @@ auto CommandDispatcher::update(
         return;
     }
 
-    std::wcout << "Command::" << to_string(command.command) << " [" << command.nodeType << "]\n";
+    std::wcout << "Command::" << to_string(command.command) << " [" << node->type << "]\n";
     node->native->applyProps(
         command.props
     );
