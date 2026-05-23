@@ -84,9 +84,7 @@ auto NativeNodeFactory::createButton(const Api::BackendCommand& command) -> std:
 
     if (!parent)
     {
-        Api::Logger::Error(
-            L"[Error] createButton no parent"
-        );
+        LOG_E(L"[Error] createButton no parent");
         return std::nullopt;
     }
 

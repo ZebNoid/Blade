@@ -24,9 +24,7 @@ auto App::initBackend() -> int
 {
     if (!m_backend)
     {
-        Api::Logger::Error(
-            L"No Backend set"
-        );
+        LOG_E(L"No Backend set");
         return -1;
     }
     m_backend->init();

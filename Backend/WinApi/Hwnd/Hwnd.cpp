@@ -23,12 +23,7 @@ auto Hwnd::Create(const HwndDesc& desc) -> HWND
 
     if (!hwnd)
     {
-        Api::Logger::Error(
-            L"[Error] Hwnd::Create[",
-            desc.className,
-            L"] ",
-            GetLastError()
-        );
+        LOG_EF(L"[Error] Hwnd::Create[%s] %lu", desc.className, GetLastError());
     }
 
     return hwnd;

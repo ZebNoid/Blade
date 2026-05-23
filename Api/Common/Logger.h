@@ -1,94 +1,81 @@
 #pragma once
 
+#include <cwchar>
 #include <iostream>
+#include <windows.h>
 
 
-namespace Blade::Api {
+namespace Blade::Log {
 
-enum class LogLevel
+enum class Color
 {
-    Debug,
-    Info,
-    Error,
-    Off
+    Debug = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE,
+    Info = FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY,
+    Warning = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY,
+    Error = FOREGROUND_RED | FOREGROUND_INTENSITY
 };
 
-class Logger
+inline auto Print(
+    Color color,
+    const wchar_t* message
+) -> void
 {
-public:
-    static auto SetLevel(
-        LogLevel level
-    ) -> void
-    {
-        CurrentLevel() = level;
-    }
+    const auto handle = GetStdHandle(STD_OUTPUT_HANDLE);
 
-    template <typename... TParts>
-    static auto Debug(
-        const TParts&... parts
-    ) -> void
-    {
-        Write(
-            LogLevel::Debug,
-            std::wcout,
-            parts...
-        );
-    }
+    CONSOLE_SCREEN_BUFFER_INFO info{};
+    GetConsoleScreenBufferInfo(handle, &info);
 
-    template <typename... TParts>
-    static auto Info(
-        const TParts&... parts
-    ) -> void
-    {
-        Write(
-            LogLevel::Info,
-            std::wcout,
-            parts...
-        );
-    }
+    SetConsoleTextAttribute(
+        handle,
+        static_cast<WORD>(color)
+    );
 
-    template <typename... TParts>
-    static auto Error(
-        const TParts&... parts
-    ) -> void
-    {
-        Write(
-            LogLevel::Error,
-            std::wcerr,
-            parts...
-        );
-    }
+    std::wcout << message << L'\n';
 
-private:
-    static auto CurrentLevel() -> LogLevel&
-    {
-        static LogLevel level = LogLevel::Debug;
-        return level;
-    }
+    SetConsoleTextAttribute(
+        handle,
+        info.wAttributes
+    );
+}
 
-    static auto CanWrite(
-        LogLevel level
-    ) -> bool
-    {
-        return level >= CurrentLevel() &&
-            CurrentLevel() != LogLevel::Off;
-    }
+template <typename... TArgs>
+inline auto PrintFormat(
+    Color color,
+    const wchar_t* format,
+    TArgs... args
+) -> void
+{
+    const auto handle = GetStdHandle(STD_OUTPUT_HANDLE);
 
-    template <typename TStream, typename... TParts>
-    static auto Write(
-        LogLevel level,
-        TStream& stream,
-        const TParts&... parts
-    ) -> void
-    {
-        if (!CanWrite(level))
-        {
-            return;
-        }
+    CONSOLE_SCREEN_BUFFER_INFO info{};
+    GetConsoleScreenBufferInfo(handle, &info);
 
-        (stream << ... << parts);
-        stream << L'\n';
-    }
-};
+    SetConsoleTextAttribute(
+        handle,
+        static_cast<WORD>(color)
+    );
 
-} // namespace Blade::Api
+    std::wprintf(
+        format,
+        args...
+    );
+
+    std::wprintf(L"\n");
+
+    SetConsoleTextAttribute(
+        handle,
+        info.wAttributes
+    );
+}
+
+} // namespace Blade::Log
+
+#define LOG(message) ::Blade::Log::Print(::Blade::Log::Color::Info, message)
+#define LOG_D(message) ::Blade::Log::Print(::Blade::Log::Color::Debug, message)
+#define LOG_W(message) ::Blade::Log::Print(::Blade::Log::Color::Warning, message)
+#define LOG_E(message) ::Blade::Log::Print(::Blade::Log::Color::Error, message)
+
+#define LOG_F(format, ...) ::Blade::Log::PrintFormat(::Blade::Log::Color::Info, format, __VA_ARGS__)
+#define LOG_DF(format, ...) ::Blade::Log::PrintFormat(::Blade::Log::Color::Debug, format, __VA_ARGS__)
+#define LOG_WF(format, ...) ::Blade::Log::PrintFormat(::Blade::Log::Color::Warning, format, __VA_ARGS__)
+#define LOG_EF(format, ...) ::Blade::Log::PrintFormat(::Blade::Log::Color::Error, format, __VA_ARGS__)

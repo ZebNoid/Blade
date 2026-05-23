@@ -8,9 +8,7 @@ namespace Blade::Backend {
 
 auto AppRuntime::run(Tick tick) -> int
 {
-    Api::Logger::Info(
-        L"App Start!"
-    );
+    LOG(L"App Start!");
 
     while (GetMessage(&m_msg, nullptr, 0, 0))
     {
@@ -28,9 +26,7 @@ auto AppRuntime::run(Tick tick) -> int
 
 auto AppRuntime::quit(int code) -> void
 {
-    Api::Logger::Info(
-        L"App Quit!"
-    );
+    LOG(L"App Quit!");
 
     PostQuitMessage(code);
 }
