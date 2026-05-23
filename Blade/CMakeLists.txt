@@ -11,6 +11,7 @@ add_library(${PROJECT_NAME} STATIC
 
         Base/Widget.h
         Base/RootWidget.h
+        Base/WidgetTree.h
 
         Widget/Window/Window.h
         Widget/Window/WindowProps.h
@@ -19,6 +20,9 @@ add_library(${PROJECT_NAME} STATIC
         Widget/Button/Button.h
         Widget/Button/ButtonProps.h
         Widget/Button/ButtonEvents.h
+
+        Widget/Layout/Column/Column.h
+        Widget/Layout/Column/ColumnProps.h
 
         Runtime/Materializer/Materializer.cpp
         Runtime/Materializer/Materializer.h
@@ -29,17 +33,12 @@ add_library(${PROJECT_NAME} STATIC
         Runtime/LayoutEngine/LayoutContext.h
         Runtime/LayoutEngine/LayoutEngine/LayoutEngine.cpp
         Runtime/LayoutEngine/LayoutEngine/LayoutEngine.h
+        Runtime/LayoutEngine/LayoutTreeBuilder/LayoutTreeBuilder.cpp
+        Runtime/LayoutEngine/LayoutTreeBuilder/LayoutTreeBuilder.h
+        Runtime/LayoutEngine/LayoutData.h
 
         Props/LayoutProps/CrossAxisAlignment.h
         Props/LayoutProps/MainAxisAlignment.h
-
-        Widget/Layout/Column/ColumnProps.h
-        Widget/Layout/Container.h
-        Runtime/LayoutEngine/LayoutTreeBuilder/LayoutTreeBuilder.cpp
-        Runtime/LayoutEngine/LayoutTreeBuilder/LayoutTreeBuilder.h
-        Base/WidgetTree.h
-        Runtime/LayoutEngine/LayoutData.h
-
 )
 
 # use Unicode

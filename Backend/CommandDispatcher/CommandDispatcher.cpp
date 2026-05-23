@@ -39,7 +39,7 @@ auto CommandDispatcher::dispatch(
 
 auto CommandDispatcher::create(const Api::BackendCommand& command) -> void
 {
-    // std::wcout << "Command::" << to_string(command.command) << " [" << command.nodeType << "]\n";
+    std::wcout << "Command::" << to_string(command.command) << " [" << command.nodeType << "]\n";
 
     auto node = m_backend->factory().create(command);
 
@@ -63,7 +63,7 @@ auto CommandDispatcher::attach(const Api::BackendCommand& command) -> void
         return;
     }
 
-    // std::wcout << "Command::" << to_string(command.command) << " [" << child->type << " -> " << parent->type << "]\n";
+    std::wcout << "Command::" << to_string(command.command) << " [" << child->type << " -> " << parent->type << "]\n";
 
     child->parent = command.parent;
 
