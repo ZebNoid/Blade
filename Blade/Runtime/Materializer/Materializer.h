@@ -2,6 +2,7 @@
 
 #include "Api/BackendCommand.h"
 #include "Base/WidgetTree.h"
+#include "Runtime/LayoutEngine/LayoutNode.h"
 
 
 namespace Blade {
@@ -11,12 +12,14 @@ class Materializer
 {
 public:
     auto build(
-        const WidgetTree& tree
+        const WidgetTree& widgetTree,
+        const LayoutNode& layoutTree
     ) -> std::vector<Api::BackendCommand>;
 
 private:
     auto buildNode(
-        const WidgetTree& node,
+        const WidgetTree& widget,
+        const LayoutNode& layout,
         std::vector<Api::BackendCommand>& out,
         Api::Id parent = Api::InvalidId
     ) -> void;

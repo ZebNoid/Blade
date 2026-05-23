@@ -1,5 +1,9 @@
 #include "App.h"
 
+#include "Runtime/LayoutEngine/LayoutContext.h"
+#include "Runtime/LayoutEngine/LayoutEngine/LayoutEngine.h"
+#include "Runtime/LayoutEngine/LayoutTreeBuilder/LayoutTreeBuilder.h"
+
 
 namespace Blade {
 
@@ -31,7 +35,51 @@ auto App::initBackend() -> int
 
 auto App::materialize(const WidgetTree& tree) -> void
 {
-    auto commands = m_materializer.build(tree);
+    // -------------------------------------------------
+    // Build layout tree
+    // -------------------------------------------------
+
+    auto layoutTree = LayoutTreeBuilder::Build(tree);
+
+    // -------------------------------------------------
+    // Measure
+    // -------------------------------------------------
+
+    LayoutContext measureCtx{
+        .node = &layoutTree,
+        .available = {
+            1280,
+            720
+        }
+    };
+
+    LayoutEngine::Measure(measureCtx);
+
+    // -------------------------------------------------
+    // Arrange
+    // -------------------------------------------------
+
+    LayoutContext arrangeCtx{
+        .node = &layoutTree,
+        .rect = {
+            0,
+            0,
+            1280,
+            720
+        }
+    };
+
+    LayoutEngine::Arrange(arrangeCtx);
+
+    // -------------------------------------------------
+    // Build backend commands
+    // -------------------------------------------------
+
+
+    auto commands = m_materializer.build(
+        tree,
+        layoutTree
+    );
 
     for (auto& cmd : commands)
     {
