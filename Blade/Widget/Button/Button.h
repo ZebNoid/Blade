@@ -11,15 +11,16 @@ namespace Blade {
 class Button : public Widget
 {
 public:
-    Button(Api::Text text)
+    explicit Button(Api::Text text)
     {
         m_tree.type = L"Button";
-        m_tree.custom = std::move(text);
+        Normalize::PropsMerge(m_tree, ButtonProps{});
+        m_tree.backend.create[Api::Props::Title] = std::move(text);
     }
 
     auto set(ButtonProps props) -> Button&
     {
-        m_tree.props = Normalize::Props(props);
+        Normalize::PropsMerge(m_tree, props);
         return *this;
     }
 

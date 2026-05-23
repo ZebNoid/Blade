@@ -1,8 +1,7 @@
 #pragma once
 
 #include "Api/ApiBackend.h"
-#include "Api/WidgetTree.h"
-#include "Runtime/Materializer/Materializer.h"
+#include "Runtime/LayoutRuntime/LayoutRuntime.h"
 
 
 namespace Blade {
@@ -38,11 +37,14 @@ private:
 
     auto initBackend() -> int;
 
-    auto materialize(const Api::WidgetTree& tree) -> void;
+    auto onNativeResize(
+        Api::Id rootId,
+        const Api::Size& size
+    ) -> void;
 
 private:
     std::unique_ptr<Api::ApiBackend> m_backend;
-    Materializer m_materializer;
+    std::unique_ptr<LayoutRuntime> m_layoutRuntime;
 
     friend class RootWidget;
 };

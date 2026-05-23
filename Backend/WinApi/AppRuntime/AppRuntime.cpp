@@ -1,6 +1,6 @@
 #include "AppRuntime.h"
 
-#include <iostream>
+#include "Common/Logger.h"
 
 
 namespace Blade::Backend {
@@ -8,7 +8,7 @@ namespace Blade::Backend {
 
 auto AppRuntime::run(Tick tick) -> int
 {
-    std::cout << "App Start!" << std::endl;
+    LOG(L"App Start!");
 
     while (GetMessage(&m_msg, nullptr, 0, 0))
     {
@@ -26,7 +26,7 @@ auto AppRuntime::run(Tick tick) -> int
 
 auto AppRuntime::quit(int code) -> void
 {
-    std::cout << "App Quit!" << std::endl;
+    LOG(L"App Quit!");
 
     PostQuitMessage(code);
 }

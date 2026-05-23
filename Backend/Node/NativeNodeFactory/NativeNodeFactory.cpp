@@ -1,7 +1,10 @@
 #include "NativeNodeFactory.h"
 
 #include "App/AppBackend.h"
+#include "Common/Logger.h"
 #include "Property/NativePropertyMapper/NativePropertyMapper.h"
+#include "WinApi/Components/Button/NativeButton.h"
+#include "WinApi/NativeApi/NativeApi.h"
 
 
 namespace Blade::Backend {
@@ -19,6 +22,11 @@ auto NativeNodeFactory::create(
         return createWindow(command);
     }
 
+    if (command.nodeType == L"Button")
+    {
+        return createButton(command);
+    }
+
     return std::nullopt;
 }
 
@@ -26,42 +34,76 @@ auto NativeNodeFactory::createWindow(
     const Api::BackendCommand& command
 ) -> std::optional<NativeNode>
 {
-    auto* nativeWindow = m_backend->host().createWindow();
+    auto nativeWindow = std::make_unique<NativeWindow>();
 
     if (!nativeWindow)
     {
         return std::nullopt;
     }
 
+    nativeWindow->create(m_backend->handle());
+
     nativeWindow->router().on(
-        WM_CLOSE,
-        [](HWND hwnd, UINT, WPARAM, LPARAM)
+        WM_SIZE,
+        [this, windowId = command.id](
+            HWND,
+            UINT,
+            WPARAM,
+            LPARAM lParam
+        ) -> int
         {
-            DestroyWindow(hwnd);
+            m_backend->onWindowResize(
+                windowId,
+                NativeApi::GetSizeFromLParam(lParam)
+            );
+
             return 0;
         }
     );
 
-    nativeWindow->router().on(
-        WM_DESTROY,
-        [nativeWindow](HWND, UINT, WPARAM, LPARAM)
-        {
-            nativeWindow->markDead();
-            return 0;
-        }
+    m_backend->host().attach(
+        nativeWindow.get()
     );
+
+    nativeWindow->applyProps(command.props);
+    nativeWindow->applyEvents(command.events);
 
     NativeNode node = {
         .id = command.id,
         .type = command.nodeType,
-        .hwnd = nativeWindow->handle(),
         .parent = command.parent,
+        .native = std::move(nativeWindow),
     };
 
-    NativePropertyMapper::apply(
-        node,
-        command.props
-    );
+    return node;
+}
+
+auto NativeNodeFactory::createButton(const Api::BackendCommand& command) -> std::optional<NativeNode>
+{
+    auto* parent = m_backend->nodes().get(command.parent);
+
+    if (!parent)
+    {
+        LOG_E(L"[Error] createButton no parent");
+        return std::nullopt;
+    }
+
+    auto button = std::make_unique<NativeButton>();
+
+    if (!button->create(parent->native->handle()))
+    {
+        return std::nullopt;
+    }
+
+    button->applyProps(command.props);
+    button->applyEvents(command.events);
+
+    NativeNode node = {
+        .id = command.id,
+        .type = command.nodeType,
+        .parent = command.parent,
+        .native = std::move(button),
+    };
 
     return node;
 }

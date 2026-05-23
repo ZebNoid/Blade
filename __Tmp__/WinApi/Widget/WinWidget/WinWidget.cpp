@@ -36,7 +36,7 @@ auto WinWidget::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 auto WinWidget::applyFont(HFONT font) const -> void
 {
-    // auto font = GetSystemUIFont();
+    // auto font = GetSystemUIFont(); // create_system_ui_font
     SendMessageW(m_hwnd, WM_SETFONT, (WPARAM)font, TRUE);
 }
 

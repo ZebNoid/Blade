@@ -10,23 +10,26 @@ namespace Blade {
 
 class Window : public RootWidget
 {
-    Api::Text m_type = L"Window";
-
 public:
     Window()
     {
-        m_tree.type = m_type;
+        m_tree.type = L"Window";
+        Normalize::PropsMerge(m_tree, WindowProps{});
     }
 
-    explicit Window(Widget child)
+    explicit Window(const Widget& child)
     {
-        m_tree.type = m_type;
-        m_tree.children.push_back(child.buildTree());
+        m_tree.type = L"Window";
+        Normalize::PropsMerge(m_tree, WindowProps{});
+
+        m_tree.children.push_back(
+            child.tree()
+        );
     }
 
     auto set(WindowProps props) -> Window&
     {
-        m_tree.props = Normalize::Props(props);
+        Normalize::PropsMerge(m_tree, props);
         return *this;
     }
 

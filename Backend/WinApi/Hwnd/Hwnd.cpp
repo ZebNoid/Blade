@@ -1,5 +1,7 @@
 #include "Hwnd.h"
 
+#include "Common/Logger.h"
+
 
 namespace Blade::Backend {
 
@@ -21,7 +23,7 @@ auto Hwnd::Create(const HwndDesc& desc) -> HWND
 
     if (!hwnd)
     {
-        std::wcerr << "[Error] Hwnd::Create[" << desc.className << "] " << GetLastError() << std::endl;
+        LOGF_E(L"[Error] Hwnd::Create[%s] %lu", desc.className, GetLastError());
     }
 
     return hwnd;

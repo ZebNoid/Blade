@@ -1,5 +1,7 @@
 #include "App.h"
 
+#include "Common/Logger.h"
+
 
 namespace Blade {
 
@@ -15,28 +17,43 @@ auto App::run() -> int
 
 auto App::addToTree(const RootWidget& rootWidget) -> void
 {
-    materialize(rootWidget.buildTree());
+    m_layoutRuntime->mount(rootWidget.tree());
 }
 
 auto App::initBackend() -> int
 {
     if (!m_backend)
     {
-        std::cerr << "No Backend set" << std::endl;
+        LOG_E(L"No Backend set");
         return -1;
     }
     m_backend->init();
+    m_layoutRuntime = std::make_unique<LayoutRuntime>(
+        m_backend.get()
+    );
+    m_backend->setResizeHandler(
+        [this](Api::Id rootId, const Api::Size& size)
+        {
+            onNativeResize(rootId, size);
+        }
+    );
     return 0;
 }
 
-auto App::materialize(const Api::WidgetTree& tree) -> void
+auto App::onNativeResize(
+    Api::Id rootId,
+    const Api::Size& size
+) -> void
 {
-    auto commands = m_materializer.build(tree);
-
-    for (auto& cmd : commands)
+    if (!m_layoutRuntime)
     {
-        m_backend->process(cmd);
+        return;
     }
+
+    m_layoutRuntime->resizeRoot(
+        rootId,
+        size
+    );
 }
 
 

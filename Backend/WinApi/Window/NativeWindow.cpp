@@ -1,7 +1,10 @@
 #include "NativeWindow.h"
 
+#include "Common/Logger.h"
+#include "Property/NativePropertyMapper/NativePropertyMapper.h"
 #include "WinApi/ClassRegistry/WindowClass.h"
 #include "WinApi/Hwnd/Hwnd.h"
+#include "WinApi/NativeApi/NativeApi.h"
 
 
 namespace Blade::Backend {
@@ -21,8 +24,7 @@ auto NativeWindow::create(HINSTANCE hInstance) -> bool
     m_hwnd = Hwnd::Create({
         .className = WindowClass::Get(CUSTOM_CLASS),
         .windowName = L"Blade",
-        .style = WS_OVERLAPPEDWINDOW | WS_VISIBLE,
-        // .position = {3200,400}, // TODO remove dev position!!!!
+        .style = WS_OVERLAPPEDWINDOW | WS_VISIBLE | WS_CLIPCHILDREN,
         .hInstance = hInstance,
         .lpParam = this,
     });
@@ -32,8 +34,8 @@ auto NativeWindow::create(HINSTANCE hInstance) -> bool
 
 auto NativeWindow::show(int cmdShow) -> void
 {
-    ShowWindow(m_hwnd, cmdShow);
-    UpdateWindow(m_hwnd);
+    NativeApi::Show(m_hwnd, cmdShow);
+    NativeApi::Update(m_hwnd);
 }
 
 auto NativeWindow::handle() const -> HWND
@@ -50,7 +52,7 @@ auto NativeWindow::destroy() -> void
 {
     if (m_hwnd != nullptr)
     {
-        DestroyWindow(m_hwnd);
+        NativeApi::Destroy(m_hwnd);
         m_hwnd = nullptr;
     }
 
@@ -65,6 +67,85 @@ auto NativeWindow::markDead() -> void
 auto NativeWindow::isAlive() const -> bool
 {
     return m_alive;
+}
+
+auto NativeWindow::attachChild(INativeElement* child) -> void
+{
+    if (!child)
+    {
+        LOG_E(L"[Error] NativeWindow::attachChild no child");
+        return;
+    }
+
+    if (NativeApi::SetParent(child->handle(), m_hwnd) == nullptr)
+    {
+        LOGF_E(L"[Error] NativeWindow::attachChild [%s] %lu", CUSTOM_CLASS, GetLastError());
+    }
+}
+
+auto NativeWindow::applyEvents(const Api::EventMap& eventMap) -> void
+{
+    // TODO leave in applyEvents?
+    m_router.on(
+        WM_DESTROY,
+        [this](HWND, UINT, WPARAM, LPARAM) -> int
+        {
+            // close default behavior
+            // step 1 -> markDead
+            this->markDead();
+            return 0;
+        }
+    );
+
+    m_router.on(
+        WM_CLOSE,
+        [](HWND hwnd, UINT, WPARAM, LPARAM) -> int
+        {
+            // close default behavior
+            // step 2 -> DestroyWindow
+            NativeApi::Destroy(hwnd);
+            return 0;
+        }
+    );
+}
+
+auto NativeWindow::applyProps(const Api::PropertyMap& propertyMap) -> void
+{
+    Api::PropertyMap nativeProps;
+
+    for (const auto& [key, value] : propertyMap)
+    {
+        switch (key)
+        {
+        case Api::Props::Rect:
+            if (const auto* rect = std::get_if<Api::Rect>(&value))
+            {
+                LOGF_D(L" -> Apply::%s %s", to_string(key).c_str(), to_string(*rect).c_str());
+
+                // TODO client rect
+                NativeApi::SetClientRect(m_hwnd, *rect);
+            }
+            break;
+
+        case Api::Props::Size:
+            if (const auto* size = std::get_if<Api::Size>(&value))
+            {
+                LOGF_D(L" -> Apply::%s %s", to_string(key).c_str(), to_string(*size).c_str());
+
+                NativeApi::SetClientSize(m_hwnd, *size);
+            }
+            break;
+
+        default:
+            nativeProps[key] = value;
+            break;
+        }
+    }
+
+    NativePropertyMapper::Apply(
+        m_hwnd,
+        nativeProps
+    );
 }
 
 

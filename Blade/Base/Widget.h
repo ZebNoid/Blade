@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Base/WidgetTree.h"
+
 
 namespace Blade {
 
@@ -9,18 +11,18 @@ class Widget
 public:
     Widget() = default;
 
-    Widget(Api::WidgetTree tree)
+    explicit Widget(WidgetTree tree)
         : m_tree(std::move(tree))
     {
     }
 
-    auto buildTree() const -> Api::WidgetTree
+    auto tree() const -> const WidgetTree&
     {
         return m_tree;
     }
 
 protected:
-    Api::WidgetTree m_tree;
+    WidgetTree m_tree;
 };
 
 

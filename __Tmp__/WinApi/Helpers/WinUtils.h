@@ -50,17 +50,6 @@ struct WinUtils
 
         SendMessage(hwnd, EM_SETRECT, 0, (LPARAM)&rc);
     }
-
-    static auto center(const Size size) -> Point
-    {
-        const int screenWidth = GetSystemMetrics(SM_CXSCREEN);
-        const int screenHeight = GetSystemMetrics(SM_CYSCREEN);
-
-        // Calculate centered position
-        const int xPos = (screenWidth - size.width) / 2;
-        const int yPos = (screenHeight - size.height) / 2;
-        return {xPos, yPos};
-    }
 };
 
 } // namespace

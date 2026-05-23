@@ -1,32 +1,25 @@
 #pragma once
 
-#include <memory>
-#include <windows.h>
-
 #include "WinApi/Window/NativeWindow.h"
 
 
 namespace Blade::Backend {
 
-// TODO rename WindowRuntime ?
 class WindowHost
 {
 public:
-    auto init(HINSTANCE hInstance) -> void;
+    auto attach(NativeWindow* window) -> void;
 
-    auto createWindow() -> NativeWindow*;
+    auto detach(NativeWindow* window) -> void;
 
     auto destroyClosedWindows() -> void;
 
-    auto windows() -> const std::vector<std::unique_ptr<NativeWindow>>&;
-
     auto count() const -> size_t;
 
+    auto windows() const -> const std::vector<NativeWindow*>&;
+
 private:
-    HINSTANCE m_hInstance = nullptr;
-
-    std::vector<std::unique_ptr<NativeWindow>> m_windows;
+    std::vector<NativeWindow*> m_windows;
 };
-
 
 } // namespace

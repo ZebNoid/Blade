@@ -3,7 +3,7 @@
 #include "Common/Point.h"
 #include "Common/Size.h"
 #include "Common/Types.h"
-#include "Runtime/Normalize/PropertyVisitor.h"
+#include "Runtime/Normalize/PropsVisitor.h"
 
 
 namespace Blade {
@@ -11,11 +11,11 @@ namespace Blade {
 
 struct WindowProps
 {
-    Api::Text title = L"Blade"; // TODO later
-    Api::Size size{800, 600};
-    Api::Point position{-1, -1};
+    Api::Text title = L"Blade";
+    Api::Size size{800,600}; // TODO default?
+    Api::Point position{-1, -1}; // TODO default?
 
-    auto visit(PropertyVisitor& v) const -> void
+    auto visit(PropsVisitor& v) const -> void
     {
         v.set(Api::Props::Title, title);
         v.set(Api::Props::Size, size);

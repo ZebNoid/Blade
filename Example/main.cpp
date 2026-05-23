@@ -17,19 +17,58 @@ protected:
 
     auto onCreate() -> void override
     {
+        // Window(
+        //     Button(L"Button")
+        // ).set({
+        //     .title = L"Test",
+        //     .size = {800, 600},
+        //     .position = {3300, 400},
+        // }).build(this);
+
         Window(
-            Button(L"Button").set({.isDefault = true,})
+            Column(
+                Button(L"Button").set({.layout = {.flex = 1,}})
+                , Button(L"Button")
+            ).set({
+                .mainAxisAlignment = MainAxisAlignment::End,
+            })
         ).set({
             .title = L"Test",
-            .size = {800, 300},
+            .size = {800, 600},
             .position = {3300, 400},
         }).build(this);
 
-        Window().set({
-            .title = L"Test 2",
-            .size = {400, 500},
-            .position = {3400, 300},
-        }).build(this);
+        // Window(
+        //     Column(
+        //         Row(
+        //             Button(L"One"),
+        //             Button(L"Two").set({.layout = {.flex = 1,},})
+        //         )
+        //         // .set({.gap = 8, .mainAxisAlignment = MainAxisAlignment::End})
+        //         , Button(L"Button")
+        //         , Button(L"Button2")//.set({.layout = {.flex = 1,},})
+        //         // , Stack(
+        //         //     Button(L"Back"),
+        //         //     Button(L"Front")
+        //         // )
+        //     ).set({
+        //         .gap = 12,
+        //         .layout = {.flex = 1,},
+        //         .mainAxisAlignment = MainAxisAlignment::End,
+        //         .crossAxisAlignment = CrossAxisAlignment::Stretch,
+        //     })
+        // ).set({
+        //     .title = L"Test",
+        //     .size = {800, 600},
+        //     .position = {3300, 400},
+        // }).build(this);
+
+
+        // Window().set({
+        //     .title = L"Test 2",
+        //     .size = {400, 500},
+        //     .position = {3400, 300},
+        // }).build(this);
 
         // return Window().buildTree();
         // return Button(L"Button").buildTree();
