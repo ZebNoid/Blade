@@ -10,11 +10,25 @@ auto LayoutEngine::Measure(
 {
     auto& node = *ctx.node;
 
-    // leaf/native widgets
+    // -------------------------------------------------
+    // Native leaf widget
+    // -------------------------------------------------
+
     if (node.children.empty())
     {
+        // temporary stub size
+
+        node.desiredSize = {
+            100,
+            30
+        };
+
         return node.desiredSize;
     }
+
+    // -------------------------------------------------
+    // Simple vertical container
+    // -------------------------------------------------
 
     int maxWidth = 0;
     int totalHeight = 0;
@@ -26,11 +40,16 @@ auto LayoutEngine::Measure(
             .available = ctx.available
         };
 
-        const auto size = Measure(childCtx);
+        const auto childSize =
+            Measure(childCtx);
 
-        maxWidth = max(maxWidth, size.width);
+        maxWidth = max(
+            maxWidth,
+            childSize.width
+        );
 
-        totalHeight += size.height;
+        totalHeight +=
+            childSize.height;
     }
 
     node.desiredSize = {
@@ -53,7 +72,7 @@ auto LayoutEngine::Arrange(
 
     for (auto& child : node.children)
     {
-        const auto size = child.desiredSize;
+        const auto& size = child.desiredSize;
 
         Api::Rect childRect{
             ctx.rect.x,
