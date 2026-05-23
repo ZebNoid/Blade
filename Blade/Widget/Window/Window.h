@@ -13,18 +13,16 @@ class Window : public RootWidget
 public:
     Window()
     {
-        m_tree.type = Window::type();
+        m_tree.type = L"Window";
     }
 
-    explicit Window(Widget child)
+    explicit Window(const Widget& child)
     {
-        m_tree.type = Window::type();
-        m_tree.children.push_back(child.buildTree());
-    }
+        m_tree.type = L"Window";
 
-    auto type() const -> Api::Text override
-    {
-        return L"Window";
+        m_tree.children.push_back(
+            child.tree()
+        );
     }
 
     auto set(WindowProps props) -> Window&

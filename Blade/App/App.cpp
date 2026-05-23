@@ -19,7 +19,7 @@ auto App::run() -> int
 
 auto App::addToTree(const RootWidget& rootWidget) -> void
 {
-    materialize(rootWidget.buildTree());
+    materialize(rootWidget.tree());
 }
 
 auto App::initBackend() -> int

@@ -11,15 +11,10 @@ namespace Blade {
 class Button : public Widget
 {
 public:
-    Button(Api::Text text)
+    explicit Button(Api::Text text)
     {
-        m_tree.type = Button::type();
-        m_tree.custom = std::move(text);
-    }
-
-    auto type() const -> Api::Text override
-    {
-        return L"Button";
+        m_tree.type = L"Button";
+        m_tree.props[Api::Props::Title] = std::move(text);
     }
 
     auto set(ButtonProps props) -> Button&

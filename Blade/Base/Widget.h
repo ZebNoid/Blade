@@ -7,21 +7,14 @@ namespace Blade {
 class Widget
 {
 public:
-    virtual ~Widget() = default; // TODO ?
-
     Widget() = default;
 
-    Widget(WidgetTree tree)
+    explicit Widget(WidgetTree tree)
         : m_tree(std::move(tree))
     {
     }
 
-    virtual auto type() const -> Api::Text
-    {
-        return L"Widget";
-    }
-
-    virtual auto buildTree() const -> WidgetTree
+    auto tree() const -> const WidgetTree&
     {
         return m_tree;
     }
