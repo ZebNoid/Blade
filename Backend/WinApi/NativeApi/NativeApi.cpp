@@ -123,6 +123,16 @@ auto NativeApi::GetScreenSize() -> Api::Size
     };
 }
 
+auto NativeApi::GetSizeFromLParam(
+    LPARAM lParam
+) -> Api::Size
+{
+    return {
+        LOWORD(lParam),
+        HIWORD(lParam)
+    };
+}
+
 auto NativeApi::SetIcon(HWND hwnd, const Api::Text& icon) -> HICON
 {
     HICON hIcon = (HICON)LoadImage(NULL, icon.c_str(), IMAGE_ICON, 32, 32, LR_LOADFROMFILE);

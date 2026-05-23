@@ -83,6 +83,10 @@ public:
 
     static auto GetScreenSize() -> Api::Size;
 
+    static auto GetSizeFromLParam(
+        LPARAM lParam
+    ) -> Api::Size;
+
     static auto SetIcon(HWND hwnd, const Api::Text& icon) -> HICON;
 };
 

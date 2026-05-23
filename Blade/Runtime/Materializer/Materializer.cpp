@@ -4,6 +4,28 @@
 namespace Blade {
 
 
+auto Materializer::assignIds(
+    WidgetTree& widgetTree
+) -> void
+{
+    assignNodeIds(widgetTree);
+}
+
+auto Materializer::assignNodeIds(
+    WidgetTree& widget
+) -> void
+{
+    if (widget.id == Api::InvalidId)
+    {
+        widget.id = nextId();
+    }
+
+    for (auto& child : widget.children)
+    {
+        assignNodeIds(child);
+    }
+}
+
 auto Materializer::build(
     const WidgetTree& widgetTree,
     const LayoutNode& layoutTree
@@ -15,6 +37,25 @@ auto Materializer::build(
         widgetTree,
         layoutTree,
         commands
+    );
+
+    return commands;
+}
+
+auto Materializer::buildUpdates(
+    const WidgetTree& widgetTree,
+    const LayoutNode& layoutTree,
+    bool includeRoot
+) -> std::vector<Api::BackendCommand>
+{
+    std::vector<Api::BackendCommand> commands;
+
+    buildUpdateNode(
+        widgetTree,
+        layoutTree,
+        commands,
+        Api::InvalidId,
+        includeRoot
     );
 
     return commands;
@@ -32,7 +73,10 @@ auto Materializer::buildNode(
     // Generate runtime id
     // -------------------------------------------------
 
-    const Api::Id id = nextId();
+    const Api::Id id =
+        widget.id != Api::InvalidId
+            ? widget.id
+            : nextId();
 
     // -------------------------------------------------
     // Native widgets only
@@ -114,6 +158,61 @@ auto Materializer::buildNode(
             layout.children[i],
             out,
             parent
+        );
+    }
+}
+
+auto Materializer::buildUpdateNode(
+    const WidgetTree& widget,
+    const LayoutNode& layout,
+    std::vector<Api::BackendCommand>& out,
+    Api::Id parent,
+    bool includeCurrent
+) -> void
+{
+    Api::Id currentParent = parent;
+
+    if (layout.isNative)
+    {
+        if (includeCurrent)
+        {
+            Api::PropertyMap props;
+
+            if (parent != Api::InvalidId)
+            {
+                props[Api::Props::Position] =
+                    Api::Point{
+                        layout.rect.x,
+                        layout.rect.y
+                    };
+            }
+
+            props[Api::Props::Size] =
+                Api::Size{
+                    layout.rect.width,
+                    layout.rect.height
+                };
+
+            out.push_back({
+                .command = Api::CommandType::Update,
+                .id = widget.id,
+                .props = std::move(props)
+            });
+        }
+
+        currentParent = widget.id;
+    }
+
+    for (size_t i = 0;
+         i < widget.children.size();
+         ++i)
+    {
+        buildUpdateNode(
+            widget.children[i],
+            layout.children[i],
+            out,
+            currentParent,
+            true
         );
     }
 }

@@ -3,6 +3,7 @@
 #include "App/AppBackend.h"
 #include "Property/NativePropertyMapper/NativePropertyMapper.h"
 #include "WinApi/Components/Button/NativeButton.h"
+#include "WinApi/NativeApi/NativeApi.h"
 
 
 namespace Blade::Backend {
@@ -40,6 +41,24 @@ auto NativeNodeFactory::createWindow(
     }
 
     nativeWindow->create(m_backend->handle());
+
+    nativeWindow->router().on(
+        WM_SIZE,
+        [this, windowId = command.id](
+            HWND,
+            UINT,
+            WPARAM,
+            LPARAM lParam
+        ) -> int
+        {
+            m_backend->onWindowResize(
+                windowId,
+                NativeApi::GetSizeFromLParam(lParam)
+            );
+
+            return 0;
+        }
+    );
 
     m_backend->host().attach(
         nativeWindow.get()

@@ -37,6 +37,15 @@ public:
 
     auto quit() -> void override;
 
+    auto setResizeHandler(
+        Api::ResizeHandler handler
+    ) -> void override;
+
+    auto onWindowResize(
+        Api::Id windowId,
+        const Api::Size& size
+    ) -> void;
+
     auto process(const Api::BackendCommand& command) -> void override;
 
     auto host() -> WindowHost&;
@@ -59,6 +68,8 @@ private:
     CommandDispatcher m_dispatcher;
 
     NativeNodeFactory m_factory;
+
+    Api::ResizeHandler m_resizeHandler;
 };
 
 

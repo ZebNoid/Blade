@@ -3,6 +3,7 @@
 #include "Api/ApiBackend.h"
 #include "Base/WidgetTree.h"
 #include "Runtime/Materializer/Materializer.h"
+#include <unordered_map>
 
 
 namespace Blade {
@@ -40,9 +41,20 @@ private:
 
     auto materialize(const WidgetTree& tree) -> void;
 
+    auto updateLayout(
+        const WidgetTree& tree,
+        const Api::Size& size
+    ) -> void;
+
+    auto onNativeResize(
+        Api::Id rootId,
+        const Api::Size& size
+    ) -> void;
+
 private:
     std::unique_ptr<Api::ApiBackend> m_backend;
     Materializer m_materializer;
+    std::unordered_map<Api::Id, WidgetTree> m_roots;
 
     friend class RootWidget;
 };

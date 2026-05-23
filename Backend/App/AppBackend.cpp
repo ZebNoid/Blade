@@ -41,6 +41,24 @@ auto AppBackend::quit() -> void
     m_runtime.quit();
 }
 
+auto AppBackend::setResizeHandler(
+    Api::ResizeHandler handler
+) -> void
+{
+    m_resizeHandler = std::move(handler);
+}
+
+auto AppBackend::onWindowResize(
+    Api::Id windowId,
+    const Api::Size& size
+) -> void
+{
+    if (m_resizeHandler)
+    {
+        m_resizeHandler(windowId, size);
+    }
+}
+
 auto AppBackend::process(const Api::BackendCommand& command) -> void
 {
     m_dispatcher.dispatch(command); // With Error !

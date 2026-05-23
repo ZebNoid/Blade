@@ -19,7 +19,18 @@ auto App::run() -> int
 
 auto App::addToTree(const RootWidget& rootWidget) -> void
 {
-    materialize(rootWidget.tree());
+    auto tree = rootWidget.tree();
+
+    m_materializer.assignIds(tree);
+
+    const auto rootId = tree.id;
+
+    materialize(tree);
+
+    m_roots.insert_or_assign(
+        rootId,
+        std::move(tree)
+    );
 }
 
 auto App::initBackend() -> int
@@ -30,6 +41,12 @@ auto App::initBackend() -> int
         return -1;
     }
     m_backend->init();
+    m_backend->setResizeHandler(
+        [this](Api::Id rootId, const Api::Size& size)
+        {
+            onNativeResize(rootId, size);
+        }
+    );
     return 0;
 }
 
@@ -86,6 +103,63 @@ auto App::materialize(const WidgetTree& tree) -> void
     {
         m_backend->process(cmd);
     }
+}
+
+auto App::updateLayout(
+    const WidgetTree& tree,
+    const Api::Size& size
+) -> void
+{
+    auto layoutTree = LayoutTreeBuilder::Build(tree);
+    layoutTree.layout.size = size;
+
+    LayoutContext measureCtx{
+        .node = &layoutTree,
+        .available = size
+    };
+
+    LayoutEngine::Measure(measureCtx);
+
+    LayoutContext arrangeCtx{
+        .node = &layoutTree,
+        .rect = {
+            0,
+            0,
+            size.width,
+            size.height
+        }
+    };
+
+    LayoutEngine::Arrange(arrangeCtx);
+
+    auto commands = m_materializer.buildUpdates(
+        tree,
+        layoutTree,
+        false
+    );
+
+    for (auto& cmd : commands)
+    {
+        m_backend->process(cmd);
+    }
+}
+
+auto App::onNativeResize(
+    Api::Id rootId,
+    const Api::Size& size
+) -> void
+{
+    const auto it = m_roots.find(rootId);
+
+    if (it == m_roots.end())
+    {
+        return;
+    }
+
+    updateLayout(
+        it->second,
+        size
+    );
 }
 
 
