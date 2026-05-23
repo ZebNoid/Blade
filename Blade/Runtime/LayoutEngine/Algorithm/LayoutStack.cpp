@@ -1,5 +1,6 @@
 #include "LayoutStack.h"
 
+#include "Runtime/LayoutEngine/Geometry/LayoutGeometry.h"
 #include "Runtime/LayoutEngine/LayoutEngine/LayoutEngine.h"
 
 
@@ -26,29 +27,31 @@ auto LayoutStack::Measure(
                 childCtx
             );
 
+        const auto marginSize =
+            LayoutGeometry::Inflate(
+                size,
+                child.layout.box.margin
+            );
+
         maxWidth = max(
             maxWidth,
-            size.width
+            marginSize.width
         );
 
         maxHeight = max(
             maxHeight,
-            size.height
+            marginSize.height
         );
     }
 
-    const auto& padding =
-        node.layout.box.padding;
-
-    node.desiredSize = {
-        maxWidth +
-        padding.left +
-        padding.right,
-
-        maxHeight +
-        padding.top +
-        padding.bottom
-    };
+    node.desiredSize =
+        LayoutGeometry::Inflate(
+            {
+                maxWidth,
+                maxHeight
+            },
+            node.layout.box.padding
+        );
 
     return node.desiredSize;
 }
@@ -59,25 +62,23 @@ auto LayoutStack::Arrange(
 {
     auto& node = *ctx.node;
 
-    const auto& padding =
-        node.layout.box.padding;
-
-    Api::Rect contentRect{
-        ctx.rect.x + padding.left,
-        ctx.rect.y + padding.top,
-        ctx.rect.width -
-        padding.left -
-        padding.right,
-        ctx.rect.height -
-        padding.top -
-        padding.bottom
-    };
+    const auto contentRect =
+        LayoutGeometry::Deflate(
+            ctx.rect,
+            node.layout.box.padding
+        );
 
     for (auto& child : node.children)
     {
+        const auto childRect =
+            LayoutGeometry::Deflate(
+                contentRect,
+                child.layout.box.margin
+            );
+
         LayoutContext childCtx{
             .node = &child,
-            .rect = contentRect
+            .rect = childRect
         };
 
         LayoutEngine::Arrange(childCtx);

@@ -2,6 +2,8 @@
 #include <utility>
 
 #include "Common/Property.h"
+#include "Props/LayoutProps/CrossAxisAlignment.h"
+#include "Props/LayoutProps/MainAxisAlignment.h"
 #include "Runtime/Normalize/NormalizedProps.h"
 
 
@@ -61,6 +63,22 @@ public:
         default:
             break;
         }
+    }
+
+    auto set(
+        const MainAxisAlignment alignment
+    ) -> void
+    {
+        m_props.layout.mainAxisAlignment = alignment;
+        m_props.hasMainAxisAlignment = true;
+    }
+
+    auto set(
+        const CrossAxisAlignment alignment
+    ) -> void
+    {
+        m_props.layout.crossAxisAlignment = alignment;
+        m_props.hasCrossAxisAlignment = true;
     }
 
     auto take() -> NormalizedProps

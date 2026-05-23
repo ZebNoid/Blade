@@ -29,13 +29,21 @@ protected:
             Column(
                 Row(
                     Button(L"One"),
-                    Button(L"Two")
-                ).set({.gap = 8}),
-                Stack(
-                    Button(L"Back"),
-                    Button(L"Front")
+                    Button(L"Two").set({.layout = {.flex = 1,},})
                 )
-            ).set({.gap = 12})
+                // .set({.gap = 8, .mainAxisAlignment = MainAxisAlignment::End})
+                , Button(L"Button")
+                , Button(L"Button2")//.set({.layout = {.flex = 1,},})
+                // , Stack(
+                //     Button(L"Back"),
+                //     Button(L"Front")
+                // )
+            ).set({
+                .gap = 12,
+                .layout = {.flex = 1,},
+                .mainAxisAlignment = MainAxisAlignment::End,
+                .crossAxisAlignment = CrossAxisAlignment::Stretch,
+            })
         ).set({
             .title = L"Test",
             .size = {800, 600},

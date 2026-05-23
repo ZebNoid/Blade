@@ -31,6 +31,8 @@ struct NormalizedProps
     bool hasSize = false;
     bool hasPosition = false;
     bool hasGap = false;
+    bool hasMainAxisAlignment = false;
+    bool hasCrossAxisAlignment = false;
 
     auto applyTo(
         LayoutData& target
@@ -54,6 +56,16 @@ struct NormalizedProps
         if (hasGap)
         {
             target.gap = layout.gap;
+        }
+
+        if (hasMainAxisAlignment)
+        {
+            target.mainAxisAlignment = layout.mainAxisAlignment;
+        }
+
+        if (hasCrossAxisAlignment)
+        {
+            target.crossAxisAlignment = layout.crossAxisAlignment;
         }
     }
 };

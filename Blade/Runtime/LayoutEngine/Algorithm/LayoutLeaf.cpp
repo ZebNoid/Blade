@@ -1,5 +1,6 @@
 #include "LayoutLeaf.h"
 
+#include "Runtime/LayoutEngine/Geometry/LayoutGeometry.h"
 #include "Runtime/LayoutEngine/LayoutEngine/LayoutEngine.h"
 
 
@@ -28,14 +29,20 @@ auto LayoutLeaf::Measure(
                 childCtx
             );
 
+        const auto marginSize =
+            LayoutGeometry::Inflate(
+                size,
+                child.layout.box.margin
+            );
+
         maxWidth = max(
             maxWidth,
-            size.width
+            marginSize.width
         );
 
         maxHeight = max(
             maxHeight,
-            size.height
+            marginSize.height
         );
     }
 
@@ -49,6 +56,12 @@ auto LayoutLeaf::Measure(
         node.desiredSize.height = maxHeight;
     }
 
+    node.desiredSize =
+        LayoutGeometry::Inflate(
+            node.desiredSize,
+            node.layout.box.padding
+        );
+
     return node.desiredSize;
 }
 
@@ -58,29 +71,10 @@ auto LayoutLeaf::Arrange(
 {
     auto& node = *ctx.node;
 
-    const auto& padding =
-        node.layout.box.padding;
-
-    const int x =
-        ctx.rect.x + padding.left;
-
-    const int y =
-        ctx.rect.y + padding.top;
-
-    const int width =
-        max(
-            0,
-            ctx.rect.width -
-            padding.left -
-            padding.right
-        );
-
-    const int height =
-        max(
-            0,
-            ctx.rect.height -
-            padding.top -
-            padding.bottom
+    const auto contentRect =
+        LayoutGeometry::Deflate(
+            ctx.rect,
+            node.layout.box.padding
         );
 
     for (auto& child : node.children)
@@ -88,15 +82,21 @@ auto LayoutLeaf::Arrange(
         const auto size =
             child.desiredSize;
 
+        const auto childContentRect =
+            LayoutGeometry::Deflate(
+                contentRect,
+                child.layout.box.margin
+            );
+
         Api::Rect childRect{
-            x,
-            y,
+            childContentRect.x,
+            childContentRect.y,
             child.layoutType == LayoutType::None
                 ? size.width
-                : width,
+                : childContentRect.width,
             child.layoutType == LayoutType::None
                 ? size.height
-                : height
+                : childContentRect.height
         };
 
         LayoutContext childCtx{

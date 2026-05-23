@@ -14,15 +14,14 @@ struct ColumnProps
     int gap = 0;
     Api::LayoutProps layout;
     MainAxisAlignment mainAxisAlignment = MainAxisAlignment::Start;
-    CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment::Start;
+    CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment::Stretch;
 
     auto visit(PropsVisitor& v) const -> void
     {
         v.set(Api::Props::Gap, gap);
         v.set(Api::Props::Layout, layout);
-        // TODO
-        // v.setLayout(LayoutEngineKey::Alignment, mainAxisAlignment);
-        // v.setLayout(LayoutEngineKey::Alignment, crossAxisAlignment);
+        v.set(mainAxisAlignment);
+        v.set(crossAxisAlignment);
     }
 };
 

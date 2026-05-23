@@ -1,5 +1,6 @@
 #include "LayoutColumn.h"
 
+#include "Runtime/LayoutEngine/Geometry/LayoutGeometry.h"
 #include "Runtime/LayoutEngine/LayoutEngine/LayoutEngine.h"
 
 
@@ -28,6 +29,12 @@ auto LayoutColumn::Measure(
                 childCtx
             );
 
+        const auto marginSize =
+            LayoutGeometry::Inflate(
+                size,
+                child.layout.box.margin
+            );
+
         if (!first)
         {
             totalHeight +=
@@ -38,25 +45,21 @@ auto LayoutColumn::Measure(
 
         maxWidth = max(
             maxWidth,
-            size.width
+            marginSize.width
         );
 
         totalHeight +=
-            size.height;
+            marginSize.height;
     }
 
-    const auto& padding =
-        node.layout.box.padding;
-
-    node.desiredSize = {
-        maxWidth +
-        padding.left +
-        padding.right,
-
-        totalHeight +
-        padding.top +
-        padding.bottom
-    };
+    node.desiredSize =
+        LayoutGeometry::Inflate(
+            {
+                maxWidth,
+                totalHeight
+            },
+            node.layout.box.padding
+        );
 
     return node.desiredSize;
 }
@@ -67,28 +70,63 @@ auto LayoutColumn::Arrange(
 {
     auto& node = *ctx.node;
 
-    const auto& padding =
-        node.layout.box.padding;
+    const auto contentRect =
+        LayoutGeometry::Deflate(
+            ctx.rect,
+            node.layout.box.padding
+        );
 
-    int cursorY =
-        ctx.rect.y + padding.top;
-
-    const int x =
-        ctx.rect.x + padding.left;
-
-    const int width =
-        ctx.rect.width -
-        padding.left -
-        padding.right;
+    int contentHeight = 0;
 
     bool first = true;
+
+    for (const auto& child : node.children)
+    {
+        if (!first)
+        {
+            contentHeight +=
+                node.layout.gap;
+        }
+
+        first = false;
+
+        contentHeight +=
+            child.layout.box.margin.top +
+            child.desiredSize.height +
+            child.layout.box.margin.bottom;
+    }
+
+    const int itemCount =
+        static_cast<int>(
+            node.children.size()
+        );
+
+    const int itemGap =
+        LayoutGeometry::MainAxisGap(
+            node.layout.mainAxisAlignment,
+            node.layout.gap,
+            contentRect.height,
+            contentHeight,
+            itemCount
+        );
+
+    int cursorY =
+        contentRect.y +
+        LayoutGeometry::MainAxisOffset(
+            node.layout.mainAxisAlignment,
+            contentRect.height,
+            contentHeight,
+            itemCount
+        );
+
+    first = true;
 
     for (auto& child : node.children)
     {
         if (!first)
         {
             cursorY +=
-                node.layout.gap;
+                itemGap;
         }
 
         first = false;
@@ -96,10 +134,62 @@ auto LayoutColumn::Arrange(
         const auto size =
             child.desiredSize;
 
+        const auto& margin =
+            child.layout.box.margin;
+
+        cursorY +=
+            margin.top;
+
+        int childX =
+            contentRect.x +
+            margin.left;
+
+        int childWidth =
+            size.width;
+
+        const int crossWidth =
+            LayoutGeometry::NonNegative(
+                contentRect.width -
+                margin.left -
+                margin.right
+            );
+
+        switch (node.layout.crossAxisAlignment)
+        {
+        case CrossAxisAlignment::Center:
+            childX =
+                contentRect.x +
+                margin.left +
+                LayoutGeometry::NonNegative(
+                    crossWidth -
+                    size.width
+                ) / 2;
+            break;
+
+        case CrossAxisAlignment::End:
+            childX =
+                contentRect.x +
+                contentRect.width -
+                margin.right -
+                size.width;
+            break;
+
+        case CrossAxisAlignment::Stretch:
+            childWidth = crossWidth;
+            break;
+
+        case CrossAxisAlignment::Start:
+        default:
+            break;
+        }
+
         Api::Rect childRect{
-            x,
+            childX,
+
             cursorY,
-            width,
+
+            childWidth,
+
             size.height
         };
 
@@ -111,6 +201,7 @@ auto LayoutColumn::Arrange(
         LayoutEngine::Arrange(childCtx);
 
         cursorY += size.height;
+        cursorY += margin.bottom;
     }
 }
 
