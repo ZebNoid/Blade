@@ -59,13 +59,15 @@ auto App::materialize(const WidgetTree& tree) -> void
     // Arrange
     // -------------------------------------------------
 
+    const auto rootSize = layoutTree.layout.size;
+
     LayoutContext arrangeCtx{
         .node = &layoutTree,
         .rect = {
             0,
             0,
-            1280,
-            720
+            rootSize.width,
+            rootSize.height
         }
     };
 

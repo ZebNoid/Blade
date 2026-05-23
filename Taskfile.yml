@@ -1,0 +1,22 @@
+version: '3'
+
+vars:
+  GREETING: Hello, Blade!
+
+tasks:
+  default:
+    desc: Example
+    cmds:
+      - echo "{{.GREETING}}"
+      - task: setup
+      - task: build
+      - ./cmake-build-vs/Example/Debug/Example.exe
+    silent: true
+
+  setup:
+    cmds: 
+      - cmake -S . -B cmake-build-vs -G "Visual Studio 17 2022" -A x64
+
+  build:
+    cmds: 
+      - cmake --build cmake-build-vs --target Example --config Debug

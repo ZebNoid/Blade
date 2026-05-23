@@ -78,6 +78,34 @@ auto LayoutTreeBuilder::ExtractLayoutData(
         }
     }
 
+    // Size
+    if (const auto it =
+            props.find(Api::Props::Size);
+        it != props.end())
+    {
+        if (const auto* size =
+            std::get_if<Api::Size>(
+                &it->second
+            ))
+        {
+            data.size = *size;
+        }
+    }
+
+    // Position
+    if (const auto it =
+            props.find(Api::Props::Position);
+        it != props.end())
+    {
+        if (const auto* position =
+            std::get_if<Api::Point>(
+                &it->second
+            ))
+        {
+            data.position = *position;
+        }
+    }
+
     return data;
 }
 

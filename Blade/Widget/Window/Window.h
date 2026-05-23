@@ -14,11 +14,13 @@ public:
     Window()
     {
         m_tree.type = L"Window";
+        m_tree.props = Normalize::Props(WindowProps{});
     }
 
     explicit Window(const Widget& child)
     {
         m_tree.type = L"Window";
+        m_tree.props = Normalize::Props(WindowProps{});
 
         m_tree.children.push_back(
             child.tree()
@@ -27,7 +29,11 @@ public:
 
     auto set(WindowProps props) -> Window&
     {
-        m_tree.props = Normalize::Props(props);
+        auto normalized = Normalize::Props(props);
+        for (auto& [key, value] : normalized)
+        {
+            m_tree.props.insert_or_assign(key, std::move(value));
+        }
         return *this;
     }
 

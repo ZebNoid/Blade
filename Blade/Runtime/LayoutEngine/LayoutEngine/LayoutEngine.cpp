@@ -60,12 +60,7 @@ auto LayoutEngine::MeasureLeaf(
 {
     auto& node = *ctx.node;
 
-    // temporary stub
-
-    node.desiredSize = {
-        100,
-        30
-    };
+    node.desiredSize = node.layout.size;
 
     return node.desiredSize;
 }

@@ -66,11 +66,23 @@ auto Materializer::buildNode(
 
         Api::PropertyMap props;
 
-        props[Api::Props::Position] =
-            Api::Point{
-                layout.rect.x,
-                layout.rect.y
-            };
+        if (parent == Api::InvalidId)
+        {
+            if (const auto it =
+                    widget.props.find(Api::Props::Position);
+                it != widget.props.end())
+            {
+                props[Api::Props::Position] = it->second;
+            }
+        }
+        else
+        {
+            props[Api::Props::Position] =
+                Api::Point{
+                    layout.rect.x,
+                    layout.rect.y
+                };
+        }
 
         props[Api::Props::Size] =
             Api::Size{

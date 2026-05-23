@@ -2,6 +2,7 @@
 
 
 #include "ColumnProps.h"
+#include "Runtime/Normalize/Normalize.h"
 
 
 namespace Blade {
@@ -13,6 +14,7 @@ public:
     {
         m_tree.type = L"Column";
         m_tree.layoutType = LayoutType::Column;
+        m_tree.props = Normalize::Props(ColumnProps{});
     }
 
     template <typename... TChildren>
@@ -20,6 +22,7 @@ public:
     {
         m_tree.type = L"Column";
         m_tree.layoutType = LayoutType::Column;
+        m_tree.props = Normalize::Props(ColumnProps{});
 
         (
             m_tree.children.push_back(
@@ -31,7 +34,11 @@ public:
 
     auto set(ColumnProps props) -> Column&
     {
-        m_tree.props = Normalize::Props(props);
+        auto normalized = Normalize::Props(props);
+        for (auto& [key, value] : normalized)
+        {
+            m_tree.props.insert_or_assign(key, std::move(value));
+        }
         return *this;
     }
 };
