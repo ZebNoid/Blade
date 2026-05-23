@@ -27,28 +27,41 @@ protected:
 
         Window(
             Column(
-                Row(
-                    Button(L"One"),
-                    Button(L"Two").set({.layout = {.flex = 1,},})
-                )
-                // .set({.gap = 8, .mainAxisAlignment = MainAxisAlignment::End})
+                Button(L"Button").set({.layout = {.flex = 1,}})
                 , Button(L"Button")
-                , Button(L"Button2")//.set({.layout = {.flex = 1,},})
-                // , Stack(
-                //     Button(L"Back"),
-                //     Button(L"Front")
-                // )
             ).set({
-                .gap = 12,
-                .layout = {.flex = 1,},
                 .mainAxisAlignment = MainAxisAlignment::End,
-                .crossAxisAlignment = CrossAxisAlignment::Stretch,
             })
         ).set({
             .title = L"Test",
             .size = {800, 600},
             .position = {3300, 400},
         }).build(this);
+
+        // Window(
+        //     Column(
+        //         Row(
+        //             Button(L"One"),
+        //             Button(L"Two").set({.layout = {.flex = 1,},})
+        //         )
+        //         // .set({.gap = 8, .mainAxisAlignment = MainAxisAlignment::End})
+        //         , Button(L"Button")
+        //         , Button(L"Button2")//.set({.layout = {.flex = 1,},})
+        //         // , Stack(
+        //         //     Button(L"Back"),
+        //         //     Button(L"Front")
+        //         // )
+        //     ).set({
+        //         .gap = 12,
+        //         .layout = {.flex = 1,},
+        //         .mainAxisAlignment = MainAxisAlignment::End,
+        //         .crossAxisAlignment = CrossAxisAlignment::Stretch,
+        //     })
+        // ).set({
+        //     .title = L"Test",
+        //     .size = {800, 600},
+        //     .position = {3300, 400},
+        // }).build(this);
 
 
         // Window().set({

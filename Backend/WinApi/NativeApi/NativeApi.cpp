@@ -3,6 +3,59 @@
 
 namespace Blade::Backend {
 
+namespace {
+
+auto GetWindowStyle(
+    HWND hwnd
+) -> DWORD
+{
+    return static_cast<DWORD>(
+        GetWindowLongPtr(
+            hwnd,
+            GWL_STYLE
+        )
+    );
+}
+
+auto GetWindowExStyle(
+    HWND hwnd
+) -> DWORD
+{
+    return static_cast<DWORD>(
+        GetWindowLongPtr(
+            hwnd,
+            GWL_EXSTYLE
+        )
+    );
+}
+
+auto ToOuterSize(
+    HWND hwnd,
+    const Api::Size& clientSize
+) -> Api::Size
+{
+    RECT rect{
+        0,
+        0,
+        clientSize.width,
+        clientSize.height
+    };
+
+    AdjustWindowRectEx(
+        &rect,
+        GetWindowStyle(hwnd),
+        FALSE,
+        GetWindowExStyle(hwnd)
+    );
+
+    return {
+        rect.right - rect.left,
+        rect.bottom - rect.top
+    };
+}
+
+} // namespace
+
 
 auto NativeApi::SetParent(HWND hwnd, HWND hwndParent) -> HWND
 {
@@ -41,7 +94,30 @@ auto NativeApi::SetSize(
     const Api::Size& size
 ) -> void
 {
-    SetWindowPos(hwnd, nullptr, 0, 0, size.width, size.height, SWP_NOMOVE | SWP_NOZORDER);
+    SetWindowPos(
+        hwnd,
+        nullptr,
+        0,
+        0,
+        size.width,
+        size.height,
+        SWP_NOMOVE |
+        SWP_NOZORDER
+    );
+}
+
+auto NativeApi::SetClientSize(
+    HWND hwnd,
+    const Api::Size& size
+) -> void
+{
+    SetSize(
+        hwnd,
+        ToOuterSize(
+            hwnd,
+            size
+        )
+    );
 }
 
 auto NativeApi::SetRect(
@@ -58,6 +134,23 @@ auto NativeApi::SetRect(
         rect.height,
         SWP_NOZORDER |
         SWP_NOACTIVATE
+    );
+}
+
+auto NativeApi::SetClientRect(
+    HWND hwnd,
+    const Api::Rect& rect
+) -> void
+{
+    SetRect(
+        hwnd,
+        {
+            rect.position(),
+            ToOuterSize(
+                hwnd,
+                rect.size()
+            )
+        }
     );
 }
 

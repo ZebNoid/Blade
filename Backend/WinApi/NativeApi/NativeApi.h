@@ -46,7 +46,17 @@ public:
         const Api::Size& size
     ) -> void;
 
+    static auto SetClientSize(
+        HWND hwnd,
+        const Api::Size& size
+    ) -> void;
+
     static auto SetRect(
+        HWND hwnd,
+        const Api::Rect& rect
+    ) -> void;
+
+    static auto SetClientRect(
         HWND hwnd,
         const Api::Rect& rect
     ) -> void;

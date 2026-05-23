@@ -110,7 +110,42 @@ auto NativeWindow::applyEvents(const Api::EventMap& eventMap) -> void
 
 auto NativeWindow::applyProps(const Api::PropertyMap& propertyMap) -> void
 {
-    NativePropertyMapper::Apply(m_hwnd, propertyMap);
+    Api::PropertyMap nativeProps;
+
+    for (const auto& [key, value] : propertyMap)
+    {
+        switch (key)
+        {
+        case Api::Props::Rect:
+            if (const auto* rect = std::get_if<Api::Rect>(&value))
+            {
+                std::wcout << " -> Apply::" << to_string(key) << " "
+                    << to_string(*rect) << "\n";
+
+                NativeApi::SetClientRect(m_hwnd, *rect);
+            }
+            break;
+
+        case Api::Props::Size:
+            if (const auto* size = std::get_if<Api::Size>(&value))
+            {
+                std::wcout << " -> Apply::" << to_string(key) << " "
+                    << to_string(*size) << "\n";
+
+                NativeApi::SetClientSize(m_hwnd, *size);
+            }
+            break;
+
+        default:
+            nativeProps[key] = value;
+            break;
+        }
+    }
+
+    NativePropertyMapper::Apply(
+        m_hwnd,
+        nativeProps
+    );
 }
 
 
