@@ -28,6 +28,10 @@ protected:
         Window(
             Column(
                 Button(L"Button C1"),
+                Stack(
+                    Button(L"Button R1").set({.size = {40,40},}),
+                    Button(L"Button R1")
+                ),
                 Button(L"Button C2").set({.isDefault = true,}),
                 Row(Button(L"Button R1"), Button(L"Button R2")),
                 Button(L"Button")
