@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Api/BackendCommand.h"
-#include "Api/WidgetTree.h"
+#include "Base/WidgetTree.h"
 
 
 namespace Blade {
@@ -11,12 +11,12 @@ class Materializer
 {
 public:
     auto build(
-        const Api::WidgetTree& tree
+        const WidgetTree& tree
     ) -> std::vector<Api::BackendCommand>;
 
 private:
     auto buildNode(
-        const Api::WidgetTree& node,
+        const WidgetTree& node,
         std::vector<Api::BackendCommand>& out,
         Api::Id parent = Api::InvalidId
     ) -> void;

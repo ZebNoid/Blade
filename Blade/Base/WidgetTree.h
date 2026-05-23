@@ -1,13 +1,14 @@
 #pragma once
-#include <any>
+
 #include <string>
 #include <vector>
 
+#include "Runtime/LayoutEngine/LayoutEnginePropMap.h"
 #include "Common/Property.h"
 #include "Common/Types.h"
 
 
-namespace Blade::Api {
+namespace Blade {
 
 
 // TODO move to Blade?
@@ -17,6 +18,7 @@ struct WidgetTree
 
     Api::Text type; // "Window", "Button", "Column"
 
+    // backend
     Api::PropertyMap props;
     Api::EventMap events;
     // TODO map std::any custom; ?

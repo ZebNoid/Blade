@@ -17,6 +17,14 @@ protected:
 
     auto onCreate() -> void override
     {
+        // Window(
+        //     Button(L"Button")
+        // ).set({
+        //     .title = L"Test",
+        //     .size = {800, 600},
+        //     .position = {3300, 400},
+        // }).build(this);
+
         Window(
             Column(
                 Button(L"Button"),
@@ -27,6 +35,7 @@ protected:
             .size = {800, 600},
             .position = {3300, 400},
         }).build(this);
+
 
         // Window().set({
         //     .title = L"Test 2",

@@ -5,7 +5,7 @@ namespace Blade {
 
 
 auto Materializer::build(
-    const Api::WidgetTree& tree
+    const WidgetTree& tree
 ) -> std::vector<Api::BackendCommand>
 {
     std::vector<Api::BackendCommand> commands;
@@ -20,7 +20,7 @@ auto Materializer::build(
 
 
 auto Materializer::buildNode(
-    const Api::WidgetTree& node,
+    const WidgetTree& node,
     std::vector<Api::BackendCommand>& out,
     Api::Id parent
 ) -> void

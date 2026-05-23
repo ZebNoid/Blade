@@ -1,8 +1,7 @@
 #pragma once
 
-#include <memory>
 
-#include "Api/WidgetTree.h"
+#include "ColumnProps.h"
 #include "Common/LayoutProps.h"
 #include "Widget/Layout/Container.h"
 
@@ -26,9 +25,11 @@ public:
     }
 
     // TODO ColumnProps
-    auto set(Api::LayoutProps props) -> Column&
+    auto set(ColumnProps props) -> Column&
     {
-        m_layout = std::move(props);
+        // TODO
+        // m_tree.layout = Normalize::Layout(props);
+        m_tree.props = Normalize::Props(props);
         return *this;
     }
 
@@ -38,30 +39,16 @@ public:
     }
 
     auto buildTree() const
-        -> Api::WidgetTree override
+        -> WidgetTree override
     {
-        Api::WidgetTree tree;
+        WidgetTree tree;
 
         tree.type = type();
 
         buildChildren(tree);
 
         return tree;
-
-        // tree.props = Normalize::Props(m_layout);
-
-        // for (const auto& child : m_children)
-        // {
-        //     tree.children.push_back(
-        //         child->buildTree()
-        //     );
-        // }
-
-        // return tree;
     }
-
-private:
-    Api::LayoutProps m_layout{};
 };
 
 

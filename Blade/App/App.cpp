@@ -29,7 +29,7 @@ auto App::initBackend() -> int
     return 0;
 }
 
-auto App::materialize(const Api::WidgetTree& tree) -> void
+auto App::materialize(const WidgetTree& tree) -> void
 {
     auto commands = m_materializer.build(tree);
 

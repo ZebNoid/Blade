@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Api/ApiBackend.h"
-#include "Api/WidgetTree.h"
+#include "Base/WidgetTree.h"
 #include "Runtime/Materializer/Materializer.h"
 
 
@@ -38,7 +38,7 @@ private:
 
     auto initBackend() -> int;
 
-    auto materialize(const Api::WidgetTree& tree) -> void;
+    auto materialize(const WidgetTree& tree) -> void;
 
 private:
     std::unique_ptr<Api::ApiBackend> m_backend;

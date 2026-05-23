@@ -19,7 +19,6 @@ public:
         return visitor.take(); // Todo move or copy?
     }
 
-
     template <typename T>
     static auto Events(const T& src) -> Api::EventMap
     {

@@ -11,7 +11,7 @@ public:
 
     Widget() = default;
 
-    Widget(Api::WidgetTree tree)
+    Widget(WidgetTree tree)
         : m_tree(std::move(tree))
     {
     }
@@ -21,13 +21,13 @@ public:
         return L"Widget";
     }
 
-    virtual auto buildTree() const -> Api::WidgetTree
+    virtual auto buildTree() const -> WidgetTree
     {
         return m_tree;
     }
 
 protected:
-    Api::WidgetTree m_tree;
+    WidgetTree m_tree;
 };
 
 

@@ -2,6 +2,7 @@
 
 #include <vector>
 
+#include "LayoutData.h"
 #include "Common/LayoutProps.h"
 #include "Common/Rect.h"
 #include "Common/Size.h"
@@ -16,13 +17,13 @@ struct LayoutNode
 
     Api::Text type; // TODO ?
 
-    Api::LayoutProps layout;
+    LayoutData layoutData;
 
     Api::Size desiredSize{};
 
     Api::Rect rect{};
 
-    bool isNative = false;
+    bool isNative = false; // TODO node db from backend
 
     std::vector<LayoutNode> children;
 };

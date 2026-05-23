@@ -3,7 +3,7 @@
 #include <memory>
 #include <vector>
 
-#include "Api/WidgetTree.h"
+#include "Base/WidgetTree.h"
 #include "Base/Widget.h"
 
 
@@ -26,7 +26,7 @@ protected:
     }
 
     auto buildChildren(
-        Api::WidgetTree& tree
+        WidgetTree& tree
     ) const -> void
     {
         for (const auto& child : m_children)
