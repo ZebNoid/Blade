@@ -55,7 +55,6 @@ public:
 
         case Api::Props::Title:
         case Api::Props::Default:
-        case Api::Props::Rect:
             m_props.backend.create[prop] = value;
             break;
 
