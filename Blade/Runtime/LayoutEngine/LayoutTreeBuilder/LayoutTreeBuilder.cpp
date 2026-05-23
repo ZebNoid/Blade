@@ -23,28 +23,9 @@ auto LayoutTreeBuilder::BuildNode(
 
     node.type = tree.type;
 
-    // temporary heuristic
-    node.isNative =
-        tree.type != L"Column" &&
-        tree.type != L"Row" &&
-        tree.type != L"Stack";
+    node.layout = ExtractLayoutData(tree.props);
 
-    // extract layout props
-    // tree.layout[] // TODO
-    // if (const auto it = tree.props.find(Api::Props::Layout); // props separate for blade? not for backend
-    //     it != tree.props.end())
-    // {
-    //     try
-    //     {
-    //         node.layout =
-    //             std::any_cast<Api::LayoutProps>(
-    //                 tree.props
-    //             );
-    //     }
-    //     catch (...)
-    //     {
-    //     }
-    // }
+    node.isNative = IsNativeWidget(tree.type);
 
     for (const auto& child : tree.children)
     {
@@ -55,5 +36,54 @@ auto LayoutTreeBuilder::BuildNode(
 
     return node;
 }
+
+
+auto LayoutTreeBuilder::ExtractLayoutData(
+    const Api::PropertyMap& props
+) -> LayoutData
+{
+    LayoutData data;
+
+    // LayoutProps
+    if (const auto it =
+            props.find(Api::Props::Layout);
+        it != props.end())
+    {
+        if (const auto* layout =
+            std::get_if<Api::LayoutProps>(
+                &it->second
+            ))
+        {
+            data.layout = *layout;
+        }
+    }
+
+    // Gap
+    if (const auto it =
+            props.find(Api::Props::Gap);
+        it != props.end())
+    {
+        if (const auto* gap =
+            std::get_if<int>(
+                &it->second
+            ))
+        {
+            data.gap = *gap;
+        }
+    }
+
+    return data;
+}
+
+auto LayoutTreeBuilder::IsNativeWidget(
+    const Api::Text& type
+) -> bool
+{
+    return
+        type != L"Column" &&
+        type != L"Row" &&
+        type != L"Stack";
+}
+
 
 } // namespace

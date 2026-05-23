@@ -17,7 +17,7 @@ struct LayoutNode
 
     Api::Text type; // TODO ?
 
-    LayoutData layoutData;
+    LayoutData layout;
 
     Api::Size desiredSize{};
 
