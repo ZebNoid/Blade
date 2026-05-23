@@ -1,11 +1,12 @@
 #pragma once
+
+#include "Common/Size.h"
 #include "Runtime/LayoutEngine/Data/LayoutContext.h"
 
 
 namespace Blade {
 
-
-class LayoutEngine
+class LayoutColumn
 {
 public:
     static auto Measure(
@@ -17,5 +18,4 @@ public:
     ) -> void;
 };
 
-
-} // namespace
+} // namespace Blade
