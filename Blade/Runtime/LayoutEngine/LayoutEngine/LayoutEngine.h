@@ -21,6 +21,10 @@ public:
         LayoutContext& ctx
     ) -> Api::Size;
 
+    static auto ArrangeLeaf(
+        LayoutContext& ctx
+    ) -> void;
+
     static auto MeasureColumn(
         LayoutContext& ctx
     ) -> Api::Size;
