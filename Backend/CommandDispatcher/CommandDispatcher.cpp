@@ -1,6 +1,7 @@
 #include "CommandDispatcher.h"
 
 #include "App/AppBackend.h"
+#include "Common/Logger.h"
 #include "Node/NativeNode/NativeNode.h"
 #include "WinApi/NativeApi/NativeApi.h"
 
@@ -40,7 +41,15 @@ auto CommandDispatcher::dispatch(
 
 auto CommandDispatcher::create(const Api::BackendCommand& command) -> void
 {
-    std::wcout << "Command::" << to_string(command.command) << " " << command.id << " [" << command.nodeType << "]\n";
+    Api::Logger::Debug(
+        L"Command::",
+        to_string(command.command),
+        L" ",
+        command.id,
+        L" [",
+        command.nodeType,
+        L"]"
+    );
 
     auto node = m_backend->factory().create(command);
 
@@ -64,7 +73,17 @@ auto CommandDispatcher::attach(const Api::BackendCommand& command) -> void
         return;
     }
 
-    std::wcout << "Command::" << to_string(command.command) << " " << command.id << " [" << child->type << " -> " << parent->type << "]\n";
+    Api::Logger::Debug(
+        L"Command::",
+        to_string(command.command),
+        L" ",
+        command.id,
+        L" [",
+        child->type,
+        L" -> ",
+        parent->type,
+        L"]"
+    );
 
     child->parent = command.parent;
 
@@ -100,7 +119,16 @@ auto CommandDispatcher::update(
         return;
     }
 
-    std::wcout << "Command::" << to_string(command.command) << " " << command.id << " [" << node->type << "]\n";
+    Api::Logger::Debug(
+        L"Command::",
+        to_string(command.command),
+        L" ",
+        command.id,
+        L" [",
+        node->type,
+        L"]"
+    );
+
     node->native->applyProps(
         command.props
     );

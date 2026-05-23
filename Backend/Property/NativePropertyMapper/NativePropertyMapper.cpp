@@ -1,5 +1,6 @@
 #include "NativePropertyMapper.h"
 
+#include "Common/Logger.h"
 #include "WinApi/NativeApi/NativeApi.h"
 
 
@@ -19,8 +20,12 @@ auto NativePropertyMapper::Apply(
             {
                 if (const auto* rect = std::get_if<Api::Rect>(&value))
                 {
-                    std::wcout << " -> Apply::" << to_string(key) << " "
-                        << to_string(*rect) << "\n";
+                    Api::Logger::Debug(
+                        L" -> Apply::",
+                        to_string(key),
+                        L" ",
+                        to_string(*rect)
+                    );
 
                     NativeApi::SetRect(hwnd, *rect);
                 }
@@ -30,7 +35,14 @@ auto NativePropertyMapper::Apply(
             {
                 if (const auto* text = std::get_if<Api::Text>(&value))
                 {
-                    std::wcout << " -> Apply::" << to_string(key) << " [" << text->c_str() << "]\n";
+                    Api::Logger::Debug(
+                        L" -> Apply::",
+                        to_string(key),
+                        L" [",
+                        text->c_str(),
+                        L"]"
+                    );
+
                     NativeApi::SetTitle(hwnd, *text);
                 }
             }
@@ -39,8 +51,13 @@ auto NativePropertyMapper::Apply(
             {
                 if (const auto* size = std::get_if<Api::Size>(&value))
                 {
-                    std::wcout << " -> Apply::" << to_string(key) << " "
-                        << to_string(*size) << "\n";
+                    Api::Logger::Debug(
+                        L" -> Apply::",
+                        to_string(key),
+                        L" ",
+                        to_string(*size)
+                    );
+
                     NativeApi::SetSize(hwnd, *size);
                 }
             }
@@ -49,14 +66,22 @@ auto NativePropertyMapper::Apply(
             {
                 if (const auto* point = std::get_if<Api::Point>(&value))
                 {
-                    std::wcout << " -> Apply::" << to_string(key) << " "
-                        << to_string(*point) << "\n";
+                    Api::Logger::Debug(
+                        L" -> Apply::",
+                        to_string(key),
+                        L" ",
+                        to_string(*point)
+                    );
+
                     NativeApi::SetPosition(hwnd, *point);
                 }
             }
             break;
         default:
-            std::wcout << " > Props::" << to_string(key) << std::endl;
+            Api::Logger::Debug(
+                L" > Props::",
+                to_string(key)
+            );
         }
     }
 }

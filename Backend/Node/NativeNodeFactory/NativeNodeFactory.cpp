@@ -1,6 +1,7 @@
 #include "NativeNodeFactory.h"
 
 #include "App/AppBackend.h"
+#include "Common/Logger.h"
 #include "Property/NativePropertyMapper/NativePropertyMapper.h"
 #include "WinApi/Components/Button/NativeButton.h"
 #include "WinApi/NativeApi/NativeApi.h"
@@ -83,7 +84,9 @@ auto NativeNodeFactory::createButton(const Api::BackendCommand& command) -> std:
 
     if (!parent)
     {
-        std::wcerr << "[Error] createButton no parent " << std::endl;
+        Api::Logger::Error(
+            L"[Error] createButton no parent"
+        );
         return std::nullopt;
     }
 

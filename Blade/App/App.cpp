@@ -1,5 +1,7 @@
 #include "App.h"
 
+#include "Common/Logger.h"
+
 
 namespace Blade {
 
@@ -22,7 +24,9 @@ auto App::initBackend() -> int
 {
     if (!m_backend)
     {
-        std::cerr << "No Backend set" << std::endl;
+        Api::Logger::Error(
+            L"No Backend set"
+        );
         return -1;
     }
     m_backend->init();

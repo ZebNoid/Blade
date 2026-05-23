@@ -1,5 +1,6 @@
 #include "NativeWindow.h"
 
+#include "Common/Logger.h"
 #include "Property/NativePropertyMapper/NativePropertyMapper.h"
 #include "WinApi/ClassRegistry/WindowClass.h"
 #include "WinApi/Hwnd/Hwnd.h"
@@ -72,13 +73,20 @@ auto NativeWindow::attachChild(INativeElement* child) -> void
 {
     if (!child)
     {
-        std::wcerr << "[Error] NativeWindow::attachChild no child" << std::endl;
+        Api::Logger::Error(
+            L"[Error] NativeWindow::attachChild no child"
+        );
         return;
     }
 
     if (NativeApi::SetParent(child->handle(), m_hwnd) == nullptr)
     {
-        std::wcerr << "[Error] NativeWindow::attachChild [" << CUSTOM_CLASS << "] " << GetLastError() << std::endl;
+        Api::Logger::Error(
+            L"[Error] NativeWindow::attachChild [",
+            CUSTOM_CLASS,
+            L"] ",
+            GetLastError()
+        );
     }
 }
 
@@ -119,8 +127,12 @@ auto NativeWindow::applyProps(const Api::PropertyMap& propertyMap) -> void
         case Api::Props::Rect:
             if (const auto* rect = std::get_if<Api::Rect>(&value))
             {
-                std::wcout << " -> Apply::" << to_string(key) << " "
-                    << to_string(*rect) << "\n";
+                Api::Logger::Debug(
+                    L" -> Apply::",
+                    to_string(key),
+                    L" ",
+                    to_string(*rect)
+                );
 
                 NativeApi::SetClientRect(m_hwnd, *rect);
             }
@@ -129,8 +141,12 @@ auto NativeWindow::applyProps(const Api::PropertyMap& propertyMap) -> void
         case Api::Props::Size:
             if (const auto* size = std::get_if<Api::Size>(&value))
             {
-                std::wcout << " -> Apply::" << to_string(key) << " "
-                    << to_string(*size) << "\n";
+                Api::Logger::Debug(
+                    L" -> Apply::",
+                    to_string(key),
+                    L" ",
+                    to_string(*size)
+                );
 
                 NativeApi::SetClientSize(m_hwnd, *size);
             }

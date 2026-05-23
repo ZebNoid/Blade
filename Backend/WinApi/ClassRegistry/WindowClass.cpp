@@ -1,5 +1,7 @@
 #include "WindowClass.h"
 
+#include "Common/Logger.h"
+
 
 namespace Blade::Backend {
 
@@ -15,7 +17,11 @@ auto WindowClass::Get(const std::wstring& className) -> const wchar_t*
     const auto it = m_names.find(className);
     if (it == m_names.end())
     {
-        std::wcerr << "[Error] WindowClass::Get[" << className << "] " << "not found" << std::endl;
+        Api::Logger::Error(
+            L"[Error] WindowClass::Get[",
+            className,
+            L"] not found"
+        );
         return nullptr;
     }
     return it->c_str();
@@ -40,7 +46,12 @@ auto WindowClass::Register(const std::wstring& className, const ClassDesc& desc)
 
     if (!RegisterClassW(&wc))
     {
-        std::wcerr << "[Error] WindowClass::Register[" << className << "] " << GetLastError() << std::endl;
+        Api::Logger::Error(
+            L"[Error] WindowClass::Register[",
+            className,
+            L"] ",
+            GetLastError()
+        );
         return;
     }
 

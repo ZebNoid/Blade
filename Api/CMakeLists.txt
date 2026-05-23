@@ -18,6 +18,7 @@ add_library(${PROJECT_NAME} INTERFACE
         Common/Property.h
         Common/Callbacks.h
         Common/Props.h
+        Common/Logger.h
 
         Api/BackendCommand.h
         Api/CommandType.h
