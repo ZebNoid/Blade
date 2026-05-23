@@ -62,8 +62,8 @@ auto App::materialize(const WidgetTree& tree) -> void
     LayoutContext arrangeCtx{
         .node = &layoutTree,
         .rect = {
-            0,
-            0,
+            3200,
+            400,
             1280,
             720
         }
@@ -74,7 +74,6 @@ auto App::materialize(const WidgetTree& tree) -> void
     // -------------------------------------------------
     // Build backend commands
     // -------------------------------------------------
-
 
     auto commands = m_materializer.build(
         tree,

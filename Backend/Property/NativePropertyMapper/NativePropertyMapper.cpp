@@ -46,7 +46,7 @@ auto NativePropertyMapper::Apply(
             }
             break;
         default:
-            std::wcout << "Props::" << to_string(key) << std::endl;;
+            std::wcout << "Props::" << to_string(key) << std::endl;
         }
     }
 }
