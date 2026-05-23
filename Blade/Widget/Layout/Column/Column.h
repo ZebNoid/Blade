@@ -14,7 +14,7 @@ public:
     {
         m_tree.type = L"Column";
         m_tree.layoutType = LayoutType::Column;
-        m_tree.props = Normalize::Props(ColumnProps{});
+        Normalize::PropsMerge(m_tree, ColumnProps{});
     }
 
     template <typename... TChildren>
@@ -22,7 +22,7 @@ public:
     {
         m_tree.type = L"Column";
         m_tree.layoutType = LayoutType::Column;
-        m_tree.props = Normalize::Props(ColumnProps{});
+        Normalize::PropsMerge(m_tree, ColumnProps{});
 
         (
             m_tree.children.push_back(
@@ -34,7 +34,7 @@ public:
 
     auto set(ColumnProps props) -> Column&
     {
-        Normalize::PropsMerge(m_tree.props, props);
+        Normalize::PropsMerge(m_tree, props);
         return *this;
     }
 };

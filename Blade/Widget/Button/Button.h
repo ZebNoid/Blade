@@ -14,13 +14,13 @@ public:
     explicit Button(Api::Text text)
     {
         m_tree.type = L"Button";
-        m_tree.props = Normalize::Props(ButtonProps{});
-        m_tree.props[Api::Props::Title] = std::move(text);
+        Normalize::PropsMerge(m_tree, ButtonProps{});
+        m_tree.backend.create[Api::Props::Title] = std::move(text);
     }
 
     auto set(ButtonProps props) -> Button&
     {
-        Normalize::PropsMerge(m_tree.props, props);
+        Normalize::PropsMerge(m_tree, props);
         return *this;
     }
 

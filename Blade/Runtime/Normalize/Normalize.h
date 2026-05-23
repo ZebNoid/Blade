@@ -3,6 +3,7 @@
 #include "EventVisitor.h"
 #include "PropertyVisitor.h"
 #include "Common/Property.h"
+#include "Base/WidgetTree.h"
 
 
 namespace Blade {
@@ -12,24 +13,22 @@ class Normalize
 {
 public:
     template <typename T>
-    static auto Props(const T& src) -> Api::PropertyMap
+    static auto Props(const T& src) -> NormalizedProps
     {
         PropertyVisitor visitor;
         src.visit(visitor);
-        return visitor.take(); // Todo move or copy?
+        return visitor.take();
     }
 
     template <typename T>
     static auto PropsMerge(
-        Api::PropertyMap& target,
+        WidgetTree& target,
         const T& src
     ) -> void
     {
         auto normalized = Props(src);
-        for (auto& [key, value] : normalized)
-        {
-            target.insert_or_assign(key, std::move(value));
-        }
+        target.backend.merge(std::move(normalized.backend));
+        normalized.applyTo(target.layout);
     }
 
     template <typename T>

@@ -1,6 +1,6 @@
 #pragma once
-
-
+#include "Base/WidgetTree.h"
+#include "Runtime/LayoutEngine/Data/LayoutNode.h"
 
 namespace Blade {
 
@@ -16,10 +16,6 @@ private:
     static auto BuildNode(
         const WidgetTree& tree
     ) -> LayoutNode;
-
-    static auto ExtractLayoutData(
-        const Api::PropertyMap& props
-    ) -> LayoutData;
 };
 
 

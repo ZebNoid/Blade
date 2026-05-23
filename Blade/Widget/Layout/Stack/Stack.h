@@ -14,7 +14,7 @@ public:
     {
         m_tree.type = L"Stack";
         m_tree.layoutType = LayoutType::Stack;
-        m_tree.props = Normalize::Props(StackProps{});
+        Normalize::PropsMerge(m_tree, StackProps{});
     }
 
     template <typename... TChildren>
@@ -22,7 +22,7 @@ public:
     {
         m_tree.type = L"Stack";
         m_tree.layoutType = LayoutType::Stack;
-        m_tree.props = Normalize::Props(StackProps{});
+        Normalize::PropsMerge(m_tree, StackProps{});
 
         (
             m_tree.children.push_back(
@@ -34,7 +34,7 @@ public:
 
     auto set(StackProps props) -> Stack&
     {
-        Normalize::PropsMerge(m_tree.props, props);
+        Normalize::PropsMerge(m_tree, props);
         return *this;
     }
 };

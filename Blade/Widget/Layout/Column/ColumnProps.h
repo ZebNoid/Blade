@@ -3,6 +3,7 @@
 #include "Common/LayoutProps.h"
 #include "Props/LayoutProps/CrossAxisAlignment.h"
 #include "Props/LayoutProps/MainAxisAlignment.h"
+#include "Runtime/Normalize/PropertyVisitor.h"
 
 
 namespace Blade {

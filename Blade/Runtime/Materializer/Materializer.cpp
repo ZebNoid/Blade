@@ -91,7 +91,7 @@ auto Materializer::buildNode(
             .id = id,
             .parent = parent,
             .nodeType = widget.type,
-            .props = buildBackendProps(widget.props),
+            .props = widget.backend.create,
             .events = widget.events
         });
 
@@ -188,29 +188,6 @@ auto Materializer::buildUpdateNode(
     }
 }
 
-auto Materializer::buildBackendProps(
-    const Api::PropertyMap& props
-) -> Api::PropertyMap
-{
-    Api::PropertyMap out;
-
-    for (const auto& [key, value] : props)
-    {
-        switch (key)
-        {
-        case Api::Props::Title:
-        case Api::Props::Default:
-            out.insert_or_assign(key, value);
-            break;
-
-        default:
-            break;
-        }
-    }
-
-    return out;
-}
-
 auto Materializer::buildRectProps(
     const LayoutNode& layout,
     const WidgetTree& widget,
@@ -222,18 +199,8 @@ auto Materializer::buildRectProps(
     if (parent == Api::InvalidId)
     {
         auto rect = layout.rect;
-
-        if (const auto it =
-                widget.props.find(Api::Props::Position);
-            it != widget.props.end())
-        {
-            if (const auto* position =
-                    std::get_if<Api::Point>(&it->second))
-            {
-                rect.x = position->x;
-                rect.y = position->y;
-            }
-        }
+        rect.x = widget.layout.position.x;
+        rect.y = widget.layout.position.y;
 
         props[Api::Props::Rect] = rect;
     }

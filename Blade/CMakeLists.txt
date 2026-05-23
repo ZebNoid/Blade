@@ -33,6 +33,7 @@ add_library(${PROJECT_NAME} STATIC
         Runtime/LayoutRuntime/LayoutRuntime.cpp
         Runtime/LayoutRuntime/LayoutRuntime.h
         Runtime/Normalize/Normalize.h
+        Runtime/Normalize/NormalizedProps.h
         Runtime/Normalize/PropertyVisitor.h
         Runtime/Normalize/EventVisitor.h
         Runtime/LayoutEngine/Data/LayoutNode.h

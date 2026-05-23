@@ -6,6 +6,8 @@
 #include "Common/Property.h"
 #include "Common/Types.h"
 #include "Runtime/LayoutEngine/Data/LayoutType.h"
+#include "Runtime/LayoutEngine/Data/LayoutData.h"
+#include "Runtime/Normalize/NormalizedProps.h"
 
 
 namespace Blade {
@@ -20,8 +22,9 @@ struct WidgetTree
 
     LayoutType layoutType = LayoutType::None;
 
-    // backend
-    Api::PropertyMap props;
+    BackendProps backend;
+    LayoutData layout;
+
     Api::EventMap events;
 
     std::vector<WidgetTree> children;

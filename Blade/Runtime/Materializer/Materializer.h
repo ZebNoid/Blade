@@ -46,10 +46,6 @@ private:
         bool includeCurrent = true
     ) -> void;
 
-    static auto buildBackendProps(
-        const Api::PropertyMap& props
-    ) -> Api::PropertyMap;
-
     static auto buildRectProps(
         const LayoutNode& layout,
         const WidgetTree& widget,
