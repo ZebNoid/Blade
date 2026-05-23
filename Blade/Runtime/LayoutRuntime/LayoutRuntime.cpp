@@ -23,7 +23,7 @@ auto LayoutRuntime::mount(
 
     auto layoutTree = layout(
         tree,
-        initialSize(LayoutTreeBuilder::Build(tree))
+        tree.layout.size
     );
 
     send(
@@ -93,13 +93,6 @@ auto LayoutRuntime::layout(
     LayoutEngine::Arrange(arrangeCtx);
 
     return layoutTree;
-}
-
-auto LayoutRuntime::initialSize(
-    const LayoutNode& layoutTree
-) -> Api::Size
-{
-    return layoutTree.layout.size;
 }
 
 auto LayoutRuntime::send(

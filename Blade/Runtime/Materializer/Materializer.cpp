@@ -69,23 +69,13 @@ auto Materializer::buildNode(
     Api::Id parent
 ) -> void
 {
-    // -------------------------------------------------
-    // Generate runtime id
-    // -------------------------------------------------
-
     const Api::Id id =
         widget.id != Api::InvalidId
             ? widget.id
             : nextId();
 
-    // -------------------------------------------------
-    // Native widgets only
-    // -------------------------------------------------
-
     if (layout.isNative)
     {
-        // CREATE
-
         out.push_back({
             .command = Api::CommandType::Create,
             .id = id,
@@ -95,8 +85,6 @@ auto Materializer::buildNode(
             .events = widget.events
         });
 
-        // ATTACH
-
         if (parent != Api::InvalidId)
         {
             out.push_back({
@@ -105,8 +93,6 @@ auto Materializer::buildNode(
                 .parent = parent
             });
         }
-
-        // UPDATE RECT
 
         auto props =
             buildRectProps(
@@ -121,14 +107,8 @@ auto Materializer::buildNode(
             .props = std::move(props)
         });
 
-        // native parent changes here
-        
         parent = id;
     }
-
-    // -------------------------------------------------
-    // Children
-    // -------------------------------------------------
 
     for (size_t i = 0;
          i < widget.children.size();

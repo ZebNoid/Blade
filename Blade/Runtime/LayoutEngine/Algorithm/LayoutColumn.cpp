@@ -46,7 +46,7 @@ auto LayoutColumn::Measure(
     }
 
     const auto& padding =
-        node.layout.layout.padding;
+        node.layout.box.padding;
 
     node.desiredSize = {
         maxWidth +
@@ -68,7 +68,7 @@ auto LayoutColumn::Arrange(
     auto& node = *ctx.node;
 
     const auto& padding =
-        node.layout.layout.padding;
+        node.layout.box.padding;
 
     int cursorY =
         ctx.rect.y + padding.top;

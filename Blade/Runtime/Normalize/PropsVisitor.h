@@ -7,7 +7,7 @@
 
 namespace Blade {
 
-class PropertyVisitor
+class PropsVisitor
 {
 public:
     auto set(
@@ -21,7 +21,7 @@ public:
             if (const auto* layout =
                     std::get_if<Api::LayoutProps>(&value))
             {
-                m_props.layout.layout = *layout;
+                m_props.layout.box = *layout;
                 m_props.hasLayout = true;
             }
             break;

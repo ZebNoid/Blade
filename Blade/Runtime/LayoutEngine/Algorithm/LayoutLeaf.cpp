@@ -59,7 +59,7 @@ auto LayoutLeaf::Arrange(
     auto& node = *ctx.node;
 
     const auto& padding =
-        node.layout.layout.padding;
+        node.layout.box.padding;
 
     const int x =
         ctx.rect.x + padding.left;

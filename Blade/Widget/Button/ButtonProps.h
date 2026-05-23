@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Runtime/Normalize/PropertyVisitor.h"
+#include "Runtime/Normalize/PropsVisitor.h"
 
 #include "Common/Props.h"
 
@@ -14,7 +14,7 @@ struct ButtonProps
     Api::Size size{100,50};
     bool isDefault = false;
 
-    auto visit(PropertyVisitor& v) const -> void
+    auto visit(PropsVisitor& v) const -> void
     {
         v.set(Api::Props::Layout, layout);
         v.set(Api::Props::Default, isDefault);

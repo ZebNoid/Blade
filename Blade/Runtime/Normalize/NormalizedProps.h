@@ -38,7 +38,7 @@ struct NormalizedProps
     {
         if (hasLayout)
         {
-            target.layout = layout.layout;
+            target.box = layout.box;
         }
 
         if (hasSize)

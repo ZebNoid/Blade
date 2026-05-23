@@ -38,7 +38,7 @@ auto LayoutStack::Measure(
     }
 
     const auto& padding =
-        node.layout.layout.padding;
+        node.layout.box.padding;
 
     node.desiredSize = {
         maxWidth +
@@ -60,7 +60,7 @@ auto LayoutStack::Arrange(
     auto& node = *ctx.node;
 
     const auto& padding =
-        node.layout.layout.padding;
+        node.layout.box.padding;
 
     Api::Rect contentRect{
         ctx.rect.x + padding.left,

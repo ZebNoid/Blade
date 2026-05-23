@@ -7,7 +7,7 @@ namespace Blade {
 
 struct LayoutData
 {
-    Api::LayoutProps layout;
+    Api::LayoutProps box;
     Api::Size size{};
     Api::Point position{};
     int gap = 0;

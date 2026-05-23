@@ -1,7 +1,7 @@
 #pragma once
 
 #include "EventVisitor.h"
-#include "PropertyVisitor.h"
+#include "PropsVisitor.h"
 #include "Common/Property.h"
 #include "Base/WidgetTree.h"
 
@@ -15,7 +15,7 @@ public:
     template <typename T>
     static auto Props(const T& src) -> NormalizedProps
     {
-        PropertyVisitor visitor;
+        PropsVisitor visitor;
         src.visit(visitor);
         return visitor.take();
     }

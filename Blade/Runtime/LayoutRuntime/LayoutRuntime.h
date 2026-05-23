@@ -32,10 +32,6 @@ private:
         const Api::Size& available
     ) -> LayoutNode;
 
-    auto initialSize(
-        const LayoutNode& layoutTree
-    ) -> Api::Size;
-
     auto send(
         std::vector<Api::BackendCommand> commands
     ) -> void;

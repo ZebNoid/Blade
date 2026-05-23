@@ -46,7 +46,7 @@ auto LayoutRow::Measure(
     }
 
     const auto& padding =
-        node.layout.layout.padding;
+        node.layout.box.padding;
 
     node.desiredSize = {
         totalWidth +
@@ -68,7 +68,7 @@ auto LayoutRow::Arrange(
     auto& node = *ctx.node;
 
     const auto& padding =
-        node.layout.layout.padding;
+        node.layout.box.padding;
 
     int cursorX =
         ctx.rect.x + padding.left;

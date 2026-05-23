@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Common/LayoutProps.h"
-#include "Runtime/Normalize/PropertyVisitor.h"
+#include "Runtime/Normalize/PropsVisitor.h"
 
 
 namespace Blade {
@@ -10,7 +10,7 @@ struct StackProps
 {
     Api::LayoutProps layout;
 
-    auto visit(PropertyVisitor& v) const -> void
+    auto visit(PropsVisitor& v) const -> void
     {
         v.set(Api::Props::Layout, layout);
     }

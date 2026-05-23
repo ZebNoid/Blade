@@ -56,7 +56,6 @@ private:
     Api::Id nextId();
 
 private:
-    // TODO persistent widget IDs (assigned at construction)
     Api::Id m_nextId = 1;
 };
 

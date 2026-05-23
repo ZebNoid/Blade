@@ -42,12 +42,6 @@ auto NativePropertyMapper::Apply(
                     std::wcout << " -> Apply::" << to_string(key) << " "
                         << to_string(*size) << "\n";
                     NativeApi::SetSize(hwnd, *size);
-                    // TODO
-                    // auto oldSize = NativeApi::GetSize(hwnd);
-                    // NativeApi::SetSize(hwnd, {
-                    //     .width = size->width > 0 ? size->width : oldSize.width,
-                    //     .height = size->height > 0 ? size->height : oldSize.height,
-                    // });
                 }
             }
             break;
