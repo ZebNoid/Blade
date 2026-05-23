@@ -11,6 +11,43 @@ auto NativePropertyMapper::Apply(
     const Api::PropertyMap& props
 ) -> void
 {
+    const auto positionIt =
+        props.find(Api::Props::Position);
+
+    const auto sizeIt =
+        props.find(Api::Props::Size);
+
+    if (positionIt != props.end() &&
+        sizeIt != props.end())
+    {
+        const auto* point =
+            std::get_if<Api::Point>(
+                &positionIt->second
+            );
+
+        const auto* size =
+            std::get_if<Api::Size>(
+                &sizeIt->second
+            );
+
+        if (point && size)
+        {
+            std::wcout << " -> Apply::Rect ["
+                << point->x << " x "
+                << point->y << " | "
+                << size->width << " x "
+                << size->height << "]\n";
+
+            NativeApi::SetRect(
+                hwnd,
+                Api::Rect{
+                    *point,
+                    *size
+                }
+            );
+        }
+    }
+
     for (const auto& [key, value] : props)
     {
         switch (key)
@@ -26,6 +63,11 @@ auto NativePropertyMapper::Apply(
             break;
         case Api::Props::Size:
             {
+                if (positionIt != props.end())
+                {
+                    break;
+                }
+
                 if (const auto* size = std::get_if<Api::Size>(&value))
                 {
                     std::wcout << " -> Apply::" << to_string(key) << " [" << size->width << " x " << size->height << "]\n";
@@ -41,6 +83,11 @@ auto NativePropertyMapper::Apply(
             break;
         case Api::Props::Position:
             {
+                if (sizeIt != props.end())
+                {
+                    break;
+                }
+
                 if (const auto* point = std::get_if<Api::Point>(&value))
                 {
                     std::wcout << " -> Apply::" << to_string(key) << " [" << point->x << " x " << point->y << "]\n";

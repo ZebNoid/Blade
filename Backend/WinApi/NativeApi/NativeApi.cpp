@@ -44,6 +44,23 @@ auto NativeApi::SetSize(
     SetWindowPos(hwnd, nullptr, 0, 0, size.width, size.height, SWP_NOMOVE | SWP_NOZORDER);
 }
 
+auto NativeApi::SetRect(
+    HWND hwnd,
+    const Api::Rect& rect
+) -> void
+{
+    SetWindowPos(
+        hwnd,
+        nullptr,
+        rect.x,
+        rect.y,
+        rect.width,
+        rect.height,
+        SWP_NOZORDER |
+        SWP_NOACTIVATE
+    );
+}
+
 auto NativeApi::GetSize(HWND hwnd) -> Api::Size
 {
     RECT rect;

@@ -3,6 +3,7 @@
 #include <windows.h>
 
 #include "Common/Point.h"
+#include "Common/Rect.h"
 #include "Common/Size.h"
 #include "Common/Types.h"
 
@@ -43,6 +44,11 @@ public:
     static auto SetSize(
         HWND hwnd,
         const Api::Size& size
+    ) -> void;
+
+    static auto SetRect(
+        HWND hwnd,
+        const Api::Rect& rect
     ) -> void;
 
     static auto GetSize(
