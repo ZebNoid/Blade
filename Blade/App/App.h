@@ -1,9 +1,7 @@
 #pragma once
 
 #include "Api/ApiBackend.h"
-#include "Base/WidgetTree.h"
-#include "Runtime/Materializer/Materializer.h"
-#include <unordered_map>
+#include "Runtime/LayoutRuntime/LayoutRuntime.h"
 
 
 namespace Blade {
@@ -39,13 +37,6 @@ private:
 
     auto initBackend() -> int;
 
-    auto materialize(const WidgetTree& tree) -> void;
-
-    auto updateLayout(
-        const WidgetTree& tree,
-        const Api::Size& size
-    ) -> void;
-
     auto onNativeResize(
         Api::Id rootId,
         const Api::Size& size
@@ -53,8 +44,7 @@ private:
 
 private:
     std::unique_ptr<Api::ApiBackend> m_backend;
-    Materializer m_materializer;
-    std::unordered_map<Api::Id, WidgetTree> m_roots;
+    std::unique_ptr<LayoutRuntime> m_layoutRuntime;
 
     friend class RootWidget;
 };
