@@ -23,7 +23,7 @@ auto NativeWindow::create(HINSTANCE hInstance) -> bool
     m_hwnd = Hwnd::Create({
         .className = WindowClass::Get(CUSTOM_CLASS),
         .windowName = L"Blade",
-        .style = WS_OVERLAPPEDWINDOW | WS_VISIBLE,
+        .style = WS_OVERLAPPEDWINDOW | WS_VISIBLE | WS_CLIPCHILDREN,
         .hInstance = hInstance,
         .lpParam = this,
     });

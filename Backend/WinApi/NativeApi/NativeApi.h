@@ -55,6 +55,10 @@ public:
         const Api::Point& position
     ) -> void;
 
+    static auto BringToFront(
+        HWND hwnd
+    ) -> void;
+
     static auto GetPosition(
         HWND hwnd
     ) -> Api::Point;

@@ -14,7 +14,7 @@ auto NativeButton::create(HWND parent) -> bool
         .className = TEXT("BUTTON"),
         .windowName = TEXT("Button"),
         .parent = parent,
-        .style = WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+        .style = WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | BS_PUSHBUTTON,
         .size = {100, 50}, // TODO dev
         .hInstance = GetModuleHandle(nullptr),
     });

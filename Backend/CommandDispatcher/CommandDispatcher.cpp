@@ -2,6 +2,7 @@
 
 #include "App/AppBackend.h"
 #include "Node/NativeNode/NativeNode.h"
+#include "WinApi/NativeApi/NativeApi.h"
 
 
 namespace Blade::Backend {
@@ -71,8 +72,9 @@ auto CommandDispatcher::attach(const Api::BackendCommand& command) -> void
         child->native.get()
     );
 
-    // TODO dev
-    // NativeApi::SetSize(child->native->handle(), {100, 50});
+    NativeApi::BringToFront(
+        child->native->handle()
+    );
 }
 
 auto CommandDispatcher::remove(const Api::BackendCommand& command) -> void
@@ -102,6 +104,13 @@ auto CommandDispatcher::update(
     node->native->applyProps(
         command.props
     );
+
+    if (node->parent != Api::InvalidId)
+    {
+        NativeApi::BringToFront(
+            node->native->handle()
+        );
+    }
 }
 
 } // namespace

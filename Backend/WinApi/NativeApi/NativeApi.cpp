@@ -62,6 +62,30 @@ auto NativeApi::SetPosition(HWND hwnd, const Api::Point& position) -> void
     SetWindowPos(hwnd, nullptr, position.x, position.y, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
 }
 
+auto NativeApi::BringToFront(HWND hwnd) -> void
+{
+    SetWindowPos(
+        hwnd,
+        HWND_TOP,
+        0,
+        0,
+        0,
+        0,
+        SWP_NOMOVE |
+        SWP_NOSIZE |
+        SWP_NOACTIVATE
+    );
+
+    RedrawWindow(
+        hwnd,
+        nullptr,
+        nullptr,
+        RDW_INVALIDATE |
+        RDW_UPDATENOW |
+        RDW_ALLCHILDREN
+    );
+}
+
 auto NativeApi::GetPosition(HWND hwnd) -> Api::Point
 {
     RECT rect;
