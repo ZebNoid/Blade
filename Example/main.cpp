@@ -36,7 +36,7 @@ protected:
                     .layout = {
                         .flex = 1,
                     },
-                    .isDefault = false
+                    .isDefault = true
                 })
                 .on({
                     .click = []() -> void
@@ -45,6 +45,11 @@ protected:
                     },
                 })
                 , Button(L"Button")
+                .set({
+                    .layout = {
+                        .flex = 3,
+                    },
+                })
             ).set({
                 .mainAxisAlignment = MainAxisAlignment::End,
             })

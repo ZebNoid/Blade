@@ -77,6 +77,7 @@ auto LayoutColumn::Arrange(
         );
 
     int contentHeight = 0;
+    int totalFlex = 0;
 
     bool first = true;
 
@@ -92,9 +93,14 @@ auto LayoutColumn::Arrange(
 
         contentHeight +=
             child.layout.box.margin.top +
-            child.desiredSize.height +
+            (child.layout.box.flex > 0 ? 0 : child.desiredSize.height) +
             child.layout.box.margin.bottom;
+
+        totalFlex += LayoutGeometry::NonNegative(child.layout.box.flex);
     }
+
+    const int flexSpace = totalFlex > 0 ? LayoutGeometry::NonNegative(contentRect.height - contentHeight) : 0;
+    contentHeight += totalFlex > 0 ? flexSpace : 0;
 
     const int itemCount =
         static_cast<int>(
@@ -131,11 +137,13 @@ auto LayoutColumn::Arrange(
 
         first = false;
 
-        const auto size =
-            child.desiredSize;
-
         const auto& margin =
             child.layout.box.margin;
+
+        const int flex = LayoutGeometry::NonNegative(child.layout.box.flex);
+        const int childHeight = totalFlex > 0 && flex > 0
+            ? flexSpace * flex / totalFlex
+            : child.desiredSize.height;
 
         cursorY +=
             margin.top;
@@ -145,7 +153,7 @@ auto LayoutColumn::Arrange(
             margin.left;
 
         int childWidth =
-            size.width;
+            child.desiredSize.width;
 
         const int crossWidth =
             LayoutGeometry::NonNegative(
@@ -162,7 +170,7 @@ auto LayoutColumn::Arrange(
                 margin.left +
                 LayoutGeometry::NonNegative(
                     crossWidth -
-                    size.width
+                    child.desiredSize.width
                 ) / 2;
             break;
 
@@ -171,7 +179,7 @@ auto LayoutColumn::Arrange(
                 contentRect.x +
                 contentRect.width -
                 margin.right -
-                size.width;
+                child.desiredSize.width;
             break;
 
         case CrossAxisAlignment::Stretch:
@@ -190,7 +198,7 @@ auto LayoutColumn::Arrange(
 
             childWidth,
 
-            size.height
+            childHeight
         };
 
         LayoutContext childCtx{
@@ -200,7 +208,7 @@ auto LayoutColumn::Arrange(
 
         LayoutEngine::Arrange(childCtx);
 
-        cursorY += size.height;
+        cursorY += childHeight;
         cursorY += margin.bottom;
     }
 }

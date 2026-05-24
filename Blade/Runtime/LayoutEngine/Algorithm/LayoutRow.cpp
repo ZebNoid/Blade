@@ -77,6 +77,7 @@ auto LayoutRow::Arrange(
         );
 
     int contentWidth = 0;
+    int totalFlex = 0;
 
     bool first = true;
 
@@ -92,9 +93,14 @@ auto LayoutRow::Arrange(
 
         contentWidth +=
             child.layout.box.margin.left +
-            child.desiredSize.width +
+            (child.layout.box.flex > 0 ? 0 : child.desiredSize.width) +
             child.layout.box.margin.right;
+
+        totalFlex += LayoutGeometry::NonNegative(child.layout.box.flex);
     }
+
+    const int flexSpace = totalFlex > 0 ? LayoutGeometry::NonNegative(contentRect.width - contentWidth) : 0;
+    contentWidth += totalFlex > 0 ? flexSpace : 0;
 
     const int itemCount =
         static_cast<int>(
@@ -131,11 +137,13 @@ auto LayoutRow::Arrange(
 
         first = false;
 
-        const auto size =
-            child.desiredSize;
-
         const auto& margin =
             child.layout.box.margin;
+
+        const int flex = LayoutGeometry::NonNegative(child.layout.box.flex);
+        const int childWidth = totalFlex > 0 && flex > 0
+            ? flexSpace * flex / totalFlex
+            : child.desiredSize.width;
 
         cursorX +=
             margin.left;
@@ -145,7 +153,7 @@ auto LayoutRow::Arrange(
             margin.top;
 
         int childHeight =
-            size.height;
+            child.desiredSize.height;
 
         const int crossHeight =
             LayoutGeometry::NonNegative(
@@ -162,7 +170,7 @@ auto LayoutRow::Arrange(
                 margin.top +
                 LayoutGeometry::NonNegative(
                     crossHeight -
-                    size.height
+                    child.desiredSize.height
                 ) / 2;
             break;
 
@@ -171,7 +179,7 @@ auto LayoutRow::Arrange(
                 contentRect.y +
                 contentRect.height -
                 margin.bottom -
-                size.height;
+                child.desiredSize.height;
             break;
 
         case CrossAxisAlignment::Stretch:
@@ -188,7 +196,7 @@ auto LayoutRow::Arrange(
 
             childY,
 
-            size.width,
+            childWidth,
 
             childHeight
         };
@@ -200,7 +208,7 @@ auto LayoutRow::Arrange(
 
         LayoutEngine::Arrange(childCtx);
 
-        cursorX += size.width;
+        cursorX += childWidth;
         cursorX += margin.right;
     }
 }
