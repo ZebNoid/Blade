@@ -3,6 +3,16 @@
 
 namespace Blade {
 
+namespace {
+
+template <typename... THandlers>
+struct Overloaded : THandlers...
+{
+    using THandlers::operator()...;
+};
+
+} // namespace
+
 auto EventRuntime::registerTree(
     const WidgetTree& tree
 ) -> void
@@ -39,15 +49,53 @@ auto EventRuntime::dispatch(
         return {};
     }
 
-    if (const auto* callback = std::get_if<Api::CallbackVoid>(&eventIt->second))
-    {
-        if (*callback)
-        {
-            (*callback)();
-        }
-    }
+    return std::visit(
+        Overloaded{
+            [](const Api::CallbackVoid& callback) -> Api::EventResult
+            {
+                if (callback)
+                {
+                    callback();
+                }
 
-    return {};
+                return {};
+            },
+
+            [](const Api::CallbackResult& callback) -> Api::EventResult
+            {
+                return callback
+                    ? callback()
+                    : Api::EventResult{};
+            },
+
+            [&event](const Api::CallbackString& callback) -> Api::EventResult
+            {
+                if (callback)
+                {
+                    if (const auto* value = std::get_if<Api::Text>(&event.value))
+                    {
+                        callback(*value);
+                    }
+                }
+
+                return {};
+            },
+
+            [&event](const Api::CallbackBool& callback) -> Api::EventResult
+            {
+                if (callback)
+                {
+                    if (const auto* value = std::get_if<bool>(&event.value))
+                    {
+                        callback(*value);
+                    }
+                }
+
+                return {};
+            }
+        },
+        eventIt->second
+    );
 }
 
 } // namespace Blade

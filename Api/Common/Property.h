@@ -17,6 +17,7 @@ namespace Blade::Api {
 
 using EventsValue = std::variant<
     CallbackVoid,
+    CallbackResult,
     CallbackString,
     CallbackBool
 >;
