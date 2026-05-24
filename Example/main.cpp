@@ -28,28 +28,35 @@ protected:
 
         Window(
             Column(
-                Button(L"Button 1")
-                .set({
-                    .isDefault = true,
-                })
-                .set({
-                    .layout = {
-                        .flex = 1,
-                    },
-                    .isDefault = true
-                })
-                .on({
-                    .click = []() -> void
-                    {
-                        LOG(L"Click! 1");
-                    },
-                })
-                , Button(L"Button")
+
+                Button(L"Button  Flex")
                 .set({
                     .layout = {
                         .flex = 3,
                     },
                 })
+                , Row(
+
+                    Button(L"Button Flex").set({
+                        .layout = {
+                            .flex = 1,
+                        },
+                    })
+                    , Button(L"Button")
+                )
+                , Button(L"Button Flex Click")
+                  .set({
+                      .layout = {
+                          .flex = 1,
+                      },
+                      .isDefault = true
+                  })
+                  .on({
+                      .click = []() -> void
+                      {
+                          LOG(L"Click! 1");
+                      },
+                  })
             ).set({
                 .mainAxisAlignment = MainAxisAlignment::End,
             })
@@ -62,7 +69,7 @@ protected:
 
         Window(
             Column(
-                Button(L"Button 2")
+                Button(L"Button Flex Click")
                 .set({.layout = {.flex = 1,}})
                 .on({
                     .click = []() -> void
