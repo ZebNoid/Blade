@@ -37,22 +37,13 @@ public:
 
     auto quit() -> void override;
 
-    auto setResizeHandler(
-        Api::ResizeHandler handler
-    ) -> void override;
+    auto setResizeHandler(Api::ResizeHandler handler) -> void override;
 
-    auto setEventHandler(
-        Api::EventHandler handler
-    ) -> void override;
+    auto setEventHandler(Api::EventHandler handler) -> void override;
 
-    auto onWindowResize(
-        Api::Id windowId,
-        const Api::Size& size
-    ) -> void;
+    auto onWindowResize(Api::Id windowId, const Api::Size& size) -> void;
 
-    auto emitEvent(
-        const Api::BackendEvent& event
-    ) -> Api::EventResult;
+    auto emitEvent(const Api::BackendEvent& event) -> Api::EventResult;
 
     auto eventHandler() -> Api::EventHandler*;
 

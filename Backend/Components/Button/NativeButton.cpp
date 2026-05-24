@@ -10,10 +10,7 @@
 namespace Blade::Backend {
 
 
-auto NativeButton::create(
-    NativeWindow* parent,
-    Api::Id id
-) -> bool
+auto NativeButton::create(NativeWindow* parent, Api::Id id) -> bool
 {
     m_parent = parent;
     m_id = id;
@@ -25,9 +22,7 @@ auto NativeButton::create(
         .parent = parent->handle(),
         .style = WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | BS_PUSHBUTTON,
         .size = {100, 50}, // TODO dev
-        .menu = reinterpret_cast<HMENU>(
-            static_cast<UINT_PTR>(m_id)
-        ),
+        .menu = reinterpret_cast<HMENU>(static_cast<UINT_PTR>(m_id)),
         .hInstance = GetModuleHandle(nullptr),
     });
 
@@ -68,12 +63,7 @@ auto NativeButton::applyEvents(const Api::EventSubscriptions& events) -> void
     {
         if (event == Api::Events::Click)
         {
-            // TODO eventMapper ?
-            LOGF_W(L" -> ApplyEvent::%s for id:%d", to_string(event).c_str(), m_id);
-            m_parent->commandRouter().on(
-                m_id,
-                event
-            );
+            m_parent->commandRouter().on(m_id, event);
         }
     }
 }

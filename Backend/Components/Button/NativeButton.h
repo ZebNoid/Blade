@@ -10,20 +10,13 @@ class NativeWindow;
 class NativeButton : public INativeElement
 {
 public:
-    auto create(
-        NativeWindow* parent,
-        Api::Id id
-    ) -> bool;
+    auto create(NativeWindow* parent, Api::Id id) -> bool;
 
     auto handle() const -> HWND override;
 
-    auto applyProps(
-        const Api::PropertyMap& propertyMap
-    ) -> void override;
+    auto applyProps(const Api::PropertyMap& propertyMap) -> void override;
 
-    auto applyEvents(
-        const Api::EventSubscriptions& events
-    ) -> void override;
+    auto applyEvents(const Api::EventSubscriptions& events) -> void override;
 
     auto isAlive() const -> bool override;
 

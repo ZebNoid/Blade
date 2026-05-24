@@ -3,24 +3,17 @@
 
 namespace Blade::Backend {
 
-CommandRouter::CommandRouter(
-    Api::EventHandler* handler
-)
+CommandRouter::CommandRouter(Api::EventHandler* handler)
     : m_handler(handler)
 {
 }
 
-auto CommandRouter::setHandler(
-    Api::EventHandler* handler
-) -> void
+auto CommandRouter::setHandler(Api::EventHandler* handler) -> void
 {
     m_handler = handler;
 }
 
-auto CommandRouter::on(
-    Api::Id id,
-    Api::Events event
-) -> void
+auto CommandRouter::on(Api::Id id, Api::Events event) -> void
 {
     if (event == Api::Events::Unknown)
     {
@@ -30,19 +23,14 @@ auto CommandRouter::on(
     m_handlers[id] = event;
 }
 
-auto CommandRouter::dispatch(
-    WPARAM wParam,
-    LPARAM lParam
-) -> bool
+auto CommandRouter::dispatch(WPARAM wParam, LPARAM lParam) -> bool
 {
     if (!lParam)
     {
         return false;
     }
 
-    const auto id = static_cast<Api::Id>(
-        LOWORD(wParam)
-    );
+    const auto id = static_cast<Api::Id>(LOWORD(wParam));
 
     const auto it = m_handlers.find(id);
 
@@ -56,10 +44,7 @@ auto CommandRouter::dispatch(
         return false;
     }
 
-    (*m_handler)({
-        .target = id,
-        .type = it->second
-    });
+    (*m_handler)({ .target = id, .type = it->second });
 
     return true;
 }
