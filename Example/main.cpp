@@ -32,7 +32,12 @@ protected:
                 .set({
                     .isDefault = true,
                 })
-                .set({.layout = {.flex = 1,}})
+                .set({
+                    .layout = {
+                        .flex = 1,
+                    },
+                    .isDefault = false
+                })
                 .on({
                     .click = []() -> void
                     {

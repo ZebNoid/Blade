@@ -1,9 +1,7 @@
 #pragma once
 
-#include <windows.h>
-
 #include "Common/Types.h"
-#include "WinApi/INativeElement/INativeElement.h"
+#include "WinApi/NativeElement/INativeElement.h"
 
 
 namespace Blade::Backend {

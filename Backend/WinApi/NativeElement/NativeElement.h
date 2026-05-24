@@ -1,6 +1,6 @@
 #pragma once
 
-#include "WinApi/INativeElement/INativeElement.h"
+#include "WinApi/NativeElement/INativeElement.h"
 
 
 namespace Blade::Backend {

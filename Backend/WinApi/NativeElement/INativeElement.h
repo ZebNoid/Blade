@@ -15,13 +15,9 @@ public:
 
     virtual auto handle() const -> HWND = 0;
 
-    virtual auto applyProps(
-        const Api::PropertyMap&
-    ) -> void = 0;
+    virtual auto applyProps(const Api::PropertyMap&) -> void = 0;
 
-    virtual auto applyEvents(
-        const Api::EventSubscriptions&
-    ) -> void = 0;
+    virtual auto applyEvents(const Api::EventSubscriptions&) -> void = 0;
 
     // TODO for all or only for window?
     virtual auto isAlive() const -> bool = 0;

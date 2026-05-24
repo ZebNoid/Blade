@@ -47,7 +47,7 @@ add_library(${PROJECT_NAME} STATIC
         Property/PropertyMapper/PropertyMapper.h
         WinApi/CommonControls/CommonControls.cpp
         WinApi/CommonControls/CommonControls.h
-        WinApi/INativeElement/INativeElement.h
+        WinApi/NativeElement/INativeElement.h
 
         Components/Window/NativeWindow.cpp
         Components/Window/NativeWindow.h
