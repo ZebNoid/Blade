@@ -3,6 +3,7 @@
 #include "Common/Logger.h"
 #include "Property/NativePropertyMapper/NativePropertyMapper.h"
 #include "WinApi/Hwnd/Hwnd.h"
+#include "WinApi/NativeApi/NativeApi.h"
 #include "WinApi/Window/NativeWindow.h"
 
 
@@ -41,6 +42,19 @@ auto NativeButton::handle() const -> HWND
 auto NativeButton::applyProps(const Api::PropertyMap& propertyMap) -> void
 {
     NativePropertyMapper::Apply(m_hwnd, propertyMap);
+
+    auto it = propertyMap.find(Api::Props::Default);
+    if (it != propertyMap.end()) {
+        auto value = it->second;
+        if (const auto* b_ptr = std::get_if<bool>(&value))
+        {
+            // TODO not working
+            bool isDefault = *b_ptr;
+            auto style = isDefault ? BS_DEFPUSHBUTTON : BS_PUSHBUTTON;
+            // LOGF_E(L" -> ApplyProps::%s %d", to_string(Api::Props::Default).c_str(), isDefault);
+            NativeApi::SetStyle(m_hwnd, style, TRUE);
+        }
+    }
 }
 
 auto NativeButton::applyEvents(const Api::EventSubscriptions& events) -> void

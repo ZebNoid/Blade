@@ -5,54 +5,54 @@ namespace Blade::Backend {
 
 namespace {
 
-auto GetWindowStyle(
-    HWND hwnd
-) -> DWORD
-{
-    return static_cast<DWORD>(
-        GetWindowLongPtr(
-            hwnd,
-            GWL_STYLE
-        )
-    );
-}
+    auto GetWindowStyle(
+        HWND hwnd
+    ) -> DWORD
+    {
+        return static_cast<DWORD>(
+            GetWindowLongPtr(
+                hwnd,
+                GWL_STYLE
+            )
+        );
+    }
 
-auto GetWindowExStyle(
-    HWND hwnd
-) -> DWORD
-{
-    return static_cast<DWORD>(
-        GetWindowLongPtr(
-            hwnd,
-            GWL_EXSTYLE
-        )
-    );
-}
+    auto GetWindowExStyle(
+        HWND hwnd
+    ) -> DWORD
+    {
+        return static_cast<DWORD>(
+            GetWindowLongPtr(
+                hwnd,
+                GWL_EXSTYLE
+            )
+        );
+    }
 
-auto ToOuterSize(
-    HWND hwnd,
-    const Api::Size& clientSize
-) -> Api::Size
-{
-    RECT rect{
-        0,
-        0,
-        clientSize.width,
-        clientSize.height
-    };
+    auto ToOuterSize(
+        HWND hwnd,
+        const Api::Size& clientSize
+    ) -> Api::Size
+    {
+        RECT rect{
+            0,
+            0,
+            clientSize.width,
+            clientSize.height
+        };
 
-    AdjustWindowRectEx(
-        &rect,
-        GetWindowStyle(hwnd),
-        FALSE,
-        GetWindowExStyle(hwnd)
-    );
+        AdjustWindowRectEx(
+            &rect,
+            GetWindowStyle(hwnd),
+            FALSE,
+            GetWindowExStyle(hwnd)
+        );
 
-    return {
-        rect.right - rect.left,
-        rect.bottom - rect.top
-    };
-}
+        return {
+            rect.right - rect.left,
+            rect.bottom - rect.top
+        };
+    }
 
 } // namespace
 
@@ -272,6 +272,11 @@ auto NativeApi::SetIcon(HWND hwnd, const Api::Text& icon) -> HICON
     HICON hIcon = (HICON)LoadImage(NULL, icon.c_str(), IMAGE_ICON, 32, 32, LR_LOADFROMFILE);
     SendMessage(hwnd, WM_SETICON, ICON_BIG, (LPARAM)hIcon);
     return (HICON)SendMessage(hwnd, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
+}
+
+auto NativeApi::SetStyle(HWND hwnd, DWORD style, int redraw) -> void
+{
+    SendMessage(hwnd, BM_SETSTYLE, (WPARAM)style, (LPARAM)redraw);
 }
 
 

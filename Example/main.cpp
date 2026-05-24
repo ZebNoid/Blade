@@ -29,6 +29,9 @@ protected:
         Window(
             Column(
                 Button(L"Button 1")
+                .set({
+                    .isDefault = true,
+                })
                 .set({.layout = {.flex = 1,}})
                 .on({
                     .click = []() -> void
