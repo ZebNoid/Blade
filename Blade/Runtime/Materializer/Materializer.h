@@ -11,16 +11,9 @@ namespace Blade {
 class Materializer
 {
 public:
-    auto build(
-        const WidgetTree& widgetTree,
-        const LayoutNode& layoutTree
-    ) -> std::vector<Api::BackendCommand>;
+    auto build(const WidgetTree& widgetTree, const LayoutNode& layoutTree) -> std::vector<Api::BackendCommand>;
 
-    auto buildUpdates(
-        const WidgetTree& widgetTree,
-        const LayoutNode& layoutTree,
-        bool includeRoot = false
-    ) -> std::vector<Api::BackendCommand>;
+    auto buildUpdates(const WidgetTree& widgetTree, const LayoutNode& layoutTree, bool includeRoot = false) -> std::vector<Api::BackendCommand>;
 
 private:
     auto buildNode(
@@ -38,13 +31,7 @@ private:
         bool includeCurrent = true
     ) -> void;
 
-    static auto buildRectProps(
-        const LayoutNode& layout,
-        const WidgetTree& widget,
-        Api::Id parent
-    ) -> Api::PropertyMap;
-
-private:
+    static auto buildRectProps(const LayoutNode& layout, const WidgetTree& widget, Api::Id parent) -> Api::PropertyMap;
 };
 
 

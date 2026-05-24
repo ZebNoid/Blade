@@ -13,21 +13,11 @@ auto Materializer::build(const WidgetTree& widgetTree, const LayoutNode& layoutT
     return commands;
 }
 
-auto Materializer::buildUpdates(
-    const WidgetTree& widgetTree,
-    const LayoutNode& layoutTree,
-    bool includeRoot
-) -> std::vector<Api::BackendCommand>
+auto Materializer::buildUpdates(const WidgetTree& widgetTree, const LayoutNode& layoutTree, bool includeRoot) -> std::vector<Api::BackendCommand>
 {
     std::vector<Api::BackendCommand> commands;
 
-    buildUpdateNode(
-        widgetTree,
-        layoutTree,
-        commands,
-        Api::InvalidId,
-        includeRoot
-    );
+    buildUpdateNode(widgetTree, layoutTree, commands, Api::InvalidId, includeRoot);
 
     return commands;
 }
@@ -71,16 +61,9 @@ auto Materializer::buildNode(
         parent = widget.id;
     }
 
-    for (size_t i = 0;
-         i < widget.children.size();
-         ++i)
+    for (size_t i = 0; i < widget.children.size(); ++i)
     {
-        buildNode(
-            widget.children[i],
-            layout.children[i],
-            out,
-            parent
-        );
+        buildNode(widget.children[i], layout.children[i], out, parent);
     }
 }
 
@@ -110,25 +93,13 @@ auto Materializer::buildUpdateNode(
         currentParent = widget.id;
     }
 
-    for (size_t i = 0;
-         i < widget.children.size();
-         ++i)
+    for (size_t i = 0; i < widget.children.size(); ++i)
     {
-        buildUpdateNode(
-            widget.children[i],
-            layout.children[i],
-            out,
-            currentParent,
-            true
-        );
+        buildUpdateNode(widget.children[i], layout.children[i], out, currentParent, true);
     }
 }
 
-auto Materializer::buildRectProps(
-    const LayoutNode& layout,
-    const WidgetTree& widget,
-    Api::Id parent
-) -> Api::PropertyMap
+auto Materializer::buildRectProps(const LayoutNode& layout, const WidgetTree& widget, Api::Id parent) -> Api::PropertyMap
 {
     Api::PropertyMap props;
 
