@@ -37,6 +37,14 @@ auto App::initBackend() -> int
             onNativeResize(rootId, size);
         }
     );
+
+    m_backend->setEventHandler(
+        [this](const Api::BackendEvent& event)
+        {
+            return onBackendEvent(event);
+        }
+    );
+
     return 0;
 }
 
@@ -54,6 +62,18 @@ auto App::onNativeResize(
         rootId,
         size
     );
+}
+
+auto App::onBackendEvent(
+    const Api::BackendEvent& event
+) -> Api::EventResult
+{
+    if (!m_layoutRuntime)
+    {
+        return {};
+    }
+
+    return m_layoutRuntime->handleEvent(event);
 }
 
 

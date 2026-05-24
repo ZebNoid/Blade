@@ -3,17 +3,31 @@
 
 namespace Blade::Backend {
 
-auto CommandRouter::on(
-    Api::Id id,
-    Api::CallbackVoid callback
+CommandRouter::CommandRouter(
+    Api::EventHandler* handler
+)
+    : m_handler(handler)
+{
+}
+
+auto CommandRouter::setHandler(
+    Api::EventHandler* handler
 ) -> void
 {
-    if (!callback)
+    m_handler = handler;
+}
+
+auto CommandRouter::on(
+    Api::Id id,
+    Api::Events event
+) -> void
+{
+    if (event == Api::Events::Unknown)
     {
         return;
     }
 
-    m_handlers[id] = std::move(callback);
+    m_handlers[id] = event;
 }
 
 auto CommandRouter::dispatch(
@@ -39,12 +53,16 @@ auto CommandRouter::dispatch(
         return false;
     }
 
-    if (!it->second)
+    if (!m_handler || !*m_handler)
     {
         return false;
     }
 
-    it->second();
+    (*m_handler)({
+        .target = id,
+        .type = it->second
+    });
+
     return true;
 }
 

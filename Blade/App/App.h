@@ -42,6 +42,10 @@ private:
         const Api::Size& size
     ) -> void;
 
+    auto onBackendEvent(
+        const Api::BackendEvent& event
+    ) -> Api::EventResult;
+
 private:
     std::unique_ptr<Api::ApiBackend> m_backend;
     std::unique_ptr<LayoutRuntime> m_layoutRuntime;

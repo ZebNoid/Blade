@@ -1,6 +1,7 @@
 #pragma once
 #include <functional>
 #include <variant>
+#include <vector>
 
 #include "Callbacks.h"
 #include "Events.h"
@@ -36,8 +37,8 @@ using PropertyValue = std::variant<
 using PropertyMap = std::unordered_map<Api::Props, PropertyValue>;
 
 using EventId = Api::Id;
-// TODO backend doesn't know about EventMap
 using EventMap = std::unordered_map<Api::Events, EventsValue>;
+using EventSubscriptions = std::vector<Api::Events>;
 
 
 } // namespace

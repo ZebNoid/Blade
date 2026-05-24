@@ -88,7 +88,7 @@ auto NativeWindow::attachChild(INativeElement* child) -> void
     }
 }
 
-auto NativeWindow::applyEvents(const Api::EventMap& eventMap) -> void
+auto NativeWindow::applyEvents(const Api::EventSubscriptions& events) -> void
 {
     m_router.on(
         WM_COMMAND,

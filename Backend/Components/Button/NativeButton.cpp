@@ -42,27 +42,22 @@ auto NativeButton::applyProps(const Api::PropertyMap& propertyMap) -> void
     NativePropertyMapper::Apply(m_hwnd, propertyMap);
 }
 
-auto NativeButton::applyEvents(const Api::EventMap& eventMap) -> void
+auto NativeButton::applyEvents(const Api::EventSubscriptions& events) -> void
 {
     if (!m_parent)
     {
         return;
     }
 
-    const auto it = eventMap.find(Api::Events::Click);
-
-    if (it == eventMap.end())
+    for (const auto event : events)
     {
-        return;
-    }
-
-    if (const auto* callback =
-        std::get_if<Api::CallbackVoid>(&it->second))
-    {
-        m_parent->commandRouter().on(
-            m_id,
-            *callback
-        );
+        if (event == Api::Events::Click)
+        {
+            m_parent->commandRouter().on(
+                m_id,
+                event
+            );
+        }
     }
 }
 

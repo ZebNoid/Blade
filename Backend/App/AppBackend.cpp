@@ -48,6 +48,13 @@ auto AppBackend::setResizeHandler(
     m_resizeHandler = std::move(handler);
 }
 
+auto AppBackend::setEventHandler(
+    Api::EventHandler handler
+) -> void
+{
+    m_eventHandler = std::move(handler);
+}
+
 auto AppBackend::onWindowResize(
     Api::Id windowId,
     const Api::Size& size
@@ -57,6 +64,23 @@ auto AppBackend::onWindowResize(
     {
         m_resizeHandler(windowId, size);
     }
+}
+
+auto AppBackend::emitEvent(
+    const Api::BackendEvent& event
+) -> Api::EventResult
+{
+    if (!m_eventHandler)
+    {
+        return {};
+    }
+
+    return m_eventHandler(event);
+}
+
+auto AppBackend::eventHandler() -> Api::EventHandler*
+{
+    return &m_eventHandler;
 }
 
 auto AppBackend::process(const Api::BackendCommand& command) -> void

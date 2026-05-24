@@ -20,7 +20,7 @@ public:
     ) -> void = 0;
 
     virtual auto applyEvents(
-        const Api::EventMap&
+        const Api::EventSubscriptions&
     ) -> void = 0;
 
     // TODO for all or only for window?

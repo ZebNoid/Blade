@@ -3,6 +3,24 @@
 
 namespace Blade {
 
+namespace {
+
+auto EventSubscriptions(
+    const Api::EventMap& events
+) -> Api::EventSubscriptions
+{
+    Api::EventSubscriptions subscriptions;
+
+    for (const auto& [event, _] : events)
+    {
+        subscriptions.push_back(event);
+    }
+
+    return subscriptions;
+}
+
+} // namespace
+
 
 auto Materializer::assignIds(
     WidgetTree& widgetTree
@@ -82,7 +100,7 @@ auto Materializer::buildNode(
             .parent = parent,
             .nodeType = widget.type,
             .props = widget.backend.create,
-            .events = widget.events
+            .events = EventSubscriptions(widget.events)
         });
 
         if (parent != Api::InvalidId)

@@ -22,7 +22,7 @@ public:
     ) -> void override;
 
     auto applyEvents(
-        const Api::EventMap& eventMap
+        const Api::EventSubscriptions& events
     ) -> void override;
 
     auto isAlive() const -> bool override;

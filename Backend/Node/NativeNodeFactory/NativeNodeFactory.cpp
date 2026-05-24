@@ -42,6 +42,9 @@ auto NativeNodeFactory::createWindow(
     }
 
     nativeWindow->create(m_backend->handle());
+    nativeWindow->commandRouter().setHandler(
+        m_backend->eventHandler()
+    );
 
     nativeWindow->router().on(
         WM_SIZE,

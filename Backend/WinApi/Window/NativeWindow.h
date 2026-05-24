@@ -15,7 +15,7 @@ public:
 
     auto handle() const -> HWND override;
 
-    auto applyEvents(const Api::EventMap& eventMap) -> void override;
+    auto applyEvents(const Api::EventSubscriptions& events) -> void override;
 
     auto applyProps(const Api::PropertyMap& propertyMap) -> void override;
 

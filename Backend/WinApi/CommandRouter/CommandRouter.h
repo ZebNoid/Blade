@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Api/ApiBackend.h"
 #include "Common/Property.h"
 #include "Common/Types.h"
 
@@ -9,9 +10,17 @@ namespace Blade::Backend {
 class CommandRouter
 {
 public:
+    explicit CommandRouter(
+        Api::EventHandler* handler = nullptr
+    );
+
+    auto setHandler(
+        Api::EventHandler* handler
+    ) -> void;
+
     auto on(
         Api::Id id,
-        Api::CallbackVoid callback
+        Api::Events event
     ) -> void;
 
     auto dispatch(
@@ -20,7 +29,8 @@ public:
     ) -> bool;
 
 private:
-    std::unordered_map<Api::Id, Api::CallbackVoid> m_handlers;
+    Api::EventHandler* m_handler = nullptr;
+    std::unordered_map<Api::Id, Api::Events> m_handlers;
 };
 
 } // namespace Blade::Backend
