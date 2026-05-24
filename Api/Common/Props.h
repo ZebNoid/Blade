@@ -6,7 +6,7 @@ namespace Blade::Api {
 enum class Props
 {
     Unknown,
-    Default,
+    IsDefault,
     Title,
     Size,
     Position,
@@ -19,7 +19,7 @@ enum class Props
 inline auto to_string(Props p) -> std::wstring {
     switch (p) {
     case Props::Unknown:   return L"Unknown";
-    case Props::Default:   return L"Default";
+    case Props::IsDefault:   return L"IsDefault";
     case Props::Title:   return L"Title";
     case Props::Size:   return L"Size";
     case Props::Position:   return L"Position";

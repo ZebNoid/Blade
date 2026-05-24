@@ -34,7 +34,7 @@ auto NativeButton::applyProps(const Api::PropertyMap& propertyMap) -> void
 {
     NativePropertyMapper::Apply(m_hwnd, propertyMap);
 
-    auto it = propertyMap.find(Api::Props::Default);
+    auto it = propertyMap.find(Api::Props::IsDefault);
     if (it != propertyMap.end()) {
         auto value = it->second;
         if (const auto* b_ptr = std::get_if<bool>(&value))
@@ -42,7 +42,7 @@ auto NativeButton::applyProps(const Api::PropertyMap& propertyMap) -> void
             // TODO not working
             bool isDefault = *b_ptr;
             auto style = isDefault ? BS_DEFPUSHBUTTON : BS_PUSHBUTTON;
-            // LOGF_E(L" -> ApplyProps::%s %d", to_string(Api::Props::Default).c_str(), isDefault);
+            // LOGF_E(L" -> ApplyProps::%s %d", to_string(Api::Props::IsDefault).c_str(), isDefault);
             NativeApi::SetStyle(m_hwnd, style, TRUE);
         }
     }
