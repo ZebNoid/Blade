@@ -3,16 +3,12 @@
 
 namespace Blade {
 
-auto RuntimeTree::assignIds(
-    WidgetTree& tree
-) -> void
+auto RuntimeTree::assignIds(WidgetTree& tree) -> void
 {
     assignNodeIds(tree);
 }
 
-auto RuntimeTree::assignNodeIds(
-    WidgetTree& node
-) -> void
+auto RuntimeTree::assignNodeIds(WidgetTree& node) -> void
 {
     if (node.id == Api::InvalidId)
     {

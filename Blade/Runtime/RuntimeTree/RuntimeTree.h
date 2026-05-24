@@ -8,14 +8,10 @@ namespace Blade {
 class RuntimeTree
 {
 public:
-    auto assignIds(
-        WidgetTree& tree
-    ) -> void;
+    auto assignIds(WidgetTree& tree) -> void;
 
 private:
-    auto assignNodeIds(
-        WidgetTree& node
-    ) -> void;
+    auto assignNodeIds(WidgetTree& node) -> void;
 
     auto nextId() -> Api::Id;
 
