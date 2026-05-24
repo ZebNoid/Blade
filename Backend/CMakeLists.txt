@@ -54,6 +54,8 @@ add_library(${PROJECT_NAME} STATIC
 
         Components/Button/NativeButton.cpp
         Components/Button/NativeButton.h
+        Components/Button/NativeButtonProps.cpp
+        Components/Button/NativeButtonProps.h
 )
 
 # use Unicode

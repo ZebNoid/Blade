@@ -1,39 +1,14 @@
 #include "NativeButton.h"
 
 #include "Common/Logger.h"
+#include "Components/Button/NativeButtonProps.h"
 #include "Event/EventMapper/EventMapper.h"
 #include "Property/PropertyMapper/PropertyMapper.h"
 #include "WinApi/Hwnd/Hwnd.h"
-#include "WinApi/NativeApi/NativeApi.h"
 #include "WinApi/Window/NativeWindow.h"
 
 
 namespace Blade::Backend {
-
-namespace {
-
-auto ApplyIsDefault(HWND hwnd, const Api::PropertyMap& propertyMap) -> void
-{
-    const auto it = propertyMap.find(Api::Props::IsDefault);
-
-    if (it == propertyMap.end())
-    {
-        return;
-    }
-
-    const auto* isDefault = std::get_if<bool>(&it->second);
-
-    if (!isDefault)
-    {
-        return;
-    }
-
-    const auto style = *isDefault ? BS_DEFPUSHBUTTON : BS_PUSHBUTTON;
-    NativeApi::SetStyle(hwnd, style, TRUE);
-}
-
-} // namespace
-
 
 auto NativeButton::create(NativeWindow* parent, Api::Id id) -> bool
 {
@@ -57,7 +32,7 @@ auto NativeButton::create(NativeWindow* parent, Api::Id id) -> bool
 auto NativeButton::applyProps(const Api::PropertyMap& propertyMap) -> void
 {
     PropertyMapper::Apply(m_hwnd, propertyMap);
-    ApplyIsDefault(m_hwnd, propertyMap);
+    NativeButtonProps::Apply(m_hwnd, propertyMap);
 }
 
 auto NativeButton::applyEvents(const Api::EventSubscriptions& events) -> void
