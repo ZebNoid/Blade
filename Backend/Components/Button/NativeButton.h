@@ -1,22 +1,16 @@
 #pragma once
 
-#include "WinApi/INativeElement/INativeElement.h"
+#include "WinApi/NativeElement/NativeElement.h"
 
 
 namespace Blade::Backend {
 
 class NativeWindow;
 
-class NativeButton : public INativeElement
+class NativeButton : public NativeElement
 {
 public:
     auto create(NativeWindow* parent, Api::Id id) -> bool;
-
-    auto handle() const -> HWND override;
-
-    auto id() const -> Api::Id;
-
-    auto parent() const -> NativeWindow*;
 
     auto applyProps(const Api::PropertyMap& propertyMap) -> void override;
 
@@ -28,10 +22,6 @@ public:
     {
     }
 
-private:
-    HWND m_hwnd = nullptr;
-    Api::Id m_id = Api::InvalidId;
-    NativeWindow* m_parent = nullptr;
 };
 
 

@@ -30,21 +30,6 @@ auto NativeButton::create(NativeWindow* parent, Api::Id id) -> bool
     return m_hwnd != nullptr;
 }
 
-auto NativeButton::handle() const -> HWND
-{
-    return m_hwnd;
-}
-
-auto NativeButton::id() const -> Api::Id
-{
-    return m_id;
-}
-
-auto NativeButton::parent() const -> NativeWindow*
-{
-    return m_parent;
-}
-
 auto NativeButton::applyProps(const Api::PropertyMap& propertyMap) -> void
 {
     NativePropertyMapper::Apply(m_hwnd, propertyMap);

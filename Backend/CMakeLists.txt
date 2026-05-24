@@ -32,6 +32,8 @@ add_library(${PROJECT_NAME} STATIC
 
         WinApi/NativeApi/NativeApi.cpp
         WinApi/NativeApi/NativeApi.h
+        WinApi/NativeElement/NativeElement.cpp
+        WinApi/NativeElement/NativeElement.h
 
         Node/NativeNode/NativeNode.cpp
         Node/NativeNode/NativeNode.h

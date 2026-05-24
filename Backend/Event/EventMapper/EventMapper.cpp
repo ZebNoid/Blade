@@ -38,7 +38,7 @@ auto EventMapper::Apply(NativeWindow& window, const Api::EventSubscriptions&) ->
 
 auto EventMapper::Apply(NativeButton& button, const Api::EventSubscriptions& events) -> void
 {
-    auto* parent = button.parent();
+    auto* parent = dynamic_cast<NativeWindow*>(button.parent());
 
     if (!parent)
     {

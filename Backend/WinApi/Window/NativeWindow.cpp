@@ -39,11 +39,6 @@ auto NativeWindow::show(int cmdShow) -> void
     NativeApi::Update(m_hwnd);
 }
 
-auto NativeWindow::handle() const -> HWND
-{
-    return m_hwnd;
-}
-
 auto NativeWindow::router() -> MessageRouter&
 {
     return m_router;
