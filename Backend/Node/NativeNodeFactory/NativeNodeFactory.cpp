@@ -2,8 +2,7 @@
 
 #include "App/AppBackend.h"
 #include "Common/Logger.h"
-#include "Property/NativePropertyMapper/NativePropertyMapper.h"
-#include "WinApi/Components/Button/NativeButton.h"
+#include "Components/Button/NativeButton.h"
 #include "WinApi/NativeApi/NativeApi.h"
 
 
@@ -13,9 +12,7 @@ NativeNodeFactory::NativeNodeFactory(AppBackend* backend) : m_backend(backend)
 {
 }
 
-auto NativeNodeFactory::create(
-    const Api::BackendCommand& command
-) -> std::optional<NativeNode>
+auto NativeNodeFactory::create(const Api::BackendCommand& command) -> std::optional<NativeNode>
 {
     if (command.nodeType == L"Window")
     {
@@ -30,9 +27,7 @@ auto NativeNodeFactory::create(
     return std::nullopt;
 }
 
-auto NativeNodeFactory::createWindow(
-    const Api::BackendCommand& command
-) -> std::optional<NativeNode>
+auto NativeNodeFactory::createWindow(const Api::BackendCommand& command) -> std::optional<NativeNode>
 {
     auto nativeWindow = std::make_unique<NativeWindow>();
 
@@ -42,28 +37,18 @@ auto NativeNodeFactory::createWindow(
     }
 
     nativeWindow->create(m_backend->handle());
+    nativeWindow->commandRouter().setHandler(m_backend->eventHandler());
 
     nativeWindow->router().on(
         WM_SIZE,
-        [this, windowId = command.id](
-            HWND,
-            UINT,
-            WPARAM,
-            LPARAM lParam
-        ) -> int
+        [this, windowId = command.id](HWND, UINT, WPARAM, LPARAM lParam) -> int
         {
-            m_backend->onWindowResize(
-                windowId,
-                NativeApi::GetSizeFromLParam(lParam)
-            );
-
+            m_backend->onWindowResize(windowId, NativeApi::GetSizeFromLParam(lParam));
             return 0;
         }
     );
 
-    m_backend->host().attach(
-        nativeWindow.get()
-    );
+    m_backend->host().attach(nativeWindow.get());
 
     nativeWindow->applyProps(command.props);
     nativeWindow->applyEvents(command.events);
@@ -90,8 +75,17 @@ auto NativeNodeFactory::createButton(const Api::BackendCommand& command) -> std:
 
     auto button = std::make_unique<NativeButton>();
 
-    if (!button->create(parent->native->handle()))
+    auto* parentWindow = dynamic_cast<NativeWindow*>(parent->native.get());
+
+    if (!parentWindow)
     {
+        LOG_E(L"[Error] createButton parent is not NativeWindow");
+        return std::nullopt;
+    }
+
+    if (!button->create(parentWindow, command.id))
+    {
+        LOG_E(L"[Error] createButton failed");
         return std::nullopt;
     }
 

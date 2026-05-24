@@ -8,41 +8,21 @@
 
 namespace Blade {
 
-LayoutRuntime::LayoutRuntime(
-    Api::ApiBackend* backend
-)
+LayoutRuntime::LayoutRuntime(Api::ApiBackend* backend)
     : m_backend(backend)
 {
 }
 
-auto LayoutRuntime::mount(
-    WidgetTree tree
-) -> void
+auto LayoutRuntime::mount(WidgetTree tree) -> void
 {
-    m_materializer.assignIds(tree);
+    auto layoutTree = layout(tree, tree.layout.size);
 
-    auto layoutTree = layout(
-        tree,
-        tree.layout.size
-    );
+    send(m_materializer.build(tree, layoutTree));
 
-    send(
-        m_materializer.build(
-            tree,
-            layoutTree
-        )
-    );
-
-    m_roots.insert_or_assign(
-        tree.id,
-        std::move(tree)
-    );
+    m_roots.insert_or_assign(tree.id, std::move(tree));
 }
 
-auto LayoutRuntime::resizeRoot(
-    Api::Id rootId,
-    const Api::Size& size
-) -> void
+auto LayoutRuntime::resizeRoot(Api::Id rootId, const Api::Size& size) -> void
 {
     const auto it = m_roots.find(rootId);
 
@@ -51,24 +31,12 @@ auto LayoutRuntime::resizeRoot(
         return;
     }
 
-    auto layoutTree = layout(
-        it->second,
-        size
-    );
+    auto layoutTree = layout(it->second, size);
 
-    send(
-        m_materializer.buildUpdates(
-            it->second,
-            layoutTree,
-            false
-        )
-    );
+    send(m_materializer.buildUpdates(it->second, layoutTree, false));
 }
 
-auto LayoutRuntime::layout(
-    const WidgetTree& tree,
-    const Api::Size& available
-) -> LayoutNode
+auto LayoutRuntime::layout(const WidgetTree& tree, const Api::Size& available) -> LayoutNode
 {
     auto layoutTree = LayoutTreeBuilder::Build(tree);
     layoutTree.layout.size = available;
@@ -95,9 +63,7 @@ auto LayoutRuntime::layout(
     return layoutTree;
 }
 
-auto LayoutRuntime::send(
-    std::vector<Api::BackendCommand> commands
-) -> void
+auto LayoutRuntime::send(std::vector<Api::BackendCommand> commands) -> void
 {
     if (!m_backend)
     {

@@ -1,62 +1,23 @@
 #include "Materializer.h"
 
+#include "Runtime/EventRuntime/EventSubscriptions.h"
 
 namespace Blade {
 
-
-auto Materializer::assignIds(
-    WidgetTree& widgetTree
-) -> void
-{
-    assignNodeIds(widgetTree);
-}
-
-auto Materializer::assignNodeIds(
-    WidgetTree& widget
-) -> void
-{
-    if (widget.id == Api::InvalidId)
-    {
-        widget.id = nextId();
-    }
-
-    for (auto& child : widget.children)
-    {
-        assignNodeIds(child);
-    }
-}
-
-auto Materializer::build(
-    const WidgetTree& widgetTree,
-    const LayoutNode& layoutTree
-) -> std::vector<Api::BackendCommand>
+auto Materializer::build(const WidgetTree& widgetTree, const LayoutNode& layoutTree) -> std::vector<Api::BackendCommand>
 {
     std::vector<Api::BackendCommand> commands;
 
-    buildNode(
-        widgetTree,
-        layoutTree,
-        commands
-    );
+    buildNode(widgetTree, layoutTree, commands);
 
     return commands;
 }
 
-auto Materializer::buildUpdates(
-    const WidgetTree& widgetTree,
-    const LayoutNode& layoutTree,
-    bool includeRoot
-) -> std::vector<Api::BackendCommand>
+auto Materializer::buildUpdates(const WidgetTree& widgetTree, const LayoutNode& layoutTree, bool includeRoot) -> std::vector<Api::BackendCommand>
 {
     std::vector<Api::BackendCommand> commands;
 
-    buildUpdateNode(
-        widgetTree,
-        layoutTree,
-        commands,
-        Api::InvalidId,
-        includeRoot
-    );
+    buildUpdateNode(widgetTree, layoutTree, commands, Api::InvalidId, includeRoot);
 
     return commands;
 }
@@ -69,57 +30,40 @@ auto Materializer::buildNode(
     Api::Id parent
 ) -> void
 {
-    const Api::Id id =
-        widget.id != Api::InvalidId
-            ? widget.id
-            : nextId();
-
     if (layout.isNative)
     {
         out.push_back({
             .command = Api::CommandType::Create,
-            .id = id,
+            .id = widget.id,
             .parent = parent,
             .nodeType = widget.type,
             .props = widget.backend.create,
-            .events = widget.events
+            .events = ToEventSubscriptions(widget.events)
         });
 
         if (parent != Api::InvalidId)
         {
             out.push_back({
                 .command = Api::CommandType::Attach,
-                .id = id,
+                .id = widget.id,
                 .parent = parent
             });
         }
 
-        auto props =
-            buildRectProps(
-                layout,
-                widget,
-                parent
-            );
+        auto props = buildRectProps(layout, widget, parent);
 
         out.push_back({
             .command = Api::CommandType::Update,
-            .id = id,
+            .id = widget.id,
             .props = std::move(props)
         });
 
-        parent = id;
+        parent = widget.id;
     }
 
-    for (size_t i = 0;
-         i < widget.children.size();
-         ++i)
+    for (size_t i = 0; i < widget.children.size(); ++i)
     {
-        buildNode(
-            widget.children[i],
-            layout.children[i],
-            out,
-            parent
-        );
+        buildNode(widget.children[i], layout.children[i], out, parent);
     }
 }
 
@@ -137,12 +81,7 @@ auto Materializer::buildUpdateNode(
     {
         if (includeCurrent)
         {
-            auto props =
-                buildRectProps(
-                    layout,
-                    widget,
-                    parent
-                );
+            auto props = buildRectProps(layout, widget, parent);
 
             out.push_back({
                 .command = Api::CommandType::Update,
@@ -154,25 +93,13 @@ auto Materializer::buildUpdateNode(
         currentParent = widget.id;
     }
 
-    for (size_t i = 0;
-         i < widget.children.size();
-         ++i)
+    for (size_t i = 0; i < widget.children.size(); ++i)
     {
-        buildUpdateNode(
-            widget.children[i],
-            layout.children[i],
-            out,
-            currentParent,
-            true
-        );
+        buildUpdateNode(widget.children[i], layout.children[i], out, currentParent, true);
     }
 }
 
-auto Materializer::buildRectProps(
-    const LayoutNode& layout,
-    const WidgetTree& widget,
-    Api::Id parent
-) -> Api::PropertyMap
+auto Materializer::buildRectProps(const LayoutNode& layout, const WidgetTree& widget, Api::Id parent) -> Api::PropertyMap
 {
     Api::PropertyMap props;
 
@@ -191,11 +118,5 @@ auto Materializer::buildRectProps(
 
     return props;
 }
-
-Api::Id Materializer::nextId()
-{
-    return m_nextId++;
-}
-
 
 } // namespace

@@ -19,7 +19,7 @@ struct BackendCommand
     Api::Text nodeType; // "Button", "Window", "Column"
 
     Api::PropertyMap props;
-    Api::EventMap events;
+    Api::EventSubscriptions events;
 };
 
 

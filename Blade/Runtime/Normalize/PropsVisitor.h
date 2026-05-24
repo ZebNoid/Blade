@@ -56,11 +56,12 @@ public:
             break;
 
         case Api::Props::Title:
-        case Api::Props::Default:
+        case Api::Props::IsDefault:
             m_props.backend.create[prop] = value;
             break;
 
         default:
+            m_props.backend.create[prop] = value;
             break;
         }
     }

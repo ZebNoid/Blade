@@ -1,0 +1,88 @@
+#include "LayoutLinearArrange.h"
+
+#include "Runtime/LayoutEngine/Geometry/LayoutGeometry.h"
+
+
+namespace Blade {
+
+auto LayoutLinearArrange::MeasureContent(const LayoutNode& node, const Api::Rect& contentRect, LayoutAxis axis) -> Content
+{
+    Content content;
+    bool first = true;
+
+    for (const auto& child : node.children)
+    {
+        if (!first)
+        {
+            content.size += node.layout.gap;
+        }
+
+        first = false;
+
+        const auto& margin = child.layout.box.margin;
+        const int flex = LayoutGeometry::NonNegative(child.layout.box.flex);
+
+        content.size += LayoutAxisGeometry::MainMarginStart(axis, margin);
+        content.size += flex > 0 ? 0 : LayoutAxisGeometry::MainSize(axis, child.desiredSize);
+        content.size += LayoutAxisGeometry::MainMarginEnd(axis, margin);
+        content.totalFlex += flex;
+    }
+
+    if (content.totalFlex > 0)
+    {
+        content.flexSpace = LayoutGeometry::NonNegative(LayoutAxisGeometry::MainRectSize(axis, contentRect) - content.size);
+        content.size += content.flexSpace;
+    }
+
+    return content;
+}
+
+auto LayoutLinearArrange::ChildMainSize(const LayoutNode& child, const Content& content, LayoutAxis axis) -> int
+{
+    const int flex = LayoutGeometry::NonNegative(child.layout.box.flex);
+
+    return content.totalFlex > 0 && flex > 0
+        ? content.flexSpace * flex / content.totalFlex
+        : LayoutAxisGeometry::MainSize(axis, child.desiredSize);
+}
+
+auto LayoutLinearArrange::AlignCrossAxis(const LayoutNode& node, const LayoutNode& child, const Api::Rect& contentRect, LayoutAxis axis) -> CrossAxis
+{
+    const auto& margin = child.layout.box.margin;
+    const int available = LayoutGeometry::NonNegative(
+        LayoutAxisGeometry::CrossRectSize(axis, contentRect) -
+        LayoutAxisGeometry::CrossMarginStart(axis, margin) -
+        LayoutAxisGeometry::CrossMarginEnd(axis, margin)
+    );
+
+    CrossAxis layout{
+        .position = LayoutAxisGeometry::CrossRectPosition(axis, contentRect) + LayoutAxisGeometry::CrossMarginStart(axis, margin),
+        .size = LayoutAxisGeometry::CrossSize(axis, child.desiredSize)
+    };
+
+    switch (node.layout.crossAxisAlignment)
+    {
+    case CrossAxisAlignment::Center:
+        layout.position += LayoutGeometry::NonNegative(available - layout.size) / 2;
+        break;
+
+    case CrossAxisAlignment::End:
+        layout.position = LayoutAxisGeometry::CrossRectPosition(axis, contentRect) +
+            LayoutAxisGeometry::CrossRectSize(axis, contentRect) -
+            LayoutAxisGeometry::CrossMarginEnd(axis, margin) -
+            layout.size;
+        break;
+
+    case CrossAxisAlignment::Stretch:
+        layout.size = available;
+        break;
+
+    case CrossAxisAlignment::Start:
+    default:
+        break;
+    }
+
+    return layout;
+}
+
+} // namespace Blade

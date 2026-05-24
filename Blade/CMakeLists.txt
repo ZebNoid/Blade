@@ -1,4 +1,4 @@
-project(Blade VERSION 0.3.5)
+project(Blade VERSION 0.3.7)
 
 # Use the names to logic check
 if (NOT PROJECT_IS_TOP_LEVEL)
@@ -30,6 +30,14 @@ add_library(${PROJECT_NAME} STATIC
 
         Runtime/Materializer/Materializer.cpp
         Runtime/Materializer/Materializer.h
+        Runtime/RuntimeTree/RuntimeTree.cpp
+        Runtime/RuntimeTree/RuntimeTree.h
+        Runtime/EventRuntime/EventRuntime.cpp
+        Runtime/EventRuntime/EventRuntime.h
+        Runtime/EventRuntime/EventInvoker.cpp
+        Runtime/EventRuntime/EventInvoker.h
+        Runtime/EventRuntime/EventSubscriptions.cpp
+        Runtime/EventRuntime/EventSubscriptions.h
         Runtime/LayoutRuntime/LayoutRuntime.cpp
         Runtime/LayoutRuntime/LayoutRuntime.h
         Runtime/Normalize/Normalize.h
@@ -44,8 +52,13 @@ add_library(${PROJECT_NAME} STATIC
         Runtime/LayoutEngine/Algorithm/LayoutColumn.h
         Runtime/LayoutEngine/Algorithm/LayoutRow.cpp
         Runtime/LayoutEngine/Algorithm/LayoutRow.h
+        Runtime/LayoutEngine/Algorithm/LayoutLinear/LayoutLinear.cpp
+        Runtime/LayoutEngine/Algorithm/LayoutLinear/LayoutLinear.h
+        Runtime/LayoutEngine/Algorithm/LayoutLinearArrange/LayoutLinearArrange.cpp
+        Runtime/LayoutEngine/Algorithm/LayoutLinearArrange/LayoutLinearArrange.h
         Runtime/LayoutEngine/Algorithm/LayoutStack.cpp
         Runtime/LayoutEngine/Algorithm/LayoutStack.h
+        Runtime/LayoutEngine/Geometry/LayoutAxis.h
         Runtime/LayoutEngine/Geometry/LayoutGeometry.h
         Runtime/LayoutEngine/LayoutEngine/LayoutEngine.cpp
         Runtime/LayoutEngine/LayoutEngine/LayoutEngine.h

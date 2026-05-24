@@ -1,8 +1,10 @@
 #pragma once
 #include <functional>
 #include <variant>
+#include <vector>
 
 #include "Callbacks.h"
+#include "Events.h"
 #include "LayoutProps.h"
 #include "Point.h"
 #include "Props.h"
@@ -15,6 +17,7 @@ namespace Blade::Api {
 
 using EventsValue = std::variant<
     CallbackVoid,
+    CallbackResult,
     CallbackString,
     CallbackBool
 >;
@@ -35,8 +38,8 @@ using PropertyValue = std::variant<
 using PropertyMap = std::unordered_map<Api::Props, PropertyValue>;
 
 using EventId = Api::Id;
-// TODO backend doesn't know about EventMap
-using EventMap = std::unordered_map<Api::Text, EventsValue>;
+using EventMap = std::unordered_map<Api::Events, EventsValue>;
+using EventSubscriptions = std::vector<Api::Events>;
 
 
 } // namespace

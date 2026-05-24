@@ -17,7 +17,7 @@ struct ButtonProps
     auto visit(PropsVisitor& v) const -> void
     {
         v.set(Api::Props::Layout, layout);
-        v.set(Api::Props::Default, isDefault);
+        v.set(Api::Props::IsDefault, isDefault);
         v.set(Api::Props::Size, size);
     }
 };

@@ -1,6 +1,7 @@
 #pragma once
 
 
+#include "Common/Events.h"
 #include "Common/Types.h"
 #include "Common/Property.h"
 
@@ -11,7 +12,7 @@ namespace Blade {
 class EventVisitor
 {
 public:
-    auto set(const Api::Text& key, const Api::EventsValue& value) -> void
+    auto set(const Api::Events& key, const Api::EventsValue& value) -> void
     {
         m_map[key] = value;
     }

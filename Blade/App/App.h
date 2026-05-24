@@ -1,7 +1,9 @@
 #pragma once
 
 #include "Api/ApiBackend.h"
+#include "Runtime/EventRuntime/EventRuntime.h"
 #include "Runtime/LayoutRuntime/LayoutRuntime.h"
+#include "Runtime/RuntimeTree/RuntimeTree.h"
 
 
 namespace Blade {
@@ -21,9 +23,7 @@ protected:
         requires std::derived_from<TBackend, Api::ApiBackend>
     auto use(Args&&... args) -> void
     {
-        m_backend = std::make_unique<TBackend>(
-            std::forward<Args>(args)...
-        );
+        m_backend = std::make_unique<TBackend>(std::forward<Args>(args)...);
     }
 
     virtual auto onSetup() -> void = 0;
@@ -37,13 +37,14 @@ private:
 
     auto initBackend() -> int;
 
-    auto onNativeResize(
-        Api::Id rootId,
-        const Api::Size& size
-    ) -> void;
+    auto onNativeResize(Api::Id rootId, const Api::Size& size) -> void;
+
+    auto onBackendEvent(const Api::BackendEvent& event) -> Api::EventResult;
 
 private:
     std::unique_ptr<Api::ApiBackend> m_backend;
+    RuntimeTree m_runtimeTree;
+    EventRuntime m_eventRuntime;
     std::unique_ptr<LayoutRuntime> m_layoutRuntime;
 
     friend class RootWidget;

@@ -19,17 +19,18 @@ add_library(${PROJECT_NAME} STATIC
 
         WinApi/WindowProc/WindowProc.cpp
         WinApi/WindowProc/WindowProc.h
-        WinApi/MessageRouter/MessageRouter.cpp
-        WinApi/MessageRouter/MessageRouter.h
+        WinApi/Router/MessageRouter/MessageRouter.cpp
+        WinApi/Router/MessageRouter/MessageRouter.h
+        WinApi/Router/CommandRouter/CommandRouter.cpp
+        WinApi/Router/CommandRouter/CommandRouter.h
 
         WinApi/AppRuntime/AppRuntime.cpp
         WinApi/AppRuntime/AppRuntime.h
 
-        WinApi/Window/NativeWindow.cpp
-        WinApi/Window/NativeWindow.h
-
         WinApi/NativeApi/NativeApi.cpp
         WinApi/NativeApi/NativeApi.h
+        WinApi/NativeElement/NativeElement.cpp
+        WinApi/NativeElement/NativeElement.h
 
         Node/NativeNode/NativeNode.cpp
         Node/NativeNode/NativeNode.h
@@ -40,14 +41,22 @@ add_library(${PROJECT_NAME} STATIC
 
         CommandDispatcher/CommandDispatcher.cpp
         CommandDispatcher/CommandDispatcher.h
-        Property/NativePropertyMapper/NativePropertyMapper.cpp
-        Property/NativePropertyMapper/NativePropertyMapper.h
+        Event/EventMapper/EventMapper.cpp
+        Event/EventMapper/EventMapper.h
+        Property/PropertyMapper/PropertyMapper.cpp
+        Property/PropertyMapper/PropertyMapper.h
         WinApi/CommonControls/CommonControls.cpp
         WinApi/CommonControls/CommonControls.h
-        WinApi/Components/Button/NativeButton.cpp
-        WinApi/Components/Button/NativeButton.h
-        WinApi/INativeElement/INativeElement.h
+        WinApi/NativeElement/INativeElement.h
 
+        Components/Window/NativeWindow.cpp
+        Components/Window/NativeWindow.h
+        Components/Window/NativeWindowProps.cpp
+        Components/Window/NativeWindowProps.h
+        Components/Button/NativeButton.cpp
+        Components/Button/NativeButton.h
+        Components/Button/NativeButtonProps.cpp
+        Components/Button/NativeButtonProps.h
 )
 
 # use Unicode

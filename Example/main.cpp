@@ -2,6 +2,7 @@
 
 #include "blade.h"
 #include "App/AppBackend.h"
+#include "Common/Logger.h"
 
 using namespace Blade;
 
@@ -27,8 +28,35 @@ protected:
 
         Window(
             Column(
-                Button(L"Button").set({.layout = {.flex = 1,}})
-                , Button(L"Button")
+
+                Button(L"Button  Flex")
+                .set({
+                    .layout = {
+                        .flex = 3,
+                    },
+                })
+                , Row(
+
+                    Button(L"Button Flex").set({
+                        .layout = {
+                            .flex = 1,
+                        },
+                    })
+                    , Button(L"Button")
+                )
+                , Button(L"Button Flex Click")
+                  .set({
+                      .layout = {
+                          .flex = 1,
+                      },
+                      .isDefault = true
+                  })
+                  .on({
+                      .click = []() -> void
+                      {
+                          LOG(L"Click! 1");
+                      },
+                  })
             ).set({
                 .mainAxisAlignment = MainAxisAlignment::End,
             })
@@ -37,6 +65,26 @@ protected:
             .size = {800, 600},
             .position = {3300, 400},
         }).build(this);
+
+
+        Window(
+            Column(
+                Button(L"Button Flex Click")
+                .set({.layout = {.flex = 1,}})
+                .on({
+                    .click = []() -> void
+                    {
+                        LOG(L"Click! 2");
+                    },
+                })
+                , Button(L"Button")
+            )
+        ).set({
+            .title = L"Test",
+            .size = {400, 400},
+            .position = {3500, 200},
+        }).build(this);
+
 
         // Window(
         //     Column(

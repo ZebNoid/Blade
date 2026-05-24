@@ -12,7 +12,7 @@ struct WindowEvents
 
     auto visit(EventVisitor& v) const -> void
     {
-        v.set(L"close", close);
+        v.set(Api::Events::Close, close);
     }
 };
 

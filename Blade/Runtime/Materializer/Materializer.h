@@ -11,26 +11,11 @@ namespace Blade {
 class Materializer
 {
 public:
-    auto assignIds(
-        WidgetTree& widgetTree
-    ) -> void;
+    auto build(const WidgetTree& widgetTree, const LayoutNode& layoutTree) -> std::vector<Api::BackendCommand>;
 
-    auto build(
-        const WidgetTree& widgetTree,
-        const LayoutNode& layoutTree
-    ) -> std::vector<Api::BackendCommand>;
-
-    auto buildUpdates(
-        const WidgetTree& widgetTree,
-        const LayoutNode& layoutTree,
-        bool includeRoot = false
-    ) -> std::vector<Api::BackendCommand>;
+    auto buildUpdates(const WidgetTree& widgetTree, const LayoutNode& layoutTree, bool includeRoot = false) -> std::vector<Api::BackendCommand>;
 
 private:
-    auto assignNodeIds(
-        WidgetTree& widget
-    ) -> void;
-
     auto buildNode(
         const WidgetTree& widget,
         const LayoutNode& layout,
@@ -46,17 +31,7 @@ private:
         bool includeCurrent = true
     ) -> void;
 
-    static auto buildRectProps(
-        const LayoutNode& layout,
-        const WidgetTree& widget,
-        Api::Id parent
-    ) -> Api::PropertyMap;
-
-private:
-    Api::Id nextId();
-
-private:
-    Api::Id m_nextId = 1;
+    static auto buildRectProps(const LayoutNode& layout, const WidgetTree& widget, Api::Id parent) -> Api::PropertyMap;
 };
 
 

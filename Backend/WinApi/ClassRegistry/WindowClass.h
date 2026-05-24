@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include <unordered_map>
 #include <unordered_set>
 #include <windows.h>
 
@@ -34,7 +33,7 @@ public:
 
 private:
     static inline HINSTANCE m_hInstance = nullptr;
-    static inline std::unordered_set<std::wstring> m_names;;
+    static inline std::unordered_set<std::wstring> m_names;
 };
 
 
