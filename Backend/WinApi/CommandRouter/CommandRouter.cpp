@@ -20,7 +20,7 @@ auto CommandRouter::on(Api::Id id, Api::Events event) -> void
         return;
     }
 
-    m_handlers[id] = event;
+    m_subscriptions[id] = event;
 }
 
 auto CommandRouter::dispatch(WPARAM wParam, LPARAM lParam) -> bool
@@ -32,9 +32,9 @@ auto CommandRouter::dispatch(WPARAM wParam, LPARAM lParam) -> bool
 
     const auto id = static_cast<Api::Id>(LOWORD(wParam));
 
-    const auto it = m_handlers.find(id);
+    const auto it = m_subscriptions.find(id);
 
-    if (it == m_handlers.end())
+    if (it == m_subscriptions.end())
     {
         return false;
     }

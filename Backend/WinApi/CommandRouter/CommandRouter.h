@@ -18,7 +18,7 @@ public:
 
 private:
     Api::EventHandler* m_handler = nullptr;
-    std::unordered_map<Api::Id, Api::Events> m_handlers;
+    std::unordered_map<Api::Id, Api::Events> m_subscriptions;
 };
 
 } // namespace Blade::Backend
