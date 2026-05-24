@@ -11,7 +11,7 @@ struct ButtonEvents
 
     auto visit(EventVisitor& v) const -> void
     {
-        v.set(L"click", click);
+        v.set(Api::Events::Click, click);
     }
 };
 

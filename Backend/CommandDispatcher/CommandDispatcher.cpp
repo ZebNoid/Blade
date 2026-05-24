@@ -41,7 +41,7 @@ auto CommandDispatcher::dispatch(
 
 auto CommandDispatcher::create(const Api::BackendCommand& command) -> void
 {
-    LOGF_D(L"Command::%s %u [%s]", to_string(command.command).c_str(), command.id, command.nodeType.c_str());
+    // LOGF_D(L"Command::%s %u [%s]", to_string(command.command).c_str(), command.id, command.nodeType.c_str());
 
     auto node = m_backend->factory().create(command);
 
@@ -65,7 +65,7 @@ auto CommandDispatcher::attach(const Api::BackendCommand& command) -> void
         return;
     }
 
-    LOGF_D(L"Command::%s %u [%s -> %s]", to_string(command.command).c_str(), command.id, child->type.c_str(), parent->type.c_str());
+    // LOGF_D(L"Command::%s %u [%s -> %s]", to_string(command.command).c_str(), command.id, child->type.c_str(), parent->type.c_str());
 
     child->parent = command.parent;
 
@@ -101,7 +101,7 @@ auto CommandDispatcher::update(
         return;
     }
 
-    LOGF_D(L"Command::%s %u [%s]", to_string(command.command).c_str(), command.id, node->type.c_str());
+    // LOGF_D(L"Command::%s %u [%s]", to_string(command.command).c_str(), command.id, node->type.c_str());
 
     node->native->applyProps(
         command.props

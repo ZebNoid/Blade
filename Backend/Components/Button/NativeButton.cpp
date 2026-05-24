@@ -49,7 +49,7 @@ auto NativeButton::applyEvents(const Api::EventMap& eventMap) -> void
         return;
     }
 
-    const auto it = eventMap.find(L"click");
+    const auto it = eventMap.find(Api::Events::Click);
 
     if (it == eventMap.end())
     {
