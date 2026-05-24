@@ -48,6 +48,11 @@ auto NativeWindow::router() -> MessageRouter&
     return m_router;
 }
 
+auto NativeWindow::commandRouter() -> CommandRouter&
+{
+    return m_commandRouter;
+}
+
 auto NativeWindow::destroy() -> void
 {
     if (m_hwnd != nullptr)
@@ -85,7 +90,16 @@ auto NativeWindow::attachChild(INativeElement* child) -> void
 
 auto NativeWindow::applyEvents(const Api::EventMap& eventMap) -> void
 {
-    // TODO leave in applyEvents?
+    m_router.on(
+        WM_COMMAND,
+        [this](HWND, UINT, WPARAM wParam, LPARAM lParam) -> int
+        {
+            return m_commandRouter.dispatch(wParam, lParam)
+                ? 0
+                : 1;
+        }
+    );
+
     m_router.on(
         WM_DESTROY,
         [this](HWND, UINT, WPARAM, LPARAM) -> int

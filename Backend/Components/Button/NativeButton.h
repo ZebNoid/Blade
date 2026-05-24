@@ -5,11 +5,15 @@
 
 namespace Blade::Backend {
 
+class NativeWindow;
 
 class NativeButton : public INativeElement
 {
 public:
-    auto create(HWND parent) -> bool;
+    auto create(
+        NativeWindow* parent,
+        Api::Id id
+    ) -> bool;
 
     auto handle() const -> HWND override;
 
@@ -29,6 +33,8 @@ public:
 
 private:
     HWND m_hwnd = nullptr;
+    Api::Id m_id = Api::InvalidId;
+    NativeWindow* m_parent = nullptr;
 };
 
 

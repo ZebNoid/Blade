@@ -21,6 +21,8 @@ add_library(${PROJECT_NAME} STATIC
         WinApi/WindowProc/WindowProc.h
         WinApi/MessageRouter/MessageRouter.cpp
         WinApi/MessageRouter/MessageRouter.h
+        WinApi/CommandRouter/CommandRouter.cpp
+        WinApi/CommandRouter/CommandRouter.h
 
         WinApi/AppRuntime/AppRuntime.cpp
         WinApi/AppRuntime/AppRuntime.h

@@ -46,11 +46,11 @@ auto NativeNodeFactory::createWindow(
     nativeWindow->router().on(
         WM_SIZE,
         [this, windowId = command.id](
-            HWND,
-            UINT,
-            WPARAM,
-            LPARAM lParam
-        ) -> int
+        HWND,
+        UINT,
+        WPARAM,
+        LPARAM lParam
+    ) -> int
         {
             m_backend->onWindowResize(
                 windowId,
@@ -90,8 +90,19 @@ auto NativeNodeFactory::createButton(const Api::BackendCommand& command) -> std:
 
     auto button = std::make_unique<NativeButton>();
 
-    if (!button->create(parent->native->handle()))
+    auto* parentWindow = dynamic_cast<NativeWindow*>(
+        parent->native.get()
+    );
+
+    if (!parentWindow)
     {
+        LOG_E(L"[Error] createButton parent is not NativeWindow");
+        return std::nullopt;
+    }
+
+    if (!button->create(parentWindow, command.id))
+    {
+        LOG_E(L"[Error] createButton failed");
         return std::nullopt;
     }
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "WinApi/INativeElement/INativeElement.h"
+#include "WinApi/CommandRouter/CommandRouter.h"
 #include "WinApi/MessageRouter/MessageRouter.h"
 
 
@@ -27,6 +28,8 @@ public:
 
     auto router() -> MessageRouter&;
 
+    auto commandRouter() -> CommandRouter&;
+
     auto destroy() -> void;
     auto markDead() -> void;
 
@@ -35,6 +38,7 @@ private:
     bool m_alive = true;
 
     MessageRouter m_router;
+    CommandRouter m_commandRouter;
 };
 
 
