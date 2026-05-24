@@ -1,7 +1,9 @@
 #pragma once
 
 #include "Api/ApiBackend.h"
+#include "Runtime/EventRuntime/EventRuntime.h"
 #include "Runtime/LayoutRuntime/LayoutRuntime.h"
+#include "Runtime/RuntimeTree/RuntimeTree.h"
 
 
 namespace Blade {
@@ -48,6 +50,8 @@ private:
 
 private:
     std::unique_ptr<Api::ApiBackend> m_backend;
+    RuntimeTree m_runtimeTree;
+    EventRuntime m_eventRuntime;
     std::unique_ptr<LayoutRuntime> m_layoutRuntime;
 
     friend class RootWidget;

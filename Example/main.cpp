@@ -31,7 +31,7 @@ protected:
                 Button(L"Button 1")
                 .set({.layout = {.flex = 1,}})
                 .on({
-                    .click = [] -> void
+                    .click = []() -> void
                     {
                         LOG(L"Click! 1");
                     },
@@ -52,7 +52,7 @@ protected:
                 Button(L"Button 2")
                 .set({.layout = {.flex = 1,}})
                 .on({
-                    .click = [] -> void
+                    .click = []() -> void
                     {
                         LOG(L"Click! 2");
                     },

@@ -17,7 +17,12 @@ auto App::run() -> int
 
 auto App::addToTree(const RootWidget& rootWidget) -> void
 {
-    m_layoutRuntime->mount(rootWidget.tree());
+    auto tree = rootWidget.tree();
+
+    m_runtimeTree.assignIds(tree);
+    m_eventRuntime.registerTree(tree);
+
+    m_layoutRuntime->mount(std::move(tree));
 }
 
 auto App::initBackend() -> int
@@ -68,12 +73,7 @@ auto App::onBackendEvent(
     const Api::BackendEvent& event
 ) -> Api::EventResult
 {
-    if (!m_layoutRuntime)
-    {
-        return {};
-    }
-
-    return m_layoutRuntime->handleEvent(event);
+    return m_eventRuntime.dispatch(event);
 }
 
 
