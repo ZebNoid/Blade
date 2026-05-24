@@ -36,6 +36,8 @@ add_library(${PROJECT_NAME} STATIC
         Runtime/EventRuntime/EventRuntime.h
         Runtime/EventRuntime/EventInvoker.cpp
         Runtime/EventRuntime/EventInvoker.h
+        Runtime/EventRuntime/EventSubscriptions.cpp
+        Runtime/EventRuntime/EventSubscriptions.h
         Runtime/LayoutRuntime/LayoutRuntime.cpp
         Runtime/LayoutRuntime/LayoutRuntime.h
         Runtime/Normalize/Normalize.h

@@ -1,38 +1,14 @@
 #include "Materializer.h"
 
+#include "Runtime/EventRuntime/EventSubscriptions.h"
 
 namespace Blade {
 
-namespace {
-
-auto EventSubscriptions(
-    const Api::EventMap& events
-) -> Api::EventSubscriptions
-{
-    Api::EventSubscriptions subscriptions;
-
-    for (const auto& [event, _] : events)
-    {
-        subscriptions.push_back(event);
-    }
-
-    return subscriptions;
-}
-
-} // namespace
-
-auto Materializer::build(
-    const WidgetTree& widgetTree,
-    const LayoutNode& layoutTree
-) -> std::vector<Api::BackendCommand>
+auto Materializer::build(const WidgetTree& widgetTree, const LayoutNode& layoutTree) -> std::vector<Api::BackendCommand>
 {
     std::vector<Api::BackendCommand> commands;
 
-    buildNode(
-        widgetTree,
-        layoutTree,
-        commands
-    );
+    buildNode(widgetTree, layoutTree, commands);
 
     return commands;
 }
@@ -72,7 +48,7 @@ auto Materializer::buildNode(
             .parent = parent,
             .nodeType = widget.type,
             .props = widget.backend.create,
-            .events = EventSubscriptions(widget.events)
+            .events = ToEventSubscriptions(widget.events)
         });
 
         if (parent != Api::InvalidId)
@@ -84,12 +60,7 @@ auto Materializer::buildNode(
             });
         }
 
-        auto props =
-            buildRectProps(
-                layout,
-                widget,
-                parent
-            );
+        auto props = buildRectProps(layout, widget, parent);
 
         out.push_back({
             .command = Api::CommandType::Update,
@@ -127,12 +98,7 @@ auto Materializer::buildUpdateNode(
     {
         if (includeCurrent)
         {
-            auto props =
-                buildRectProps(
-                    layout,
-                    widget,
-                    parent
-                );
+            auto props = buildRectProps(layout, widget, parent);
 
             out.push_back({
                 .command = Api::CommandType::Update,
