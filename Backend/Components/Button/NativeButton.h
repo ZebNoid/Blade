@@ -14,6 +14,10 @@ public:
 
     auto handle() const -> HWND override;
 
+    auto id() const -> Api::Id;
+
+    auto parent() const -> NativeWindow*;
+
     auto applyProps(const Api::PropertyMap& propertyMap) -> void override;
 
     auto applyEvents(const Api::EventSubscriptions& events) -> void override;

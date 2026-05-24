@@ -1,6 +1,7 @@
 #include "NativeButton.h"
 
 #include "Common/Logger.h"
+#include "Event/EventMapper/EventMapper.h"
 #include "Property/NativePropertyMapper/NativePropertyMapper.h"
 #include "WinApi/Hwnd/Hwnd.h"
 #include "WinApi/NativeApi/NativeApi.h"
@@ -34,6 +35,16 @@ auto NativeButton::handle() const -> HWND
     return m_hwnd;
 }
 
+auto NativeButton::id() const -> Api::Id
+{
+    return m_id;
+}
+
+auto NativeButton::parent() const -> NativeWindow*
+{
+    return m_parent;
+}
+
 auto NativeButton::applyProps(const Api::PropertyMap& propertyMap) -> void
 {
     NativePropertyMapper::Apply(m_hwnd, propertyMap);
@@ -54,18 +65,7 @@ auto NativeButton::applyProps(const Api::PropertyMap& propertyMap) -> void
 
 auto NativeButton::applyEvents(const Api::EventSubscriptions& events) -> void
 {
-    if (!m_parent)
-    {
-        return;
-    }
-
-    for (const auto event : events)
-    {
-        if (event == Api::Events::Click)
-        {
-            m_parent->commandRouter().on(m_id, event);
-        }
-    }
+    EventMapper::Apply(*this, events);
 }
 
 auto NativeButton::isAlive() const -> bool

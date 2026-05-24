@@ -1,6 +1,7 @@
 #include "NativeWindow.h"
 
 #include "Common/Logger.h"
+#include "Event/EventMapper/EventMapper.h"
 #include "Property/NativePropertyMapper/NativePropertyMapper.h"
 #include "WinApi/ClassRegistry/WindowClass.h"
 #include "WinApi/Hwnd/Hwnd.h"
@@ -90,37 +91,7 @@ auto NativeWindow::attachChild(INativeElement* child) -> void
 
 auto NativeWindow::applyEvents(const Api::EventSubscriptions& events) -> void
 {
-    m_router.on(
-        WM_COMMAND,
-        [this](HWND, UINT, WPARAM wParam, LPARAM lParam) -> int
-        {
-            return m_commandRouter.dispatch(wParam, lParam)
-                ? 0
-                : 1;
-        }
-    );
-
-    m_router.on(
-        WM_DESTROY,
-        [this](HWND, UINT, WPARAM, LPARAM) -> int
-        {
-            // close default behavior
-            // step 1 -> markDead
-            this->markDead();
-            return 0;
-        }
-    );
-
-    m_router.on(
-        WM_CLOSE,
-        [](HWND hwnd, UINT, WPARAM, LPARAM) -> int
-        {
-            // close default behavior
-            // step 2 -> DestroyWindow
-            NativeApi::Destroy(hwnd);
-            return 0;
-        }
-    );
+    EventMapper::Apply(*this, events);
 }
 
 auto NativeWindow::applyProps(const Api::PropertyMap& propertyMap) -> void
@@ -156,10 +127,7 @@ auto NativeWindow::applyProps(const Api::PropertyMap& propertyMap) -> void
         }
     }
 
-    NativePropertyMapper::Apply(
-        m_hwnd,
-        nativeProps
-    );
+    NativePropertyMapper::Apply(m_hwnd, nativeProps);
 }
 
 
