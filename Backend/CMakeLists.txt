@@ -27,9 +27,6 @@ add_library(${PROJECT_NAME} STATIC
         WinApi/AppRuntime/AppRuntime.cpp
         WinApi/AppRuntime/AppRuntime.h
 
-        WinApi/Window/NativeWindow.cpp
-        WinApi/Window/NativeWindow.h
-
         WinApi/NativeApi/NativeApi.cpp
         WinApi/NativeApi/NativeApi.h
         WinApi/NativeElement/NativeElement.cpp
@@ -52,6 +49,10 @@ add_library(${PROJECT_NAME} STATIC
         WinApi/CommonControls/CommonControls.h
         WinApi/INativeElement/INativeElement.h
 
+        Components/Window/NativeWindow.cpp
+        Components/Window/NativeWindow.h
+        Components/Window/NativeWindowProps.cpp
+        Components/Window/NativeWindowProps.h
         Components/Button/NativeButton.cpp
         Components/Button/NativeButton.h
         Components/Button/NativeButtonProps.cpp

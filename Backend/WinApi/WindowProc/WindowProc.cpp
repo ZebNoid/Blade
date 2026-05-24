@@ -1,6 +1,6 @@
 #include "WindowProc.h"
 
-#include "WinApi/Window/NativeWindow.h"
+#include "Components/Window/NativeWindow.h"
 
 
 namespace Blade::Backend {

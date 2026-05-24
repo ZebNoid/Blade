@@ -1,5 +1,6 @@
 #include "NativeWindow.h"
 
+#include "Components/Window/NativeWindowProps.h"
 #include "Common/Logger.h"
 #include "Event/EventMapper/EventMapper.h"
 #include "Property/PropertyMapper/PropertyMapper.h"
@@ -92,37 +93,7 @@ auto NativeWindow::applyEvents(const Api::EventSubscriptions& events) -> void
 
 auto NativeWindow::applyProps(const Api::PropertyMap& propertyMap) -> void
 {
-    Api::PropertyMap nativeProps;
-
-    for (const auto& [key, value] : propertyMap)
-    {
-        switch (key)
-        {
-        case Api::Props::Rect:
-            if (const auto* rect = std::get_if<Api::Rect>(&value))
-            {
-                LOGF_D(L" -> Apply::%s %s", to_string(key).c_str(), to_string(*rect).c_str());
-
-                // TODO client rect
-                NativeApi::SetClientRect(m_hwnd, *rect);
-            }
-            break;
-
-        case Api::Props::Size:
-            if (const auto* size = std::get_if<Api::Size>(&value))
-            {
-                LOGF_D(L" -> Apply::%s %s", to_string(key).c_str(), to_string(*size).c_str());
-
-                NativeApi::SetClientSize(m_hwnd, *size);
-            }
-            break;
-
-        default:
-            nativeProps[key] = value;
-            break;
-        }
-    }
-
+    auto nativeProps = NativeWindowProps::Apply(m_hwnd, propertyMap);
     PropertyMapper::Apply(m_hwnd, nativeProps);
 }
 

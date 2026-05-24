@@ -2,7 +2,7 @@
 
 #include "Components/Button/NativeButton.h"
 #include "WinApi/NativeApi/NativeApi.h"
-#include "WinApi/Window/NativeWindow.h"
+#include "Components/Window/NativeWindow.h"
 
 
 namespace Blade::Backend {

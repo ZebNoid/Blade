@@ -5,7 +5,7 @@
 #include "Event/EventMapper/EventMapper.h"
 #include "Property/PropertyMapper/PropertyMapper.h"
 #include "WinApi/Hwnd/Hwnd.h"
-#include "WinApi/Window/NativeWindow.h"
+#include "Components/Window/NativeWindow.h"
 
 
 namespace Blade::Backend {
