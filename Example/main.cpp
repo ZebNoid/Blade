@@ -76,6 +76,10 @@ protected:
                     {
                         LOG(L"Click! 2");
                     },
+                    .focus = [](auto focus)
+                    {
+                        LOGF(L"Focus! 2 %d", focus);
+                    },
                 })
                 , Button(L"Button")
             )

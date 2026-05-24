@@ -13,7 +13,11 @@ struct WindowProps
 {
     Api::Text title = L"Blade";
     Api::Size size{800,600}; // TODO default?
-    Api::Point position{-1, -1}; // TODO default?
+    Api::Point position{-1, -1}; // TODO default
+
+    // TODO no caption
+    // TODO start absolute or relative
+    // TODO start align
 
     auto visit(PropsVisitor& v) const -> void
     {

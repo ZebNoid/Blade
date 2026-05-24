@@ -1,7 +1,7 @@
 #pragma once
 
-#include "WinApi/CommandRouter/CommandRouter.h"
-#include "WinApi/MessageRouter/MessageRouter.h"
+#include "WinApi/Router/CommandRouter/CommandRouter.h"
+#include "WinApi/Router/MessageRouter/MessageRouter.h"
 #include "WinApi/NativeElement/NativeElement.h"
 
 

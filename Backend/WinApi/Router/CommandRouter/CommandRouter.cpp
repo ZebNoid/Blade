@@ -32,6 +32,10 @@ auto CommandRouter::dispatch(WPARAM wParam, LPARAM lParam) -> bool
 
     const auto id = static_cast<Api::Id>(LOWORD(wParam));
 
+    // TODO
+    const int event = HIWORD(wParam);
+    // TODO EN_SETFOCUS/EN_KILLFOCUS for Api::Events::Focus
+
     const auto it = m_subscriptions.find(id);
 
     if (it == m_subscriptions.end())

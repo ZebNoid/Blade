@@ -36,6 +36,7 @@ auto EventMapper::Apply(NativeWindow& window, const Api::EventSubscriptions&) ->
     );
 }
 
+// TODO not NativeButton but all NativeElements
 auto EventMapper::Apply(NativeButton& button, const Api::EventSubscriptions& events) -> void
 {
     auto* parent = dynamic_cast<NativeWindow*>(button.parent());
@@ -47,8 +48,11 @@ auto EventMapper::Apply(NativeButton& button, const Api::EventSubscriptions& eve
 
     for (const auto event : events)
     {
+        // TODO focus
+        // Api::Events::Focus
         if (event == Api::Events::Click)
         {
+            // TODO for All events not only Api::Events::Click
             parent->commandRouter().on(button.id(), event);
         }
     }
