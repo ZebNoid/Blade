@@ -1,5 +1,6 @@
 #include "NativeButton.h"
 
+#include "Common/Logger.h"
 #include "Property/NativePropertyMapper/NativePropertyMapper.h"
 #include "WinApi/Hwnd/Hwnd.h"
 #include "WinApi/Window/NativeWindow.h"
@@ -53,6 +54,8 @@ auto NativeButton::applyEvents(const Api::EventSubscriptions& events) -> void
     {
         if (event == Api::Events::Click)
         {
+            // TODO eventMapper ?
+            LOGF_W(L" -> ApplyEvent::%s for id:%d", to_string(event).c_str(), m_id);
             m_parent->commandRouter().on(
                 m_id,
                 event

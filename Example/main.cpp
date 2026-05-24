@@ -28,7 +28,7 @@ protected:
 
         Window(
             Column(
-                Button(L"Button")
+                Button(L"Button 1")
                 .set({.layout = {.flex = 1,}})
                 .on({
                     .click = [] -> void
@@ -47,23 +47,24 @@ protected:
         }).build(this);
 
 
-        // Window(
-        //     Column(
-        //         Button(L"Button 2")
-        //         .set({.layout = {.flex = 1,}})
-        //         .on({
-        //             .click = [] -> void
-        //             {
-        //                 LOG(L"Click! 2");
-        //             },
-        //         })
-        //         , Button(L"Button")
-        //     )
-        // ).set({
-        //     .title = L"Test",
-        //     .size = {400, 400},
-        //     .position = {3500, 200},
-        // }).build(this);
+        Window(
+            Column(
+                Button(L"Button 2")
+                .set({.layout = {.flex = 1,}})
+                .on({
+                    .click = [] -> void
+                    {
+                        LOG(L"Click! 2");
+                    },
+                })
+                , Button(L"Button")
+            )
+        ).set({
+            .title = L"Test",
+            .size = {400, 400},
+            .position = {3500, 200},
+        }).build(this);
+
 
         // Window(
         //     Column(

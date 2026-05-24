@@ -6,6 +6,7 @@
 #include "Base/WidgetTree.h"
 #include "Runtime/LayoutEngine/Data/LayoutNode.h"
 #include "Runtime/Materializer/Materializer.h"
+#include "Runtime/RuntimeTree/RuntimeTree.h"
 
 
 namespace Blade {
@@ -46,6 +47,7 @@ private:
 
 private:
     Api::ApiBackend* m_backend = nullptr;
+    RuntimeTree m_runtimeTree;
     Materializer m_materializer;
     std::unordered_map<Api::Id, WidgetTree> m_roots;
     std::unordered_map<Api::Id, Api::EventMap> m_events;

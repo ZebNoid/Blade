@@ -11,10 +11,6 @@ namespace Blade {
 class Materializer
 {
 public:
-    auto assignIds(
-        WidgetTree& widgetTree
-    ) -> void;
-
     auto build(
         const WidgetTree& widgetTree,
         const LayoutNode& layoutTree
@@ -27,10 +23,6 @@ public:
     ) -> std::vector<Api::BackendCommand>;
 
 private:
-    auto assignNodeIds(
-        WidgetTree& widget
-    ) -> void;
-
     auto buildNode(
         const WidgetTree& widget,
         const LayoutNode& layout,
@@ -53,10 +45,6 @@ private:
     ) -> Api::PropertyMap;
 
 private:
-    Api::Id nextId();
-
-private:
-    Api::Id m_nextId = 1;
 };
 
 

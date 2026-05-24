@@ -40,13 +40,11 @@ auto CommandRouter::dispatch(
         return false;
     }
 
-    const auto id =
-        static_cast<Api::Id>(
-            LOWORD(wParam)
-        );
+    const auto id = static_cast<Api::Id>(
+        LOWORD(wParam)
+    );
 
-    const auto it =
-        m_handlers.find(id);
+    const auto it = m_handlers.find(id);
 
     if (it == m_handlers.end())
     {

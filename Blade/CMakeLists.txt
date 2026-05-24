@@ -30,6 +30,8 @@ add_library(${PROJECT_NAME} STATIC
 
         Runtime/Materializer/Materializer.cpp
         Runtime/Materializer/Materializer.h
+        Runtime/RuntimeTree/RuntimeTree.cpp
+        Runtime/RuntimeTree/RuntimeTree.h
         Runtime/LayoutRuntime/LayoutRuntime.cpp
         Runtime/LayoutRuntime/LayoutRuntime.h
         Runtime/Normalize/Normalize.h

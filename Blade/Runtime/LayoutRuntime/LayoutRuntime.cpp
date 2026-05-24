@@ -19,7 +19,7 @@ auto LayoutRuntime::mount(
     WidgetTree tree
 ) -> void
 {
-    m_materializer.assignIds(tree);
+    m_runtimeTree.assignIds(tree);
     registerEvents(tree);
 
     auto layoutTree = layout(
