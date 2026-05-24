@@ -52,8 +52,10 @@ add_library(${PROJECT_NAME} STATIC
         Runtime/LayoutEngine/Algorithm/LayoutColumn.h
         Runtime/LayoutEngine/Algorithm/LayoutRow.cpp
         Runtime/LayoutEngine/Algorithm/LayoutRow.h
-        Runtime/LayoutEngine/Algorithm/LayoutLinear.cpp
-        Runtime/LayoutEngine/Algorithm/LayoutLinear.h
+        Runtime/LayoutEngine/Algorithm/LayoutLinear/LayoutLinear.cpp
+        Runtime/LayoutEngine/Algorithm/LayoutLinear/LayoutLinear.h
+        Runtime/LayoutEngine/Algorithm/LayoutLinearArrange/LayoutLinearArrange.cpp
+        Runtime/LayoutEngine/Algorithm/LayoutLinearArrange/LayoutLinearArrange.h
         Runtime/LayoutEngine/Algorithm/LayoutStack.cpp
         Runtime/LayoutEngine/Algorithm/LayoutStack.h
         Runtime/LayoutEngine/Geometry/LayoutAxis.h
