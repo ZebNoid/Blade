@@ -56,6 +56,8 @@ auto NativePropertyMapper::Apply(
                 }
             }
             break;
+        case Api::Props::IsDefault:
+            break;
         default:
             LOGF_W(L" -> ApplyProps::%s not implemented", to_string(key).c_str());
         }

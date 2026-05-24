@@ -10,6 +10,30 @@
 
 namespace Blade::Backend {
 
+namespace {
+
+auto ApplyIsDefault(HWND hwnd, const Api::PropertyMap& propertyMap) -> void
+{
+    const auto it = propertyMap.find(Api::Props::IsDefault);
+
+    if (it == propertyMap.end())
+    {
+        return;
+    }
+
+    const auto* isDefault = std::get_if<bool>(&it->second);
+
+    if (!isDefault)
+    {
+        return;
+    }
+
+    const auto style = *isDefault ? BS_DEFPUSHBUTTON : BS_PUSHBUTTON;
+    NativeApi::SetStyle(hwnd, style, TRUE);
+}
+
+} // namespace
+
 
 auto NativeButton::create(NativeWindow* parent, Api::Id id) -> bool
 {
@@ -33,19 +57,7 @@ auto NativeButton::create(NativeWindow* parent, Api::Id id) -> bool
 auto NativeButton::applyProps(const Api::PropertyMap& propertyMap) -> void
 {
     NativePropertyMapper::Apply(m_hwnd, propertyMap);
-
-    auto it = propertyMap.find(Api::Props::IsDefault);
-    if (it != propertyMap.end()) {
-        auto value = it->second;
-        if (const auto* b_ptr = std::get_if<bool>(&value))
-        {
-            // TODO not working
-            bool isDefault = *b_ptr;
-            auto style = isDefault ? BS_DEFPUSHBUTTON : BS_PUSHBUTTON;
-            // LOGF_E(L" -> ApplyProps::%s %d", to_string(Api::Props::IsDefault).c_str(), isDefault);
-            NativeApi::SetStyle(m_hwnd, style, TRUE);
-        }
-    }
+    ApplyIsDefault(m_hwnd, propertyMap);
 }
 
 auto NativeButton::applyEvents(const Api::EventSubscriptions& events) -> void
