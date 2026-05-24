@@ -1,4 +1,4 @@
-#include "NativePropertyMapper.h"
+#include "PropertyMapper.h"
 
 #include "Common/Logger.h"
 #include "WinApi/NativeApi/NativeApi.h"
@@ -6,11 +6,7 @@
 
 namespace Blade::Backend {
 
-
-auto NativePropertyMapper::Apply(
-    HWND hwnd,
-    const Api::PropertyMap& props
-) -> void
+auto PropertyMapper::Apply(HWND hwnd, const Api::PropertyMap& props) -> void
 {
     for (const auto& [key, value] : props)
     {
@@ -21,7 +17,6 @@ auto NativePropertyMapper::Apply(
                 if (const auto* rect = std::get_if<Api::Rect>(&value))
                 {
                     LOGF_D(L" -> ApplyProps::%s %s", to_string(key).c_str(), to_string(*rect).c_str());
-
                     NativeApi::SetRect(hwnd, *rect);
                 }
             }
@@ -31,7 +26,6 @@ auto NativePropertyMapper::Apply(
                 if (const auto* text = std::get_if<Api::Text>(&value))
                 {
                     LOGF_D(L" -> ApplyProps::%s [%s]", to_string(key).c_str(), text->c_str());
-
                     NativeApi::SetTitle(hwnd, *text);
                 }
             }
@@ -41,7 +35,6 @@ auto NativePropertyMapper::Apply(
                 if (const auto* size = std::get_if<Api::Size>(&value))
                 {
                     LOGF_D(L" -> ApplyProps::%s %s", to_string(key).c_str(), to_string(*size).c_str());
-
                     NativeApi::SetSize(hwnd, *size);
                 }
             }
@@ -51,7 +44,6 @@ auto NativePropertyMapper::Apply(
                 if (const auto* point = std::get_if<Api::Point>(&value))
                 {
                     LOGF_D(L" -> ApplyProps::%s %s", to_string(key).c_str(), to_string(*point).c_str());
-
                     NativeApi::SetPosition(hwnd, *point);
                 }
             }
@@ -64,5 +56,4 @@ auto NativePropertyMapper::Apply(
     }
 }
 
-
-} // namespace
+} // namespace Blade::Backend

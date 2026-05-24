@@ -46,8 +46,8 @@ add_library(${PROJECT_NAME} STATIC
         CommandDispatcher/CommandDispatcher.h
         Event/EventMapper/EventMapper.cpp
         Event/EventMapper/EventMapper.h
-        Property/NativePropertyMapper/NativePropertyMapper.cpp
-        Property/NativePropertyMapper/NativePropertyMapper.h
+        Property/PropertyMapper/PropertyMapper.cpp
+        Property/PropertyMapper/PropertyMapper.h
         WinApi/CommonControls/CommonControls.cpp
         WinApi/CommonControls/CommonControls.h
         WinApi/INativeElement/INativeElement.h

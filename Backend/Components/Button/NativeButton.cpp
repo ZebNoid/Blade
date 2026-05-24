@@ -2,7 +2,7 @@
 
 #include "Common/Logger.h"
 #include "Event/EventMapper/EventMapper.h"
-#include "Property/NativePropertyMapper/NativePropertyMapper.h"
+#include "Property/PropertyMapper/PropertyMapper.h"
 #include "WinApi/Hwnd/Hwnd.h"
 #include "WinApi/NativeApi/NativeApi.h"
 #include "WinApi/Window/NativeWindow.h"
@@ -56,7 +56,7 @@ auto NativeButton::create(NativeWindow* parent, Api::Id id) -> bool
 
 auto NativeButton::applyProps(const Api::PropertyMap& propertyMap) -> void
 {
-    NativePropertyMapper::Apply(m_hwnd, propertyMap);
+    PropertyMapper::Apply(m_hwnd, propertyMap);
     ApplyIsDefault(m_hwnd, propertyMap);
 }
 

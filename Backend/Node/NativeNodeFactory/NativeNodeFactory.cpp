@@ -2,7 +2,6 @@
 
 #include "App/AppBackend.h"
 #include "Common/Logger.h"
-#include "Property/NativePropertyMapper/NativePropertyMapper.h"
 #include "Components/Button/NativeButton.h"
 #include "WinApi/NativeApi/NativeApi.h"
 

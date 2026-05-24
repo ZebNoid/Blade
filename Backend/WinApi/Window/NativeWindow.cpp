@@ -2,7 +2,7 @@
 
 #include "Common/Logger.h"
 #include "Event/EventMapper/EventMapper.h"
-#include "Property/NativePropertyMapper/NativePropertyMapper.h"
+#include "Property/PropertyMapper/PropertyMapper.h"
 #include "WinApi/ClassRegistry/WindowClass.h"
 #include "WinApi/Hwnd/Hwnd.h"
 #include "WinApi/NativeApi/NativeApi.h"
@@ -123,7 +123,7 @@ auto NativeWindow::applyProps(const Api::PropertyMap& propertyMap) -> void
         }
     }
 
-    NativePropertyMapper::Apply(m_hwnd, nativeProps);
+    PropertyMapper::Apply(m_hwnd, nativeProps);
 }
 
 

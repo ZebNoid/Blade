@@ -7,8 +7,7 @@
 
 namespace Blade::Backend {
 
-
-class NativePropertyMapper
+class PropertyMapper
 {
 public:
     static auto Apply(
@@ -17,5 +16,4 @@ public:
     ) -> void;
 };
 
-
-} // namespace
+} // namespace Blade::Backend
