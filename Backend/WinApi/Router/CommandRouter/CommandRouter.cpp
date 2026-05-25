@@ -5,32 +5,26 @@
 
 namespace Blade::Backend {
 
-namespace {
-
-auto ToCommandEvent(WORD notificationCode) -> Api::BackendEvent
+auto CommandRouter::findSubscription(
+    std::vector<Subscription>& subscriptions,
+    WORD notificationCode
+) -> Subscription*
 {
-    switch (notificationCode)
+    const auto it = std::ranges::find_if(
+        subscriptions,
+        [notificationCode](const auto& subscription)
+        {
+            return subscription.notificationCode == notificationCode;
+        }
+    );
+
+    if (it == subscriptions.end())
     {
-    case BN_CLICKED:
-        return { .type = Api::Events::Click };
-
-    case BN_SETFOCUS:
-        return { .type = Api::Events::Focus, .value = true };
-
-    case BN_KILLFOCUS:
-        return { .type = Api::Events::Focus, .value = false };
-
-    default:
-        return {};
+        return nullptr;
     }
-}
 
-auto HasSubscription(const std::vector<Api::Events>& subscriptions, Api::Events event) -> bool
-{
-    return std::ranges::find(subscriptions, event) != subscriptions.end();
+    return &*it;
 }
-
-} // namespace
 
 CommandRouter::CommandRouter(Api::EventHandler* handler)
     : m_handler(handler)
@@ -42,19 +36,26 @@ auto CommandRouter::setHandler(Api::EventHandler* handler) -> void
     m_handler = handler;
 }
 
-auto CommandRouter::on(Api::Id id, Api::Events event) -> void
+auto CommandRouter::on(Api::Id id, WORD notificationCode, Api::BackendEvent event) -> void
 {
-    if (id == Api::InvalidId || event == Api::Events::Unknown)
+    if (id == Api::InvalidId || event.type == Api::Events::Unknown)
     {
         return;
     }
 
-    auto& events = m_subscriptions[id];
+    auto& subscriptions = m_subscriptions[id];
+    auto* subscription = findSubscription(subscriptions, notificationCode);
 
-    if (!HasSubscription(events, event))
+    if (subscription)
     {
-        events.push_back(event);
+        subscription->event = std::move(event);
+        return;
     }
+
+    subscriptions.push_back({
+        .notificationCode = notificationCode,
+        .event = std::move(event)
+    });
 }
 
 auto CommandRouter::dispatch(WPARAM wParam, LPARAM lParam) -> bool
@@ -65,13 +66,7 @@ auto CommandRouter::dispatch(WPARAM wParam, LPARAM lParam) -> bool
     }
 
     const auto id = static_cast<Api::Id>(LOWORD(wParam));
-
-    auto event = ToCommandEvent(HIWORD(wParam));
-
-    if (event.type == Api::Events::Unknown)
-    {
-        return false;
-    }
+    const auto notificationCode = HIWORD(wParam);
 
     const auto it = m_subscriptions.find(id);
 
@@ -80,7 +75,9 @@ auto CommandRouter::dispatch(WPARAM wParam, LPARAM lParam) -> bool
         return false;
     }
 
-    if (!HasSubscription(it->second, event.type))
+    auto* subscription = findSubscription(it->second, notificationCode);
+
+    if (!subscription)
     {
         return false;
     }
@@ -90,6 +87,7 @@ auto CommandRouter::dispatch(WPARAM wParam, LPARAM lParam) -> bool
         return false;
     }
 
+    auto event = subscription->event;
     event.target = id;
     (*m_handler)(event);
 

@@ -1,5 +1,6 @@
 #include "EventMapper.h"
 
+#include "Components/Button/NativeButtonEvents.h"
 #include "Components/Button/NativeButton.h"
 #include "WinApi/NativeApi/NativeApi.h"
 #include "Components/Window/NativeWindow.h"
@@ -46,13 +47,7 @@ auto EventMapper::Apply(NativeButton& button, const Api::EventSubscriptions& eve
         return;
     }
 
-    for (const auto event : events)
-    {
-        if (event == Api::Events::Click || event == Api::Events::Focus)
-        {
-            parent->commandRouter().on(button.id(), event);
-        }
-    }
+    NativeButtonEvents::Apply(parent->commandRouter(), button.id(), events);
 }
 
 } // namespace Blade::Backend

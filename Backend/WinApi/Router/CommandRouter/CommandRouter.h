@@ -16,13 +16,25 @@ public:
 
     auto setHandler(Api::EventHandler* handler) -> void;
 
-    auto on(Api::Id id, Api::Events event) -> void;
+    auto on(Api::Id id, WORD notificationCode, Api::BackendEvent event) -> void;
 
     auto dispatch(WPARAM wParam, LPARAM lParam) -> bool;
 
 private:
+    struct Subscription
+    {
+        WORD notificationCode = 0;
+        Api::BackendEvent event{};
+    };
+
+    static auto findSubscription(
+        std::vector<Subscription>& subscriptions,
+        WORD notificationCode
+    ) -> Subscription*;
+
+private:
     Api::EventHandler* m_handler = nullptr;
-    std::unordered_map<Api::Id, std::vector<Api::Events>> m_subscriptions;
+    std::unordered_map<Api::Id, std::vector<Subscription>> m_subscriptions;
 };
 
 } // namespace Blade::Backend
