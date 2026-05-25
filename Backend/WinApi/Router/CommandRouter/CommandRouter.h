@@ -1,5 +1,9 @@
 #pragma once
 
+#include <unordered_map>
+#include <vector>
+#include <windows.h>
+
 #include "Api/ApiBackend.h"
 
 
@@ -18,7 +22,7 @@ public:
 
 private:
     Api::EventHandler* m_handler = nullptr;
-    std::unordered_map<Api::Id, Api::Events> m_subscriptions;
+    std::unordered_map<Api::Id, std::vector<Api::Events>> m_subscriptions;
 };
 
 } // namespace Blade::Backend

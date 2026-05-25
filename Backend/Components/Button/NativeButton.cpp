@@ -20,7 +20,7 @@ auto NativeButton::create(NativeWindow* parent, Api::Id id) -> bool
         .className = TEXT("BUTTON"),
         .windowName = TEXT("Button"),
         .parent = parent->handle(),
-        .style = WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | BS_PUSHBUTTON,
+        .style = WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | BS_PUSHBUTTON | BS_NOTIFY,
         .size = {100, 50}, // TODO dev
         .menu = reinterpret_cast<HMENU>(static_cast<UINT_PTR>(m_id)),
         .hInstance = GetModuleHandle(nullptr),
