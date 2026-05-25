@@ -64,6 +64,11 @@ protected:
             .title = L"Test",
             .size = {800, 600},
             .position = {3300, 400},
+        }).on({
+            .close = []()
+            {
+                LOG(L"Window 1 Close");
+            },
         }).build(this);
 
 

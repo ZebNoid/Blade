@@ -36,7 +36,7 @@ auto NativeNodeFactory::createWindow(const Api::BackendCommand& command) -> std:
         return std::nullopt;
     }
 
-    nativeWindow->create(m_backend->handle());
+    nativeWindow->create(m_backend->handle(), command.id);
     nativeWindow->commandRouter().setHandler(m_backend->eventHandler());
 
     nativeWindow->router().on(

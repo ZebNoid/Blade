@@ -14,8 +14,10 @@ namespace Blade::Backend {
 #define CUSTOM_CLASS L"BladeWindow"
 
 
-auto NativeWindow::create(HINSTANCE hInstance) -> bool
+auto NativeWindow::create(HINSTANCE hInstance, Api::Id id) -> bool
 {
+    m_id = id;
+
     WindowClass::Register(
         CUSTOM_CLASS,
         {

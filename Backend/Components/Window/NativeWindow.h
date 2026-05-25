@@ -11,7 +11,7 @@ namespace Blade::Backend {
 class NativeWindow : public NativeElement
 {
 public:
-    auto create(HINSTANCE hInstance) -> bool;
+    auto create(HINSTANCE hInstance, Api::Id id) -> bool;
 
     auto applyEvents(const Api::EventSubscriptions& events) -> void override;
 
