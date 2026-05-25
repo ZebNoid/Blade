@@ -29,8 +29,6 @@ auto LayoutTreeBuilder::BuildNode(
 
     node.layoutType = tree.layoutType;
 
-    node.isNative = node.layoutType == LayoutType::None;
-
     for (const auto& child : tree.children)
     {
         node.children.push_back(

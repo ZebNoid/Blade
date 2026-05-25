@@ -30,7 +30,7 @@ auto Materializer::buildNode(
     Api::Id parent
 ) -> void
 {
-    if (layout.isNative)
+    if (layout.layoutType == LayoutType::None)
     {
         out.push_back({
             .command = Api::CommandType::Create,
@@ -77,7 +77,7 @@ auto Materializer::buildUpdateNode(
 {
     Api::Id currentParent = parent;
 
-    if (layout.isNative)
+    if (layout.layoutType == LayoutType::None)
     {
         if (includeCurrent)
         {
