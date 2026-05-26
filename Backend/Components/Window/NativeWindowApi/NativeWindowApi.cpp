@@ -1,16 +1,10 @@
 #include "NativeWindowApi.h"
 
+#include "WinApi/DisplayApi/DisplayApi.h"
+
 namespace Blade::Backend {
 
 namespace {
-
-struct MonitorSearch
-{
-    int target = 0;
-    int index = 0;
-    RECT rect{};
-    bool found = false;
-};
 
 auto Has(Api::CaptionButton value, Api::CaptionButton flag) -> bool
 {
@@ -41,41 +35,6 @@ auto SetCaptionButtons(HWND hwnd, Api::CaptionButton buttons) -> void
     EnableMenuItem(systemMenu, SC_CLOSE, MF_BYCOMMAND | (Has(buttons, Api::CaptionButton::Close) ? MF_ENABLED : MF_GRAYED));
 }
 
-auto SearchMonitor(HMONITOR monitor, HDC, LPRECT, LPARAM data) -> BOOL
-{
-    auto* search = reinterpret_cast<MonitorSearch*>(data);
-
-    if (search->index == search->target)
-    {
-        MONITORINFO info{sizeof(MONITORINFO)};
-        if (GetMonitorInfo(monitor, &info))
-        {
-            search->rect = info.rcWork;
-            search->found = true;
-        }
-
-        return FALSE;
-    }
-
-    ++search->index;
-    return TRUE;
-}
-
-auto GetMonitorRect(int monitor) -> RECT
-{
-    MonitorSearch search{.target = monitor};
-    EnumDisplayMonitors(nullptr, nullptr, SearchMonitor, reinterpret_cast<LPARAM>(&search));
-
-    if (search.found)
-    {
-        return search.rect;
-    }
-
-    MONITORINFO info{sizeof(MONITORINFO)};
-    GetMonitorInfo(MonitorFromWindow(nullptr, MONITOR_DEFAULTTOPRIMARY), &info);
-    return info.rcWork;
-}
-
 auto GetWindowSize(HWND hwnd) -> Api::Size
 {
     RECT rect{};
@@ -85,9 +44,7 @@ auto GetWindowSize(HWND hwnd) -> Api::Size
 
 auto ToRect(HWND hwnd, const Api::WindowPlacementProps& placement) -> Api::Rect
 {
-    const auto screen = GetMonitorRect(placement.monitor);
-    const auto screenWidth = screen.right - screen.left;
-    const auto screenHeight = screen.bottom - screen.top;
+    const auto screen = DisplayApi::WorkArea(placement.monitor);
     auto size = GetWindowSize(hwnd);
 
     switch (placement.anchor)
@@ -99,7 +56,7 @@ auto ToRect(HWND hwnd, const Api::WindowPlacementProps& placement) -> Api::Rect
     case Api::WindowAnchor::CenterHorizontalFill:
     case Api::WindowAnchor::BottomFill:
     case Api::WindowAnchor::Fill:
-        size.width = screenWidth;
+        size.width = screen.width;
         break;
 
     default:
@@ -115,7 +72,7 @@ auto ToRect(HWND hwnd, const Api::WindowPlacementProps& placement) -> Api::Rect
     case Api::WindowAnchor::CenterVerticalFill:
     case Api::WindowAnchor::RightFill:
     case Api::WindowAnchor::Fill:
-        size.height = screenHeight;
+        size.height = screen.height;
         break;
 
     default:
@@ -134,7 +91,7 @@ auto ToRect(HWND hwnd, const Api::WindowPlacementProps& placement) -> Api::Rect
     case Api::WindowAnchor::TopFill:
     case Api::WindowAnchor::LeftFill:
     case Api::WindowAnchor::Fill:
-        position.x = screen.left;
+        position.x = screen.x;
         break;
 
     case Api::WindowAnchor::TopCenter:
@@ -142,20 +99,20 @@ auto ToRect(HWND hwnd, const Api::WindowPlacementProps& placement) -> Api::Rect
     case Api::WindowAnchor::BottomCenter:
     case Api::WindowAnchor::CenterHorizontalFill:
     case Api::WindowAnchor::CenterVerticalFill:
-        position.x = screen.left + (screenWidth - size.width) / 2;
+        position.x = screen.x + (screen.width - size.width) / 2;
         break;
 
     case Api::WindowAnchor::TopRight:
     case Api::WindowAnchor::CenterRight:
     case Api::WindowAnchor::BottomRight:
     case Api::WindowAnchor::RightFill:
-        position.x = screen.right - size.width;
+        position.x = screen.x + screen.width - size.width;
         break;
 
     case Api::WindowAnchor::CenterLeft:
     case Api::WindowAnchor::BottomLeft:
     case Api::WindowAnchor::BottomFill:
-        position.x = screen.left;
+        position.x = screen.x;
         break;
     }
 
@@ -169,28 +126,28 @@ auto ToRect(HWND hwnd, const Api::WindowPlacementProps& placement) -> Api::Rect
     case Api::WindowAnchor::TopCenter:
     case Api::WindowAnchor::TopRight:
     case Api::WindowAnchor::TopFill:
-        position.y = screen.top;
+        position.y = screen.y;
         break;
 
     case Api::WindowAnchor::CenterLeft:
     case Api::WindowAnchor::Center:
     case Api::WindowAnchor::CenterRight:
     case Api::WindowAnchor::CenterHorizontalFill:
-        position.y = screen.top + (screenHeight - size.height) / 2;
+        position.y = screen.y + (screen.height - size.height) / 2;
         break;
 
     case Api::WindowAnchor::BottomLeft:
     case Api::WindowAnchor::BottomCenter:
     case Api::WindowAnchor::BottomRight:
     case Api::WindowAnchor::BottomFill:
-        position.y = screen.bottom - size.height;
+        position.y = screen.y + screen.height - size.height;
         break;
 
     case Api::WindowAnchor::LeftFill:
     case Api::WindowAnchor::CenterVerticalFill:
     case Api::WindowAnchor::RightFill:
     case Api::WindowAnchor::Fill:
-        position.y = screen.top;
+        position.y = screen.y;
         break;
     }
 

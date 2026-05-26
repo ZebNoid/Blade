@@ -53,8 +53,8 @@ auto MaterializerCommands::UpdateProps(const LayoutNode& layout, const WidgetTre
 
     if (parent == Api::InvalidId)
     {
-        rect.x = widget.layout.position.x;
-        rect.y = widget.layout.position.y;
+        props[Api::Props::Size] = rect.size();
+        return props;
     }
 
     props[Api::Props::Rect] = rect;

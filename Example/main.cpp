@@ -67,9 +67,11 @@ protected:
         ).set({
             .title = L"Test",
             .size = {800, 600},
+            // .placement = Api::WindowPlacement::Default(),
             // .placement = Api::WindowPlacement::Center(),
-            .placement = Api::WindowPlacement::Manual({3500, 200}),
-            // .placement = Api::WindowPlacement::Center({0, 0}, 1),
+            // .placement = Api::WindowPlacement::Manual({3500, 200}),
+            .placement = Api::WindowPlacement::Center({0, 0}, 1),
+            // .placement = Api::WindowPlacement::TopFill()
             // .placement = Api::WindowPlacement::TopRight({-20, 20})
         }).on({
             .close = []()
