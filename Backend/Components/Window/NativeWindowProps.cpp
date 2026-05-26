@@ -19,6 +19,7 @@ auto NativeWindowProps::Apply(NativeWindow& window, const Api::PropertyMap& prop
     const bool* resizable = nullptr;
     const bool* topMost = nullptr;
     const bool* taskbar = nullptr;
+    const bool* visible = nullptr;
     const Api::Size* minSize = nullptr;
     const Api::Size* maxSize = nullptr;
     const Api::WindowState* state = nullptr;
@@ -56,6 +57,10 @@ auto NativeWindowProps::Apply(NativeWindow& window, const Api::PropertyMap& prop
             taskbar = std::get_if<bool>(&value);
             break;
 
+        case Api::Props::Visible:
+            visible = std::get_if<bool>(&value);
+            break;
+
         case Api::Props::MinSize:
             minSize = std::get_if<Api::Size>(&value);
             break;
@@ -80,21 +85,40 @@ auto NativeWindowProps::Apply(NativeWindow& window, const Api::PropertyMap& prop
     if (topMost) NativeWindowApi::SetTopMost(hwnd, *topMost);
     if (minSize) window.setMinSize(*minSize);
     if (maxSize) window.setMaxSize(*maxSize);
+    if (visible) NativeApi::SetVisible(hwnd, *visible);
 
     if (rect)
     {
         LOGF_D(L" -> Apply::%s %s", to_string(Api::Props::Rect).c_str(), to_string(*rect).c_str());
-        NativeApi::SetClientRect(hwnd, *rect);
+        if (state && *state != Api::WindowState::Normal)
+        {
+            NativeWindowApi::SetNormalRect(hwnd, {rect->position(), NativeApi::ClientToWindowSize(hwnd, rect->size())});
+        }
+        else
+        {
+            NativeApi::SetClientRect(hwnd, *rect);
+        }
     }
     else if (size)
     {
         LOGF_D(L" -> Apply::%s %s", to_string(Api::Props::Size).c_str(), to_string(*size).c_str());
-        NativeApi::SetClientSize(hwnd, *size);
+        if (!(state && *state != Api::WindowState::Normal))
+        {
+            NativeApi::SetClientSize(hwnd, *size);
+        }
     }
 
     if (placement)
     {
-        NativeWindowApi::SetPlacement(hwnd, *placement);
+        if (state && *state != Api::WindowState::Normal && size)
+        {
+            NativeWindowApi::SetNormalPlacement(hwnd, *placement, NativeApi::ClientToWindowSize(hwnd, *size));
+        }
+        else
+        {
+            NativeWindowApi::SetPlacement(hwnd, *placement);
+        }
+
         nativeProps.erase(Api::Props::Position);
     }
 

@@ -37,12 +37,19 @@ auto MaterializerCommands::Update(const LayoutNode& layout, const WidgetTree& wi
 
 auto MaterializerCommands::Visible(const WidgetTree& widget) -> Api::BackendCommand
 {
+    Api::PropertyMap props{
+        { Api::Props::Visible, VisibleValue(widget) }
+    };
+
+    if (const auto it = widget.backend.create.find(Api::Props::State); it != widget.backend.create.end())
+    {
+        props[Api::Props::State] = it->second;
+    }
+
     return {
         .command = Api::CommandType::Update,
         .id = widget.id,
-        .props = {
-            { Api::Props::Visible, VisibleValue(widget) }
-        }
+        .props = std::move(props)
     };
 }
 

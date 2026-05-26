@@ -41,8 +41,13 @@ auto NativeNodeFactory::createWindow(const Api::BackendCommand& command) -> std:
 
     nativeWindow->router().on(
         WM_SIZE,
-        [this, windowId = command.id](HWND, UINT, WPARAM, LPARAM lParam) -> int
+        [this, windowId = command.id](HWND, UINT, WPARAM wParam, LPARAM lParam) -> int
         {
+            if (wParam == SIZE_MINIMIZED)
+            {
+                return 0;
+            }
+
             m_backend->onWindowResize(windowId, NativeApi::GetSizeFromLParam(lParam));
             return 0;
         }
