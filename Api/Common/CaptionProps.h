@@ -17,16 +17,6 @@ inline auto operator|(CaptionButton left, CaptionButton right) -> CaptionButton
     return static_cast<CaptionButton>(static_cast<int>(left) | static_cast<int>(right));
 }
 
-inline auto operator&(CaptionButton left, CaptionButton right) -> CaptionButton
-{
-    return static_cast<CaptionButton>(static_cast<int>(left) & static_cast<int>(right));
-}
-
-inline auto Has(CaptionButton value, CaptionButton flag) -> bool
-{
-    return (value & flag) != CaptionButton::None;
-}
-
 struct CaptionProps
 {
     bool visible = true;

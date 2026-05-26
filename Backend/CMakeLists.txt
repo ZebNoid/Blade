@@ -51,6 +51,8 @@ add_library(${PROJECT_NAME} STATIC
 
         Components/Window/NativeWindow.cpp
         Components/Window/NativeWindow.h
+        Components/Window/NativeWindowApi/NativeWindowApi.cpp
+        Components/Window/NativeWindowApi/NativeWindowApi.h
         Components/Window/NativeWindowEvents.cpp
         Components/Window/NativeWindowEvents.h
         Components/Window/NativeWindowProps.cpp
