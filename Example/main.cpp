@@ -73,6 +73,7 @@ protected:
             .placement = Api::WindowPlacement::Center({0, 0}, 1),
             // .placement = Api::WindowPlacement::TopFill()
             // .placement = Api::WindowPlacement::TopRight({-20, 20})
+            // .placement = Api::WindowPlacement::LeftFill()
         }).on({
             .close = []()
             {
