@@ -21,10 +21,14 @@ public:
 private:
     auto send(std::vector<Api::BackendCommand> commands) -> void;
 
+    auto flushResize() -> void;
+
 private:
     Api::ApiBackend* m_backend = nullptr;
     Materializer m_materializer;
     std::unordered_map<Api::Id, WidgetTree> m_roots;
+    std::unordered_map<Api::Id, Api::Size> m_pendingResize;
+    bool m_sending = false;
 };
 
 } // namespace Blade

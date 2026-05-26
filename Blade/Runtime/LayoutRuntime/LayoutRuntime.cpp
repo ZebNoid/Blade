@@ -12,11 +12,13 @@ LayoutRuntime::LayoutRuntime(Api::ApiBackend* backend)
 
 auto LayoutRuntime::mount(WidgetTree tree) -> void
 {
-    auto layoutTree = LayoutPass::Compute(tree, tree.layout.size);
+    const auto rootId = tree.id;
+    m_roots.insert_or_assign(rootId, std::move(tree));
 
-    send(m_materializer.create(tree, layoutTree));
+    auto& root = m_roots.at(rootId);
+    auto layoutTree = LayoutPass::Compute(root, root.layout.size);
 
-    m_roots.insert_or_assign(tree.id, std::move(tree));
+    send(m_materializer.create(root, layoutTree));
 }
 
 auto LayoutRuntime::resizeRoot(Api::Id rootId, const Api::Size& size) -> void
@@ -25,6 +27,12 @@ auto LayoutRuntime::resizeRoot(Api::Id rootId, const Api::Size& size) -> void
 
     if (it == m_roots.end())
     {
+        return;
+    }
+
+    if (m_sending)
+    {
+        m_pendingResize.insert_or_assign(rootId, size);
         return;
     }
 
@@ -40,9 +48,35 @@ auto LayoutRuntime::send(std::vector<Api::BackendCommand> commands) -> void
         return;
     }
 
+    const auto wasSending = m_sending;
+    m_sending = true;
+
     for (auto& cmd : commands)
     {
         m_backend->process(cmd);
+    }
+
+    m_sending = wasSending;
+
+    if (!m_sending)
+    {
+        flushResize();
+    }
+}
+
+auto LayoutRuntime::flushResize() -> void
+{
+    if (m_pendingResize.empty())
+    {
+        return;
+    }
+
+    auto pending = std::move(m_pendingResize);
+    m_pendingResize.clear();
+
+    for (const auto& [rootId, size] : pending)
+    {
+        resizeRoot(rootId, size);
     }
 }
 
