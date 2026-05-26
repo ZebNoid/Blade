@@ -26,7 +26,7 @@ auto MaterializerCommands::Attach(const WidgetTree& widget, Api::Id parent) -> A
     };
 }
 
-auto MaterializerCommands::UpdateRect(const LayoutNode& layout, const WidgetTree& widget, Api::Id parent) -> Api::BackendCommand
+auto MaterializerCommands::Update(const LayoutNode& layout, const WidgetTree& widget, Api::Id parent) -> Api::BackendCommand
 {
     return {
         .command = Api::CommandType::Update,

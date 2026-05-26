@@ -39,7 +39,7 @@ auto Materializer::createNode(
             out.push_back(MaterializerCommands::Attach(widget, parent));
         }
 
-        out.push_back(MaterializerCommands::UpdateRect(layout, widget, parent));
+        out.push_back(MaterializerCommands::Update(layout, widget, parent));
 
         parent = widget.id;
     }
@@ -64,7 +64,7 @@ auto Materializer::updateNode(
     {
         if (includeCurrent)
         {
-            out.push_back(MaterializerCommands::UpdateRect(layout, widget, parent));
+            out.push_back(MaterializerCommands::Update(layout, widget, parent));
         }
 
         currentParent = widget.id;
