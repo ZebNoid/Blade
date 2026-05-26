@@ -68,7 +68,7 @@ protected:
             .title = L"Test",
             .size = {800, 600},
             .minSize = {400,400},
-            .maxSize = {1000,800},
+            // .maxSize = {1000,800},
             // .resizable = false,
             // .placement = Api::WindowPlacement::Default(),
             // .placement = Api::WindowPlacement::Center(),
@@ -78,7 +78,7 @@ protected:
             // .placement = Api::WindowPlacement::TopRight({-20, 20},1),
             // .placement = Api::WindowPlacement::LeftFill({}, 1),
             // .placement = Api::WindowPlacement::Fill({}, 1),
-            // .state = Api::WindowState::Maximized,
+            // .state = Api::WindowState::Maximized, // TODO strange behavior with maxSize
             // .state = Api::WindowState::Minimized,
             // .state = Api::WindowState::Normal,
         }).on({
