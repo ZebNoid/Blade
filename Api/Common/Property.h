@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "Callbacks.h"
+#include "CaptionProps.h"
 #include "Events/Events.h"
 #include "LayoutProps.h"
 #include "Point.h"
@@ -31,6 +32,7 @@ using PropertyValue = std::variant<
     Api::Point,
     Api::Size,
     Api::Rect,
+    Api::CaptionProps,
     LayoutProps
 >;
 

@@ -72,6 +72,7 @@ protected:
             .close = []()
             {
                 LOG(L"Window 1 Close");
+                // TODO fix application won't close from context menu close
             },
         }).build(this);
 

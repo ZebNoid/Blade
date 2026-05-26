@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Common/CaptionProps.h"
 #include "Common/Point.h"
 #include "Common/Size.h"
 #include "Common/Types.h"
@@ -15,8 +16,8 @@ struct WindowProps
     Api::Size size{800,600}; // TODO default?
     Api::Point position{0, 0};
     bool visible = true;
+    Api::CaptionProps caption{};
 
-    // TODO no caption
     // TODO start absolute or relative
     // TODO start align
 
@@ -26,6 +27,7 @@ struct WindowProps
         v.set(Api::Props::Size, size);
         v.set(Api::Props::Position, position);
         v.set(Api::Props::Visible, visible);
+        v.set(Api::Props::Caption, caption);
     }
 };
 
