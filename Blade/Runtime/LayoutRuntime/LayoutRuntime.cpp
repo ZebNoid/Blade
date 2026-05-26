@@ -1,9 +1,6 @@
 #include "LayoutRuntime.h"
 
-#include "Runtime/LayoutEngine/Data/LayoutContext.h"
-#include "Runtime/LayoutEngine/Data/LayoutNode.h"
-#include "Runtime/LayoutEngine/LayoutEngine/LayoutEngine.h"
-#include "Runtime/LayoutEngine/LayoutTreeBuilder/LayoutTreeBuilder.h"
+#include "Runtime/LayoutRuntime/LayoutPass/LayoutPass.h"
 
 
 namespace Blade {
@@ -15,11 +12,13 @@ LayoutRuntime::LayoutRuntime(Api::ApiBackend* backend)
 
 auto LayoutRuntime::mount(WidgetTree tree) -> void
 {
-    auto layoutTree = layout(tree, tree.layout.size);
+    const auto rootId = tree.id;
+    m_roots.insert_or_assign(rootId, std::move(tree));
 
-    send(m_materializer.build(tree, layoutTree));
+    auto& root = m_roots.at(rootId);
+    auto layoutTree = LayoutPass::Compute(root, root.layout.size);
 
-    m_roots.insert_or_assign(tree.id, std::move(tree));
+    send(m_materializer.create(root, layoutTree));
 }
 
 auto LayoutRuntime::resizeRoot(Api::Id rootId, const Api::Size& size) -> void
@@ -31,36 +30,15 @@ auto LayoutRuntime::resizeRoot(Api::Id rootId, const Api::Size& size) -> void
         return;
     }
 
-    auto layoutTree = layout(it->second, size);
+    if (m_sending)
+    {
+        m_pendingResize.insert_or_assign(rootId, size);
+        return;
+    }
 
-    send(m_materializer.buildUpdates(it->second, layoutTree, false));
-}
+    auto layoutTree = LayoutPass::Compute(it->second, size);
 
-auto LayoutRuntime::layout(const WidgetTree& tree, const Api::Size& available) -> LayoutNode
-{
-    auto layoutTree = LayoutTreeBuilder::Build(tree);
-    layoutTree.layout.size = available;
-
-    LayoutContext measureCtx{
-        .node = &layoutTree,
-        .available = available
-    };
-
-    LayoutEngine::Measure(measureCtx);
-
-    LayoutContext arrangeCtx{
-        .node = &layoutTree,
-        .rect = {
-            0,
-            0,
-            available.width,
-            available.height
-        }
-    };
-
-    LayoutEngine::Arrange(arrangeCtx);
-
-    return layoutTree;
+    send(m_materializer.update(it->second, layoutTree, false));
 }
 
 auto LayoutRuntime::send(std::vector<Api::BackendCommand> commands) -> void
@@ -70,9 +48,35 @@ auto LayoutRuntime::send(std::vector<Api::BackendCommand> commands) -> void
         return;
     }
 
+    const auto wasSending = m_sending;
+    m_sending = true;
+
     for (auto& cmd : commands)
     {
         m_backend->process(cmd);
+    }
+
+    m_sending = wasSending;
+
+    if (!m_sending)
+    {
+        flushResize();
+    }
+}
+
+auto LayoutRuntime::flushResize() -> void
+{
+    if (m_pendingResize.empty())
+    {
+        return;
+    }
+
+    auto pending = std::move(m_pendingResize);
+    m_pendingResize.clear();
+
+    for (const auto& [rootId, size] : pending)
+    {
+        resizeRoot(rootId, size);
     }
 }
 

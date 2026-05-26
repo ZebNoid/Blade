@@ -4,13 +4,16 @@
 #include <vector>
 
 #include "Callbacks.h"
-#include "Events.h"
+#include "CaptionProps.h"
+#include "Events/Events.h"
 #include "LayoutProps.h"
 #include "Point.h"
 #include "Props.h"
 #include "Rect.h"
 #include "Size.h"
 #include "Types.h"
+#include "WindowPlacementProps.h"
+#include "WindowState.h"
 
 
 namespace Blade::Api {
@@ -31,6 +34,9 @@ using PropertyValue = std::variant<
     Api::Point,
     Api::Size,
     Api::Rect,
+    Api::CaptionProps,
+    Api::WindowPlacementProps,
+    Api::WindowState,
     LayoutProps
 >;
 

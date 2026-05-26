@@ -4,7 +4,6 @@
 
 #include "Api/ApiBackend.h"
 #include "Base/WidgetTree.h"
-#include "Runtime/LayoutEngine/Data/LayoutNode.h"
 #include "Runtime/Materializer/Materializer.h"
 
 
@@ -20,14 +19,16 @@ public:
     auto resizeRoot(Api::Id rootId, const Api::Size& size) -> void;
 
 private:
-    auto layout(const WidgetTree& tree, const Api::Size& available) -> LayoutNode;
-
     auto send(std::vector<Api::BackendCommand> commands) -> void;
+
+    auto flushResize() -> void;
 
 private:
     Api::ApiBackend* m_backend = nullptr;
     Materializer m_materializer;
     std::unordered_map<Api::Id, WidgetTree> m_roots;
+    std::unordered_map<Api::Id, Api::Size> m_pendingResize;
+    bool m_sending = false;
 };
 
 } // namespace Blade

@@ -1,13 +1,14 @@
 #include "EventMapper.h"
 
+#include "Components/Button/NativeButtonEvents.h"
 #include "Components/Button/NativeButton.h"
-#include "WinApi/NativeApi/NativeApi.h"
+#include "Components/Window/NativeWindowEvents.h"
 #include "Components/Window/NativeWindow.h"
 
 
 namespace Blade::Backend {
 
-auto EventMapper::Apply(NativeWindow& window, const Api::EventSubscriptions&) -> void
+auto EventMapper::Apply(NativeWindow& window, const Api::EventSubscriptions& events) -> void
 {
     window.router().on(
         WM_COMMAND,
@@ -26,16 +27,10 @@ auto EventMapper::Apply(NativeWindow& window, const Api::EventSubscriptions&) ->
         }
     );
 
-    window.router().on(
-        WM_CLOSE,
-        [](HWND hwnd, UINT, WPARAM, LPARAM) -> int
-        {
-            NativeApi::Destroy(hwnd);
-            return 0;
-        }
-    );
+    NativeWindowEvents::Apply(window, events);
 }
 
+// TODO not NativeButton but all NativeElements
 auto EventMapper::Apply(NativeButton& button, const Api::EventSubscriptions& events) -> void
 {
     auto* parent = dynamic_cast<NativeWindow*>(button.parent());
@@ -45,13 +40,7 @@ auto EventMapper::Apply(NativeButton& button, const Api::EventSubscriptions& eve
         return;
     }
 
-    for (const auto event : events)
-    {
-        if (event == Api::Events::Click)
-        {
-            parent->commandRouter().on(button.id(), event);
-        }
-    }
+    NativeButtonEvents::Apply(parent->commandRouter(), button.id(), events);
 }
 
 } // namespace Blade::Backend

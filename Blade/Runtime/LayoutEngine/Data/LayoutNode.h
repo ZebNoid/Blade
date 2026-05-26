@@ -26,8 +26,6 @@ struct LayoutNode
 
     Api::Rect rect{};
 
-    bool isNative = false; // TODO node db from backend
-
     std::vector<LayoutNode> children;
 };
 

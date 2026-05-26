@@ -1,4 +1,4 @@
-project(Blade VERSION 0.3.7)
+project(Blade VERSION 0.3.8)
 
 # Use the names to logic check
 if (NOT PROJECT_IS_TOP_LEVEL)
@@ -30,6 +30,8 @@ add_library(${PROJECT_NAME} STATIC
 
         Runtime/Materializer/Materializer.cpp
         Runtime/Materializer/Materializer.h
+        Runtime/Materializer/MaterializerCommands/MaterializerCommands.cpp
+        Runtime/Materializer/MaterializerCommands/MaterializerCommands.h
         Runtime/RuntimeTree/RuntimeTree.cpp
         Runtime/RuntimeTree/RuntimeTree.h
         Runtime/EventRuntime/EventRuntime.cpp
@@ -40,24 +42,28 @@ add_library(${PROJECT_NAME} STATIC
         Runtime/EventRuntime/EventSubscriptions.h
         Runtime/LayoutRuntime/LayoutRuntime.cpp
         Runtime/LayoutRuntime/LayoutRuntime.h
+        Runtime/LayoutRuntime/LayoutPass/LayoutPass.cpp
+        Runtime/LayoutRuntime/LayoutPass/LayoutPass.h
         Runtime/Normalize/Normalize.h
         Runtime/Normalize/NormalizedProps.h
         Runtime/Normalize/PropsVisitor.h
         Runtime/Normalize/EventVisitor.h
         Runtime/LayoutEngine/Data/LayoutNode.h
         Runtime/LayoutEngine/Data/LayoutContext.h
-        Runtime/LayoutEngine/Algorithm/LayoutLeaf.cpp
-        Runtime/LayoutEngine/Algorithm/LayoutLeaf.h
-        Runtime/LayoutEngine/Algorithm/LayoutColumn.cpp
-        Runtime/LayoutEngine/Algorithm/LayoutColumn.h
-        Runtime/LayoutEngine/Algorithm/LayoutRow.cpp
-        Runtime/LayoutEngine/Algorithm/LayoutRow.h
+        Runtime/LayoutEngine/Algorithm/LayoutLeaf/LayoutLeaf.cpp
+        Runtime/LayoutEngine/Algorithm/LayoutLeaf/LayoutLeaf.h
+        Runtime/LayoutEngine/Algorithm/LayoutLeafChildren/LayoutLeafChildren.cpp
+        Runtime/LayoutEngine/Algorithm/LayoutLeafChildren/LayoutLeafChildren.h
+        Runtime/LayoutEngine/Algorithm/LayoutColumn/LayoutColumn.cpp
+        Runtime/LayoutEngine/Algorithm/LayoutColumn/LayoutColumn.h
+        Runtime/LayoutEngine/Algorithm/LayoutRow/LayoutRow.cpp
+        Runtime/LayoutEngine/Algorithm/LayoutRow/LayoutRow.h
         Runtime/LayoutEngine/Algorithm/LayoutLinear/LayoutLinear.cpp
         Runtime/LayoutEngine/Algorithm/LayoutLinear/LayoutLinear.h
         Runtime/LayoutEngine/Algorithm/LayoutLinearArrange/LayoutLinearArrange.cpp
         Runtime/LayoutEngine/Algorithm/LayoutLinearArrange/LayoutLinearArrange.h
-        Runtime/LayoutEngine/Algorithm/LayoutStack.cpp
-        Runtime/LayoutEngine/Algorithm/LayoutStack.h
+        Runtime/LayoutEngine/Algorithm/LayoutStack/LayoutStack.cpp
+        Runtime/LayoutEngine/Algorithm/LayoutStack/LayoutStack.h
         Runtime/LayoutEngine/Geometry/LayoutAxis.h
         Runtime/LayoutEngine/Geometry/LayoutGeometry.h
         Runtime/LayoutEngine/LayoutEngine/LayoutEngine.cpp
@@ -65,10 +71,10 @@ add_library(${PROJECT_NAME} STATIC
         Runtime/LayoutEngine/LayoutTreeBuilder/LayoutTreeBuilder.cpp
         Runtime/LayoutEngine/LayoutTreeBuilder/LayoutTreeBuilder.h
         Runtime/LayoutEngine/Data/LayoutData.h
+        Runtime/LayoutEngine/Data/LayoutType.h
 
         Props/LayoutProps/CrossAxisAlignment.h
         Props/LayoutProps/MainAxisAlignment.h
-        Runtime/LayoutEngine/Data/LayoutType.h
 )
 
 # use Unicode

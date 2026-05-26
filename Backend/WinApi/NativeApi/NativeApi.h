@@ -51,6 +51,8 @@ public:
         const Api::Size& size
     ) -> void;
 
+    static auto ClientToWindowSize(HWND hwnd, const Api::Size& clientSize) -> Api::Size;
+
     static auto SetRect(
         HWND hwnd,
         const Api::Rect& rect
@@ -92,6 +94,8 @@ public:
         HWND hwnd,
         int cmdShow = SW_SHOW
     ) -> void;
+
+    static auto SetVisible(HWND hwnd, bool visible) -> void;
 
     static auto Update(
         HWND hwnd

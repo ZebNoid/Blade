@@ -23,7 +23,7 @@ protected:
         // ).set({
         //     .title = L"Test",
         //     .size = {800, 600},
-        //     .position = {3300, 400},
+        //     .placement = Api::WindowPlacement::Manual({3300, 400}),
         // }).build(this);
 
         Window(
@@ -58,32 +58,60 @@ protected:
                       },
                   })
             ).set({
+                .gap = 8,
+                .layout = {
+                    .padding = 8,
+                },
                 .mainAxisAlignment = MainAxisAlignment::End,
             })
         ).set({
             .title = L"Test",
             .size = {800, 600},
-            .position = {3300, 400},
+            .minSize = {400,400},
+            // .maxSize = {1000,800},
+            // .resizable = false,
+            // .placement = Api::WindowPlacement::Default(),
+            // .placement = Api::WindowPlacement::Center(),
+            // .placement = Api::WindowPlacement::Manual({3500, 200}),
+            .placement = Api::WindowPlacement::Center({0, 0}, 1),
+            // .placement = Api::WindowPlacement::TopFill(),
+            // .placement = Api::WindowPlacement::TopRight({-20, 20},1),
+            // .placement = Api::WindowPlacement::LeftFill({}, 1),
+            // .placement = Api::WindowPlacement::Fill({}, 1),
+            // .state = Api::WindowState::Maximized, // TODO strange behavior with maxSize
+            // .state = Api::WindowState::Minimized,
+            // .state = Api::WindowState::Normal,
+        }).on({
+            .close = []()
+            {
+                LOG(L"Window 1 Close");
+                // TODO fix application won't close from context menu close
+            },
         }).build(this);
 
 
-        Window(
-            Column(
-                Button(L"Button Flex Click")
-                .set({.layout = {.flex = 1,}})
-                .on({
-                    .click = []() -> void
-                    {
-                        LOG(L"Click! 2");
-                    },
-                })
-                , Button(L"Button")
-            )
-        ).set({
-            .title = L"Test",
-            .size = {400, 400},
-            .position = {3500, 200},
-        }).build(this);
+        // Window(
+        //     Column(
+        //         Button(L"Button Flex Click")
+        //         .set({.layout = {.flex = 1,}})
+        //         .on({
+        //             .click = []() -> void
+        //             {
+        //                 LOG(L"Click! 2");
+        //             },
+        //             .focus = [](auto focus)
+        //             {
+        //                 LOGF(L"Focus! 2 %d", focus);
+        //             },
+        //         })
+        //         , Button(L"Button")
+        //     )
+        // ).set({
+        //     .title = L"Test",
+        //     .size = {400, 400},
+        //     // .placement = Api::WindowPlacement::Manual({3500, 200}),
+        //     .placement = Api::WindowPlacement::TopRight({-20, 20},1),
+        // }).build(this);
 
 
         // Window(
@@ -108,14 +136,14 @@ protected:
         // ).set({
         //     .title = L"Test",
         //     .size = {800, 600},
-        //     .position = {3300, 400},
+        //     .placement = Api::WindowPlacement::Manual({3300, 400}),
         // }).build(this);
 
 
         // Window().set({
         //     .title = L"Test 2",
         //     .size = {400, 500},
-        //     .position = {3400, 300},
+        //     .placement = Api::WindowPlacement::Manual({3400, 300}),
         // }).build(this);
 
         // return Window().buildTree();

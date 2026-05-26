@@ -14,8 +14,10 @@ namespace Blade::Backend {
 #define CUSTOM_CLASS L"BladeWindow"
 
 
-auto NativeWindow::create(HINSTANCE hInstance) -> bool
+auto NativeWindow::create(HINSTANCE hInstance, Api::Id id) -> bool
 {
+    m_id = id;
+
     WindowClass::Register(
         CUSTOM_CLASS,
         {
@@ -27,7 +29,7 @@ auto NativeWindow::create(HINSTANCE hInstance) -> bool
         .className = WindowClass::Get(CUSTOM_CLASS),
         .windowName = L"Blade",
         // TODO for parent add WS_CHILD
-        .style = WS_OVERLAPPEDWINDOW | WS_VISIBLE | WS_CLIPCHILDREN,
+        .style = WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN,
         .hInstance = hInstance,
         .lpParam = this,
     });
@@ -49,6 +51,38 @@ auto NativeWindow::router() -> MessageRouter&
 auto NativeWindow::commandRouter() -> CommandRouter&
 {
     return m_commandRouter;
+}
+
+auto NativeWindow::setMinSize(const Api::Size& size) -> void
+{
+    m_minSize = size;
+}
+
+auto NativeWindow::setMaxSize(const Api::Size& size) -> void
+{
+    m_maxSize = size;
+}
+
+auto NativeWindow::applyMinMax(MINMAXINFO* info) const -> void
+{
+    if (!info)
+    {
+        return;
+    }
+
+    if (m_minSize.width > 0 || m_minSize.height > 0)
+    {
+        const auto size = NativeApi::ClientToWindowSize(m_hwnd, m_minSize);
+        if (m_minSize.width > 0) info->ptMinTrackSize.x = size.width;
+        if (m_minSize.height > 0) info->ptMinTrackSize.y = size.height;
+    }
+
+    if (m_maxSize.width > 0 || m_maxSize.height > 0)
+    {
+        const auto size = NativeApi::ClientToWindowSize(m_hwnd, m_maxSize);
+        if (m_maxSize.width > 0) info->ptMaxTrackSize.x = size.width;
+        if (m_maxSize.height > 0) info->ptMaxTrackSize.y = size.height;
+    }
 }
 
 auto NativeWindow::destroy() -> void
@@ -93,7 +127,7 @@ auto NativeWindow::applyEvents(const Api::EventSubscriptions& events) -> void
 
 auto NativeWindow::applyProps(const Api::PropertyMap& propertyMap) -> void
 {
-    auto nativeProps = NativeWindowProps::Apply(m_hwnd, propertyMap);
+    auto nativeProps = NativeWindowProps::Apply(*this, propertyMap);
     PropertyMapper::Apply(m_hwnd, nativeProps);
 }
 

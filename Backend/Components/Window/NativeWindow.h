@@ -1,7 +1,7 @@
 #pragma once
 
-#include "WinApi/CommandRouter/CommandRouter.h"
-#include "WinApi/MessageRouter/MessageRouter.h"
+#include "WinApi/Router/CommandRouter/CommandRouter.h"
+#include "WinApi/Router/MessageRouter/MessageRouter.h"
 #include "WinApi/NativeElement/NativeElement.h"
 
 
@@ -11,7 +11,7 @@ namespace Blade::Backend {
 class NativeWindow : public NativeElement
 {
 public:
-    auto create(HINSTANCE hInstance) -> bool;
+    auto create(HINSTANCE hInstance, Api::Id id) -> bool;
 
     auto applyEvents(const Api::EventSubscriptions& events) -> void override;
 
@@ -28,11 +28,17 @@ public:
 
     auto commandRouter() -> CommandRouter&;
 
+    auto setMinSize(const Api::Size& size) -> void;
+    auto setMaxSize(const Api::Size& size) -> void;
+    auto applyMinMax(MINMAXINFO* info) const -> void;
+
     auto destroy() -> void;
     auto markDead() -> void;
 
 private:
     bool m_alive = true;
+    Api::Size m_minSize{};
+    Api::Size m_maxSize{};
 
     MessageRouter m_router;
     CommandRouter m_commandRouter;

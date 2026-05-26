@@ -36,14 +36,28 @@ auto NativeNodeFactory::createWindow(const Api::BackendCommand& command) -> std:
         return std::nullopt;
     }
 
-    nativeWindow->create(m_backend->handle());
+    nativeWindow->create(m_backend->handle(), command.id);
     nativeWindow->commandRouter().setHandler(m_backend->eventHandler());
 
     nativeWindow->router().on(
         WM_SIZE,
-        [this, windowId = command.id](HWND, UINT, WPARAM, LPARAM lParam) -> int
+        [this, windowId = command.id](HWND, UINT, WPARAM wParam, LPARAM lParam) -> int
         {
+            if (wParam == SIZE_MINIMIZED)
+            {
+                return 0;
+            }
+
             m_backend->onWindowResize(windowId, NativeApi::GetSizeFromLParam(lParam));
+            return 0;
+        }
+    );
+
+    nativeWindow->router().on(
+        WM_GETMINMAXINFO,
+        [window = nativeWindow.get()](HWND, UINT, WPARAM, LPARAM lParam) -> int
+        {
+            window->applyMinMax(reinterpret_cast<MINMAXINFO*>(lParam));
             return 0;
         }
     );

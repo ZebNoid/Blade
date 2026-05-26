@@ -8,6 +8,7 @@ endif ()
 add_library(${PROJECT_NAME} INTERFACE
         Api/ApiWidget.h
         Api/ApiBackend.h
+        Fabric/WindowPlacement.h
 
         Common/Types.h
         Common/Thickness.h
@@ -17,9 +18,16 @@ add_library(${PROJECT_NAME} INTERFACE
         Common/Point.h
         Common/Property.h
         Common/Callbacks.h
+        Common/CaptionProps.h
+        Common/WindowPlacementProps.h
+        Common/WindowState.h
         Common/Props.h
-        Common/Events.h
         Common/Logger.h
+
+        Events/Events.h
+        Events/EventPayload.h
+        Events/EventResult.h
+        Events/BackendEvent.h
 
         Api/BackendCommand.h
         Api/CommandType.h

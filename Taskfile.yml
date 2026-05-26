@@ -6,17 +6,51 @@ vars:
 tasks:
   default:
     desc: Example
+    silent: true
+    vars:
+      PROFILE: Release
     cmds:
       - echo "{{.GREETING}}"
       - task: setup
       - task: build
-      - ./cmake-build-vs/Example/Debug/Example.exe
-    silent: true
+        vars:
+          PROFILE: '{{.PROFILE}}'
+      - task: run
+        vars:
+          PROFILE: '{{.PROFILE}}'
+
+  start:  
+    vars:
+      PROFILE: Debug
+    cmds: 
+      - task: build
+        vars:
+          PROFILE: '{{.PROFILE}}'
+      - task: run
+        vars:
+          PROFILE: '{{.PROFILE}}'
 
   setup:
+    vars:
+      BUILD_FOLDER: '{{.BUILD_FOLDER | default "cmake-build-vs"}}'
     cmds: 
-      - cmake -S . -B cmake-build-vs -G "Visual Studio 17 2022" -A x64
+      - cmake -S . -B {{.BUILD_FOLDER}} -G "Visual Studio 17 2022" -A x64
 
   build:
-    cmds: 
-      - cmake --build cmake-build-vs --target Example --config Debug
+    internal: true
+    vars:
+      BUILD_FOLDER: '{{.BUILD_FOLDER | default "cmake-build-vs"}}'
+      PROJECT: '{{.PROJECT | default "Example"}}'
+      PROFILE: '{{.PROFILE | default "Debug"}}' # 'Release'
+    cmds:
+      - cmake --build {{.BUILD_FOLDER}} --target {{.PROJECT}} --config {{.PROFILE}}
+
+  run:
+    internal: true
+    vars:
+      BUILD_FOLDER: '{{.BUILD_FOLDER | default "cmake-build-vs"}}'
+      PROJECT: '{{.PROJECT | default "Example"}}'
+      # 'Release' it defaults to 'Debug'
+      PROFILE: '{{.PROFILE | default "Debug"}}'
+    cmds:
+      - ./{{.BUILD_FOLDER}}/{{.PROJECT}}/{{.PROFILE}}/{{.PROJECT}}.exe

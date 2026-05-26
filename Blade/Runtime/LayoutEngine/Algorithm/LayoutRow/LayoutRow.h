@@ -9,13 +9,8 @@ namespace Blade {
 class LayoutRow
 {
 public:
-    static auto Measure(
-        LayoutContext& ctx
-    ) -> Api::Size;
-
-    static auto Arrange(
-        LayoutContext& ctx
-    ) -> void;
+    static auto Measure(LayoutContext& ctx) -> Api::Size;
+    static auto Arrange(LayoutContext& ctx) -> void;
 };
 
 } // namespace Blade

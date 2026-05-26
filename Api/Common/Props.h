@@ -11,6 +11,15 @@ enum class Props
     Size,
     Position,
     Rect,
+    Visible,
+    Caption,
+    Placement,
+    Resizable,
+    TopMost,
+    Taskbar,
+    MinSize,
+    MaxSize,
+    State,
 
     Layout,
     Gap
@@ -24,6 +33,15 @@ inline auto to_string(Props p) -> std::wstring {
     case Props::Size:   return L"Size";
     case Props::Position:   return L"Position";
     case Props::Rect:   return L"Rect";
+    case Props::Visible:   return L"Visible";
+    case Props::Caption:   return L"Caption";
+    case Props::Placement:   return L"Placement";
+    case Props::Resizable:   return L"Resizable";
+    case Props::TopMost:   return L"TopMost";
+    case Props::Taskbar:   return L"Taskbar";
+    case Props::MinSize:   return L"MinSize";
+    case Props::MaxSize:   return L"MaxSize";
+    case Props::State:   return L"State";
 
     case Props::Layout:   return L"Layout";
     case Props::Gap:   return L"Gap";

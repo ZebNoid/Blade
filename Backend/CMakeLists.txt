@@ -29,6 +29,8 @@ add_library(${PROJECT_NAME} STATIC
 
         WinApi/NativeApi/NativeApi.cpp
         WinApi/NativeApi/NativeApi.h
+        WinApi/DisplayApi/DisplayApi.cpp
+        WinApi/DisplayApi/DisplayApi.h
         WinApi/NativeElement/NativeElement.cpp
         WinApi/NativeElement/NativeElement.h
 
@@ -51,12 +53,18 @@ add_library(${PROJECT_NAME} STATIC
 
         Components/Window/NativeWindow.cpp
         Components/Window/NativeWindow.h
+        Components/Window/NativeWindowApi/NativeWindowApi.cpp
+        Components/Window/NativeWindowApi/NativeWindowApi.h
+        Components/Window/NativeWindowEvents.cpp
+        Components/Window/NativeWindowEvents.h
         Components/Window/NativeWindowProps.cpp
         Components/Window/NativeWindowProps.h
         Components/Button/NativeButton.cpp
         Components/Button/NativeButton.h
         Components/Button/NativeButtonProps.cpp
         Components/Button/NativeButtonProps.h
+        Components/Button/NativeButtonEvents.cpp
+        Components/Button/NativeButtonEvents.h
 )
 
 # use Unicode

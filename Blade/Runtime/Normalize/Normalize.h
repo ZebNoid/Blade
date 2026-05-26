@@ -36,7 +36,7 @@ public:
     {
         EventVisitor visitor;
         src.visit(visitor);
-        return visitor.take(); // Todo move or copy?
+        return visitor.take();
     }
 };
 

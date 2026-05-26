@@ -1,7 +1,7 @@
 #pragma once
 #include <functional>
 
-#include "Events.h"
+#include "Events/EventResult.h"
 #include "Types.h"
 
 namespace Blade::Api {

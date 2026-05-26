@@ -8,8 +8,9 @@
 ##############
 
 # CMake
-cmake-build-debug/
 cmake-build-*/
+build/
+
 
 # IDE
 ### VSCode ###

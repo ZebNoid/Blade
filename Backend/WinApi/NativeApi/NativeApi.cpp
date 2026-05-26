@@ -120,6 +120,11 @@ auto NativeApi::SetClientSize(
     );
 }
 
+auto NativeApi::ClientToWindowSize(HWND hwnd, const Api::Size& clientSize) -> Api::Size
+{
+    return ToOuterSize(hwnd, clientSize);
+}
+
 auto NativeApi::SetRect(
     HWND hwnd,
     const Api::Rect& rect
@@ -237,6 +242,16 @@ auto NativeApi::Show(HWND hwnd, int cmdShow) -> void
     // SW_FORCEMINIMIZE    11
     // SW_MAX              11
     ShowWindow(hwnd, cmdShow);
+}
+
+auto NativeApi::SetVisible(HWND hwnd, bool visible) -> void
+{
+    Show(hwnd, visible ? SW_SHOW : SW_HIDE);
+
+    if (visible)
+    {
+        Update(hwnd);
+    }
 }
 
 auto NativeApi::Update(HWND hwnd) -> void
