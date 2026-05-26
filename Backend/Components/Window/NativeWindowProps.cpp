@@ -8,76 +8,49 @@
 
 namespace Blade::Backend {
 
+namespace {
+
+template <typename T>
+auto Get(const Api::PropertyMap& propertyMap, Api::Props prop) -> const T*
+{
+    const auto it = propertyMap.find(prop);
+    return it == propertyMap.end() ? nullptr : std::get_if<T>(&it->second);
+}
+
+auto RemoveWindowProps(Api::PropertyMap& propertyMap) -> void
+{
+    propertyMap.erase(Api::Props::Rect);
+    propertyMap.erase(Api::Props::Size);
+    propertyMap.erase(Api::Props::Caption);
+    propertyMap.erase(Api::Props::Placement);
+    propertyMap.erase(Api::Props::Resizable);
+    propertyMap.erase(Api::Props::TopMost);
+    propertyMap.erase(Api::Props::Taskbar);
+    propertyMap.erase(Api::Props::Visible);
+    propertyMap.erase(Api::Props::MinSize);
+    propertyMap.erase(Api::Props::MaxSize);
+    propertyMap.erase(Api::Props::State);
+}
+
+} // namespace
+
 auto NativeWindowProps::Apply(NativeWindow& window, const Api::PropertyMap& propertyMap) -> Api::PropertyMap
 {
-    Api::PropertyMap nativeProps;
+    Api::PropertyMap nativeProps = propertyMap;
+    RemoveWindowProps(nativeProps);
+
     const auto hwnd = window.handle();
-    const Api::Rect* rect = nullptr;
-    const Api::Size* size = nullptr;
-    const Api::CaptionProps* caption = nullptr;
-    const Api::WindowPlacementProps* placement = nullptr;
-    const bool* resizable = nullptr;
-    const bool* topMost = nullptr;
-    const bool* taskbar = nullptr;
-    const bool* visible = nullptr;
-    const Api::Size* minSize = nullptr;
-    const Api::Size* maxSize = nullptr;
-    const Api::WindowState* state = nullptr;
-
-    // TODO prop order WindowState must be latest
-    for (const auto& [key, value] : propertyMap)
-    {
-        switch (key)
-        {
-        case Api::Props::Rect:
-            rect = std::get_if<Api::Rect>(&value);
-            break;
-
-        case Api::Props::Size:
-            size = std::get_if<Api::Size>(&value);
-            break;
-
-        case Api::Props::Caption:
-            caption = std::get_if<Api::CaptionProps>(&value);
-            break;
-
-        case Api::Props::Placement:
-            placement = std::get_if<Api::WindowPlacementProps>(&value);
-            break;
-
-        case Api::Props::Resizable:
-            resizable = std::get_if<bool>(&value);
-            break;
-
-        case Api::Props::TopMost:
-            topMost = std::get_if<bool>(&value);
-            break;
-
-        case Api::Props::Taskbar:
-            taskbar = std::get_if<bool>(&value);
-            break;
-
-        case Api::Props::Visible:
-            visible = std::get_if<bool>(&value);
-            break;
-
-        case Api::Props::MinSize:
-            minSize = std::get_if<Api::Size>(&value);
-            break;
-
-        case Api::Props::MaxSize:
-            maxSize = std::get_if<Api::Size>(&value);
-            break;
-
-        case Api::Props::State:
-            state = std::get_if<Api::WindowState>(&value);
-            break;
-
-        default:
-            nativeProps[key] = value;
-            break;
-        }
-    }
+    const auto* rect = Get<Api::Rect>(propertyMap, Api::Props::Rect);
+    const auto* size = Get<Api::Size>(propertyMap, Api::Props::Size);
+    const auto* caption = Get<Api::CaptionProps>(propertyMap, Api::Props::Caption);
+    const auto* placement = Get<Api::WindowPlacementProps>(propertyMap, Api::Props::Placement);
+    const auto* resizable = Get<bool>(propertyMap, Api::Props::Resizable);
+    const auto* topMost = Get<bool>(propertyMap, Api::Props::TopMost);
+    const auto* taskbar = Get<bool>(propertyMap, Api::Props::Taskbar);
+    const auto* visible = Get<bool>(propertyMap, Api::Props::Visible);
+    const auto* minSize = Get<Api::Size>(propertyMap, Api::Props::MinSize);
+    const auto* maxSize = Get<Api::Size>(propertyMap, Api::Props::MaxSize);
+    const auto* state = Get<Api::WindowState>(propertyMap, Api::Props::State);
 
     if (caption) NativeWindowApi::SetCaption(hwnd, *caption);
     if (resizable) NativeWindowApi::SetResizable(hwnd, *resizable);
