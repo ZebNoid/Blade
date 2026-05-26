@@ -10,6 +10,7 @@ namespace Blade::Backend {
 auto NativeWindowProps::Apply(HWND hwnd, const Api::PropertyMap& propertyMap) -> Api::PropertyMap
 {
     Api::PropertyMap nativeProps;
+    const Api::WindowPlacementProps* placement = nullptr;
 
     for (const auto& [key, value] : propertyMap)
     {
@@ -38,10 +39,20 @@ auto NativeWindowProps::Apply(HWND hwnd, const Api::PropertyMap& propertyMap) ->
             }
             break;
 
+        case Api::Props::Placement:
+            placement = std::get_if<Api::WindowPlacementProps>(&value);
+            break;
+
         default:
             nativeProps[key] = value;
             break;
         }
+    }
+
+    if (placement)
+    {
+        NativeWindowApi::SetPlacement(hwnd, *placement);
+        nativeProps.erase(Api::Props::Position);
     }
 
     return nativeProps;

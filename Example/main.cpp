@@ -23,7 +23,7 @@ protected:
         // ).set({
         //     .title = L"Test",
         //     .size = {800, 600},
-        //     .position = {3300, 400},
+        //     .placement = Api::WindowPlacement::Manual({3300, 400}),
         // }).build(this);
 
         Window(
@@ -67,7 +67,10 @@ protected:
         ).set({
             .title = L"Test",
             .size = {800, 600},
-            .position = {3300, 400},
+            // .placement = Api::WindowPlacement::Center(),
+            .placement = Api::WindowPlacement::Manual({3500, 200}),
+            // .placement = Api::WindowPlacement::Center({0, 0}, 1),
+            // .placement = Api::WindowPlacement::TopRight({-20, 20})
         }).on({
             .close = []()
             {
@@ -96,7 +99,7 @@ protected:
         // ).set({
         //     .title = L"Test",
         //     .size = {400, 400},
-        //     .position = {3500, 200},
+        //     .placement = Api::WindowPlacement::Manual({3500, 200}),
         // }).build(this);
 
 
@@ -122,14 +125,14 @@ protected:
         // ).set({
         //     .title = L"Test",
         //     .size = {800, 600},
-        //     .position = {3300, 400},
+        //     .placement = Api::WindowPlacement::Manual({3300, 400}),
         // }).build(this);
 
 
         // Window().set({
         //     .title = L"Test 2",
         //     .size = {400, 500},
-        //     .position = {3400, 300},
+        //     .placement = Api::WindowPlacement::Manual({3400, 300}),
         // }).build(this);
 
         // return Window().buildTree();

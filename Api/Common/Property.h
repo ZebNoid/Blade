@@ -12,6 +12,7 @@
 #include "Rect.h"
 #include "Size.h"
 #include "Types.h"
+#include "WindowPlacementProps.h"
 
 
 namespace Blade::Api {
@@ -33,6 +34,7 @@ using PropertyValue = std::variant<
     Api::Size,
     Api::Rect,
     Api::CaptionProps,
+    Api::WindowPlacementProps,
     LayoutProps
 >;
 

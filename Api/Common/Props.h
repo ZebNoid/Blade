@@ -13,6 +13,7 @@ enum class Props
     Rect,
     Visible,
     Caption,
+    Placement,
 
     Layout,
     Gap
@@ -28,6 +29,7 @@ inline auto to_string(Props p) -> std::wstring {
     case Props::Rect:   return L"Rect";
     case Props::Visible:   return L"Visible";
     case Props::Caption:   return L"Caption";
+    case Props::Placement:   return L"Placement";
 
     case Props::Layout:   return L"Layout";
     case Props::Gap:   return L"Gap";
