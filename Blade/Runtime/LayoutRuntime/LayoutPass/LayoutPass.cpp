@@ -7,7 +7,7 @@
 
 namespace Blade {
 
-auto LayoutPass::Build(const WidgetTree& tree, const Api::Size& available) -> LayoutNode
+auto LayoutPass::Compute(const WidgetTree& tree, const Api::Size& available) -> LayoutNode
 {
     auto layoutTree = LayoutTreeBuilder::Build(tree);
     layoutTree.layout.size = available;

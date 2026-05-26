@@ -12,7 +12,7 @@ LayoutRuntime::LayoutRuntime(Api::ApiBackend* backend)
 
 auto LayoutRuntime::mount(WidgetTree tree) -> void
 {
-    auto layoutTree = LayoutPass::Build(tree, tree.layout.size);
+    auto layoutTree = LayoutPass::Compute(tree, tree.layout.size);
 
     send(m_materializer.create(tree, layoutTree));
 
@@ -28,7 +28,7 @@ auto LayoutRuntime::resizeRoot(Api::Id rootId, const Api::Size& size) -> void
         return;
     }
 
-    auto layoutTree = LayoutPass::Build(it->second, size);
+    auto layoutTree = LayoutPass::Compute(it->second, size);
 
     send(m_materializer.update(it->second, layoutTree, false));
 }

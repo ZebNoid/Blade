@@ -15,7 +15,7 @@ public:
     static auto Update(const LayoutNode& layout, const WidgetTree& widget, Api::Id parent) -> Api::BackendCommand;
 
 private:
-    static auto RectProps(const LayoutNode& layout, const WidgetTree& widget, Api::Id parent) -> Api::PropertyMap;
+    static auto UpdateProps(const LayoutNode& layout, const WidgetTree& widget, Api::Id parent) -> Api::PropertyMap;
 };
 
 } // namespace Blade

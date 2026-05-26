@@ -10,7 +10,7 @@ namespace Blade {
 class LayoutPass
 {
 public:
-    static auto Build(const WidgetTree& tree, const Api::Size& available) -> LayoutNode;
+    static auto Compute(const WidgetTree& tree, const Api::Size& available) -> LayoutNode;
 };
 
 } // namespace Blade

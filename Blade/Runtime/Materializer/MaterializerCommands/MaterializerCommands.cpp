@@ -31,11 +31,11 @@ auto MaterializerCommands::Update(const LayoutNode& layout, const WidgetTree& wi
     return {
         .command = Api::CommandType::Update,
         .id = widget.id,
-        .props = RectProps(layout, widget, parent)
+        .props = UpdateProps(layout, widget, parent)
     };
 }
 
-auto MaterializerCommands::RectProps(const LayoutNode& layout, const WidgetTree& widget, Api::Id parent) -> Api::PropertyMap
+auto MaterializerCommands::UpdateProps(const LayoutNode& layout, const WidgetTree& widget, Api::Id parent) -> Api::PropertyMap
 {
     Api::PropertyMap props;
     auto rect = layout.rect;
