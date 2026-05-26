@@ -1,6 +1,6 @@
 #include "Materializer.h"
 
-#include "Runtime/EventRuntime/EventSubscriptions.h"
+#include "Runtime/Materializer/MaterializerCommands/MaterializerCommands.h"
 
 namespace Blade {
 
@@ -32,31 +32,14 @@ auto Materializer::buildNode(
 {
     if (layout.layoutType == LayoutType::None)
     {
-        out.push_back({
-            .command = Api::CommandType::Create,
-            .id = widget.id,
-            .parent = parent,
-            .nodeType = widget.type,
-            .props = widget.backend.create,
-            .events = ToEventSubscriptions(widget.events)
-        });
+        out.push_back(MaterializerCommands::Create(widget, parent));
 
         if (parent != Api::InvalidId)
         {
-            out.push_back({
-                .command = Api::CommandType::Attach,
-                .id = widget.id,
-                .parent = parent
-            });
+            out.push_back(MaterializerCommands::Attach(widget, parent));
         }
 
-        auto props = buildRectProps(layout, widget, parent);
-
-        out.push_back({
-            .command = Api::CommandType::Update,
-            .id = widget.id,
-            .props = std::move(props)
-        });
+        out.push_back(MaterializerCommands::UpdateRect(layout, widget, parent));
 
         parent = widget.id;
     }
@@ -81,13 +64,7 @@ auto Materializer::buildUpdateNode(
     {
         if (includeCurrent)
         {
-            auto props = buildRectProps(layout, widget, parent);
-
-            out.push_back({
-                .command = Api::CommandType::Update,
-                .id = widget.id,
-                .props = std::move(props)
-            });
+            out.push_back(MaterializerCommands::UpdateRect(layout, widget, parent));
         }
 
         currentParent = widget.id;
@@ -97,26 +74,6 @@ auto Materializer::buildUpdateNode(
     {
         buildUpdateNode(widget.children[i], layout.children[i], out, currentParent, true);
     }
-}
-
-auto Materializer::buildRectProps(const LayoutNode& layout, const WidgetTree& widget, Api::Id parent) -> Api::PropertyMap
-{
-    Api::PropertyMap props;
-
-    if (parent == Api::InvalidId)
-    {
-        auto rect = layout.rect;
-        rect.x = widget.layout.position.x;
-        rect.y = widget.layout.position.y;
-
-        props[Api::Props::Rect] = rect;
-    }
-    else
-    {
-        props[Api::Props::Rect] = layout.rect;
-    }
-
-    return props;
 }
 
 } // namespace

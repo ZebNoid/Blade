@@ -4,7 +4,6 @@
 
 #include "Api/ApiBackend.h"
 #include "Base/WidgetTree.h"
-#include "Runtime/LayoutEngine/Data/LayoutNode.h"
 #include "Runtime/Materializer/Materializer.h"
 
 
@@ -20,8 +19,6 @@ public:
     auto resizeRoot(Api::Id rootId, const Api::Size& size) -> void;
 
 private:
-    auto layout(const WidgetTree& tree, const Api::Size& available) -> LayoutNode;
-
     auto send(std::vector<Api::BackendCommand> commands) -> void;
 
 private:

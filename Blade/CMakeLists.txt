@@ -30,6 +30,8 @@ add_library(${PROJECT_NAME} STATIC
 
         Runtime/Materializer/Materializer.cpp
         Runtime/Materializer/Materializer.h
+        Runtime/Materializer/MaterializerCommands/MaterializerCommands.cpp
+        Runtime/Materializer/MaterializerCommands/MaterializerCommands.h
         Runtime/RuntimeTree/RuntimeTree.cpp
         Runtime/RuntimeTree/RuntimeTree.h
         Runtime/EventRuntime/EventRuntime.cpp
@@ -40,6 +42,8 @@ add_library(${PROJECT_NAME} STATIC
         Runtime/EventRuntime/EventSubscriptions.h
         Runtime/LayoutRuntime/LayoutRuntime.cpp
         Runtime/LayoutRuntime/LayoutRuntime.h
+        Runtime/LayoutRuntime/LayoutPass/LayoutPass.cpp
+        Runtime/LayoutRuntime/LayoutPass/LayoutPass.h
         Runtime/Normalize/Normalize.h
         Runtime/Normalize/NormalizedProps.h
         Runtime/Normalize/PropsVisitor.h
@@ -67,10 +71,10 @@ add_library(${PROJECT_NAME} STATIC
         Runtime/LayoutEngine/LayoutTreeBuilder/LayoutTreeBuilder.cpp
         Runtime/LayoutEngine/LayoutTreeBuilder/LayoutTreeBuilder.h
         Runtime/LayoutEngine/Data/LayoutData.h
+        Runtime/LayoutEngine/Data/LayoutType.h
 
         Props/LayoutProps/CrossAxisAlignment.h
         Props/LayoutProps/MainAxisAlignment.h
-        Runtime/LayoutEngine/Data/LayoutType.h
 )
 
 # use Unicode

@@ -30,8 +30,6 @@ private:
         Api::Id parent = Api::InvalidId,
         bool includeCurrent = true
     ) -> void;
-
-    static auto buildRectProps(const LayoutNode& layout, const WidgetTree& widget, Api::Id parent) -> Api::PropertyMap;
 };
 
 
