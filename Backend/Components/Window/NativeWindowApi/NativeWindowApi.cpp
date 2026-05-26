@@ -350,18 +350,20 @@ auto NativeWindowApi::SetTopMost(HWND hwnd, bool topMost) -> void
 
 auto NativeWindowApi::SetState(HWND hwnd, Api::WindowState state) -> void
 {
+    const bool visible = IsWindowVisible(hwnd);
+
     switch (state)
     {
     case Api::WindowState::Normal:
-        ShowWindow(hwnd, SW_RESTORE);
+        ShowWindow(hwnd, visible ? SW_RESTORE : SW_SHOWNORMAL);
         break;
 
     case Api::WindowState::Minimized:
-        ShowWindow(hwnd, SW_MINIMIZE);
+        ShowWindow(hwnd, visible ? SW_MINIMIZE : SW_SHOWMINIMIZED);
         break;
 
     case Api::WindowState::Maximized:
-        ShowWindow(hwnd, SW_MAXIMIZE);
+        ShowWindow(hwnd, visible ? SW_MAXIMIZE : SW_SHOWMAXIMIZED);
         break;
     }
 }

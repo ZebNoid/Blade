@@ -85,7 +85,6 @@ auto NativeWindowProps::Apply(NativeWindow& window, const Api::PropertyMap& prop
     if (topMost) NativeWindowApi::SetTopMost(hwnd, *topMost);
     if (minSize) window.setMinSize(*minSize);
     if (maxSize) window.setMaxSize(*maxSize);
-    if (visible) NativeApi::SetVisible(hwnd, *visible);
 
     if (rect)
     {
@@ -122,9 +121,17 @@ auto NativeWindowProps::Apply(NativeWindow& window, const Api::PropertyMap& prop
         nativeProps.erase(Api::Props::Position);
     }
 
-    if (state)
+    if (visible && !*visible)
+    {
+        NativeApi::SetVisible(hwnd, false);
+    }
+    else if (state)
     {
         NativeWindowApi::SetState(hwnd, *state);
+    }
+    else if (visible)
+    {
+        NativeApi::SetVisible(hwnd, true);
     }
 
     return nativeProps;
