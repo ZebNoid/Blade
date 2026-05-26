@@ -120,6 +120,11 @@ auto NativeApi::SetClientSize(
     );
 }
 
+auto NativeApi::ClientToWindowSize(HWND hwnd, const Api::Size& clientSize) -> Api::Size
+{
+    return ToOuterSize(hwnd, clientSize);
+}
+
 auto NativeApi::SetRect(
     HWND hwnd,
     const Api::Rect& rect

@@ -51,6 +51,8 @@ public:
         const Api::Size& size
     ) -> void;
 
+    static auto ClientToWindowSize(HWND hwnd, const Api::Size& clientSize) -> Api::Size;
+
     static auto SetRect(
         HWND hwnd,
         const Api::Rect& rect

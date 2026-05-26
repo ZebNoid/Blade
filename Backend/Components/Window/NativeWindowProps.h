@@ -7,10 +7,12 @@
 
 namespace Blade::Backend {
 
+class NativeWindow;
+
 class NativeWindowProps
 {
 public:
-    static auto Apply(HWND hwnd, const Api::PropertyMap& propertyMap) -> Api::PropertyMap;
+    static auto Apply(NativeWindow& window, const Api::PropertyMap& propertyMap) -> Api::PropertyMap;
 };
 
 } // namespace Blade::Backend

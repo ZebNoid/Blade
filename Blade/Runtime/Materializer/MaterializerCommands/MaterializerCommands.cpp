@@ -60,6 +60,11 @@ auto MaterializerCommands::UpdateProps(const LayoutNode& layout, const WidgetTre
             props[Api::Props::Placement] = it->second;
         }
 
+        if (const auto it = widget.backend.create.find(Api::Props::State); it != widget.backend.create.end())
+        {
+            props[Api::Props::State] = it->second;
+        }
+
         return props;
     }
 

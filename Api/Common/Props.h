@@ -17,6 +17,8 @@ enum class Props
     Resizable,
     TopMost,
     Taskbar,
+    MinSize,
+    MaxSize,
     State,
 
     Layout,
@@ -37,6 +39,8 @@ inline auto to_string(Props p) -> std::wstring {
     case Props::Resizable:   return L"Resizable";
     case Props::TopMost:   return L"TopMost";
     case Props::Taskbar:   return L"Taskbar";
+    case Props::MinSize:   return L"MinSize";
+    case Props::MaxSize:   return L"MaxSize";
     case Props::State:   return L"State";
 
     case Props::Layout:   return L"Layout";

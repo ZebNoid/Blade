@@ -28,11 +28,17 @@ public:
 
     auto commandRouter() -> CommandRouter&;
 
+    auto setMinSize(const Api::Size& size) -> void;
+    auto setMaxSize(const Api::Size& size) -> void;
+    auto applyMinMax(MINMAXINFO* info) const -> void;
+
     auto destroy() -> void;
     auto markDead() -> void;
 
 private:
     bool m_alive = true;
+    Api::Size m_minSize{};
+    Api::Size m_maxSize{};
 
     MessageRouter m_router;
     CommandRouter m_commandRouter;

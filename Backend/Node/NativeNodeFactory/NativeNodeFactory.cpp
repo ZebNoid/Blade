@@ -48,6 +48,15 @@ auto NativeNodeFactory::createWindow(const Api::BackendCommand& command) -> std:
         }
     );
 
+    nativeWindow->router().on(
+        WM_GETMINMAXINFO,
+        [window = nativeWindow.get()](HWND, UINT, WPARAM, LPARAM lParam) -> int
+        {
+            window->applyMinMax(reinterpret_cast<MINMAXINFO*>(lParam));
+            return 0;
+        }
+    );
+
     m_backend->host().attach(nativeWindow.get());
 
     nativeWindow->applyProps(command.props);

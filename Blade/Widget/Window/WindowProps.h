@@ -19,6 +19,8 @@ struct WindowProps
     bool resizable = true;
     bool topMost = false;
     bool taskbar = true;
+    Api::Size minSize{};
+    Api::Size maxSize{};
     Api::CaptionProps caption{};
     Api::WindowPlacementProps placement = Api::WindowPlacement::Default();
     Api::WindowState state = Api::WindowState::Normal;
@@ -32,6 +34,8 @@ struct WindowProps
         v.set(Api::Props::Resizable, resizable);
         v.set(Api::Props::TopMost, topMost);
         v.set(Api::Props::Taskbar, taskbar);
+        v.set(Api::Props::MinSize, minSize);
+        v.set(Api::Props::MaxSize, maxSize);
         v.set(Api::Props::Caption, caption);
         v.set(Api::Props::State, state);
     }

@@ -53,6 +53,38 @@ auto NativeWindow::commandRouter() -> CommandRouter&
     return m_commandRouter;
 }
 
+auto NativeWindow::setMinSize(const Api::Size& size) -> void
+{
+    m_minSize = size;
+}
+
+auto NativeWindow::setMaxSize(const Api::Size& size) -> void
+{
+    m_maxSize = size;
+}
+
+auto NativeWindow::applyMinMax(MINMAXINFO* info) const -> void
+{
+    if (!info)
+    {
+        return;
+    }
+
+    if (m_minSize.width > 0 || m_minSize.height > 0)
+    {
+        const auto size = NativeApi::ClientToWindowSize(m_hwnd, m_minSize);
+        if (m_minSize.width > 0) info->ptMinTrackSize.x = size.width;
+        if (m_minSize.height > 0) info->ptMinTrackSize.y = size.height;
+    }
+
+    if (m_maxSize.width > 0 || m_maxSize.height > 0)
+    {
+        const auto size = NativeApi::ClientToWindowSize(m_hwnd, m_maxSize);
+        if (m_maxSize.width > 0) info->ptMaxTrackSize.x = size.width;
+        if (m_maxSize.height > 0) info->ptMaxTrackSize.y = size.height;
+    }
+}
+
 auto NativeWindow::destroy() -> void
 {
     if (m_hwnd != nullptr)
@@ -95,7 +127,7 @@ auto NativeWindow::applyEvents(const Api::EventSubscriptions& events) -> void
 
 auto NativeWindow::applyProps(const Api::PropertyMap& propertyMap) -> void
 {
-    auto nativeProps = NativeWindowProps::Apply(m_hwnd, propertyMap);
+    auto nativeProps = NativeWindowProps::Apply(*this, propertyMap);
     PropertyMapper::Apply(m_hwnd, nativeProps);
 }
 

@@ -67,6 +67,9 @@ protected:
         ).set({
             .title = L"Test",
             .size = {800, 600},
+            // .minSize = {400,400},
+            // .maxSize = {1000,800},
+            // .resizable = false,
             // .placement = Api::WindowPlacement::Default(),
             // .placement = Api::WindowPlacement::Center(),
             // .placement = Api::WindowPlacement::Manual({3500, 200}),
@@ -76,7 +79,8 @@ protected:
             // .placement = Api::WindowPlacement::LeftFill({}, 1),
             // .placement = Api::WindowPlacement::Fill({}, 1),
             // .state = Api::WindowState::Maximized,
-            // .state = Api::WindowState::Minimized,
+            .state = Api::WindowState::Minimized,
+            // .state = Api::WindowState::Normal,
         }).on({
             .close = []()
             {
