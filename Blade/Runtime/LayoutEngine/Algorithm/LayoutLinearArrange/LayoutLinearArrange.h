@@ -23,9 +23,15 @@ public:
         int size = 0;
     };
 
+    struct FlexCursor
+    {
+        int usedFlex = 0;
+        int usedSpace = 0;
+    };
+
 public:
     static auto MeasureContent(const LayoutNode& node, const Api::Rect& contentRect, LayoutAxis axis) -> Content;
-    static auto ChildMainSize(const LayoutNode& child, const Content& content, LayoutAxis axis) -> int;
+    static auto ChildMainSize(const LayoutNode& child, const Content& content, LayoutAxis axis, FlexCursor& cursor) -> int;
     static auto AlignCrossAxis(const LayoutNode& node, const LayoutNode& child, const Api::Rect& contentRect, LayoutAxis axis) -> CrossAxis;
 };
 

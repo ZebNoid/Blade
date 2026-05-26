@@ -50,6 +50,7 @@ auto LayoutLinear::Arrange(LayoutContext& ctx, LayoutAxis axis) -> void
         LayoutGeometry::MainAxisOffset(node.layout.mainAxisAlignment, availableMain, content.size, itemCount);
 
     bool first = true;
+    LayoutLinearArrange::FlexCursor flexCursor;
 
     for (auto& child : node.children)
     {
@@ -61,7 +62,7 @@ auto LayoutLinear::Arrange(LayoutContext& ctx, LayoutAxis axis) -> void
         first = false;
 
         const auto& margin = child.layout.box.margin;
-        const int childMain = LayoutLinearArrange::ChildMainSize(child, content, axis);
+        const int childMain = LayoutLinearArrange::ChildMainSize(child, content, axis, flexCursor);
         const auto cross = LayoutLinearArrange::AlignCrossAxis(node, child, contentRect, axis);
 
         cursor += LayoutAxisGeometry::MainMarginStart(axis, margin);

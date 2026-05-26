@@ -46,8 +46,10 @@ add_library(${PROJECT_NAME} STATIC
         Runtime/Normalize/EventVisitor.h
         Runtime/LayoutEngine/Data/LayoutNode.h
         Runtime/LayoutEngine/Data/LayoutContext.h
-        Runtime/LayoutEngine/Algorithm/LayoutLeaf.cpp
-        Runtime/LayoutEngine/Algorithm/LayoutLeaf.h
+        Runtime/LayoutEngine/Algorithm/LayoutLeaf/LayoutLeaf.cpp
+        Runtime/LayoutEngine/Algorithm/LayoutLeaf/LayoutLeaf.h
+        Runtime/LayoutEngine/Algorithm/LayoutLeafChildren/LayoutLeafChildren.cpp
+        Runtime/LayoutEngine/Algorithm/LayoutLeafChildren/LayoutLeafChildren.h
         Runtime/LayoutEngine/Algorithm/LayoutColumn.cpp
         Runtime/LayoutEngine/Algorithm/LayoutColumn.h
         Runtime/LayoutEngine/Algorithm/LayoutRow.cpp

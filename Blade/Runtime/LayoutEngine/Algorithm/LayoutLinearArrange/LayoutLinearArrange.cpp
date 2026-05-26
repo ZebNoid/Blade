@@ -37,13 +37,22 @@ auto LayoutLinearArrange::MeasureContent(const LayoutNode& node, const Api::Rect
     return content;
 }
 
-auto LayoutLinearArrange::ChildMainSize(const LayoutNode& child, const Content& content, LayoutAxis axis) -> int
+auto LayoutLinearArrange::ChildMainSize(const LayoutNode& child, const Content& content, LayoutAxis axis, FlexCursor& cursor) -> int
 {
     const int flex = LayoutGeometry::NonNegative(child.layout.box.flex);
 
-    return content.totalFlex > 0 && flex > 0
-        ? content.flexSpace * flex / content.totalFlex
-        : LayoutAxisGeometry::MainSize(axis, child.desiredSize);
+    if (content.totalFlex <= 0 || flex <= 0)
+    {
+        return LayoutAxisGeometry::MainSize(axis, child.desiredSize);
+    }
+
+    cursor.usedFlex += flex;
+
+    const int nextUsedSpace = content.flexSpace * cursor.usedFlex / content.totalFlex;
+    const int size = nextUsedSpace - cursor.usedSpace;
+
+    cursor.usedSpace = nextUsedSpace;
+    return size;
 }
 
 auto LayoutLinearArrange::AlignCrossAxis(const LayoutNode& node, const LayoutNode& child, const Api::Rect& contentRect, LayoutAxis axis) -> CrossAxis
