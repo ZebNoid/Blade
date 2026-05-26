@@ -35,6 +35,11 @@ auto SetCaptionButtons(HWND hwnd, Api::CaptionButton buttons) -> void
     EnableMenuItem(systemMenu, SC_CLOSE, MF_BYCOMMAND | (Has(buttons, Api::CaptionButton::Close) ? MF_ENABLED : MF_GRAYED));
 }
 
+auto SetFrameChanged(HWND hwnd) -> void
+{
+    SetWindowPos(hwnd, nullptr, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
+}
+
 auto GetWindowSize(HWND hwnd) -> Api::Size
 {
     RECT rect{};
@@ -172,13 +177,53 @@ auto NativeWindowApi::SetCaption(HWND hwnd, const Api::CaptionProps& caption) ->
 
     SetWindowLongPtr(hwnd, GWL_STYLE, static_cast<LONG_PTR>(style));
     SetCaptionButtons(hwnd, caption.buttons);
-    SetWindowPos(hwnd, nullptr, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
+    SetFrameChanged(hwnd);
 }
 
 auto NativeWindowApi::SetPlacement(HWND hwnd, const Api::WindowPlacementProps& placement) -> void
 {
     const auto rect = ToRect(hwnd, placement);
     SetWindowPos(hwnd, nullptr, rect.x, rect.y, rect.width, rect.height, SWP_NOZORDER | SWP_NOACTIVATE);
+}
+
+auto NativeWindowApi::SetResizable(HWND hwnd, bool resizable) -> void
+{
+    auto style = static_cast<DWORD>(GetWindowLongPtr(hwnd, GWL_STYLE));
+    SetStyleFlag(style, WS_THICKFRAME, resizable);
+    SetWindowLongPtr(hwnd, GWL_STYLE, static_cast<LONG_PTR>(style));
+    SetFrameChanged(hwnd);
+}
+
+auto NativeWindowApi::SetTaskbar(HWND hwnd, bool taskbar) -> void
+{
+    auto exStyle = static_cast<DWORD>(GetWindowLongPtr(hwnd, GWL_EXSTYLE));
+    SetStyleFlag(exStyle, WS_EX_APPWINDOW, taskbar);
+    SetStyleFlag(exStyle, WS_EX_TOOLWINDOW, !taskbar);
+    SetWindowLongPtr(hwnd, GWL_EXSTYLE, static_cast<LONG_PTR>(exStyle));
+    SetFrameChanged(hwnd);
+}
+
+auto NativeWindowApi::SetTopMost(HWND hwnd, bool topMost) -> void
+{
+    SetWindowPos(hwnd, topMost ? HWND_TOPMOST : HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+}
+
+auto NativeWindowApi::SetState(HWND hwnd, Api::WindowState state) -> void
+{
+    switch (state)
+    {
+    case Api::WindowState::Normal:
+        ShowWindow(hwnd, SW_RESTORE);
+        break;
+
+    case Api::WindowState::Minimized:
+        ShowWindow(hwnd, SW_MINIMIZE);
+        break;
+
+    case Api::WindowState::Maximized:
+        ShowWindow(hwnd, SW_MAXIMIZE);
+        break;
+    }
 }
 
 } // namespace Blade::Backend

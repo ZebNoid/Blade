@@ -75,6 +75,8 @@ protected:
             // .placement = Api::WindowPlacement::TopRight({-20, 20},1),
             // .placement = Api::WindowPlacement::LeftFill({}, 1),
             // .placement = Api::WindowPlacement::Fill({}, 1),
+            // .state = Api::WindowState::Maximized,
+            // .state = Api::WindowState::Minimized,
         }).on({
             .close = []()
             {

@@ -14,6 +14,10 @@ enum class Props
     Visible,
     Caption,
     Placement,
+    Resizable,
+    TopMost,
+    Taskbar,
+    State,
 
     Layout,
     Gap
@@ -30,6 +34,10 @@ inline auto to_string(Props p) -> std::wstring {
     case Props::Visible:   return L"Visible";
     case Props::Caption:   return L"Caption";
     case Props::Placement:   return L"Placement";
+    case Props::Resizable:   return L"Resizable";
+    case Props::TopMost:   return L"TopMost";
+    case Props::Taskbar:   return L"Taskbar";
+    case Props::State:   return L"State";
 
     case Props::Layout:   return L"Layout";
     case Props::Gap:   return L"Gap";

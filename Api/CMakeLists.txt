@@ -20,6 +20,7 @@ add_library(${PROJECT_NAME} INTERFACE
         Common/Callbacks.h
         Common/CaptionProps.h
         Common/WindowPlacementProps.h
+        Common/WindowState.h
         Common/Props.h
         Common/Logger.h
 

@@ -11,6 +11,7 @@ auto NativeWindowProps::Apply(HWND hwnd, const Api::PropertyMap& propertyMap) ->
 {
     Api::PropertyMap nativeProps;
     const Api::WindowPlacementProps* placement = nullptr;
+    const Api::WindowState* state = nullptr;
 
     for (const auto& [key, value] : propertyMap)
     {
@@ -43,6 +44,31 @@ auto NativeWindowProps::Apply(HWND hwnd, const Api::PropertyMap& propertyMap) ->
             placement = std::get_if<Api::WindowPlacementProps>(&value);
             break;
 
+        case Api::Props::Resizable:
+            if (const auto* resizable = std::get_if<bool>(&value))
+            {
+                NativeWindowApi::SetResizable(hwnd, *resizable);
+            }
+            break;
+
+        case Api::Props::TopMost:
+            if (const auto* topMost = std::get_if<bool>(&value))
+            {
+                NativeWindowApi::SetTopMost(hwnd, *topMost);
+            }
+            break;
+
+        case Api::Props::Taskbar:
+            if (const auto* taskbar = std::get_if<bool>(&value))
+            {
+                NativeWindowApi::SetTaskbar(hwnd, *taskbar);
+            }
+            break;
+
+        case Api::Props::State:
+            state = std::get_if<Api::WindowState>(&value);
+            break;
+
         default:
             nativeProps[key] = value;
             break;
@@ -53,6 +79,11 @@ auto NativeWindowProps::Apply(HWND hwnd, const Api::PropertyMap& propertyMap) ->
     {
         NativeWindowApi::SetPlacement(hwnd, *placement);
         nativeProps.erase(Api::Props::Position);
+    }
+
+    if (state)
+    {
+        NativeWindowApi::SetState(hwnd, *state);
     }
 
     return nativeProps;
