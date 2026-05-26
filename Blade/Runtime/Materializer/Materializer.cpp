@@ -4,26 +4,26 @@
 
 namespace Blade {
 
-auto Materializer::build(const WidgetTree& widgetTree, const LayoutNode& layoutTree) -> std::vector<Api::BackendCommand>
+auto Materializer::create(const WidgetTree& widgetTree, const LayoutNode& layoutTree) -> std::vector<Api::BackendCommand>
 {
     std::vector<Api::BackendCommand> commands;
 
-    buildNode(widgetTree, layoutTree, commands);
+    createNode(widgetTree, layoutTree, commands);
 
     return commands;
 }
 
-auto Materializer::buildUpdates(const WidgetTree& widgetTree, const LayoutNode& layoutTree, bool includeRoot) -> std::vector<Api::BackendCommand>
+auto Materializer::update(const WidgetTree& widgetTree, const LayoutNode& layoutTree, bool includeRoot) -> std::vector<Api::BackendCommand>
 {
     std::vector<Api::BackendCommand> commands;
 
-    buildUpdateNode(widgetTree, layoutTree, commands, Api::InvalidId, includeRoot);
+    updateNode(widgetTree, layoutTree, commands, Api::InvalidId, includeRoot);
 
     return commands;
 }
 
 
-auto Materializer::buildNode(
+auto Materializer::createNode(
     const WidgetTree& widget,
     const LayoutNode& layout,
     std::vector<Api::BackendCommand>& out,
@@ -46,11 +46,11 @@ auto Materializer::buildNode(
 
     for (size_t i = 0; i < widget.children.size(); ++i)
     {
-        buildNode(widget.children[i], layout.children[i], out, parent);
+        createNode(widget.children[i], layout.children[i], out, parent);
     }
 }
 
-auto Materializer::buildUpdateNode(
+auto Materializer::updateNode(
     const WidgetTree& widget,
     const LayoutNode& layout,
     std::vector<Api::BackendCommand>& out,
@@ -72,7 +72,7 @@ auto Materializer::buildUpdateNode(
 
     for (size_t i = 0; i < widget.children.size(); ++i)
     {
-        buildUpdateNode(widget.children[i], layout.children[i], out, currentParent, true);
+        updateNode(widget.children[i], layout.children[i], out, currentParent, true);
     }
 }
 

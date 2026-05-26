@@ -14,7 +14,7 @@ auto LayoutRuntime::mount(WidgetTree tree) -> void
 {
     auto layoutTree = LayoutPass::Build(tree, tree.layout.size);
 
-    send(m_materializer.build(tree, layoutTree));
+    send(m_materializer.create(tree, layoutTree));
 
     m_roots.insert_or_assign(tree.id, std::move(tree));
 }
@@ -30,7 +30,7 @@ auto LayoutRuntime::resizeRoot(Api::Id rootId, const Api::Size& size) -> void
 
     auto layoutTree = LayoutPass::Build(it->second, size);
 
-    send(m_materializer.buildUpdates(it->second, layoutTree, false));
+    send(m_materializer.update(it->second, layoutTree, false));
 }
 
 auto LayoutRuntime::send(std::vector<Api::BackendCommand> commands) -> void
