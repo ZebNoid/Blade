@@ -35,18 +35,14 @@ auto MaterializerCommands::Update(const LayoutNode& layout, const WidgetTree& wi
     };
 }
 
-auto MaterializerCommands::Visible(const WidgetTree& widget, bool visible) -> Api::BackendCommand
+auto MaterializerCommands::Visible(const WidgetTree& widget) -> Api::BackendCommand
 {
-    Api::PropertyMap props{
-        {
-            Api::Props::Visible, visible
-        }
-    };
-
     return {
         .command = Api::CommandType::Update,
         .id = widget.id,
-        .props = std::move(props)
+        .props = {
+            { Api::Props::Visible, VisibleValue(widget) }
+        }
     };
 }
 
@@ -63,6 +59,19 @@ auto MaterializerCommands::UpdateProps(const LayoutNode& layout, const WidgetTre
 
     props[Api::Props::Rect] = rect;
     return props;
+}
+
+auto MaterializerCommands::VisibleValue(const WidgetTree& widget) -> bool
+{
+    const auto it = widget.backend.create.find(Api::Props::Visible);
+
+    if (it == widget.backend.create.end())
+    {
+        return true;
+    }
+
+    const auto* visible = std::get_if<bool>(&it->second);
+    return visible ? *visible : true;
 }
 
 } // namespace Blade

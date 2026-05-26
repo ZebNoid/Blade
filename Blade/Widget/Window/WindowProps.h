@@ -13,7 +13,8 @@ struct WindowProps
 {
     Api::Text title = L"Blade";
     Api::Size size{800,600}; // TODO default?
-    Api::Point position{-1, -1}; // TODO default
+    Api::Point position{0, 0};
+    bool visible = true;
 
     // TODO no caption
     // TODO start absolute or relative
@@ -24,6 +25,7 @@ struct WindowProps
         v.set(Api::Props::Title, title);
         v.set(Api::Props::Size, size);
         v.set(Api::Props::Position, position);
+        v.set(Api::Props::Visible, visible);
     }
 };
 

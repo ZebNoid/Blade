@@ -43,7 +43,7 @@ auto Materializer::createNode(
 
         if (parent == Api::InvalidId)
         {
-            out.push_back(MaterializerCommands::Visible(widget, true));
+            out.push_back(MaterializerCommands::Visible(widget));
         }
 
         parent = widget.id;
