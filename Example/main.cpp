@@ -58,6 +58,10 @@ protected:
                       },
                   })
             ).set({
+                .gap = 8,
+                .layout = {
+                    .padding = 8,
+                },
                 .mainAxisAlignment = MainAxisAlignment::End,
             })
         ).set({
@@ -72,27 +76,27 @@ protected:
         }).build(this);
 
 
-        Window(
-            Column(
-                Button(L"Button Flex Click")
-                .set({.layout = {.flex = 1,}})
-                .on({
-                    .click = []() -> void
-                    {
-                        LOG(L"Click! 2");
-                    },
-                    .focus = [](auto focus)
-                    {
-                        LOGF(L"Focus! 2 %d", focus);
-                    },
-                })
-                , Button(L"Button")
-            )
-        ).set({
-            .title = L"Test",
-            .size = {400, 400},
-            .position = {3500, 200},
-        }).build(this);
+        // Window(
+        //     Column(
+        //         Button(L"Button Flex Click")
+        //         .set({.layout = {.flex = 1,}})
+        //         .on({
+        //             .click = []() -> void
+        //             {
+        //                 LOG(L"Click! 2");
+        //             },
+        //             .focus = [](auto focus)
+        //             {
+        //                 LOGF(L"Focus! 2 %d", focus);
+        //             },
+        //         })
+        //         , Button(L"Button")
+        //     )
+        // ).set({
+        //     .title = L"Test",
+        //     .size = {400, 400},
+        //     .position = {3500, 200},
+        // }).build(this);
 
 
         // Window(

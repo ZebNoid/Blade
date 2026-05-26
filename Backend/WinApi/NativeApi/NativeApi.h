@@ -93,6 +93,8 @@ public:
         int cmdShow = SW_SHOW
     ) -> void;
 
+    static auto SetVisible(HWND hwnd, bool visible) -> void;
+
     static auto Update(
         HWND hwnd
     ) -> void;

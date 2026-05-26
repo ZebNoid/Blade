@@ -29,7 +29,7 @@ auto NativeWindow::create(HINSTANCE hInstance, Api::Id id) -> bool
         .className = WindowClass::Get(CUSTOM_CLASS),
         .windowName = L"Blade",
         // TODO for parent add WS_CHILD
-        .style = WS_OVERLAPPEDWINDOW | WS_VISIBLE | WS_CLIPCHILDREN,
+        .style = WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN,
         .hInstance = hInstance,
         .lpParam = this,
     });

@@ -11,6 +11,7 @@ enum class Props
     Size,
     Position,
     Rect,
+    Visible,
 
     Layout,
     Gap
@@ -24,6 +25,7 @@ inline auto to_string(Props p) -> std::wstring {
     case Props::Size:   return L"Size";
     case Props::Position:   return L"Position";
     case Props::Rect:   return L"Rect";
+    case Props::Visible:   return L"Visible";
 
     case Props::Layout:   return L"Layout";
     case Props::Gap:   return L"Gap";

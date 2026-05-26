@@ -41,6 +41,11 @@ auto Materializer::createNode(
 
         out.push_back(MaterializerCommands::Update(layout, widget, parent));
 
+        if (parent == Api::InvalidId)
+        {
+            out.push_back(MaterializerCommands::Visible(widget, true));
+        }
+
         parent = widget.id;
     }
 

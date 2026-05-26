@@ -239,6 +239,16 @@ auto NativeApi::Show(HWND hwnd, int cmdShow) -> void
     ShowWindow(hwnd, cmdShow);
 }
 
+auto NativeApi::SetVisible(HWND hwnd, bool visible) -> void
+{
+    Show(hwnd, visible ? SW_SHOW : SW_HIDE);
+
+    if (visible)
+    {
+        Update(hwnd);
+    }
+}
+
 auto NativeApi::Update(HWND hwnd) -> void
 {
     UpdateWindow(hwnd);

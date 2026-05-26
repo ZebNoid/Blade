@@ -48,6 +48,15 @@ auto PropertyMapper::Apply(HWND hwnd, const Api::PropertyMap& props) -> void
                 }
             }
             break;
+        case Api::Props::Visible:
+            {
+                if (const auto* visible = std::get_if<bool>(&value))
+                {
+                    LOGF_D(L" -> ApplyProps::%s %d", to_string(key).c_str(), *visible);
+                    NativeApi::SetVisible(hwnd, *visible);
+                }
+            }
+            break;
         case Api::Props::IsDefault:
             break;
         default:

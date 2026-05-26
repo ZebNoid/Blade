@@ -35,6 +35,21 @@ auto MaterializerCommands::Update(const LayoutNode& layout, const WidgetTree& wi
     };
 }
 
+auto MaterializerCommands::Visible(const WidgetTree& widget, bool visible) -> Api::BackendCommand
+{
+    Api::PropertyMap props{
+        {
+            Api::Props::Visible, visible
+        }
+    };
+
+    return {
+        .command = Api::CommandType::Update,
+        .id = widget.id,
+        .props = std::move(props)
+    };
+}
+
 auto MaterializerCommands::UpdateProps(const LayoutNode& layout, const WidgetTree& widget, Api::Id parent) -> Api::PropertyMap
 {
     Api::PropertyMap props;
