@@ -18,8 +18,12 @@ add_library(${PROJECT_NAME} INTERFACE
         Common/Property.h
         Common/Callbacks.h
         Common/Props.h
-        Common/Events.h
         Common/Logger.h
+
+        Events/Events.h
+        Events/EventPayload.h
+        Events/EventResult.h
+        Events/BackendEvent.h
 
         Api/BackendCommand.h
         Api/CommandType.h

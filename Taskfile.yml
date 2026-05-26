@@ -15,6 +15,13 @@ tasks:
           PROFILE: Release
 #      - ./cmake-build-vs/Example/Debug/Example.exe
 
+  run:
+    cmds: 
+      - task: build
+        vars:
+          PROFILE: Debug
+      - ./cmake-build-vs/Example/Debug/Example.exe
+
   setup:
     vars:
       BUILD_FOLDER: '{{.BUILD_FOLDER | default "cmake-build-vs"}}'

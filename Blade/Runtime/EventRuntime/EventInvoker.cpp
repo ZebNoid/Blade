@@ -32,7 +32,7 @@ auto InvokeCallback(const Api::CallbackString& callback, const Api::BackendEvent
         return {};
     }
 
-    const auto* value = std::get_if<Api::Text>(&event.value);
+    const auto* value = std::get_if<Api::Text>(&event.payload);
 
     if (!value)
     {
@@ -50,7 +50,7 @@ auto InvokeCallback(const Api::CallbackBool& callback, const Api::BackendEvent& 
         return {};
     }
 
-    const auto* value = std::get_if<bool>(&event.value);
+    const auto* value = std::get_if<bool>(&event.payload);
 
     if (!value)
     {
