@@ -11,67 +11,32 @@ namespace Blade {
 class LayoutGeometry
 {
 public:
-    static auto NonNegative(
-        int value
-    ) -> int
+    static auto NonNegative(int value) -> int
     {
-        return max(
-            0,
-            value
-        );
+        return max(0, value);
     }
 
-    static auto Inflate(
-        const Api::Size& size,
-        const Api::Thickness& thickness
-    ) -> Api::Size
+    static auto Inflate(const Api::Size& size, const Api::Thickness& thickness) -> Api::Size
     {
         return {
-            size.width +
-            thickness.left +
-            thickness.right,
-
-            size.height +
-            thickness.top +
-            thickness.bottom
+            size.width + thickness.left + thickness.right,
+            size.height + thickness.top + thickness.bottom
         };
     }
 
-    static auto Deflate(
-        const Api::Rect& rect,
-        const Api::Thickness& thickness
-    ) -> Api::Rect
+    static auto Deflate(const Api::Rect& rect, const Api::Thickness& thickness) -> Api::Rect
     {
         return {
             rect.x + thickness.left,
             rect.y + thickness.top,
-
-            NonNegative(
-                rect.width -
-                thickness.left -
-                thickness.right
-            ),
-
-            NonNegative(
-                rect.height -
-                thickness.top -
-                thickness.bottom
-            )
+            NonNegative(rect.width - thickness.left - thickness.right),
+            NonNegative(rect.height - thickness.top - thickness.bottom)
         };
     }
 
-    static auto MainAxisOffset(
-        const MainAxisAlignment alignment,
-        const int available,
-        const int content,
-        const int itemCount
-    ) -> int
+    static auto MainAxisOffset(MainAxisAlignment alignment, int available, int content, int itemCount) -> int
     {
-        const int freeSpace =
-            NonNegative(
-                available -
-                content
-            );
+        const int freeSpace = NonNegative(available - content);
 
         switch (alignment)
         {
@@ -98,19 +63,9 @@ public:
         }
     }
 
-    static auto MainAxisGap(
-        const MainAxisAlignment alignment,
-        const int baseGap,
-        const int available,
-        const int content,
-        const int itemCount
-    ) -> int
+    static auto MainAxisGap(MainAxisAlignment alignment, int baseGap, int available, int content, int itemCount) -> int
     {
-        const int freeSpace =
-            NonNegative(
-                available -
-                content
-            );
+        const int freeSpace = NonNegative(available - content);
 
         switch (alignment)
         {
