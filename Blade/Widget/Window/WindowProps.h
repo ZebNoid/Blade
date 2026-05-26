@@ -14,12 +14,12 @@ namespace Blade {
 struct WindowProps
 {
     Api::Text title = L"Blade";
-    Api::Size size{800,600}; // TODO default?
+    Api::Size size{800,600}; // TODO Fabric or Constant WindowSize::DefaultSize
     bool visible = true;
     bool resizable = true;
     bool topMost = false;
     bool taskbar = true;
-    Api::Size minSize{};
+    Api::Size minSize{}; // TODO Fabric or Constant WindowSize::DefaultMinSize
     Api::Size maxSize{};
     Api::CaptionProps caption{};
     Api::WindowPlacementProps placement = Api::WindowPlacement::Default();
