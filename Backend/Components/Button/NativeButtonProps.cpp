@@ -1,6 +1,6 @@
 #include "NativeButtonProps.h"
 
-#include "WinApi/NativeApi/NativeApi.h"
+#include "NativeButtonApi/NativeButtonApi.h"
 
 
 namespace Blade::Backend {
@@ -25,7 +25,7 @@ auto ApplyIsDefault(HWND hwnd, const Api::PropertyMap& propertyMap) -> void
 
     // TODO fix *isDefault is always false, no data from blade?
     const auto style = *isDefault ? BS_DEFPUSHBUTTON : BS_PUSHBUTTON;
-    NativeApi::SetStyle(hwnd, style, TRUE);
+    NativeButtonApi::SetStyle(hwnd, style, TRUE);
 }
 
 } // namespace

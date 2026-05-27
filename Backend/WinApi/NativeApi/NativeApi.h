@@ -105,15 +105,9 @@ public:
         HWND hwnd
     ) -> void;
 
-    static auto GetScreenSize() -> Api::Size;
-
     static auto GetSizeFromLParam(
         LPARAM lParam
     ) -> Api::Size;
-
-    static auto SetIcon(HWND hwnd, const Api::Text& icon) -> HICON;
-
-    static auto SetStyle(HWND hwnd, DWORD style, int redraw = TRUE) -> void;
 };
 
 

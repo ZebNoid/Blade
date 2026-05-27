@@ -1,6 +1,7 @@
 #include "NativeWindowApi.h"
 
 #include "WinApi/Display/DisplayApi/DisplayApi.h"
+#include "WinApi/Resource/ImageLoader/ImageLoader.h"
 
 namespace Blade::Backend {
 
@@ -300,6 +301,17 @@ auto NativeWindowApi::SetCaption(HWND hwnd, const Api::CaptionProps& caption) ->
     SetWindowLongPtr(hwnd, GWL_STYLE, static_cast<LONG_PTR>(style));
     SetCaptionButtons(hwnd, caption.buttons);
     SetFrameChanged(hwnd);
+}
+
+auto NativeWindowApi::SetIcon(HWND hwnd, const Api::Text& icon) -> HICON
+{
+    auto bigIcon = ImageLoader::LoadIcon(icon, 32, 32);
+    auto smallIcon = ImageLoader::IsIcon(icon) ? ImageLoader::LoadIcon(icon, 16, 16) : (bigIcon ? CopyIcon(bigIcon) : nullptr);
+
+    if (bigIcon) SendMessage(hwnd, WM_SETICON, ICON_BIG, reinterpret_cast<LPARAM>(bigIcon));
+    if (smallIcon) SendMessage(hwnd, WM_SETICON, ICON_SMALL, reinterpret_cast<LPARAM>(smallIcon));
+
+    return bigIcon;
 }
 
 auto NativeWindowApi::SetPlacement(HWND hwnd, const Api::WindowPlacementProps& placement) -> void

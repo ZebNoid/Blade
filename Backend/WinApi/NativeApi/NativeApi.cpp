@@ -1,7 +1,5 @@
 #include "NativeApi.h"
 
-#include "WinApi/Resource/ImageLoader/ImageLoader.h"
-
 
 namespace Blade::Backend {
 
@@ -266,14 +264,6 @@ auto NativeApi::Destroy(HWND hwnd) -> void
     DestroyWindow(hwnd);
 }
 
-auto NativeApi::GetScreenSize() -> Api::Size
-{
-    return {
-        .width = GetSystemMetrics(SM_CXSCREEN),
-        .height = GetSystemMetrics(SM_CYSCREEN),
-    };
-}
-
 auto NativeApi::GetSizeFromLParam(
     LPARAM lParam
 ) -> Api::Size
@@ -282,22 +272,6 @@ auto NativeApi::GetSizeFromLParam(
         LOWORD(lParam),
         HIWORD(lParam)
     };
-}
-
-auto NativeApi::SetIcon(HWND hwnd, const Api::Text& icon) -> HICON
-{
-    auto bigIcon = ImageLoader::LoadIcon(icon, 32, 32);
-    auto smallIcon = ImageLoader::IsIcon(icon) ? ImageLoader::LoadIcon(icon, 16, 16) : CopyIcon(bigIcon);
-
-    if (bigIcon) SendMessage(hwnd, WM_SETICON, ICON_BIG, reinterpret_cast<LPARAM>(bigIcon));
-    if (smallIcon) SendMessage(hwnd, WM_SETICON, ICON_SMALL, reinterpret_cast<LPARAM>(smallIcon));
-
-    return bigIcon;
-}
-
-auto NativeApi::SetStyle(HWND hwnd, DWORD style, int redraw) -> void
-{
-    SendMessage(hwnd, BM_SETSTYLE, (WPARAM)style, (LPARAM)redraw);
 }
 
 

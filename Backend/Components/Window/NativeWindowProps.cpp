@@ -54,7 +54,7 @@ auto NativeWindowProps::Apply(NativeWindow& window, const Api::PropertyMap& prop
     const auto* maxSize = Get<Api::Size>(propertyMap, Api::Props::MaxSize);
     const auto* state = Get<Api::WindowState>(propertyMap, Api::Props::State);
 
-    if (icon && !icon->empty()) NativeApi::SetIcon(hwnd, *icon);
+    if (icon && !icon->empty()) NativeWindowApi::SetIcon(hwnd, *icon);
     if (caption) NativeWindowApi::SetCaption(hwnd, *caption);
     if (resizable) NativeWindowApi::SetResizable(hwnd, *resizable);
     if (taskbar) NativeWindowApi::SetTaskbar(hwnd, *taskbar);
