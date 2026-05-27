@@ -66,7 +66,10 @@ protected:
             })
         ).set({
             .title = L"Test",
-            .icon = L"checkbox.ico",
+            // .icon = L"app.ico",
+            // .icon = L"app.png",
+            .icon = L"test/app.png",
+            // .icon = L"test/app.ico",
             .size = {800, 600},
             .minSize = {400,400},
             // .maxSize = {1000,800},

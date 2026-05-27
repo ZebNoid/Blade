@@ -1,5 +1,7 @@
 #include "NativeApi.h"
 
+#include "WinApi/ImageLoader/ImageLoader.h"
+
 
 namespace Blade::Backend {
 
@@ -282,12 +284,15 @@ auto NativeApi::GetSizeFromLParam(
     };
 }
 
-// TODO png?
 auto NativeApi::SetIcon(HWND hwnd, const Api::Text& icon) -> HICON
 {
-    HICON hIcon = (HICON)LoadImage(NULL, icon.c_str(), IMAGE_ICON, 32, 32, LR_LOADFROMFILE);
-    SendMessage(hwnd, WM_SETICON, ICON_BIG, (LPARAM)hIcon);
-    return (HICON)SendMessage(hwnd, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
+    auto bigIcon = ImageLoader::LoadIcon(icon, 32, 32);
+    auto smallIcon = ImageLoader::LoadIcon(icon, 16, 16);
+
+    if (bigIcon) SendMessage(hwnd, WM_SETICON, ICON_BIG, reinterpret_cast<LPARAM>(bigIcon));
+    if (smallIcon) SendMessage(hwnd, WM_SETICON, ICON_SMALL, reinterpret_cast<LPARAM>(smallIcon));
+
+    return bigIcon;
 }
 
 auto NativeApi::SetStyle(HWND hwnd, DWORD style, int redraw) -> void

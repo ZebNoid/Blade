@@ -31,6 +31,8 @@ add_library(${PROJECT_NAME} STATIC
         WinApi/NativeApi/NativeApi.h
         WinApi/DisplayApi/DisplayApi.cpp
         WinApi/DisplayApi/DisplayApi.h
+        WinApi/ImageLoader/ImageLoader.cpp
+        WinApi/ImageLoader/ImageLoader.h
         WinApi/NativeElement/NativeElement.cpp
         WinApi/NativeElement/NativeElement.h
 
@@ -85,6 +87,7 @@ target_link_libraries(${PROJECT_NAME}
         gdi32
         comctl32
         uxtheme #include <uxtheme.h>
+        windowscodecs # png
 )
 
 # TODO remove?
