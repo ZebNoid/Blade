@@ -82,7 +82,7 @@ protected:
             // .placement = Api::WindowPlacement::TopRight({-20, 20},1),
             // .placement = Api::WindowPlacement::LeftFill({}, 1),
             // .placement = Api::WindowPlacement::Fill({}, 1),
-            // .state = Api::WindowState::Maximized, // TODO strange behavior with maxSize
+            .state = Api::WindowState::Maximized, // TODO strange behavior with maxSize
             // .state = Api::WindowState::Minimized,
             // .state = Api::WindowState::Normal,
         }).on({

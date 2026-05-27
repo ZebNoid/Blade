@@ -4,6 +4,7 @@
 #include "Common/Logger.h"
 #include "NativeWindowApi/NativeWindowApi.h"
 #include "NativeWindowStyle/NativeWindowStyle.h"
+#include "Property/PropertyReader.h"
 #include "WinApi/NativeApi/NativeApi.h"
 
 
@@ -27,28 +28,21 @@ struct Props
     const Api::WindowState* state{};
 };
 
-template <typename T>
-auto Get(const Api::PropertyMap& propertyMap, Api::Props prop) -> const T*
-{
-    const auto it = propertyMap.find(prop);
-    return it == propertyMap.end() ? nullptr : std::get_if<T>(&it->second);
-}
-
 auto GetProps(const Api::PropertyMap& propertyMap) -> Props
 {
     return {
-        .icon = Get<Api::Text>(propertyMap, Api::Props::Icon),
-        .rect = Get<Api::Rect>(propertyMap, Api::Props::Rect),
-        .size = Get<Api::Size>(propertyMap, Api::Props::Size),
-        .caption = Get<Api::CaptionProps>(propertyMap, Api::Props::Caption),
-        .placement = Get<Api::WindowPlacementProps>(propertyMap, Api::Props::Placement),
-        .resizable = Get<bool>(propertyMap, Api::Props::Resizable),
-        .topMost = Get<bool>(propertyMap, Api::Props::TopMost),
-        .taskbar = Get<bool>(propertyMap, Api::Props::Taskbar),
-        .visible = Get<bool>(propertyMap, Api::Props::Visible),
-        .minSize = Get<Api::Size>(propertyMap, Api::Props::MinSize),
-        .maxSize = Get<Api::Size>(propertyMap, Api::Props::MaxSize),
-        .state = Get<Api::WindowState>(propertyMap, Api::Props::State),
+        .icon = PropertyReader::Get<Api::Text>(propertyMap, Api::Props::Icon),
+        .rect = PropertyReader::Get<Api::Rect>(propertyMap, Api::Props::Rect),
+        .size = PropertyReader::Get<Api::Size>(propertyMap, Api::Props::Size),
+        .caption = PropertyReader::Get<Api::CaptionProps>(propertyMap, Api::Props::Caption),
+        .placement = PropertyReader::Get<Api::WindowPlacementProps>(propertyMap, Api::Props::Placement),
+        .resizable = PropertyReader::Get<bool>(propertyMap, Api::Props::Resizable),
+        .topMost = PropertyReader::Get<bool>(propertyMap, Api::Props::TopMost),
+        .taskbar = PropertyReader::Get<bool>(propertyMap, Api::Props::Taskbar),
+        .visible = PropertyReader::Get<bool>(propertyMap, Api::Props::Visible),
+        .minSize = PropertyReader::Get<Api::Size>(propertyMap, Api::Props::MinSize),
+        .maxSize = PropertyReader::Get<Api::Size>(propertyMap, Api::Props::MaxSize),
+        .state = PropertyReader::Get<Api::WindowState>(propertyMap, Api::Props::State),
     };
 }
 

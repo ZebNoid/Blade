@@ -52,6 +52,7 @@ add_library(${PROJECT_NAME} STATIC
         Event/EventMapper/EventMapper.h
         Property/PropertyMapper/PropertyMapper.cpp
         Property/PropertyMapper/PropertyMapper.h
+        Property/PropertyReader.h
         WinApi/NativeElement/INativeElement.h
 
         Components/Window/NativeWindow.cpp
