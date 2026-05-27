@@ -3,6 +3,7 @@
 #include "Components/Window/NativeWindow.h"
 #include "Common/Logger.h"
 #include "NativeWindowApi/NativeWindowApi.h"
+#include "NativeWindowStyle/NativeWindowStyle.h"
 #include "WinApi/NativeApi/NativeApi.h"
 
 
@@ -55,9 +56,9 @@ auto NativeWindowProps::Apply(NativeWindow& window, const Api::PropertyMap& prop
     const auto* state = Get<Api::WindowState>(propertyMap, Api::Props::State);
 
     if (icon && !icon->empty()) NativeWindowApi::SetIcon(hwnd, *icon);
-    if (caption) NativeWindowApi::SetCaption(hwnd, *caption);
-    if (resizable) NativeWindowApi::SetResizable(hwnd, *resizable);
-    if (taskbar) NativeWindowApi::SetTaskbar(hwnd, *taskbar);
+    if (caption) NativeWindowStyle::SetCaption(hwnd, *caption);
+    if (resizable) NativeWindowStyle::SetResizable(hwnd, *resizable);
+    if (taskbar) NativeWindowStyle::SetTaskbar(hwnd, *taskbar);
     if (topMost) NativeWindowApi::SetTopMost(hwnd, *topMost);
     if (minSize) window.setMinSize(*minSize);
     if (maxSize) window.setMaxSize(*maxSize);
