@@ -11,12 +11,14 @@ LayoutRuntime::LayoutRuntime(Api::ApiBackend* backend, WidgetTreeRegistry& trees
 {
 }
 
-auto LayoutRuntime::mount(WidgetTree tree) -> void
+auto LayoutRuntime::mount(WidgetTree tree) -> WidgetTree&
 {
     auto& root = m_trees.add(std::move(tree));
     auto layoutTree = LayoutPass::Compute(root, root.layout.size);
 
     send(m_materializer.create(root, layoutTree));
+
+    return root;
 }
 
 auto LayoutRuntime::resizeRoot(Api::Id rootId, const Api::Size& size) -> void

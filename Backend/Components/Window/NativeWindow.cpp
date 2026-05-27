@@ -127,7 +127,6 @@ auto NativeWindow::attachChild(INativeElement* child) -> void
         LOGF_E(L"[Error] NativeWindow::attachChild [%s] %lu", CUSTOM_CLASS, GetLastError());
     }
 
-    if (m_dropTarget) m_dropTarget->registerHwnd(child->handle());
 }
 
 auto NativeWindow::applyEvents(const Api::EventSubscriptions& events) -> void

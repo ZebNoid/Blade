@@ -19,9 +19,9 @@ auto App::addToTree(const RootWidget& rootWidget) -> void
 {
     auto tree = rootWidget.tree();
 
-    m_eventRuntime.registerTree(tree);
+    auto& root = m_layoutRuntime->mount(std::move(tree));
 
-    m_layoutRuntime->mount(std::move(tree));
+    m_eventRuntime.registerTree(root);
 }
 
 auto App::initBackend() -> int

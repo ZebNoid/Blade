@@ -13,7 +13,7 @@ class LayoutRuntime
 public:
     LayoutRuntime(Api::ApiBackend* backend, WidgetTreeRegistry& trees);
 
-    auto mount(WidgetTree tree) -> void;
+    auto mount(WidgetTree tree) -> WidgetTree&;
 
     auto resizeRoot(Api::Id rootId, const Api::Size& size) -> void;
 
