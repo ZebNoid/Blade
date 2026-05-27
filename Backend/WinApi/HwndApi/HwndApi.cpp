@@ -5,54 +5,22 @@ namespace Blade::Backend {
 
 namespace {
 
-    auto GetWindowStyle(
-        HWND hwnd
-    ) -> DWORD
-    {
-        return static_cast<DWORD>(
-            GetWindowLongPtr(
-                hwnd,
-                GWL_STYLE
-            )
-        );
-    }
+auto GetWindowStyle(HWND hwnd) -> DWORD
+{
+    return static_cast<DWORD>(GetWindowLongPtr(hwnd, GWL_STYLE));
+}
 
-    auto GetWindowExStyle(
-        HWND hwnd
-    ) -> DWORD
-    {
-        return static_cast<DWORD>(
-            GetWindowLongPtr(
-                hwnd,
-                GWL_EXSTYLE
-            )
-        );
-    }
+auto GetWindowExStyle(HWND hwnd) -> DWORD
+{
+    return static_cast<DWORD>(GetWindowLongPtr(hwnd, GWL_EXSTYLE));
+}
 
-    auto ToOuterSize(
-        HWND hwnd,
-        const Api::Size& clientSize
-    ) -> Api::Size
-    {
-        RECT rect{
-            0,
-            0,
-            clientSize.width,
-            clientSize.height
-        };
-
-        AdjustWindowRectEx(
-            &rect,
-            GetWindowStyle(hwnd),
-            FALSE,
-            GetWindowExStyle(hwnd)
-        );
-
-        return {
-            rect.right - rect.left,
-            rect.bottom - rect.top
-        };
-    }
+auto ToOuterSize(HWND hwnd, const Api::Size& clientSize) -> Api::Size
+{
+    RECT rect{0, 0, clientSize.width, clientSize.height};
+    AdjustWindowRectEx(&rect, GetWindowStyle(hwnd), FALSE, GetWindowExStyle(hwnd));
+    return {rect.right - rect.left, rect.bottom - rect.top};
+}
 
 } // namespace
 
@@ -67,10 +35,7 @@ auto HwndApi::GetParent(HWND hwnd) -> HWND
     return ::GetParent(hwnd);
 }
 
-auto HwndApi::SetTitle(
-    HWND hwnd,
-    const Api::Text& text
-) -> void
+auto HwndApi::SetTitle(HWND hwnd, const Api::Text& text) -> void
 {
     SetWindowTextW(hwnd, text.c_str());
 }
@@ -88,36 +53,14 @@ auto HwndApi::GetTitle(HWND hwnd) -> Api::Text
     return title;
 }
 
-
-auto HwndApi::SetSize(
-    HWND hwnd,
-    const Api::Size& size
-) -> void
+auto HwndApi::SetSize(HWND hwnd, const Api::Size& size) -> void
 {
-    SetWindowPos(
-        hwnd,
-        nullptr,
-        0,
-        0,
-        size.width,
-        size.height,
-        SWP_NOMOVE |
-        SWP_NOZORDER
-    );
+    SetWindowPos(hwnd, nullptr, 0, 0, size.width, size.height, SWP_NOMOVE | SWP_NOZORDER);
 }
 
-auto HwndApi::SetClientSize(
-    HWND hwnd,
-    const Api::Size& size
-) -> void
+auto HwndApi::SetClientSize(HWND hwnd, const Api::Size& size) -> void
 {
-    SetSize(
-        hwnd,
-        ToOuterSize(
-            hwnd,
-            size
-        )
-    );
+    SetSize(hwnd, ToOuterSize(hwnd, size));
 }
 
 auto HwndApi::ClientToWindowSize(HWND hwnd, const Api::Size& clientSize) -> Api::Size
@@ -125,38 +68,14 @@ auto HwndApi::ClientToWindowSize(HWND hwnd, const Api::Size& clientSize) -> Api:
     return ToOuterSize(hwnd, clientSize);
 }
 
-auto HwndApi::SetRect(
-    HWND hwnd,
-    const Api::Rect& rect
-) -> void
+auto HwndApi::SetRect(HWND hwnd, const Api::Rect& rect) -> void
 {
-    SetWindowPos(
-        hwnd,
-        nullptr,
-        rect.x,
-        rect.y,
-        rect.width,
-        rect.height,
-        SWP_NOZORDER |
-        SWP_NOACTIVATE
-    );
+    SetWindowPos(hwnd, nullptr, rect.x, rect.y, rect.width, rect.height, SWP_NOZORDER | SWP_NOACTIVATE);
 }
 
-auto HwndApi::SetClientRect(
-    HWND hwnd,
-    const Api::Rect& rect
-) -> void
+auto HwndApi::SetClientRect(HWND hwnd, const Api::Rect& rect) -> void
 {
-    SetRect(
-        hwnd,
-        {
-            rect.position(),
-            ToOuterSize(
-                hwnd,
-                rect.size()
-            )
-        }
-    );
+    SetRect(hwnd, {rect.position(), ToOuterSize(hwnd, rect.size())});
 }
 
 auto HwndApi::GetSize(HWND hwnd) -> Api::Size
@@ -179,26 +98,8 @@ auto HwndApi::SetPosition(HWND hwnd, const Api::Point& position) -> void
 
 auto HwndApi::BringToFront(HWND hwnd) -> void
 {
-    SetWindowPos(
-        hwnd,
-        HWND_TOP,
-        0,
-        0,
-        0,
-        0,
-        SWP_NOMOVE |
-        SWP_NOSIZE |
-        SWP_NOACTIVATE
-    );
-
-    RedrawWindow(
-        hwnd,
-        nullptr,
-        nullptr,
-        RDW_INVALIDATE |
-        RDW_UPDATENOW |
-        RDW_ALLCHILDREN
-    );
+    SetWindowPos(hwnd, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+    RedrawWindow(hwnd, nullptr, nullptr, RDW_INVALIDATE | RDW_UPDATENOW | RDW_ALLCHILDREN);
 }
 
 auto HwndApi::GetPosition(HWND hwnd) -> Api::Point
@@ -264,9 +165,7 @@ auto HwndApi::Destroy(HWND hwnd) -> void
     DestroyWindow(hwnd);
 }
 
-auto HwndApi::GetSizeFromLParam(
-    LPARAM lParam
-) -> Api::Size
+auto HwndApi::GetSizeFromLParam(LPARAM lParam) -> Api::Size
 {
     return {
         LOWORD(lParam),
