@@ -19,7 +19,6 @@ auto App::addToTree(const RootWidget& rootWidget) -> void
 {
     auto tree = rootWidget.tree();
 
-    m_widgetIds.assignIds(tree);
     m_eventRuntime.registerTree(tree);
 
     m_layoutRuntime->mount(std::move(tree));
@@ -33,7 +32,7 @@ auto App::initBackend() -> int
         return -1;
     }
     m_backend->init();
-    m_layoutRuntime = std::make_unique<LayoutRuntime>(m_backend.get());
+    m_layoutRuntime = std::make_unique<LayoutRuntime>(m_backend.get(), m_trees);
     m_backend->setMessageHandler(
         [this](const Api::BackendMessage& message)
         {

@@ -1,10 +1,9 @@
 #pragma once
 
-#include <unordered_map>
-
 #include "Api/ApiBackend.h"
 #include "Base/WidgetTree.h"
 #include "Runtime/Materializer/Materializer.h"
+#include "Runtime/WidgetTreeRegistry/WidgetTreeRegistry.h"
 
 
 namespace Blade {
@@ -12,7 +11,7 @@ namespace Blade {
 class LayoutRuntime
 {
 public:
-    explicit LayoutRuntime(Api::ApiBackend* backend);
+    LayoutRuntime(Api::ApiBackend* backend, WidgetTreeRegistry& trees);
 
     auto mount(WidgetTree tree) -> void;
 
@@ -25,8 +24,8 @@ private:
 
 private:
     Api::ApiBackend* m_backend = nullptr;
+    WidgetTreeRegistry& m_trees;
     Materializer m_materializer;
-    std::unordered_map<Api::Id, WidgetTree> m_roots;
     std::unordered_map<Api::Id, Api::Size> m_pendingResize;
     bool m_sending = false;
 };
