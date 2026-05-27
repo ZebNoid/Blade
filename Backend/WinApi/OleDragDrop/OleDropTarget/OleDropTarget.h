@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include <oleidl.h>
 #include <shobjidl.h>
 #include <vector>
@@ -34,7 +35,7 @@ private:
 
 private:
     LONG m_refs = 1;
-    std::vector<HWND> m_hwnds;
+    std::vector<std::uintptr_t> m_hwnds;
     Api::Id m_id = Api::InvalidId;
     bool m_allowDrop = false;
     CommandRouter& m_router;

@@ -31,7 +31,7 @@ OleDropTarget::OleDropTarget(Api::Id id, CommandRouter& router)
 
 OleDropTarget::~OleDropTarget()
 {
-    for (auto hwnd : m_hwnds) RevokeDragDrop(hwnd);
+    for (const auto hwnd : m_hwnds) RevokeDragDrop(reinterpret_cast<HWND>(hwnd));
     if (m_helper) m_helper->Release();
 }
 
@@ -46,7 +46,7 @@ auto OleDropTarget::registerHwnd(HWND hwnd) -> bool
         return false;
     }
 
-    m_hwnds.push_back(hwnd);
+    m_hwnds.push_back(reinterpret_cast<std::uintptr_t>(hwnd));
     LOGF_D(L"OleDropTarget::RegisterDragDrop [%p]", hwnd);
     return true;
 }
