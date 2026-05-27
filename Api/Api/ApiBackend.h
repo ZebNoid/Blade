@@ -1,16 +1,10 @@
 #pragma once
-#include <functional>
 
-#include "BackendCommand.h"
-#include "Events/BackendEvent.h"
-#include "Common/Size.h"
+#include "Command/ElementCommand.h"
+#include "Message/BackendMessage.h"
 
 
 namespace Blade::Api {
-
-using ResizeHandler = std::function<void(Api::Id, const Api::Size&)>;
-using EventHandler = std::function<EventResult(const BackendEvent&)>;
-
 
 class ApiBackend
 {
@@ -23,16 +17,12 @@ public:
 
     virtual auto quit() -> void = 0;
 
-    virtual auto setResizeHandler(
-        ResizeHandler handler
-    ) -> void = 0;
-
-    virtual auto setEventHandler(
-        EventHandler handler
+    virtual auto setMessageHandler(
+        BackendMessageHandler handler
     ) -> void = 0;
 
     virtual auto process(
-        const Api::BackendCommand& command
+        const Api::ElementCommand& command
     ) -> void = 0;
 };
 

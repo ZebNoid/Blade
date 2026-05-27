@@ -1,6 +1,7 @@
 #include "NativeButtonProps.h"
 
-#include "WinApi/NativeApi/NativeApi.h"
+#include "NativeButtonApi/NativeButtonApi.h"
+#include "Property/PropertyReader.h"
 
 
 namespace Blade::Backend {
@@ -9,23 +10,12 @@ namespace {
 
 auto ApplyIsDefault(HWND hwnd, const Api::PropertyMap& propertyMap) -> void
 {
-    const auto it = propertyMap.find(Api::Props::IsDefault);
-
-    if (it == propertyMap.end())
-    {
-        return;
-    }
-
-    const auto* isDefault = std::get_if<bool>(&it->second);
-
-    if (!isDefault)
-    {
-        return;
-    }
+    const auto* isDefault = PropertyReader::Get<bool>(propertyMap, Api::Props::IsDefault);
+    if (!isDefault) return;
 
     // TODO fix *isDefault is always false, no data from blade?
     const auto style = *isDefault ? BS_DEFPUSHBUTTON : BS_PUSHBUTTON;
-    NativeApi::SetStyle(hwnd, style, TRUE);
+    NativeButtonApi::SetStyle(hwnd, style, TRUE);
 }
 
 } // namespace

@@ -1,4 +1,4 @@
-project(Blade VERSION 0.3.8)
+project(Blade VERSION 0.3.9)
 
 # Use the names to logic check
 if (NOT PROJECT_IS_TOP_LEVEL)
@@ -32,8 +32,8 @@ add_library(${PROJECT_NAME} STATIC
         Runtime/Materializer/Materializer.h
         Runtime/Materializer/MaterializerCommands/MaterializerCommands.cpp
         Runtime/Materializer/MaterializerCommands/MaterializerCommands.h
-        Runtime/RuntimeTree/RuntimeTree.cpp
-        Runtime/RuntimeTree/RuntimeTree.h
+        Runtime/WidgetTreeRegistry/WidgetTreeRegistry.cpp
+        Runtime/WidgetTreeRegistry/WidgetTreeRegistry.h
         Runtime/EventRuntime/EventRuntime.cpp
         Runtime/EventRuntime/EventRuntime.h
         Runtime/EventRuntime/EventInvoker.cpp

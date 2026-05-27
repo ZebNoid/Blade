@@ -3,7 +3,7 @@
 #include "App/AppBackend.h"
 #include "Common/Logger.h"
 #include "Node/NativeNode/NativeNode.h"
-#include "WinApi/NativeApi/NativeApi.h"
+#include "WinApi/HwndApi/HwndApi.h"
 
 
 namespace Blade::Backend {
@@ -13,24 +13,24 @@ CommandDispatcher::CommandDispatcher(AppBackend* backend) : m_backend(backend)
 }
 
 auto CommandDispatcher::dispatch(
-    const Api::BackendCommand& command
+    const Api::ElementCommand& command
 ) -> void
 {
     switch (command.command)
     {
-    case Api::CommandType::Create:
+    case Api::ElementCommandType::Create:
         create(command);
         break;
 
-    case Api::CommandType::Attach:
+    case Api::ElementCommandType::Attach:
         attach(command);
         break;
 
-    case Api::CommandType::Remove:
+    case Api::ElementCommandType::Remove:
         remove(command);
         break;
 
-    case Api::CommandType::Update:
+    case Api::ElementCommandType::Update:
         update(command);
         break;
 
@@ -39,7 +39,7 @@ auto CommandDispatcher::dispatch(
     }
 }
 
-auto CommandDispatcher::create(const Api::BackendCommand& command) -> void
+auto CommandDispatcher::create(const Api::ElementCommand& command) -> void
 {
     // LOGF_D(L"Command::%s %u [%s]", to_string(command.command).c_str(), command.id, command.nodeType.c_str());
 
@@ -55,7 +55,7 @@ auto CommandDispatcher::create(const Api::BackendCommand& command) -> void
     );
 }
 
-auto CommandDispatcher::attach(const Api::BackendCommand& command) -> void
+auto CommandDispatcher::attach(const Api::ElementCommand& command) -> void
 {
     auto* child = m_backend->nodes().get(command.id);
     auto* parent = m_backend->nodes().get(command.parent);
@@ -73,12 +73,12 @@ auto CommandDispatcher::attach(const Api::BackendCommand& command) -> void
         child->native.get()
     );
 
-    NativeApi::BringToFront(
+    HwndApi::BringToFront(
         child->native->handle()
     );
 }
 
-auto CommandDispatcher::remove(const Api::BackendCommand& command) -> void
+auto CommandDispatcher::remove(const Api::ElementCommand& command) -> void
 {
     m_backend->nodes().remove(
         command.id
@@ -86,7 +86,7 @@ auto CommandDispatcher::remove(const Api::BackendCommand& command) -> void
 }
 
 auto CommandDispatcher::update(
-    const Api::BackendCommand& command
+    const Api::ElementCommand& command
 ) -> void
 {
     auto* node = m_backend->nodes().get(command.id);
@@ -109,7 +109,7 @@ auto CommandDispatcher::update(
 
     if (node->parent != Api::InvalidId)
     {
-        NativeApi::BringToFront(
+        HwndApi::BringToFront(
             node->native->handle()
         );
     }

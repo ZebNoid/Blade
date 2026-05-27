@@ -1,7 +1,8 @@
 #pragma once
 #include <optional>
 
-#include "Api/BackendCommand.h"
+#include "Command/ElementCommand.h"
+#include "Node/NativeFactoryRegistry/NativeFactoryRegistry.h"
 #include "Node/NativeNode/NativeNode.h"
 
 
@@ -15,15 +16,18 @@ class NativeNodeFactory
 public:
     explicit NativeNodeFactory(AppBackend* backend);
 
-    auto create(const Api::BackendCommand& command) -> std::optional<NativeNode>;
+    auto create(const Api::ElementCommand& command) -> std::optional<NativeNode>;
 
 private:
-    auto createWindow(const Api::BackendCommand& command) -> std::optional<NativeNode>;
+    auto registerFactories() -> void;
 
-    auto createButton(const Api::BackendCommand& command) -> std::optional<NativeNode>;
+    auto createWindow(const Api::ElementCommand& command) -> std::optional<NativeNode>;
+
+    auto createButton(const Api::ElementCommand& command) -> std::optional<NativeNode>;
 
 private:
     AppBackend* m_backend = nullptr;
+    NativeFactoryRegistry m_registry;
 };
 
 

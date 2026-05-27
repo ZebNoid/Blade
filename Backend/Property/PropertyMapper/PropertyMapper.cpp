@@ -1,10 +1,20 @@
 #include "PropertyMapper.h"
 
 #include "Common/Logger.h"
-#include "WinApi/NativeApi/NativeApi.h"
+#include "WinApi/HwndApi/HwndApi.h"
 
 
 namespace Blade::Backend {
+
+namespace {
+
+template <typename T, typename Apply>
+auto ApplyValue(const Api::PropertyValue& value, Apply apply) -> void
+{
+    if (const auto* typed = std::get_if<T>(&value)) apply(*typed);
+}
+
+} // namespace
 
 auto PropertyMapper::Apply(HWND hwnd, const Api::PropertyMap& props) -> void
 {
@@ -13,52 +23,28 @@ auto PropertyMapper::Apply(HWND hwnd, const Api::PropertyMap& props) -> void
         switch (key)
         {
         case Api::Props::Rect:
-            {
-                if (const auto* rect = std::get_if<Api::Rect>(&value))
-                {
-                    LOGF_D(L" -> ApplyProps::%s %s", to_string(key).c_str(), to_string(*rect).c_str());
-                    NativeApi::SetRect(hwnd, *rect);
-                }
-            }
+            ApplyValue<Api::Rect>(value, [hwnd](const auto& rect) { HwndApi::SetRect(hwnd, rect); });
             break;
+
         case Api::Props::Title:
-            {
-                if (const auto* text = std::get_if<Api::Text>(&value))
-                {
-                    LOGF_D(L" -> ApplyProps::%s [%s]", to_string(key).c_str(), text->c_str());
-                    NativeApi::SetTitle(hwnd, *text);
-                }
-            }
+            ApplyValue<Api::Text>(value, [hwnd](const auto& text) { HwndApi::SetTitle(hwnd, text); });
             break;
+
         case Api::Props::Size:
-            {
-                if (const auto* size = std::get_if<Api::Size>(&value))
-                {
-                    LOGF_D(L" -> ApplyProps::%s %s", to_string(key).c_str(), to_string(*size).c_str());
-                    NativeApi::SetSize(hwnd, *size);
-                }
-            }
+            ApplyValue<Api::Size>(value, [hwnd](const auto& size) { HwndApi::SetSize(hwnd, size); });
             break;
+
         case Api::Props::Position:
-            {
-                if (const auto* point = std::get_if<Api::Point>(&value))
-                {
-                    LOGF_D(L" -> ApplyProps::%s %s", to_string(key).c_str(), to_string(*point).c_str());
-                    NativeApi::SetPosition(hwnd, *point);
-                }
-            }
+            ApplyValue<Api::Point>(value, [hwnd](const auto& point) { HwndApi::SetPosition(hwnd, point); });
             break;
+
         case Api::Props::Visible:
-            {
-                if (const auto* visible = std::get_if<bool>(&value))
-                {
-                    LOGF_D(L" -> ApplyProps::%s %d", to_string(key).c_str(), *visible);
-                    NativeApi::SetVisible(hwnd, *visible);
-                }
-            }
+            ApplyValue<bool>(value, [hwnd](bool visible) { HwndApi::SetVisible(hwnd, visible); });
             break;
+
         case Api::Props::IsDefault:
             break;
+
         default:
             LOGF_W(L" -> ApplyProps::%s not implemented", to_string(key).c_str());
         }

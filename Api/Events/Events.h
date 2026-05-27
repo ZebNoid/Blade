@@ -9,7 +9,8 @@ enum class Events
     Click,
     Focus,
     Close,
-    Resize
+    Resize,
+    Drop
 };
 
 inline auto to_string(Events e) -> std::wstring
@@ -21,6 +22,7 @@ inline auto to_string(Events e) -> std::wstring
     case Events::Focus: return L"Focus";
     case Events::Close: return L"Close";
     case Events::Resize: return L"Resize";
+    case Events::Drop: return L"Drop";
     default: return L"Unknown";
     }
 }

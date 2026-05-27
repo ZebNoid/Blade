@@ -3,31 +3,28 @@
 #include "App/AppBackend.h"
 #include "Common/Logger.h"
 #include "Components/Button/NativeButton.h"
-#include "WinApi/NativeApi/NativeApi.h"
+#include "WinApi/HwndApi/HwndApi.h"
 
 
 namespace Blade::Backend {
 
 NativeNodeFactory::NativeNodeFactory(AppBackend* backend) : m_backend(backend)
 {
+    registerFactories();
 }
 
-auto NativeNodeFactory::create(const Api::BackendCommand& command) -> std::optional<NativeNode>
+auto NativeNodeFactory::create(const Api::ElementCommand& command) -> std::optional<NativeNode>
 {
-    if (command.nodeType == L"Window")
-    {
-        return createWindow(command);
-    }
-
-    if (command.nodeType == L"Button")
-    {
-        return createButton(command);
-    }
-
-    return std::nullopt;
+    return m_registry.create(command);
 }
 
-auto NativeNodeFactory::createWindow(const Api::BackendCommand& command) -> std::optional<NativeNode>
+auto NativeNodeFactory::registerFactories() -> void
+{
+    m_registry.add(L"Window", [this](const auto& command) { return createWindow(command); });
+    m_registry.add(L"Button", [this](const auto& command) { return createButton(command); });
+}
+
+auto NativeNodeFactory::createWindow(const Api::ElementCommand& command) -> std::optional<NativeNode>
 {
     auto nativeWindow = std::make_unique<NativeWindow>();
 
@@ -37,7 +34,7 @@ auto NativeNodeFactory::createWindow(const Api::BackendCommand& command) -> std:
     }
 
     nativeWindow->create(m_backend->handle(), command.id);
-    nativeWindow->commandRouter().setHandler(m_backend->eventHandler());
+    nativeWindow->commandRouter().setHandler(m_backend->messageHandler());
 
     nativeWindow->router().on(
         WM_SIZE,
@@ -48,7 +45,7 @@ auto NativeNodeFactory::createWindow(const Api::BackendCommand& command) -> std:
                 return 0;
             }
 
-            m_backend->onWindowResize(windowId, NativeApi::GetSizeFromLParam(lParam));
+            m_backend->onWindowResize(windowId, HwndApi::GetSizeFromLParam(lParam));
             return 0;
         }
     );
@@ -77,7 +74,7 @@ auto NativeNodeFactory::createWindow(const Api::BackendCommand& command) -> std:
     return node;
 }
 
-auto NativeNodeFactory::createButton(const Api::BackendCommand& command) -> std::optional<NativeNode>
+auto NativeNodeFactory::createButton(const Api::ElementCommand& command) -> std::optional<NativeNode>
 {
     auto* parent = m_backend->nodes().get(command.parent);
 

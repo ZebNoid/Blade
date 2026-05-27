@@ -1,8 +1,11 @@
 #pragma once
 
+#include <memory>
+
+#include "WinApi/NativeElement/NativeElement.h"
+#include "WinApi/OleDragDrop/OleDropTarget/OleDropTarget.h"
 #include "WinApi/Router/CommandRouter/CommandRouter.h"
 #include "WinApi/Router/MessageRouter/MessageRouter.h"
-#include "WinApi/NativeElement/NativeElement.h"
 
 
 namespace Blade::Backend {
@@ -27,6 +30,7 @@ public:
     auto router() -> MessageRouter&;
 
     auto commandRouter() -> CommandRouter&;
+    auto enableDropTarget() -> void;
 
     auto setMinSize(const Api::Size& size) -> void;
     auto setMaxSize(const Api::Size& size) -> void;
@@ -42,6 +46,7 @@ private:
 
     MessageRouter m_router;
     CommandRouter m_commandRouter;
+    std::unique_ptr<OleDropTarget> m_dropTarget;
 };
 
 

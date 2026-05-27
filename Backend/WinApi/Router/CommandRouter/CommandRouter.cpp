@@ -26,12 +26,12 @@ auto CommandRouter::findSubscription(
     return &*it;
 }
 
-CommandRouter::CommandRouter(Api::EventHandler* handler)
+CommandRouter::CommandRouter(Api::BackendMessageHandler* handler)
     : m_handler(handler)
 {
 }
 
-auto CommandRouter::setHandler(Api::EventHandler* handler) -> void
+auto CommandRouter::setHandler(Api::BackendMessageHandler* handler) -> void
 {
     m_handler = handler;
 }
@@ -70,7 +70,10 @@ auto CommandRouter::emit(Api::BackendEvent event) -> bool
         return false;
     }
 
-    (*m_handler)(event);
+    (*m_handler)({
+        .type = Api::BackendMessageType::Event,
+        .payload = event
+    });
 
     return true;
 }

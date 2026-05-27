@@ -3,7 +3,7 @@
 #include "Api/ApiBackend.h"
 #include "Runtime/EventRuntime/EventRuntime.h"
 #include "Runtime/LayoutRuntime/LayoutRuntime.h"
-#include "Runtime/RuntimeTree/RuntimeTree.h"
+#include "Runtime/WidgetTreeRegistry/WidgetTreeRegistry.h"
 
 
 namespace Blade {
@@ -37,13 +37,11 @@ private:
 
     auto initBackend() -> int;
 
-    auto onNativeResize(Api::Id rootId, const Api::Size& size) -> void;
-
-    auto onBackendEvent(const Api::BackendEvent& event) -> Api::EventResult;
+    auto onBackendMessage(const Api::BackendMessage& message) -> Api::EventResult;
 
 private:
     std::unique_ptr<Api::ApiBackend> m_backend;
-    RuntimeTree m_runtimeTree;
+    WidgetTreeRegistry m_trees;
     EventRuntime m_eventRuntime;
     std::unique_ptr<LayoutRuntime> m_layoutRuntime;
 

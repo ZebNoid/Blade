@@ -4,18 +4,18 @@
 
 namespace Blade {
 
-auto Materializer::create(const WidgetTree& widgetTree, const LayoutNode& layoutTree) -> std::vector<Api::BackendCommand>
+auto Materializer::create(const WidgetTree& widgetTree, const LayoutNode& layoutTree) -> std::vector<Api::ElementCommand>
 {
-    std::vector<Api::BackendCommand> commands;
+    std::vector<Api::ElementCommand> commands;
 
     createNode(widgetTree, layoutTree, commands);
 
     return commands;
 }
 
-auto Materializer::update(const WidgetTree& widgetTree, const LayoutNode& layoutTree, bool includeRoot) -> std::vector<Api::BackendCommand>
+auto Materializer::update(const WidgetTree& widgetTree, const LayoutNode& layoutTree, bool includeRoot) -> std::vector<Api::ElementCommand>
 {
-    std::vector<Api::BackendCommand> commands;
+    std::vector<Api::ElementCommand> commands;
 
     updateNode(widgetTree, layoutTree, commands, Api::InvalidId, includeRoot);
 
@@ -26,7 +26,7 @@ auto Materializer::update(const WidgetTree& widgetTree, const LayoutNode& layout
 auto Materializer::createNode(
     const WidgetTree& widget,
     const LayoutNode& layout,
-    std::vector<Api::BackendCommand>& out,
+    std::vector<Api::ElementCommand>& out,
     Api::Id parent
 ) -> void
 {
@@ -58,7 +58,7 @@ auto Materializer::createNode(
 auto Materializer::updateNode(
     const WidgetTree& widget,
     const LayoutNode& layout,
-    std::vector<Api::BackendCommand>& out,
+    std::vector<Api::ElementCommand>& out,
     Api::Id parent,
     bool includeCurrent
 ) -> void

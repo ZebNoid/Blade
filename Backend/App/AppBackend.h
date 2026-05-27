@@ -5,6 +5,7 @@
 #include "Api/ApiBackend.h"
 #include "Node/NodeRegistry/NodeRegistry.h"
 #include "WinApi/AppRuntime/AppRuntime.h"
+#include "WinApi/Interop/OleScope/OleScope.h"
 #include "WindowHost/WindowHost.h"
 
 #include "CommandDispatcher/CommandDispatcher.h"
@@ -37,17 +38,15 @@ public:
 
     auto quit() -> void override;
 
-    auto setResizeHandler(Api::ResizeHandler handler) -> void override;
-
-    auto setEventHandler(Api::EventHandler handler) -> void override;
+    auto setMessageHandler(Api::BackendMessageHandler handler) -> void override;
 
     auto onWindowResize(Api::Id windowId, const Api::Size& size) -> void;
 
     auto emitEvent(const Api::BackendEvent& event) -> Api::EventResult;
 
-    auto eventHandler() -> Api::EventHandler*;
+    auto messageHandler() -> Api::BackendMessageHandler*;
 
-    auto process(const Api::BackendCommand& command) -> void override;
+    auto process(const Api::ElementCommand& command) -> void override;
 
     auto host() -> WindowHost&;
 
@@ -61,6 +60,7 @@ private:
     HINSTANCE m_hInstance;
 
     AppRuntime m_runtime;
+    OleScope m_ole;
 
     WindowHost m_host;
 
@@ -70,8 +70,7 @@ private:
 
     NativeNodeFactory m_factory;
 
-    Api::ResizeHandler m_resizeHandler;
-    Api::EventHandler m_eventHandler;
+    Api::BackendMessageHandler m_messageHandler;
 };
 
 

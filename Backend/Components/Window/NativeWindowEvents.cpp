@@ -3,7 +3,7 @@
 #include <algorithm>
 
 #include "Components/Window/NativeWindow.h"
-#include "WinApi/NativeApi/NativeApi.h"
+#include "WinApi/HwndApi/HwndApi.h"
 
 
 namespace Blade::Backend {
@@ -20,6 +20,9 @@ auto HasEvent(const Api::EventSubscriptions& events, Api::Events event) -> bool
 auto NativeWindowEvents::Apply(NativeWindow& window, const Api::EventSubscriptions& events) -> void
 {
     const bool hasClose = HasEvent(events, Api::Events::Close);
+    const bool hasDrop = HasEvent(events, Api::Events::Drop);
+
+    if (hasDrop) window.enableDropTarget();
 
     window.router().on(
         WM_CLOSE,
@@ -33,7 +36,7 @@ auto NativeWindowEvents::Apply(NativeWindow& window, const Api::EventSubscriptio
                 });
             }
 
-            NativeApi::Destroy(hwnd);
+            HwndApi::Destroy(hwnd);
             return 0;
         }
     );

@@ -5,27 +5,27 @@
 
 namespace Blade {
 
-LayoutRuntime::LayoutRuntime(Api::ApiBackend* backend)
+LayoutRuntime::LayoutRuntime(Api::ApiBackend* backend, WidgetTreeRegistry& trees)
     : m_backend(backend)
+    , m_trees(trees)
 {
 }
 
-auto LayoutRuntime::mount(WidgetTree tree) -> void
+auto LayoutRuntime::mount(WidgetTree tree) -> WidgetTree&
 {
-    const auto rootId = tree.id;
-    m_roots.insert_or_assign(rootId, std::move(tree));
-
-    auto& root = m_roots.at(rootId);
+    auto& root = m_trees.add(std::move(tree));
     auto layoutTree = LayoutPass::Compute(root, root.layout.size);
 
     send(m_materializer.create(root, layoutTree));
+
+    return root;
 }
 
 auto LayoutRuntime::resizeRoot(Api::Id rootId, const Api::Size& size) -> void
 {
-    const auto it = m_roots.find(rootId);
+    auto* root = m_trees.root(rootId);
 
-    if (it == m_roots.end())
+    if (!root)
     {
         return;
     }
@@ -36,12 +36,12 @@ auto LayoutRuntime::resizeRoot(Api::Id rootId, const Api::Size& size) -> void
         return;
     }
 
-    auto layoutTree = LayoutPass::Compute(it->second, size);
+    auto layoutTree = LayoutPass::Compute(*root, size);
 
-    send(m_materializer.update(it->second, layoutTree, false));
+    send(m_materializer.update(*root, layoutTree, false));
 }
 
-auto LayoutRuntime::send(std::vector<Api::BackendCommand> commands) -> void
+auto LayoutRuntime::send(std::vector<Api::ElementCommand> commands) -> void
 {
     if (!m_backend)
     {

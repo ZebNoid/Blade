@@ -12,13 +12,12 @@ add_library(${PROJECT_NAME} STATIC
         WindowHost/WindowHost.cpp
         WindowHost/WindowHost.h
 
-        WinApi/ClassRegistry/WindowClass.cpp
-        WinApi/ClassRegistry/WindowClass.h
-        WinApi/Hwnd/Hwnd.cpp
-        WinApi/Hwnd/Hwnd.h
-
-        WinApi/WindowProc/WindowProc.cpp
-        WinApi/WindowProc/WindowProc.h
+        WinApi/Window/WindowClass/WindowClass.cpp
+        WinApi/Window/WindowClass/WindowClass.h
+        WinApi/Window/Hwnd/Hwnd.cpp
+        WinApi/Window/Hwnd/Hwnd.h
+        WinApi/Window/WindowProc/WindowProc.cpp
+        WinApi/Window/WindowProc/WindowProc.h
         WinApi/Router/MessageRouter/MessageRouter.cpp
         WinApi/Router/MessageRouter/MessageRouter.h
         WinApi/Router/CommandRouter/CommandRouter.cpp
@@ -27,10 +26,22 @@ add_library(${PROJECT_NAME} STATIC
         WinApi/AppRuntime/AppRuntime.cpp
         WinApi/AppRuntime/AppRuntime.h
 
-        WinApi/NativeApi/NativeApi.cpp
-        WinApi/NativeApi/NativeApi.h
-        WinApi/DisplayApi/DisplayApi.cpp
-        WinApi/DisplayApi/DisplayApi.h
+        WinApi/Interop/ComScope/ComScope.cpp
+        WinApi/Interop/ComScope/ComScope.h
+        WinApi/Interop/OleScope/OleScope.cpp
+        WinApi/Interop/OleScope/OleScope.h
+        WinApi/OleDragDrop/OleDropTarget/OleDropTarget.cpp
+        WinApi/OleDragDrop/OleDropTarget/OleDropTarget.h
+        WinApi/HwndApi/HwndApi.cpp
+        WinApi/HwndApi/HwndApi.h
+        WinApi/Display/DisplayApi/DisplayApi.cpp
+        WinApi/Display/DisplayApi/DisplayApi.h
+        WinApi/Resource/ImageLoader/ImageLoader.cpp
+        WinApi/Resource/ImageLoader/ImageLoader.h
+        WinApi/Resource/IconImageLoader/IconImageLoader.cpp
+        WinApi/Resource/IconImageLoader/IconImageLoader.h
+        WinApi/Resource/WicImageLoader/WicImageLoader.cpp
+        WinApi/Resource/WicImageLoader/WicImageLoader.h
         WinApi/NativeElement/NativeElement.cpp
         WinApi/NativeElement/NativeElement.h
 
@@ -38,6 +49,8 @@ add_library(${PROJECT_NAME} STATIC
         Node/NativeNode/NativeNode.h
         Node/NodeRegistry/NodeRegistry.cpp
         Node/NodeRegistry/NodeRegistry.h
+        Node/NativeFactoryRegistry/NativeFactoryRegistry.cpp
+        Node/NativeFactoryRegistry/NativeFactoryRegistry.h
         Node/NativeNodeFactory/NativeNodeFactory.cpp
         Node/NativeNodeFactory/NativeNodeFactory.h
 
@@ -47,20 +60,27 @@ add_library(${PROJECT_NAME} STATIC
         Event/EventMapper/EventMapper.h
         Property/PropertyMapper/PropertyMapper.cpp
         Property/PropertyMapper/PropertyMapper.h
-        WinApi/CommonControls/CommonControls.cpp
-        WinApi/CommonControls/CommonControls.h
+        Property/PropertyReader.h
         WinApi/NativeElement/INativeElement.h
 
         Components/Window/NativeWindow.cpp
         Components/Window/NativeWindow.h
         Components/Window/NativeWindowApi/NativeWindowApi.cpp
         Components/Window/NativeWindowApi/NativeWindowApi.h
+        Components/Window/NativeWindowPlacement/NativeWindowPlacement.cpp
+        Components/Window/NativeWindowPlacement/NativeWindowPlacement.h
+        Components/Window/NativeWindowStyle/NativeWindowStyle.cpp
+        Components/Window/NativeWindowStyle/NativeWindowStyle.h
         Components/Window/NativeWindowEvents.cpp
         Components/Window/NativeWindowEvents.h
         Components/Window/NativeWindowProps.cpp
         Components/Window/NativeWindowProps.h
+        Components/Window/NativeWindowPropsData/NativeWindowPropsData.cpp
+        Components/Window/NativeWindowPropsData/NativeWindowPropsData.h
         Components/Button/NativeButton.cpp
         Components/Button/NativeButton.h
+        Components/Button/NativeButtonApi/NativeButtonApi.cpp
+        Components/Button/NativeButtonApi/NativeButtonApi.h
         Components/Button/NativeButtonProps.cpp
         Components/Button/NativeButtonProps.h
         Components/Button/NativeButtonEvents.cpp
@@ -83,6 +103,9 @@ target_link_libraries(${PROJECT_NAME}
         gdi32
         comctl32
         uxtheme #include <uxtheme.h>
+        windowscodecs # png
+        ole32
+        shell32
 )
 
 # TODO remove?

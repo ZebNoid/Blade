@@ -1,6 +1,9 @@
 #pragma once
 
+#include <memory>
+
 #include "WinApi/NativeElement/NativeElement.h"
+#include "WinApi/OleDragDrop/OleDropTarget/OleDropTarget.h"
 
 
 namespace Blade::Backend {
@@ -15,6 +18,7 @@ public:
     auto applyProps(const Api::PropertyMap& propertyMap) -> void override;
 
     auto applyEvents(const Api::EventSubscriptions& events) -> void override;
+    auto enableDropTarget() -> void;
 
     auto isAlive() const -> bool override;
 
@@ -22,6 +26,8 @@ public:
     {
     }
 
+private:
+    std::unique_ptr<OleDropTarget> m_dropTarget;
 };
 
 

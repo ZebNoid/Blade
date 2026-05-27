@@ -4,7 +4,7 @@
 #include "Components/Button/NativeButtonProps.h"
 #include "Event/EventMapper/EventMapper.h"
 #include "Property/PropertyMapper/PropertyMapper.h"
-#include "WinApi/Hwnd/Hwnd.h"
+#include "WinApi/Window/Hwnd/Hwnd.h"
 #include "Components/Window/NativeWindow.h"
 
 
@@ -38,6 +38,17 @@ auto NativeButton::applyProps(const Api::PropertyMap& propertyMap) -> void
 auto NativeButton::applyEvents(const Api::EventSubscriptions& events) -> void
 {
     EventMapper::Apply(*this, events);
+}
+
+auto NativeButton::enableDropTarget() -> void
+{
+    if (m_dropTarget || !m_hwnd) return;
+
+    auto* parent = dynamic_cast<NativeWindow*>(m_parent);
+    if (!parent) return;
+
+    auto dropTarget = std::make_unique<OleDropTarget>(m_id, parent->commandRouter());
+    if (dropTarget->registerHwnd(m_hwnd)) m_dropTarget = std::move(dropTarget);
 }
 
 auto NativeButton::isAlive() const -> bool
