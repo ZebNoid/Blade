@@ -10,21 +10,18 @@ namespace Blade::Backend {
 
 NativeNodeFactory::NativeNodeFactory(AppBackend* backend) : m_backend(backend)
 {
+    registerFactories();
 }
 
 auto NativeNodeFactory::create(const Api::ElementCommand& command) -> std::optional<NativeNode>
 {
-    if (command.nodeType == L"Window")
-    {
-        return createWindow(command);
-    }
+    return m_registry.create(command);
+}
 
-    if (command.nodeType == L"Button")
-    {
-        return createButton(command);
-    }
-
-    return std::nullopt;
+auto NativeNodeFactory::registerFactories() -> void
+{
+    m_registry.add(L"Window", [this](const auto& command) { return createWindow(command); });
+    m_registry.add(L"Button", [this](const auto& command) { return createButton(command); });
 }
 
 auto NativeNodeFactory::createWindow(const Api::ElementCommand& command) -> std::optional<NativeNode>

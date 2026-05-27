@@ -38,6 +38,8 @@ add_library(${PROJECT_NAME} STATIC
         Node/NativeNode/NativeNode.h
         Node/NodeRegistry/NodeRegistry.cpp
         Node/NodeRegistry/NodeRegistry.h
+        Node/NativeFactoryRegistry/NativeFactoryRegistry.cpp
+        Node/NativeFactoryRegistry/NativeFactoryRegistry.h
         Node/NativeNodeFactory/NativeNodeFactory.cpp
         Node/NativeNodeFactory/NativeNodeFactory.h
 
