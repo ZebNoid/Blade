@@ -32,8 +32,8 @@ add_library(${PROJECT_NAME} STATIC
         Runtime/Materializer/Materializer.h
         Runtime/Materializer/MaterializerCommands/MaterializerCommands.cpp
         Runtime/Materializer/MaterializerCommands/MaterializerCommands.h
-        Runtime/RuntimeTree/RuntimeTree.cpp
-        Runtime/RuntimeTree/RuntimeTree.h
+        Runtime/WidgetIdAssigner/WidgetIdAssigner.cpp
+        Runtime/WidgetIdAssigner/WidgetIdAssigner.h
         Runtime/EventRuntime/EventRuntime.cpp
         Runtime/EventRuntime/EventRuntime.h
         Runtime/EventRuntime/EventInvoker.cpp

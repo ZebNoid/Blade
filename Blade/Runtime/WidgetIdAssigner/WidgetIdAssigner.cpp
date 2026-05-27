@@ -1,14 +1,14 @@
-#include "RuntimeTree.h"
+#include "WidgetIdAssigner.h"
 
 
 namespace Blade {
 
-auto RuntimeTree::assignIds(WidgetTree& tree) -> void
+auto WidgetIdAssigner::assignIds(WidgetTree& tree) -> void
 {
     assignNodeIds(tree);
 }
 
-auto RuntimeTree::assignNodeIds(WidgetTree& node) -> void
+auto WidgetIdAssigner::assignNodeIds(WidgetTree& node) -> void
 {
     if (node.id == Api::InvalidId)
     {
@@ -21,7 +21,7 @@ auto RuntimeTree::assignNodeIds(WidgetTree& node) -> void
     }
 }
 
-auto RuntimeTree::nextId() -> Api::Id
+auto WidgetIdAssigner::nextId() -> Api::Id
 {
     return m_nextId++;
 }

@@ -3,7 +3,7 @@
 #include "Api/ApiBackend.h"
 #include "Runtime/EventRuntime/EventRuntime.h"
 #include "Runtime/LayoutRuntime/LayoutRuntime.h"
-#include "Runtime/RuntimeTree/RuntimeTree.h"
+#include "Runtime/WidgetIdAssigner/WidgetIdAssigner.h"
 
 
 namespace Blade {
@@ -41,7 +41,7 @@ private:
 
 private:
     std::unique_ptr<Api::ApiBackend> m_backend;
-    RuntimeTree m_runtimeTree;
+    WidgetIdAssigner m_widgetIds;
     EventRuntime m_eventRuntime;
     std::unique_ptr<LayoutRuntime> m_layoutRuntime;
 

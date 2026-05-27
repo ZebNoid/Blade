@@ -5,7 +5,7 @@
 
 namespace Blade {
 
-class RuntimeTree
+class WidgetIdAssigner
 {
 public:
     auto assignIds(WidgetTree& tree) -> void;

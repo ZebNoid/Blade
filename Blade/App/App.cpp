@@ -19,7 +19,7 @@ auto App::addToTree(const RootWidget& rootWidget) -> void
 {
     auto tree = rootWidget.tree();
 
-    m_runtimeTree.assignIds(tree);
+    m_widgetIds.assignIds(tree);
     m_eventRuntime.registerTree(tree);
 
     m_layoutRuntime->mount(std::move(tree));
