@@ -27,6 +27,25 @@ protected:
         // }).build(this);
 
         Window(
+            Button(L"Button").on({
+                .drop = [](Api::Text files)
+                {
+                    LOGF_D(L"Drop Button:\n%s", files.c_str());
+                }
+            })
+        ).set({
+            .title = L"Drag and Drop",
+            .size = {800, 600},
+            .placement = Api::WindowPlacement::Center({0, 0}, 1),
+        }).on({
+            .drop = [](Api::Text files)
+            {
+                LOGF_D(L"Drop Window:\n%s", files.c_str());
+            }
+        }).build(this);
+
+
+        Window(
             Column(
 
                 Button(L"Button  Flex")
@@ -36,8 +55,8 @@ protected:
                     },
                 })
                 , Row(
-
-                    Button(L"Button Flex").set({
+                    Button(L"Button Flex")
+                    , Row().set({
                         .layout = {
                             .flex = 1,
                         },
@@ -71,7 +90,7 @@ protected:
             .icon = L"test/app.png",
             // .icon = L"test/app.ico",
             .size = {800, 600},
-            .minSize = {400,400},
+            .minSize = {400, 400},
             // .maxSize = {1000,800},
             // .resizable = false,
             // .placement = Api::WindowPlacement::Default(),
@@ -91,7 +110,13 @@ protected:
                 LOG(L"Window 1 Close");
                 // TODO fix application won't close from context menu close
             },
-        }).build(this);
+            .drop = [](Api::Text files)
+            {
+                LOGF_D(L"Drop:\n%s", files.c_str());
+            }
+        })
+        // .build(this)
+        ;
 
 
         // Window(

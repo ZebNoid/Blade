@@ -28,6 +28,10 @@ add_library(${PROJECT_NAME} STATIC
 
         WinApi/Interop/ComScope/ComScope.cpp
         WinApi/Interop/ComScope/ComScope.h
+        WinApi/Interop/OleScope/OleScope.cpp
+        WinApi/Interop/OleScope/OleScope.h
+        WinApi/OleDragDrop/OleDropTarget/OleDropTarget.cpp
+        WinApi/OleDragDrop/OleDropTarget/OleDropTarget.h
         WinApi/HwndApi/HwndApi.cpp
         WinApi/HwndApi/HwndApi.h
         WinApi/Display/DisplayApi/DisplayApi.cpp
@@ -100,6 +104,8 @@ target_link_libraries(${PROJECT_NAME}
         comctl32
         uxtheme #include <uxtheme.h>
         windowscodecs # png
+        ole32
+        shell32
 )
 
 # TODO remove?

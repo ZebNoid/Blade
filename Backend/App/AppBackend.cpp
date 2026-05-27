@@ -17,6 +17,7 @@ AppBackend::AppBackend()
 
 auto AppBackend::init() -> void
 {
+    m_ole.init();
     DisplayApi::InitDpi();
     WindowClass::Init(m_hInstance);
 }

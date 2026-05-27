@@ -20,6 +20,9 @@ auto HasEvent(const Api::EventSubscriptions& events, Api::Events event) -> bool
 auto NativeWindowEvents::Apply(NativeWindow& window, const Api::EventSubscriptions& events) -> void
 {
     const bool hasClose = HasEvent(events, Api::Events::Close);
+    const bool hasDrop = HasEvent(events, Api::Events::Drop);
+
+    if (hasDrop) window.enableDropTarget();
 
     window.router().on(
         WM_CLOSE,

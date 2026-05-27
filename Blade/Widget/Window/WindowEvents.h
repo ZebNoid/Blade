@@ -9,10 +9,12 @@ namespace Blade {
 struct WindowEvents
 {
     Api::CallbackVoid close = nullptr;
+    Api::CallbackString drop = nullptr;
 
     auto visit(EventVisitor& v) const -> void
     {
         v.set(Api::Events::Close, close);
+        v.set(Api::Events::Drop, drop);
     }
 };
 

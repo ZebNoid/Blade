@@ -1,5 +1,7 @@
 #include "EventMapper.h"
 
+#include <algorithm>
+
 #include "Components/Button/NativeButtonEvents.h"
 #include "Components/Button/NativeButton.h"
 #include "Components/Window/NativeWindowEvents.h"
@@ -7,6 +9,15 @@
 
 
 namespace Blade::Backend {
+
+namespace {
+
+auto HasEvent(const Api::EventSubscriptions& events, Api::Events event) -> bool
+{
+    return std::ranges::find(events, event) != events.end();
+}
+
+} // namespace
 
 auto EventMapper::Apply(NativeWindow& window, const Api::EventSubscriptions& events) -> void
 {
@@ -33,6 +44,8 @@ auto EventMapper::Apply(NativeWindow& window, const Api::EventSubscriptions& eve
 // TODO not NativeButton but all NativeElements
 auto EventMapper::Apply(NativeButton& button, const Api::EventSubscriptions& events) -> void
 {
+    if (HasEvent(events, Api::Events::Drop)) button.enableDropTarget();
+
     auto* parent = dynamic_cast<NativeWindow*>(button.parent());
 
     if (!parent)

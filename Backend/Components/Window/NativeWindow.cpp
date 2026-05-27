@@ -53,6 +53,14 @@ auto NativeWindow::commandRouter() -> CommandRouter&
     return m_commandRouter;
 }
 
+auto NativeWindow::enableDropTarget() -> void
+{
+    if (m_dropTarget || !m_hwnd) return;
+
+    auto dropTarget = std::make_unique<OleDropTarget>(m_id, m_commandRouter);
+    if (dropTarget->registerHwnd(m_hwnd)) m_dropTarget = std::move(dropTarget);
+}
+
 auto NativeWindow::setMinSize(const Api::Size& size) -> void
 {
     m_minSize = size;
@@ -118,6 +126,8 @@ auto NativeWindow::attachChild(INativeElement* child) -> void
     {
         LOGF_E(L"[Error] NativeWindow::attachChild [%s] %lu", CUSTOM_CLASS, GetLastError());
     }
+
+    if (m_dropTarget) m_dropTarget->registerHwnd(child->handle());
 }
 
 auto NativeWindow::applyEvents(const Api::EventSubscriptions& events) -> void

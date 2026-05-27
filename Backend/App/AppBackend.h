@@ -5,6 +5,7 @@
 #include "Api/ApiBackend.h"
 #include "Node/NodeRegistry/NodeRegistry.h"
 #include "WinApi/AppRuntime/AppRuntime.h"
+#include "WinApi/Interop/OleScope/OleScope.h"
 #include "WindowHost/WindowHost.h"
 
 #include "CommandDispatcher/CommandDispatcher.h"
@@ -59,6 +60,7 @@ private:
     HINSTANCE m_hInstance;
 
     AppRuntime m_runtime;
+    OleScope m_ole;
 
     WindowHost m_host;
 
