@@ -21,6 +21,7 @@ auto RemoveWindowProps(Api::PropertyMap& propertyMap) -> void
 {
     propertyMap.erase(Api::Props::Rect);
     propertyMap.erase(Api::Props::Size);
+    propertyMap.erase(Api::Props::Icon);
     propertyMap.erase(Api::Props::Caption);
     propertyMap.erase(Api::Props::Placement);
     propertyMap.erase(Api::Props::Resizable);
@@ -40,6 +41,7 @@ auto NativeWindowProps::Apply(NativeWindow& window, const Api::PropertyMap& prop
     RemoveWindowProps(nativeProps);
 
     const auto hwnd = window.handle();
+    const auto* icon = Get<Api::Text>(propertyMap, Api::Props::Icon);
     const auto* rect = Get<Api::Rect>(propertyMap, Api::Props::Rect);
     const auto* size = Get<Api::Size>(propertyMap, Api::Props::Size);
     const auto* caption = Get<Api::CaptionProps>(propertyMap, Api::Props::Caption);
@@ -52,6 +54,7 @@ auto NativeWindowProps::Apply(NativeWindow& window, const Api::PropertyMap& prop
     const auto* maxSize = Get<Api::Size>(propertyMap, Api::Props::MaxSize);
     const auto* state = Get<Api::WindowState>(propertyMap, Api::Props::State);
 
+    if (icon && !icon->empty()) NativeApi::SetIcon(hwnd, *icon);
     if (caption) NativeWindowApi::SetCaption(hwnd, *caption);
     if (resizable) NativeWindowApi::SetResizable(hwnd, *resizable);
     if (taskbar) NativeWindowApi::SetTaskbar(hwnd, *taskbar);

@@ -14,6 +14,7 @@ namespace Blade {
 struct WindowProps
 {
     Api::Text title = L"Blade";
+    Api::Text icon{};
     Api::Size size{800,600}; // TODO Fabric or Constant WindowSize::DefaultSize
     bool visible = true;
     bool resizable = true;
@@ -28,6 +29,7 @@ struct WindowProps
     auto visit(PropsVisitor& v) const -> void
     {
         v.set(Api::Props::Title, title);
+        v.set(Api::Props::Icon, icon);
         v.set(Api::Props::Size, size);
         v.set(Api::Props::Placement, placement);
         v.set(Api::Props::Visible, visible);

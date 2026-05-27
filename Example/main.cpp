@@ -66,6 +66,7 @@ protected:
             })
         ).set({
             .title = L"Test",
+            .icon = L"checkbox.ico",
             .size = {800, 600},
             .minSize = {400,400},
             // .maxSize = {1000,800},
