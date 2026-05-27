@@ -8,7 +8,6 @@
 
 namespace Blade::Backend {
 
-
 class Hwnd
 {
 public:
@@ -33,5 +32,4 @@ public:
     static auto ExStyle() -> DWORD;
 };
 
-
-} // namespace
+} // namespace Blade::Backend

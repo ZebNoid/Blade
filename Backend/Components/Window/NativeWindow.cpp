@@ -4,8 +4,8 @@
 #include "Common/Logger.h"
 #include "Event/EventMapper/EventMapper.h"
 #include "Property/PropertyMapper/PropertyMapper.h"
-#include "WinApi/ClassRegistry/WindowClass.h"
-#include "WinApi/Hwnd/Hwnd.h"
+#include "WinApi/Window/Hwnd/Hwnd.h"
+#include "WinApi/Window/WindowClass/WindowClass.h"
 #include "WinApi/NativeApi/NativeApi.h"
 
 

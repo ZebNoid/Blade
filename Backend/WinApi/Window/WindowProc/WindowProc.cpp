@@ -43,5 +43,4 @@ auto CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> L
     return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 
-
-} // namespace
+} // namespace Blade::Backend

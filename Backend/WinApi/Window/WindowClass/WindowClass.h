@@ -4,13 +4,12 @@
 #include <unordered_set>
 #include <windows.h>
 
-#include "WinApi/WindowProc/WindowProc.h"
+#include "WinApi/Window/WindowProc/WindowProc.h"
 
 
 namespace Blade::Backend {
 
 using WndProc = LRESULT (CALLBACK*)(HWND, UINT, WPARAM, LPARAM);
-
 
 class WindowClass
 {
@@ -36,5 +35,4 @@ private:
     static inline std::unordered_set<std::wstring> m_names;
 };
 
-
-} // namespace
+} // namespace Blade::Backend

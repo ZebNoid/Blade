@@ -5,7 +5,6 @@
 
 namespace Blade::Backend {
 
-
 auto WindowClass::Init(const HINSTANCE hInstance) -> void
 {
     if (m_hInstance != nullptr)
@@ -57,5 +56,4 @@ auto WindowClass::Register(const std::wstring& className, const ClassDesc& desc)
     m_names.insert(className);
 }
 
-
-} // namespace
+} // namespace Blade::Backend

@@ -12,13 +12,12 @@ add_library(${PROJECT_NAME} STATIC
         WindowHost/WindowHost.cpp
         WindowHost/WindowHost.h
 
-        WinApi/ClassRegistry/WindowClass.cpp
-        WinApi/ClassRegistry/WindowClass.h
-        WinApi/Hwnd/Hwnd.cpp
-        WinApi/Hwnd/Hwnd.h
-
-        WinApi/WindowProc/WindowProc.cpp
-        WinApi/WindowProc/WindowProc.h
+        WinApi/Window/WindowClass/WindowClass.cpp
+        WinApi/Window/WindowClass/WindowClass.h
+        WinApi/Window/Hwnd/Hwnd.cpp
+        WinApi/Window/Hwnd/Hwnd.h
+        WinApi/Window/WindowProc/WindowProc.cpp
+        WinApi/Window/WindowProc/WindowProc.h
         WinApi/Router/MessageRouter/MessageRouter.cpp
         WinApi/Router/MessageRouter/MessageRouter.h
         WinApi/Router/CommandRouter/CommandRouter.cpp

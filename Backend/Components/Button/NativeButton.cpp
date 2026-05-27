@@ -4,7 +4,7 @@
 #include "Components/Button/NativeButtonProps.h"
 #include "Event/EventMapper/EventMapper.h"
 #include "Property/PropertyMapper/PropertyMapper.h"
-#include "WinApi/Hwnd/Hwnd.h"
+#include "WinApi/Window/Hwnd/Hwnd.h"
 #include "Components/Window/NativeWindow.h"
 
 

@@ -5,7 +5,6 @@
 
 namespace Blade::Backend {
 
-
 auto Hwnd::Create(const HwndDesc& desc) -> HWND
 {
     const auto hwnd = CreateWindowEx(
@@ -39,5 +38,4 @@ auto Hwnd::ExStyle() -> DWORD
     return 0;
 }
 
-
-} // namespace
+} // namespace Blade::Backend
