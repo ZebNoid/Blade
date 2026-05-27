@@ -11,11 +11,45 @@ namespace Blade::Backend {
 
 namespace {
 
+struct Props
+{
+    const Api::Text* icon{};
+    const Api::Rect* rect{};
+    const Api::Size* size{};
+    const Api::CaptionProps* caption{};
+    const Api::WindowPlacementProps* placement{};
+    const bool* resizable{};
+    const bool* topMost{};
+    const bool* taskbar{};
+    const bool* visible{};
+    const Api::Size* minSize{};
+    const Api::Size* maxSize{};
+    const Api::WindowState* state{};
+};
+
 template <typename T>
 auto Get(const Api::PropertyMap& propertyMap, Api::Props prop) -> const T*
 {
     const auto it = propertyMap.find(prop);
     return it == propertyMap.end() ? nullptr : std::get_if<T>(&it->second);
+}
+
+auto GetProps(const Api::PropertyMap& propertyMap) -> Props
+{
+    return {
+        .icon = Get<Api::Text>(propertyMap, Api::Props::Icon),
+        .rect = Get<Api::Rect>(propertyMap, Api::Props::Rect),
+        .size = Get<Api::Size>(propertyMap, Api::Props::Size),
+        .caption = Get<Api::CaptionProps>(propertyMap, Api::Props::Caption),
+        .placement = Get<Api::WindowPlacementProps>(propertyMap, Api::Props::Placement),
+        .resizable = Get<bool>(propertyMap, Api::Props::Resizable),
+        .topMost = Get<bool>(propertyMap, Api::Props::TopMost),
+        .taskbar = Get<bool>(propertyMap, Api::Props::Taskbar),
+        .visible = Get<bool>(propertyMap, Api::Props::Visible),
+        .minSize = Get<Api::Size>(propertyMap, Api::Props::MinSize),
+        .maxSize = Get<Api::Size>(propertyMap, Api::Props::MaxSize),
+        .state = Get<Api::WindowState>(propertyMap, Api::Props::State),
+    };
 }
 
 auto RemoveWindowProps(Api::PropertyMap& propertyMap) -> void
@@ -34,6 +68,77 @@ auto RemoveWindowProps(Api::PropertyMap& propertyMap) -> void
     propertyMap.erase(Api::Props::State);
 }
 
+auto IsNormal(const Props& props) -> bool
+{
+    return !props.state || *props.state == Api::WindowState::Normal;
+}
+
+auto ApplySettings(NativeWindow& window, const Props& props) -> void
+{
+    const auto hwnd = window.handle();
+
+    if (props.icon && !props.icon->empty()) NativeWindowApi::SetIcon(hwnd, *props.icon);
+    if (props.caption) NativeWindowStyle::SetCaption(hwnd, *props.caption);
+    if (props.resizable) NativeWindowStyle::SetResizable(hwnd, *props.resizable);
+    if (props.taskbar) NativeWindowStyle::SetTaskbar(hwnd, *props.taskbar);
+    if (props.topMost) NativeWindowApi::SetTopMost(hwnd, *props.topMost);
+    if (props.minSize) window.setMinSize(*props.minSize);
+    if (props.maxSize) window.setMaxSize(*props.maxSize);
+}
+
+auto ApplyBounds(HWND hwnd, const Props& props) -> void
+{
+    if (props.rect)
+    {
+        LOGF_D(L" -> Apply::%s %s", to_string(Api::Props::Rect).c_str(), to_string(*props.rect).c_str());
+        if (IsNormal(props))
+        {
+            NativeApi::SetClientRect(hwnd, *props.rect);
+        }
+        else
+        {
+            NativeWindowApi::SetNormalRect(hwnd, {props.rect->position(), NativeApi::ClientToWindowSize(hwnd, props.rect->size())});
+        }
+    }
+    else if (props.size)
+    {
+        LOGF_D(L" -> Apply::%s %s", to_string(Api::Props::Size).c_str(), to_string(*props.size).c_str());
+        if (IsNormal(props)) NativeApi::SetClientSize(hwnd, *props.size);
+    }
+}
+
+auto ApplyPlacement(HWND hwnd, const Props& props, Api::PropertyMap& nativeProps) -> void
+{
+    if (!props.placement) return;
+
+    if (IsNormal(props) || !props.size)
+    {
+        NativeWindowApi::SetPlacement(hwnd, *props.placement);
+    }
+    else
+    {
+        NativeWindowApi::SetNormalPlacement(hwnd, *props.placement, NativeApi::ClientToWindowSize(hwnd, *props.size));
+    }
+
+    nativeProps.erase(Api::Props::Position);
+}
+
+auto ApplyVisibility(HWND hwnd, const Props& props) -> void
+{
+    if (props.visible && !*props.visible)
+    {
+        NativeApi::SetVisible(hwnd, false);
+    }
+    else if (props.state)
+    {
+        NativeWindowApi::SetState(hwnd, *props.state);
+    }
+    else if (props.visible)
+    {
+        NativeApi::SetVisible(hwnd, true);
+    }
+}
+
 } // namespace
 
 auto NativeWindowProps::Apply(NativeWindow& window, const Api::PropertyMap& propertyMap) -> Api::PropertyMap
@@ -42,74 +147,12 @@ auto NativeWindowProps::Apply(NativeWindow& window, const Api::PropertyMap& prop
     RemoveWindowProps(nativeProps);
 
     const auto hwnd = window.handle();
-    const auto* icon = Get<Api::Text>(propertyMap, Api::Props::Icon);
-    const auto* rect = Get<Api::Rect>(propertyMap, Api::Props::Rect);
-    const auto* size = Get<Api::Size>(propertyMap, Api::Props::Size);
-    const auto* caption = Get<Api::CaptionProps>(propertyMap, Api::Props::Caption);
-    const auto* placement = Get<Api::WindowPlacementProps>(propertyMap, Api::Props::Placement);
-    const auto* resizable = Get<bool>(propertyMap, Api::Props::Resizable);
-    const auto* topMost = Get<bool>(propertyMap, Api::Props::TopMost);
-    const auto* taskbar = Get<bool>(propertyMap, Api::Props::Taskbar);
-    const auto* visible = Get<bool>(propertyMap, Api::Props::Visible);
-    const auto* minSize = Get<Api::Size>(propertyMap, Api::Props::MinSize);
-    const auto* maxSize = Get<Api::Size>(propertyMap, Api::Props::MaxSize);
-    const auto* state = Get<Api::WindowState>(propertyMap, Api::Props::State);
+    const auto props = GetProps(propertyMap);
 
-    if (icon && !icon->empty()) NativeWindowApi::SetIcon(hwnd, *icon);
-    if (caption) NativeWindowStyle::SetCaption(hwnd, *caption);
-    if (resizable) NativeWindowStyle::SetResizable(hwnd, *resizable);
-    if (taskbar) NativeWindowStyle::SetTaskbar(hwnd, *taskbar);
-    if (topMost) NativeWindowApi::SetTopMost(hwnd, *topMost);
-    if (minSize) window.setMinSize(*minSize);
-    if (maxSize) window.setMaxSize(*maxSize);
-
-    if (rect)
-    {
-        LOGF_D(L" -> Apply::%s %s", to_string(Api::Props::Rect).c_str(), to_string(*rect).c_str());
-        if (state && *state != Api::WindowState::Normal)
-        {
-            NativeWindowApi::SetNormalRect(hwnd, {rect->position(), NativeApi::ClientToWindowSize(hwnd, rect->size())});
-        }
-        else
-        {
-            NativeApi::SetClientRect(hwnd, *rect);
-        }
-    }
-    else if (size)
-    {
-        LOGF_D(L" -> Apply::%s %s", to_string(Api::Props::Size).c_str(), to_string(*size).c_str());
-        if (!(state && *state != Api::WindowState::Normal))
-        {
-            NativeApi::SetClientSize(hwnd, *size);
-        }
-    }
-
-    if (placement)
-    {
-        if (state && *state != Api::WindowState::Normal && size)
-        {
-            NativeWindowApi::SetNormalPlacement(hwnd, *placement, NativeApi::ClientToWindowSize(hwnd, *size));
-        }
-        else
-        {
-            NativeWindowApi::SetPlacement(hwnd, *placement);
-        }
-
-        nativeProps.erase(Api::Props::Position);
-    }
-
-    if (visible && !*visible)
-    {
-        NativeApi::SetVisible(hwnd, false);
-    }
-    else if (state)
-    {
-        NativeWindowApi::SetState(hwnd, *state);
-    }
-    else if (visible)
-    {
-        NativeApi::SetVisible(hwnd, true);
-    }
+    ApplySettings(window, props);
+    ApplyBounds(hwnd, props);
+    ApplyPlacement(hwnd, props, nativeProps);
+    ApplyVisibility(hwnd, props);
 
     return nativeProps;
 }
