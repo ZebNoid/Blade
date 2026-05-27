@@ -4,6 +4,7 @@
 #include <wincodec.h>
 
 #include "Common/Logger.h"
+#include "WinApi/ComScope/ComScope.h"
 
 
 namespace Blade::Backend {
@@ -38,35 +39,6 @@ struct WicImage
     }
 };
 
-class ComScope
-{
-public:
-    ComScope() : m_result(CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED))
-    {
-    }
-
-    ~ComScope()
-    {
-        if (m_result == S_OK || m_result == S_FALSE)
-        {
-            CoUninitialize();
-        }
-    }
-
-    auto ok() const -> bool
-    {
-        return SUCCEEDED(m_result) || m_result == RPC_E_CHANGED_MODE;
-    }
-
-    auto result() const -> HRESULT
-    {
-        return m_result;
-    }
-
-private:
-    HRESULT m_result = S_OK;
-};
-
 auto HasExtension(const Api::Text& path, const Api::Text& extension) -> bool
 {
     if (path.size() < extension.size())
@@ -93,7 +65,7 @@ auto Exists(const Api::Text& path) -> bool
 
 auto LogFailed(const wchar_t* operation, HRESULT result, const Api::Text& path) -> void
 {
-    LOGF_E(L"[Error] ImageLoader::%s failed [%08X] %s", operation, static_cast<unsigned>(result), path.c_str());
+    LOGF_E(L"[Error] ImageLoader::%s failed [%08X] \"%s\"", operation, static_cast<unsigned>(result), path.c_str());
 }
 
 auto LoadBitmapFromWic(const Api::Text& path, int width, int height) -> HBITMAP
@@ -170,7 +142,7 @@ auto LoadBitmapFromWic(const Api::Text& path, int width, int height) -> HBITMAP
 
     if (!bitmap || !bits)
     {
-        LOGF_E(L"[Error] ImageLoader::CreateDIBSection failed [%lu] %s", GetLastError(), path.c_str());
+        LOGF_E(L"[Error] ImageLoader::CreateDIBSection failed [%lu] \"%s\"", GetLastError(), path.c_str());
         DeleteObject(bitmap);
         return nullptr;
     }
@@ -199,7 +171,7 @@ auto LoadIconFromWic(const Api::Text& path, int width, int height) -> HICON
 
     if (!mask)
     {
-        LOGF_E(L"[Error] ImageLoader::CreateBitmapMask failed [%lu] %s", GetLastError(), path.c_str());
+        LOGF_E(L"[Error] ImageLoader::CreateBitmapMask failed [%lu] \"%s\"", GetLastError(), path.c_str());
         DeleteObject(color);
         return nullptr;
     }
@@ -215,7 +187,7 @@ auto LoadIconFromWic(const Api::Text& path, int width, int height) -> HICON
 
     if (!icon)
     {
-        LOGF_E(L"[Error] ImageLoader::CreateIconIndirect failed [%lu] %s", GetLastError(), path.c_str());
+        LOGF_E(L"[Error] ImageLoader::CreateIconIndirect failed [%lu] \"%s\"", GetLastError(), path.c_str());
     }
 
     return icon;
@@ -232,23 +204,35 @@ auto ImageLoader::LoadIcon(const Api::Text& path, int width, int height) -> HICO
 
     if (!Exists(path))
     {
-        LOGF_E(L"[Error] ImageLoader::LoadIcon file not found %s", path.c_str());
+        LOGF_E(L"[Error] ImageLoader::LoadIcon file not found \"%s\"", path.c_str());
         return nullptr;
     }
 
-    if (HasExtension(path, L".ico"))
+    if (IsIcon(path))
     {
         auto icon = static_cast<HICON>(LoadImage(nullptr, path.c_str(), IMAGE_ICON, width, height, LR_LOADFROMFILE));
 
         if (!icon)
         {
-            LOGF_E(L"[Error] ImageLoader::LoadImage failed [%lu] %s", GetLastError(), path.c_str());
+            LOGF_E(L"[Error] ImageLoader::LoadImage failed [%lu] \"%s\"", GetLastError(), path.c_str());
         }
 
         return icon;
     }
 
-    return LoadIconFromWic(path, width, height);
+    auto icon = LoadIconFromWic(path, width, height);
+
+    if (icon)
+    {
+        LOGF_D(L"ImageLoader::LoadIcon loaded \"%s\"", path.c_str());
+    }
+
+    return icon;
+}
+
+auto ImageLoader::IsIcon(const Api::Text& path) -> bool
+{
+    return HasExtension(path, L".ico");
 }
 
 } // namespace Blade::Backend

@@ -287,7 +287,7 @@ auto NativeApi::GetSizeFromLParam(
 auto NativeApi::SetIcon(HWND hwnd, const Api::Text& icon) -> HICON
 {
     auto bigIcon = ImageLoader::LoadIcon(icon, 32, 32);
-    auto smallIcon = ImageLoader::LoadIcon(icon, 16, 16);
+    auto smallIcon = ImageLoader::IsIcon(icon) ? ImageLoader::LoadIcon(icon, 16, 16) : CopyIcon(bigIcon);
 
     if (bigIcon) SendMessage(hwnd, WM_SETICON, ICON_BIG, reinterpret_cast<LPARAM>(bigIcon));
     if (smallIcon) SendMessage(hwnd, WM_SETICON, ICON_SMALL, reinterpret_cast<LPARAM>(smallIcon));

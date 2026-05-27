@@ -27,6 +27,8 @@ add_library(${PROJECT_NAME} STATIC
         WinApi/AppRuntime/AppRuntime.cpp
         WinApi/AppRuntime/AppRuntime.h
 
+        WinApi/ComScope/ComScope.cpp
+        WinApi/ComScope/ComScope.h
         WinApi/NativeApi/NativeApi.cpp
         WinApi/NativeApi/NativeApi.h
         WinApi/DisplayApi/DisplayApi.cpp
