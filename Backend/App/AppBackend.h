@@ -37,17 +37,15 @@ public:
 
     auto quit() -> void override;
 
-    auto setResizeHandler(Api::ResizeHandler handler) -> void override;
-
-    auto setEventHandler(Api::EventHandler handler) -> void override;
+    auto setMessageHandler(Api::BackendMessageHandler handler) -> void override;
 
     auto onWindowResize(Api::Id windowId, const Api::Size& size) -> void;
 
     auto emitEvent(const Api::BackendEvent& event) -> Api::EventResult;
 
-    auto eventHandler() -> Api::EventHandler*;
+    auto messageHandler() -> Api::BackendMessageHandler*;
 
-    auto process(const Api::BackendCommand& command) -> void override;
+    auto process(const Api::ElementCommand& command) -> void override;
 
     auto host() -> WindowHost&;
 
@@ -70,8 +68,7 @@ private:
 
     NativeNodeFactory m_factory;
 
-    Api::ResizeHandler m_resizeHandler;
-    Api::EventHandler m_eventHandler;
+    Api::BackendMessageHandler m_messageHandler;
 };
 
 

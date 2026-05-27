@@ -41,7 +41,7 @@ auto LayoutRuntime::resizeRoot(Api::Id rootId, const Api::Size& size) -> void
     send(m_materializer.update(it->second, layoutTree, false));
 }
 
-auto LayoutRuntime::send(std::vector<Api::BackendCommand> commands) -> void
+auto LayoutRuntime::send(std::vector<Api::ElementCommand> commands) -> void
 {
     if (!m_backend)
     {

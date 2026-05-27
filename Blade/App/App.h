@@ -37,9 +37,7 @@ private:
 
     auto initBackend() -> int;
 
-    auto onNativeResize(Api::Id rootId, const Api::Size& size) -> void;
-
-    auto onBackendEvent(const Api::BackendEvent& event) -> Api::EventResult;
+    auto onBackendMessage(const Api::BackendMessage& message) -> Api::EventResult;
 
 private:
     std::unique_ptr<Api::ApiBackend> m_backend;

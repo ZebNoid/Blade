@@ -12,9 +12,9 @@ namespace Blade::Backend {
 class CommandRouter
 {
 public:
-    explicit CommandRouter(Api::EventHandler* handler = nullptr);
+    explicit CommandRouter(Api::BackendMessageHandler* handler = nullptr);
 
-    auto setHandler(Api::EventHandler* handler) -> void;
+    auto setHandler(Api::BackendMessageHandler* handler) -> void;
 
     auto on(Api::Id id, WORD notificationCode, Api::BackendEvent event) -> void;
 
@@ -35,7 +35,7 @@ private:
     ) -> Subscription*;
 
 private:
-    Api::EventHandler* m_handler = nullptr;
+    Api::BackendMessageHandler* m_handler = nullptr;
     std::unordered_map<Api::Id, std::vector<Subscription>> m_subscriptions;
 };
 

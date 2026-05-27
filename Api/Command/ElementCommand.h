@@ -1,18 +1,17 @@
 #pragma once
-#include "CommandType.h"
+
+#include "Command/ElementCommandType.h"
 #include "Common/Property.h"
 #include "Common/Types.h"
 
 
 namespace Blade::Api {
 
-
-struct BackendCommand
+struct ElementCommand
 {
-    Api::CommandType command;
+    Api::ElementCommandType command;
 
     Api::Id id = InvalidId;
-
     Api::Id parent = InvalidId;
 
     // TODO enum?
@@ -22,5 +21,4 @@ struct BackendCommand
     Api::EventSubscriptions events;
 };
 
-
-} // namespace
+} // namespace Blade::Api

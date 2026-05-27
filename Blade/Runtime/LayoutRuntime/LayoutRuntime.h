@@ -19,7 +19,7 @@ public:
     auto resizeRoot(Api::Id rootId, const Api::Size& size) -> void;
 
 private:
-    auto send(std::vector<Api::BackendCommand> commands) -> void;
+    auto send(std::vector<Api::ElementCommand> commands) -> void;
 
     auto flushResize() -> void;
 

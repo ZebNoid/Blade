@@ -34,36 +34,37 @@ auto App::initBackend() -> int
     }
     m_backend->init();
     m_layoutRuntime = std::make_unique<LayoutRuntime>(m_backend.get());
-    m_backend->setResizeHandler(
-        [this](Api::Id rootId, const Api::Size& size)
+    m_backend->setMessageHandler(
+        [this](const Api::BackendMessage& message)
         {
-            onNativeResize(rootId, size);
-        }
-    );
-
-    m_backend->setEventHandler(
-        [this](const Api::BackendEvent& event)
-        {
-            return onBackendEvent(event);
+            return onBackendMessage(message);
         }
     );
 
     return 0;
 }
 
-auto App::onNativeResize(Api::Id rootId, const Api::Size& size) -> void
+auto App::onBackendMessage(const Api::BackendMessage& message) -> Api::EventResult
 {
-    if (!m_layoutRuntime)
+    if (message.type == Api::BackendMessageType::Resize)
     {
-        return;
+        const auto* resize = std::get_if<Api::BackendResize>(&message.payload);
+
+        if (resize && m_layoutRuntime)
+        {
+            m_layoutRuntime->resizeRoot(resize->target, resize->size);
+        }
+
+        return {};
     }
 
-    m_layoutRuntime->resizeRoot(rootId, size);
-}
+    if (message.type == Api::BackendMessageType::Event)
+    {
+        const auto* event = std::get_if<Api::BackendEvent>(&message.payload);
+        return event ? m_eventRuntime.dispatch(*event) : Api::EventResult{};
+    }
 
-auto App::onBackendEvent(const Api::BackendEvent& event) -> Api::EventResult
-{
-    return m_eventRuntime.dispatch(event);
+    return {};
 }
 
 

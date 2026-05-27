@@ -41,40 +41,44 @@ auto AppBackend::quit() -> void
     m_runtime.quit();
 }
 
-auto AppBackend::setResizeHandler(Api::ResizeHandler handler) -> void
+auto AppBackend::setMessageHandler(Api::BackendMessageHandler handler) -> void
 {
-    m_resizeHandler = std::move(handler);
-}
-
-auto AppBackend::setEventHandler(Api::EventHandler handler) -> void
-{
-    m_eventHandler = std::move(handler);
+    m_messageHandler = std::move(handler);
 }
 
 auto AppBackend::onWindowResize(Api::Id windowId, const Api::Size& size) -> void
 {
-    if (m_resizeHandler)
+    if (m_messageHandler)
     {
-        m_resizeHandler(windowId, size);
+        m_messageHandler({
+            .type = Api::BackendMessageType::Resize,
+            .payload = Api::BackendResize{
+                .target = windowId,
+                .size = size
+            }
+        });
     }
 }
 
 auto AppBackend::emitEvent(const Api::BackendEvent& event) -> Api::EventResult
 {
-    if (!m_eventHandler)
+    if (!m_messageHandler)
     {
         return {};
     }
 
-    return m_eventHandler(event);
+    return m_messageHandler({
+        .type = Api::BackendMessageType::Event,
+        .payload = event
+    });
 }
 
-auto AppBackend::eventHandler() -> Api::EventHandler*
+auto AppBackend::messageHandler() -> Api::BackendMessageHandler*
 {
-    return &m_eventHandler;
+    return &m_messageHandler;
 }
 
-auto AppBackend::process(const Api::BackendCommand& command) -> void
+auto AppBackend::process(const Api::ElementCommand& command) -> void
 {
     m_dispatcher.dispatch(command); // With Error !
 }

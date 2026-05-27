@@ -13,24 +13,24 @@ public:
     explicit CommandDispatcher(AppBackend* backend);
 
     auto dispatch(
-        const Api::BackendCommand& command
+        const Api::ElementCommand& command
     ) -> void;
 
 private:
     auto create(
-        const Api::BackendCommand& command
+        const Api::ElementCommand& command
     ) -> void;
 
     auto attach(
-        const Api::BackendCommand& command
+        const Api::ElementCommand& command
     ) -> void;
 
     auto remove(
-        const Api::BackendCommand& command
+        const Api::ElementCommand& command
     ) -> void;
 
     auto update(
-        const Api::BackendCommand& command
+        const Api::ElementCommand& command
     ) -> void;
 
 private:
