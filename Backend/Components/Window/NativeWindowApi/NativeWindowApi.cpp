@@ -1,6 +1,6 @@
 #include "NativeWindowApi.h"
 
-#include "WinApi/Display/DisplayApi/DisplayApi.h"
+#include "Components/Window/NativeWindowPlacement/NativeWindowPlacement.h"
 #include "WinApi/Resource/ImageLoader/ImageLoader.h"
 
 namespace Blade::Backend {
@@ -41,253 +41,6 @@ auto SetFrameChanged(HWND hwnd) -> void
     SetWindowPos(hwnd, nullptr, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
 }
 
-auto GetWindowSize(HWND hwnd) -> Api::Size
-{
-    RECT rect{};
-    GetWindowRect(hwnd, &rect);
-    return {rect.right - rect.left, rect.bottom - rect.top};
-}
-
-auto ToRect(HWND hwnd, const Api::WindowPlacementProps& placement) -> Api::Rect
-{
-    const auto screen = DisplayApi::WorkArea(placement.monitor);
-    auto size = GetWindowSize(hwnd);
-
-    switch (placement.anchor)
-    {
-    case Api::WindowAnchor::Manual:
-        break;
-
-    case Api::WindowAnchor::TopFill:
-    case Api::WindowAnchor::CenterHorizontalFill:
-    case Api::WindowAnchor::BottomFill:
-    case Api::WindowAnchor::Fill:
-        size.width = screen.width;
-        break;
-
-    default:
-        break;
-    }
-
-    switch (placement.anchor)
-    {
-    case Api::WindowAnchor::Manual:
-        break;
-
-    case Api::WindowAnchor::LeftFill:
-    case Api::WindowAnchor::CenterVerticalFill:
-    case Api::WindowAnchor::RightFill:
-    case Api::WindowAnchor::Fill:
-        size.height = screen.height;
-        break;
-
-    default:
-        break;
-    }
-
-    Api::Point position{};
-
-    switch (placement.anchor)
-    {
-    case Api::WindowAnchor::Manual:
-        position.x = placement.offset.x;
-        break;
-
-    case Api::WindowAnchor::TopLeft:
-    case Api::WindowAnchor::TopFill:
-    case Api::WindowAnchor::LeftFill:
-    case Api::WindowAnchor::Fill:
-        position.x = screen.x;
-        break;
-
-    case Api::WindowAnchor::TopCenter:
-    case Api::WindowAnchor::Center:
-    case Api::WindowAnchor::BottomCenter:
-    case Api::WindowAnchor::CenterHorizontalFill:
-    case Api::WindowAnchor::CenterVerticalFill:
-        position.x = screen.x + (screen.width - size.width) / 2;
-        break;
-
-    case Api::WindowAnchor::TopRight:
-    case Api::WindowAnchor::CenterRight:
-    case Api::WindowAnchor::BottomRight:
-    case Api::WindowAnchor::RightFill:
-        position.x = screen.x + screen.width - size.width;
-        break;
-
-    case Api::WindowAnchor::CenterLeft:
-    case Api::WindowAnchor::BottomLeft:
-    case Api::WindowAnchor::BottomFill:
-        position.x = screen.x;
-        break;
-    }
-
-    switch (placement.anchor)
-    {
-    case Api::WindowAnchor::Manual:
-        position.y = placement.offset.y;
-        break;
-
-    case Api::WindowAnchor::TopLeft:
-    case Api::WindowAnchor::TopCenter:
-    case Api::WindowAnchor::TopRight:
-    case Api::WindowAnchor::TopFill:
-        position.y = screen.y;
-        break;
-
-    case Api::WindowAnchor::CenterLeft:
-    case Api::WindowAnchor::Center:
-    case Api::WindowAnchor::CenterRight:
-    case Api::WindowAnchor::CenterHorizontalFill:
-        position.y = screen.y + (screen.height - size.height) / 2;
-        break;
-
-    case Api::WindowAnchor::BottomLeft:
-    case Api::WindowAnchor::BottomCenter:
-    case Api::WindowAnchor::BottomRight:
-    case Api::WindowAnchor::BottomFill:
-        position.y = screen.y + screen.height - size.height;
-        break;
-
-    case Api::WindowAnchor::LeftFill:
-    case Api::WindowAnchor::CenterVerticalFill:
-    case Api::WindowAnchor::RightFill:
-    case Api::WindowAnchor::Fill:
-        position.y = screen.y;
-        break;
-    }
-
-    if (placement.anchor != Api::WindowAnchor::Manual)
-    {
-        position.x += placement.offset.x;
-        position.y += placement.offset.y;
-    }
-
-    return {position, size};
-}
-
-auto ToRect(const Api::WindowPlacementProps& placement, Api::Size size) -> Api::Rect
-{
-    const auto screen = DisplayApi::WorkArea(placement.monitor);
-
-    switch (placement.anchor)
-    {
-    case Api::WindowAnchor::Manual:
-        break;
-
-    case Api::WindowAnchor::TopFill:
-    case Api::WindowAnchor::CenterHorizontalFill:
-    case Api::WindowAnchor::BottomFill:
-    case Api::WindowAnchor::Fill:
-        size.width = screen.width;
-        break;
-
-    default:
-        break;
-    }
-
-    switch (placement.anchor)
-    {
-    case Api::WindowAnchor::Manual:
-        break;
-
-    case Api::WindowAnchor::LeftFill:
-    case Api::WindowAnchor::CenterVerticalFill:
-    case Api::WindowAnchor::RightFill:
-    case Api::WindowAnchor::Fill:
-        size.height = screen.height;
-        break;
-
-    default:
-        break;
-    }
-
-    Api::Point position{};
-
-    switch (placement.anchor)
-    {
-    case Api::WindowAnchor::Manual:
-        position.x = placement.offset.x;
-        break;
-
-    case Api::WindowAnchor::TopLeft:
-    case Api::WindowAnchor::TopFill:
-    case Api::WindowAnchor::LeftFill:
-    case Api::WindowAnchor::Fill:
-        position.x = screen.x;
-        break;
-
-    case Api::WindowAnchor::TopCenter:
-    case Api::WindowAnchor::Center:
-    case Api::WindowAnchor::BottomCenter:
-    case Api::WindowAnchor::CenterHorizontalFill:
-    case Api::WindowAnchor::CenterVerticalFill:
-        position.x = screen.x + (screen.width - size.width) / 2;
-        break;
-
-    case Api::WindowAnchor::TopRight:
-    case Api::WindowAnchor::CenterRight:
-    case Api::WindowAnchor::BottomRight:
-    case Api::WindowAnchor::RightFill:
-        position.x = screen.x + screen.width - size.width;
-        break;
-
-    case Api::WindowAnchor::CenterLeft:
-    case Api::WindowAnchor::BottomLeft:
-    case Api::WindowAnchor::BottomFill:
-        position.x = screen.x;
-        break;
-    }
-
-    switch (placement.anchor)
-    {
-    case Api::WindowAnchor::Manual:
-        position.y = placement.offset.y;
-        break;
-
-    case Api::WindowAnchor::TopLeft:
-    case Api::WindowAnchor::TopCenter:
-    case Api::WindowAnchor::TopRight:
-    case Api::WindowAnchor::TopFill:
-        position.y = screen.y;
-        break;
-
-    case Api::WindowAnchor::CenterLeft:
-    case Api::WindowAnchor::Center:
-    case Api::WindowAnchor::CenterRight:
-    case Api::WindowAnchor::CenterHorizontalFill:
-        position.y = screen.y + (screen.height - size.height) / 2;
-        break;
-
-    case Api::WindowAnchor::BottomLeft:
-    case Api::WindowAnchor::BottomCenter:
-    case Api::WindowAnchor::BottomRight:
-    case Api::WindowAnchor::BottomFill:
-        position.y = screen.y + screen.height - size.height;
-        break;
-
-    case Api::WindowAnchor::LeftFill:
-    case Api::WindowAnchor::CenterVerticalFill:
-    case Api::WindowAnchor::RightFill:
-    case Api::WindowAnchor::Fill:
-        position.y = screen.y;
-        break;
-    }
-
-    if (placement.anchor != Api::WindowAnchor::Manual)
-    {
-        position.x += placement.offset.x;
-        position.y += placement.offset.y;
-    }
-
-    return {position, size};
-}
-
-auto ToWinRect(const Api::Rect& rect) -> RECT
-{
-    return {rect.x, rect.y, rect.x + rect.width, rect.y + rect.height};
-}
-
 } // namespace
 
 auto NativeWindowApi::SetCaption(HWND hwnd, const Api::CaptionProps& caption) -> void
@@ -316,13 +69,13 @@ auto NativeWindowApi::SetIcon(HWND hwnd, const Api::Text& icon) -> HICON
 
 auto NativeWindowApi::SetPlacement(HWND hwnd, const Api::WindowPlacementProps& placement) -> void
 {
-    const auto rect = ToRect(hwnd, placement);
+    const auto rect = NativeWindowPlacement::ToRect(hwnd, placement);
     SetWindowPos(hwnd, nullptr, rect.x, rect.y, rect.width, rect.height, SWP_NOZORDER | SWP_NOACTIVATE);
 }
 
 auto NativeWindowApi::SetNormalPlacement(HWND hwnd, const Api::WindowPlacementProps& placement, const Api::Size& windowSize) -> void
 {
-    SetNormalRect(hwnd, ToRect(placement, windowSize));
+    SetNormalRect(hwnd, NativeWindowPlacement::ToRect(placement, windowSize));
 }
 
 auto NativeWindowApi::SetNormalRect(HWND hwnd, const Api::Rect& rect) -> void
@@ -334,7 +87,7 @@ auto NativeWindowApi::SetNormalRect(HWND hwnd, const Api::Rect& rect) -> void
         return;
     }
 
-    placement.rcNormalPosition = ToWinRect(rect);
+    placement.rcNormalPosition = NativeWindowPlacement::ToWinRect(rect);
     SetWindowPlacement(hwnd, &placement);
 }
 
