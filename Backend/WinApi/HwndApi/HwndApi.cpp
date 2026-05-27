@@ -1,4 +1,4 @@
-#include "NativeApi.h"
+#include "HwndApi.h"
 
 
 namespace Blade::Backend {
@@ -57,17 +57,17 @@ namespace {
 } // namespace
 
 
-auto NativeApi::SetParent(HWND hwnd, HWND hwndParent) -> HWND
+auto HwndApi::SetParent(HWND hwnd, HWND hwndParent) -> HWND
 {
     return ::SetParent(hwnd, hwndParent);
 }
 
-auto NativeApi::GetParent(HWND hwnd) -> HWND
+auto HwndApi::GetParent(HWND hwnd) -> HWND
 {
     return ::GetParent(hwnd);
 }
 
-auto NativeApi::SetTitle(
+auto HwndApi::SetTitle(
     HWND hwnd,
     const Api::Text& text
 ) -> void
@@ -75,7 +75,7 @@ auto NativeApi::SetTitle(
     SetWindowTextW(hwnd, text.c_str());
 }
 
-auto NativeApi::GetTitle(HWND hwnd) -> Api::Text
+auto HwndApi::GetTitle(HWND hwnd) -> Api::Text
 {
     const int length = GetWindowTextLength(hwnd);
     if (length == 0) return L"";
@@ -89,7 +89,7 @@ auto NativeApi::GetTitle(HWND hwnd) -> Api::Text
 }
 
 
-auto NativeApi::SetSize(
+auto HwndApi::SetSize(
     HWND hwnd,
     const Api::Size& size
 ) -> void
@@ -106,7 +106,7 @@ auto NativeApi::SetSize(
     );
 }
 
-auto NativeApi::SetClientSize(
+auto HwndApi::SetClientSize(
     HWND hwnd,
     const Api::Size& size
 ) -> void
@@ -120,12 +120,12 @@ auto NativeApi::SetClientSize(
     );
 }
 
-auto NativeApi::ClientToWindowSize(HWND hwnd, const Api::Size& clientSize) -> Api::Size
+auto HwndApi::ClientToWindowSize(HWND hwnd, const Api::Size& clientSize) -> Api::Size
 {
     return ToOuterSize(hwnd, clientSize);
 }
 
-auto NativeApi::SetRect(
+auto HwndApi::SetRect(
     HWND hwnd,
     const Api::Rect& rect
 ) -> void
@@ -142,7 +142,7 @@ auto NativeApi::SetRect(
     );
 }
 
-auto NativeApi::SetClientRect(
+auto HwndApi::SetClientRect(
     HWND hwnd,
     const Api::Rect& rect
 ) -> void
@@ -159,7 +159,7 @@ auto NativeApi::SetClientRect(
     );
 }
 
-auto NativeApi::GetSize(HWND hwnd) -> Api::Size
+auto HwndApi::GetSize(HWND hwnd) -> Api::Size
 {
     RECT rect;
     if (GetWindowRect(hwnd, &rect))
@@ -172,12 +172,12 @@ auto NativeApi::GetSize(HWND hwnd) -> Api::Size
     return {};
 }
 
-auto NativeApi::SetPosition(HWND hwnd, const Api::Point& position) -> void
+auto HwndApi::SetPosition(HWND hwnd, const Api::Point& position) -> void
 {
     SetWindowPos(hwnd, nullptr, position.x, position.y, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
 }
 
-auto NativeApi::BringToFront(HWND hwnd) -> void
+auto HwndApi::BringToFront(HWND hwnd) -> void
 {
     SetWindowPos(
         hwnd,
@@ -201,7 +201,7 @@ auto NativeApi::BringToFront(HWND hwnd) -> void
     );
 }
 
-auto NativeApi::GetPosition(HWND hwnd) -> Api::Point
+auto HwndApi::GetPosition(HWND hwnd) -> Api::Point
 {
     RECT rect;
     if (GetWindowRect(hwnd, &rect))
@@ -214,17 +214,17 @@ auto NativeApi::GetPosition(HWND hwnd) -> Api::Point
     return {};
 }
 
-auto NativeApi::SetFont(HWND hwnd, HFONT font) -> void
+auto HwndApi::SetFont(HWND hwnd, HFONT font) -> void
 {
     SendMessageW(hwnd, WM_SETFONT, (WPARAM)font, TRUE);
 }
 
-auto NativeApi::GetFont(HWND hwnd) -> HFONT
+auto HwndApi::GetFont(HWND hwnd) -> HFONT
 {
     return (HFONT)SendMessage(hwnd, WM_GETFONT, 0, 0);
 }
 
-auto NativeApi::Show(HWND hwnd, int cmdShow) -> void
+auto HwndApi::Show(HWND hwnd, int cmdShow) -> void
 {
     // SW_HIDE             0
     // SW_SHOWNORMAL       1
@@ -244,7 +244,7 @@ auto NativeApi::Show(HWND hwnd, int cmdShow) -> void
     ShowWindow(hwnd, cmdShow);
 }
 
-auto NativeApi::SetVisible(HWND hwnd, bool visible) -> void
+auto HwndApi::SetVisible(HWND hwnd, bool visible) -> void
 {
     Show(hwnd, visible ? SW_SHOW : SW_HIDE);
 
@@ -254,17 +254,17 @@ auto NativeApi::SetVisible(HWND hwnd, bool visible) -> void
     }
 }
 
-auto NativeApi::Update(HWND hwnd) -> void
+auto HwndApi::Update(HWND hwnd) -> void
 {
     UpdateWindow(hwnd);
 }
 
-auto NativeApi::Destroy(HWND hwnd) -> void
+auto HwndApi::Destroy(HWND hwnd) -> void
 {
     DestroyWindow(hwnd);
 }
 
-auto NativeApi::GetSizeFromLParam(
+auto HwndApi::GetSizeFromLParam(
     LPARAM lParam
 ) -> Api::Size
 {

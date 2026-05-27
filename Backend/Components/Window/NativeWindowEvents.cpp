@@ -3,7 +3,7 @@
 #include <algorithm>
 
 #include "Components/Window/NativeWindow.h"
-#include "WinApi/NativeApi/NativeApi.h"
+#include "WinApi/HwndApi/HwndApi.h"
 
 
 namespace Blade::Backend {
@@ -33,7 +33,7 @@ auto NativeWindowEvents::Apply(NativeWindow& window, const Api::EventSubscriptio
                 });
             }
 
-            NativeApi::Destroy(hwnd);
+            HwndApi::Destroy(hwnd);
             return 0;
         }
     );

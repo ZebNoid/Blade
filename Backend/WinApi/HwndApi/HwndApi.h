@@ -11,7 +11,7 @@
 namespace Blade::Backend {
 
 
-class NativeApi
+class HwndApi
 {
 public:
     /// @brief

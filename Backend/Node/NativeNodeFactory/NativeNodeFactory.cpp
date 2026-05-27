@@ -3,7 +3,7 @@
 #include "App/AppBackend.h"
 #include "Common/Logger.h"
 #include "Components/Button/NativeButton.h"
-#include "WinApi/NativeApi/NativeApi.h"
+#include "WinApi/HwndApi/HwndApi.h"
 
 
 namespace Blade::Backend {
@@ -45,7 +45,7 @@ auto NativeNodeFactory::createWindow(const Api::ElementCommand& command) -> std:
                 return 0;
             }
 
-            m_backend->onWindowResize(windowId, NativeApi::GetSizeFromLParam(lParam));
+            m_backend->onWindowResize(windowId, HwndApi::GetSizeFromLParam(lParam));
             return 0;
         }
     );

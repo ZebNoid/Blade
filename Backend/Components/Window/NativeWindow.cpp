@@ -6,7 +6,7 @@
 #include "Property/PropertyMapper/PropertyMapper.h"
 #include "WinApi/Window/Hwnd/Hwnd.h"
 #include "WinApi/Window/WindowClass/WindowClass.h"
-#include "WinApi/NativeApi/NativeApi.h"
+#include "WinApi/HwndApi/HwndApi.h"
 
 
 namespace Blade::Backend {
@@ -39,8 +39,8 @@ auto NativeWindow::create(HINSTANCE hInstance, Api::Id id) -> bool
 
 auto NativeWindow::show(int cmdShow) -> void
 {
-    NativeApi::Show(m_hwnd, cmdShow);
-    NativeApi::Update(m_hwnd);
+    HwndApi::Show(m_hwnd, cmdShow);
+    HwndApi::Update(m_hwnd);
 }
 
 auto NativeWindow::router() -> MessageRouter&
@@ -72,14 +72,14 @@ auto NativeWindow::applyMinMax(MINMAXINFO* info) const -> void
 
     if (m_minSize.width > 0 || m_minSize.height > 0)
     {
-        const auto size = NativeApi::ClientToWindowSize(m_hwnd, m_minSize);
+        const auto size = HwndApi::ClientToWindowSize(m_hwnd, m_minSize);
         if (m_minSize.width > 0) info->ptMinTrackSize.x = size.width;
         if (m_minSize.height > 0) info->ptMinTrackSize.y = size.height;
     }
 
     if (m_maxSize.width > 0 || m_maxSize.height > 0)
     {
-        const auto size = NativeApi::ClientToWindowSize(m_hwnd, m_maxSize);
+        const auto size = HwndApi::ClientToWindowSize(m_hwnd, m_maxSize);
         if (m_maxSize.width > 0) info->ptMaxTrackSize.x = size.width;
         if (m_maxSize.height > 0) info->ptMaxTrackSize.y = size.height;
     }
@@ -89,7 +89,7 @@ auto NativeWindow::destroy() -> void
 {
     if (m_hwnd != nullptr)
     {
-        NativeApi::Destroy(m_hwnd);
+        HwndApi::Destroy(m_hwnd);
         m_hwnd = nullptr;
     }
 
@@ -114,7 +114,7 @@ auto NativeWindow::attachChild(INativeElement* child) -> void
         return;
     }
 
-    if (NativeApi::SetParent(child->handle(), m_hwnd) == nullptr)
+    if (HwndApi::SetParent(child->handle(), m_hwnd) == nullptr)
     {
         LOGF_E(L"[Error] NativeWindow::attachChild [%s] %lu", CUSTOM_CLASS, GetLastError());
     }

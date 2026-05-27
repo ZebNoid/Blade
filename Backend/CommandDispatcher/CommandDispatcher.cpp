@@ -3,7 +3,7 @@
 #include "App/AppBackend.h"
 #include "Common/Logger.h"
 #include "Node/NativeNode/NativeNode.h"
-#include "WinApi/NativeApi/NativeApi.h"
+#include "WinApi/HwndApi/HwndApi.h"
 
 
 namespace Blade::Backend {
@@ -73,7 +73,7 @@ auto CommandDispatcher::attach(const Api::ElementCommand& command) -> void
         child->native.get()
     );
 
-    NativeApi::BringToFront(
+    HwndApi::BringToFront(
         child->native->handle()
     );
 }
@@ -109,7 +109,7 @@ auto CommandDispatcher::update(
 
     if (node->parent != Api::InvalidId)
     {
-        NativeApi::BringToFront(
+        HwndApi::BringToFront(
             node->native->handle()
         );
     }

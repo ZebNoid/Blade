@@ -1,7 +1,7 @@
 #include "PropertyMapper.h"
 
 #include "Common/Logger.h"
-#include "WinApi/NativeApi/NativeApi.h"
+#include "WinApi/HwndApi/HwndApi.h"
 
 
 namespace Blade::Backend {
@@ -23,23 +23,23 @@ auto PropertyMapper::Apply(HWND hwnd, const Api::PropertyMap& props) -> void
         switch (key)
         {
         case Api::Props::Rect:
-            ApplyValue<Api::Rect>(value, [hwnd](const auto& rect) { NativeApi::SetRect(hwnd, rect); });
+            ApplyValue<Api::Rect>(value, [hwnd](const auto& rect) { HwndApi::SetRect(hwnd, rect); });
             break;
 
         case Api::Props::Title:
-            ApplyValue<Api::Text>(value, [hwnd](const auto& text) { NativeApi::SetTitle(hwnd, text); });
+            ApplyValue<Api::Text>(value, [hwnd](const auto& text) { HwndApi::SetTitle(hwnd, text); });
             break;
 
         case Api::Props::Size:
-            ApplyValue<Api::Size>(value, [hwnd](const auto& size) { NativeApi::SetSize(hwnd, size); });
+            ApplyValue<Api::Size>(value, [hwnd](const auto& size) { HwndApi::SetSize(hwnd, size); });
             break;
 
         case Api::Props::Position:
-            ApplyValue<Api::Point>(value, [hwnd](const auto& point) { NativeApi::SetPosition(hwnd, point); });
+            ApplyValue<Api::Point>(value, [hwnd](const auto& point) { HwndApi::SetPosition(hwnd, point); });
             break;
 
         case Api::Props::Visible:
-            ApplyValue<bool>(value, [hwnd](bool visible) { NativeApi::SetVisible(hwnd, visible); });
+            ApplyValue<bool>(value, [hwnd](bool visible) { HwndApi::SetVisible(hwnd, visible); });
             break;
 
         case Api::Props::IsDefault:

@@ -28,12 +28,16 @@ add_library(${PROJECT_NAME} STATIC
 
         WinApi/Interop/ComScope/ComScope.cpp
         WinApi/Interop/ComScope/ComScope.h
-        WinApi/NativeApi/NativeApi.cpp
-        WinApi/NativeApi/NativeApi.h
+        WinApi/HwndApi/HwndApi.cpp
+        WinApi/HwndApi/HwndApi.h
         WinApi/Display/DisplayApi/DisplayApi.cpp
         WinApi/Display/DisplayApi/DisplayApi.h
         WinApi/Resource/ImageLoader/ImageLoader.cpp
         WinApi/Resource/ImageLoader/ImageLoader.h
+        WinApi/Resource/IconImageLoader/IconImageLoader.cpp
+        WinApi/Resource/IconImageLoader/IconImageLoader.h
+        WinApi/Resource/WicImageLoader/WicImageLoader.cpp
+        WinApi/Resource/WicImageLoader/WicImageLoader.h
         WinApi/NativeElement/NativeElement.cpp
         WinApi/NativeElement/NativeElement.h
 
@@ -67,6 +71,8 @@ add_library(${PROJECT_NAME} STATIC
         Components/Window/NativeWindowEvents.h
         Components/Window/NativeWindowProps.cpp
         Components/Window/NativeWindowProps.h
+        Components/Window/NativeWindowPropsData/NativeWindowPropsData.cpp
+        Components/Window/NativeWindowPropsData/NativeWindowPropsData.h
         Components/Button/NativeButton.cpp
         Components/Button/NativeButton.h
         Components/Button/NativeButtonApi/NativeButtonApi.cpp
