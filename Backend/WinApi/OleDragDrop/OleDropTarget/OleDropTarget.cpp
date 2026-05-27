@@ -82,7 +82,6 @@ auto OleDropTarget::DragEnter(IDataObject* data, DWORD keyState, POINTL point, D
 {
     m_allowDrop = HasFiles(data);
     SetCopyEffect(effect, m_allowDrop);
-    LOGF_D(L"OleDropTarget::DragEnter target=%d allow=%d", m_id, m_allowDrop);
 
     auto pt = this->point(point);
     if (m_helper) m_helper->DragEnter(nullptr, data, &pt, *effect);
@@ -112,17 +111,13 @@ auto OleDropTarget::Drop(IDataObject* data, DWORD keyState, POINTL point, DWORD*
     auto pt = this->point(point);
     if (m_helper) m_helper->Drop(data, &pt, *effect);
 
-    LOGF_D(L"OleDropTarget::Drop target=%d files=[%s]", m_id, files.c_str());
-
     if (!files.empty())
     {
-        const auto emitted = m_router.emit({
+        m_router.emit({
             .target = m_id,
             .type = Api::Events::Drop,
             .payload = files
         });
-
-        LOGF_D(L"OleDropTarget::Drop emit=%d", emitted);
     }
 
     return S_OK;
