@@ -1,6 +1,6 @@
 #include "NativeWindowApi.h"
 
-#include "WinApi/DisplayApi/DisplayApi.h"
+#include "WinApi/Display/DisplayApi/DisplayApi.h"
 
 namespace Blade::Backend {
 

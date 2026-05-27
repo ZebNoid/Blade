@@ -27,14 +27,14 @@ add_library(${PROJECT_NAME} STATIC
         WinApi/AppRuntime/AppRuntime.cpp
         WinApi/AppRuntime/AppRuntime.h
 
-        WinApi/ComScope/ComScope.cpp
-        WinApi/ComScope/ComScope.h
+        WinApi/Interop/ComScope/ComScope.cpp
+        WinApi/Interop/ComScope/ComScope.h
         WinApi/NativeApi/NativeApi.cpp
         WinApi/NativeApi/NativeApi.h
-        WinApi/DisplayApi/DisplayApi.cpp
-        WinApi/DisplayApi/DisplayApi.h
-        WinApi/ImageLoader/ImageLoader.cpp
-        WinApi/ImageLoader/ImageLoader.h
+        WinApi/Display/DisplayApi/DisplayApi.cpp
+        WinApi/Display/DisplayApi/DisplayApi.h
+        WinApi/Resource/ImageLoader/ImageLoader.cpp
+        WinApi/Resource/ImageLoader/ImageLoader.h
         WinApi/NativeElement/NativeElement.cpp
         WinApi/NativeElement/NativeElement.h
 
@@ -53,8 +53,6 @@ add_library(${PROJECT_NAME} STATIC
         Event/EventMapper/EventMapper.h
         Property/PropertyMapper/PropertyMapper.cpp
         Property/PropertyMapper/PropertyMapper.h
-        WinApi/CommonControls/CommonControls.cpp
-        WinApi/CommonControls/CommonControls.h
         WinApi/NativeElement/INativeElement.h
 
         Components/Window/NativeWindow.cpp

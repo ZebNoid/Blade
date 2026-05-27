@@ -1,6 +1,6 @@
 #include "NativeApi.h"
 
-#include "WinApi/ImageLoader/ImageLoader.h"
+#include "WinApi/Resource/ImageLoader/ImageLoader.h"
 
 
 namespace Blade::Backend {

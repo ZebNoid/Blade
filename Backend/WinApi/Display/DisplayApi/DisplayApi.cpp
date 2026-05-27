@@ -53,6 +53,17 @@ auto PrimaryWorkArea() -> Api::Rect
 
 } // namespace
 
+auto DisplayApi::InitDpi() -> void
+{
+    SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
+
+    INITCOMMONCONTROLSEX icc{};
+    icc.dwSize = sizeof(icc);
+    icc.dwICC = ICC_STANDARD_CLASSES;
+
+    InitCommonControlsEx(&icc);
+}
+
 auto DisplayApi::Count() -> int
 {
     int count = 0;

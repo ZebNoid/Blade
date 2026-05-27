@@ -4,7 +4,7 @@
 #include <wincodec.h>
 
 #include "Common/Logger.h"
-#include "WinApi/ComScope/ComScope.h"
+#include "WinApi/Interop/ComScope/ComScope.h"
 
 
 namespace Blade::Backend {
@@ -65,7 +65,7 @@ auto Exists(const Api::Text& path) -> bool
 
 auto LogFailed(const wchar_t* operation, HRESULT result, const Api::Text& path) -> void
 {
-    LOGF_E(L"[Error] ImageLoader::%s failed [%08X] \"%s\"", operation, static_cast<unsigned>(result), path.c_str());
+    LOGF_E(L"[Error] ImageLoader::%s failed [%08X] %s", operation, static_cast<unsigned>(result), path.c_str());
 }
 
 auto LoadBitmapFromWic(const Api::Text& path, int width, int height) -> HBITMAP
@@ -142,7 +142,7 @@ auto LoadBitmapFromWic(const Api::Text& path, int width, int height) -> HBITMAP
 
     if (!bitmap || !bits)
     {
-        LOGF_E(L"[Error] ImageLoader::CreateDIBSection failed [%lu] \"%s\"", GetLastError(), path.c_str());
+        LOGF_E(L"[Error] ImageLoader::CreateDIBSection failed [%lu] %s", GetLastError(), path.c_str());
         DeleteObject(bitmap);
         return nullptr;
     }
@@ -171,7 +171,7 @@ auto LoadIconFromWic(const Api::Text& path, int width, int height) -> HICON
 
     if (!mask)
     {
-        LOGF_E(L"[Error] ImageLoader::CreateBitmapMask failed [%lu] \"%s\"", GetLastError(), path.c_str());
+        LOGF_E(L"[Error] ImageLoader::CreateBitmapMask failed [%lu] %s", GetLastError(), path.c_str());
         DeleteObject(color);
         return nullptr;
     }
@@ -187,7 +187,7 @@ auto LoadIconFromWic(const Api::Text& path, int width, int height) -> HICON
 
     if (!icon)
     {
-        LOGF_E(L"[Error] ImageLoader::CreateIconIndirect failed [%lu] \"%s\"", GetLastError(), path.c_str());
+        LOGF_E(L"[Error] ImageLoader::CreateIconIndirect failed [%lu] %s", GetLastError(), path.c_str());
     }
 
     return icon;
@@ -204,7 +204,7 @@ auto ImageLoader::LoadIcon(const Api::Text& path, int width, int height) -> HICO
 
     if (!Exists(path))
     {
-        LOGF_E(L"[Error] ImageLoader::LoadIcon file not found \"%s\"", path.c_str());
+        LOGF_E(L"[Error] ImageLoader::LoadIcon file not found %s", path.c_str());
         return nullptr;
     }
 
@@ -214,7 +214,7 @@ auto ImageLoader::LoadIcon(const Api::Text& path, int width, int height) -> HICO
 
         if (!icon)
         {
-            LOGF_E(L"[Error] ImageLoader::LoadImage failed [%lu] \"%s\"", GetLastError(), path.c_str());
+            LOGF_E(L"[Error] ImageLoader::LoadImage failed [%lu] %s", GetLastError(), path.c_str());
         }
 
         return icon;
