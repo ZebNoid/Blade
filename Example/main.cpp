@@ -61,6 +61,7 @@ protected:
         }).on({
             .close = []()
             {
+                App::Quit();
                 return true;
             },
             .drop = [](Api::Text files)

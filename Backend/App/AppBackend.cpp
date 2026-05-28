@@ -1,6 +1,7 @@
 #include "AppBackend.h"
 
 #include "CommandDispatcher/CommandDispatcher.h"
+#include "Common/Logger.h"
 #include "WinApi/Window/WindowClass/WindowClass.h"
 #include "WinApi/Display/DisplayApi/DisplayApi.h"
 
@@ -32,6 +33,7 @@ auto AppBackend::runApp() -> int
 
             if (m_nodes.ownerCount() == 0)
             {
+                LOG_D(L"AppBackend::ownerCount 0 -> quit");
                 quit();
             }
         }
