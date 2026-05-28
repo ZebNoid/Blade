@@ -48,17 +48,10 @@ protected:
 
         Window(
             Column(
-            Button(L"Flex").set({
-                    .layout = {
-                        .flex = 1,
-                    },
-                }),
+                Button(L"Flex").set({.layout = {.flex = 1,},}),
                 ContextArea(
-                    Button(L"File").set({
-                        .layout = {
-                            .flex = 1,
-                        },
-                    }).on({
+                    // Column().set({.layout = {.flex = 1,},}),
+                    Button(L"File").set({.layout = {.flex = 1,},}).on({
                         .drop = [](Api::Text files)
                         {
                             LOGF_D(L"Drop Button:\n%s", files.c_str());
@@ -69,10 +62,7 @@ protected:
                         MenuItem(L"Close").on({.click = [] { LOG(L"Menu Delete"); }})
                     ).set({.trigger = Api::MenuTrigger::RightClick})
                 )
-
-            ).set({
-            })
-
+            )
         ).set({
             .title = L"Context Menu",
             .size = {800, 600},
