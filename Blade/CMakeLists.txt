@@ -20,6 +20,11 @@ add_library(${PROJECT_NAME} STATIC
         Widget/Button/Button.h
         Widget/Button/ButtonProps.h
         Widget/Button/ButtonEvents.h
+        Widget/ContextArea/ContextArea.h
+        Widget/Menu/Menu.h
+        Widget/Menu/MenuItem.h
+        Widget/Menu/MenuItemEvents.h
+        Widget/Menu/MenuProps.h
 
         Widget/Layout/Column/Column.h
         Widget/Layout/Column/ColumnProps.h

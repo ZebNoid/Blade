@@ -32,6 +32,8 @@ add_library(${PROJECT_NAME} STATIC
         WinApi/Interop/OleScope/OleScope.h
         WinApi/OleDragDrop/OleDropTarget/OleDropTarget.cpp
         WinApi/OleDragDrop/OleDropTarget/OleDropTarget.h
+        WinApi/Menu/NativeContextMenu/NativeContextMenu.cpp
+        WinApi/Menu/NativeContextMenu/NativeContextMenu.h
         WinApi/HwndApi/HwndApi.cpp
         WinApi/HwndApi/HwndApi.h
         WinApi/Display/DisplayApi/DisplayApi.cpp

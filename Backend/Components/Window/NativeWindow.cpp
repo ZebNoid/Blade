@@ -61,6 +61,14 @@ auto NativeWindow::enableDropTarget() -> void
     if (dropTarget->registerHwnd(m_hwnd)) m_dropTarget = std::move(dropTarget);
 }
 
+auto NativeWindow::enableContextMenus(Api::ContextMenus menus) -> void
+{
+    if (m_contextMenu || !m_hwnd || menus.empty()) return;
+
+    auto contextMenu = std::make_unique<NativeContextMenu>();
+    if (contextMenu->attach(m_hwnd, m_id, m_commandRouter, std::move(menus))) m_contextMenu = std::move(contextMenu);
+}
+
 auto NativeWindow::setMinSize(const Api::Size& size) -> void
 {
     m_minSize = size;

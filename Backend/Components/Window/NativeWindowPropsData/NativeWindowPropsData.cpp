@@ -19,6 +19,7 @@ auto NativeWindowPropsData::Read(const Api::PropertyMap& propertyMap) -> NativeW
         .minSize = PropertyReader::Get<Api::Size>(propertyMap, Api::Props::MinSize),
         .maxSize = PropertyReader::Get<Api::Size>(propertyMap, Api::Props::MaxSize),
         .state = PropertyReader::Get<Api::WindowState>(propertyMap, Api::Props::State),
+        .contextMenus = PropertyReader::Get<Api::ContextMenus>(propertyMap, Api::Props::ContextMenus),
     };
 }
 
@@ -36,6 +37,7 @@ auto NativeWindowPropsData::RemoveHandled(Api::PropertyMap& propertyMap) -> void
     propertyMap.erase(Api::Props::MinSize);
     propertyMap.erase(Api::Props::MaxSize);
     propertyMap.erase(Api::Props::State);
+    propertyMap.erase(Api::Props::ContextMenus);
 }
 
 auto NativeWindowPropsData::isNormal() const -> bool

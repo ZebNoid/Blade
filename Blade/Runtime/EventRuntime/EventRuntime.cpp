@@ -16,6 +16,11 @@ auto EventRuntime::registerTree(const WidgetTree& tree) -> void
     {
         registerTree(child);
     }
+
+    for (const auto& overlay : tree.overlays)
+    {
+        registerTree(overlay);
+    }
 }
 
 auto EventRuntime::dispatch(const Api::BackendEvent& event) -> Api::EventResult

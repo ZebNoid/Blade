@@ -24,6 +24,7 @@ struct NativeWindowPropsData
     const Api::Size* minSize{};
     const Api::Size* maxSize{};
     const Api::WindowState* state{};
+    const Api::ContextMenus* contextMenus{};
 
     static auto Read(const Api::PropertyMap& propertyMap) -> NativeWindowPropsData;
     static auto RemoveHandled(Api::PropertyMap& propertyMap) -> void;

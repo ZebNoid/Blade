@@ -27,14 +27,24 @@ protected:
         // }).build(this);
 
         Window(
-            Button(L"Button").on({
-                .drop = [](Api::Text files)
-                {
-                    LOGF_D(L"Drop Button:\n%s", files.c_str());
-                }
-            })
+            ContextArea(
+                Button(L"File").on({
+                    .drop = [](Api::Text files)
+                    {
+                        LOGF_D(L"Drop Button:\n%s", files.c_str());
+                    }
+                }),
+                Menu(
+                    MenuItem(L"Open").on({ .click = [] { LOG(L"Menu Open"); } }),
+                    MenuItem(L"Close").on({ .click = [] { LOG(L"Menu Delete"); } })
+                ).set({ .trigger = Api::MenuTrigger::RightClick }),
+                Menu(
+                    MenuItem(L"Reset").on({ .click = [] { LOG(L"Menu Reset"); } }),
+                    MenuItem(L"Delete").on({ .click = [] { LOG(L"Menu Close"); } })
+                ).set({ .trigger = Api::MenuTrigger::MiddleClick })
+            )
         ).set({
-            .title = L"Drag and Drop",
+            .title = L"Context Menu",
             .size = {800, 600},
             .placement = Api::WindowPlacement::Center({0, 0}, 1),
         }).on({
