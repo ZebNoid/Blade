@@ -20,6 +20,7 @@ add_library(${PROJECT_NAME} INTERFACE
         Common/Lifetime.h
         Common/MenuData.h
         Common/MenuTrigger.h
+        Common/Shortcut.h
         Common/Rect.h
         Common/Size.h
         Common/Point.h

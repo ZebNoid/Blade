@@ -26,6 +26,8 @@ add_library(${PROJECT_NAME} STATIC
         Widget/Menu/Menu.h
         Widget/Menu/MenuItem.h
         Widget/Menu/MenuItemEvents.h
+        Widget/Menu/MenuItemProps.h
+        Widget/Menu/MenuSeparator.h
         Widget/Menu/MenuProps.h
 
         Widget/Layout/Column/Column.h

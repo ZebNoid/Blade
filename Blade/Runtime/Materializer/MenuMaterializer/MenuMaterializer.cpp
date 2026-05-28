@@ -5,8 +5,11 @@ namespace Blade {
 namespace {
 
 auto GetProp(const Api::PropertyMap& map, Api::Props prop) -> const Api::PropertyValue*;
+auto IsSeparator(const WidgetTree& item) -> bool;
 auto Trigger(const WidgetTree& menu) -> Api::MenuTrigger;
 auto Title(const WidgetTree& item) -> Api::Text;
+auto Shortcut(const WidgetTree& item) -> Api::Shortcut;
+auto Item(const WidgetTree& item) -> Api::MenuItemData;
 
 } // namespace
 
@@ -19,13 +22,7 @@ auto MenuMaterializer::Build(const std::vector<WidgetTree>* overlays) -> Api::Co
     {
         Api::MenuData data{ .trigger = Trigger(menu) };
 
-        for (const auto& item : menu.children)
-        {
-            data.items.push_back({
-                .id = item.id,
-                .title = Title(item)
-            });
-        }
+        for (const auto& item : menu.children) data.items.push_back(Item(item));
 
         result.push_back(std::move(data));
     }
@@ -48,11 +45,37 @@ auto Trigger(const WidgetTree& menu) -> Api::MenuTrigger
     return trigger ? *trigger : Api::MenuTrigger::RightClick;
 }
 
+auto IsSeparator(const WidgetTree& item) -> bool
+{
+    return item.type == L"MenuSeparator";
+}
+
 auto Title(const WidgetTree& item) -> Api::Text
 {
     const auto* value = GetProp(item.backend.create, Api::Props::Title);
     const auto* title = value ? std::get_if<Api::Text>(value) : nullptr;
     return title ? *title : L"";
+}
+
+auto Shortcut(const WidgetTree& item) -> Api::Shortcut
+{
+    const auto* value = GetProp(item.backend.create, Api::Props::Shortcut);
+    const auto* shortcut = value ? std::get_if<Api::Shortcut>(value) : nullptr;
+    return shortcut ? *shortcut : Api::Shortcut::None();
+}
+
+auto Item(const WidgetTree& item) -> Api::MenuItemData
+{
+    Api::MenuItemData data{
+        .id = item.id,
+        .title = Title(item),
+        .shortcut = Shortcut(item),
+        .separator = IsSeparator(item)
+    };
+
+    for (const auto& child : item.children) data.children.push_back(Item(child));
+
+    return data;
 }
 
 } // namespace

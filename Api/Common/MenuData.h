@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "MenuTrigger.h"
+#include "Shortcut.h"
 #include "Types.h"
 
 namespace Blade::Api {
@@ -11,6 +12,9 @@ struct MenuItemData
 {
     Api::Id id = Api::InvalidId;
     Api::Text title;
+    Api::Shortcut shortcut = Api::Shortcut::None();
+    bool separator = false;
+    std::vector<MenuItemData> children;
 };
 
 struct MenuData

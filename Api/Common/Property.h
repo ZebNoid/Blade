@@ -13,6 +13,7 @@
 #include "Point.h"
 #include "Props.h"
 #include "Rect.h"
+#include "Shortcut.h"
 #include "Size.h"
 #include "Types.h"
 #include "WindowPlacementProps.h"
@@ -40,6 +41,7 @@ using PropertyValue = std::variant<
     Api::CaptionProps,
     Api::Lifetime,
     Api::MenuTrigger,
+    Api::Shortcut,
     Api::ContextMenus,
     Api::WindowPlacementProps,
     Api::WindowState,

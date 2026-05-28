@@ -16,6 +16,48 @@ auto MenuItemId(Api::Id id) -> UINT_PTR
     return static_cast<UINT_PTR>(id);
 }
 
+auto ShortcutText(const Api::Shortcut& shortcut) -> Api::Text
+{
+    if (Api::IsNone(shortcut)) return L"";
+
+    Api::Text result;
+    if (Api::Has(shortcut.modifiers, Api::KeyModifier::Ctrl)) result += L"Ctrl+";
+    if (Api::Has(shortcut.modifiers, Api::KeyModifier::Alt)) result += L"Alt+";
+    if (Api::Has(shortcut.modifiers, Api::KeyModifier::Shift)) result += L"Shift+";
+    result += shortcut.key;
+    return result;
+}
+
+auto MenuTitle(const Api::MenuItemData& item) -> Api::Text
+{
+    const auto shortcut = ShortcutText(item.shortcut);
+    return shortcut.empty() ? item.title : item.title + L"\t" + shortcut;
+}
+
+auto AppendMenuItem(HMENU menu, const Api::MenuItemData& item) -> void
+{
+    if (item.separator)
+    {
+        AppendMenuW(menu, MF_SEPARATOR, 0, nullptr);
+        return;
+    }
+
+    const auto title = MenuTitle(item);
+
+    if (!item.children.empty())
+    {
+        auto subMenu = CreatePopupMenu();
+        if (!subMenu) return;
+
+        for (const auto& child : item.children) AppendMenuItem(subMenu, child);
+
+        AppendMenuW(menu, MF_POPUP, reinterpret_cast<UINT_PTR>(subMenu), title.c_str());
+        return;
+    }
+
+    AppendMenuW(menu, MF_STRING, MenuItemId(item.id), title.c_str());
+}
+
 } // namespace
 
 NativeContextMenu::~NativeContextMenu()
@@ -83,10 +125,7 @@ auto NativeContextMenu::show(Api::MenuTrigger trigger, POINT point) -> bool
     auto menu = CreatePopupMenu();
     if (!menu) return false;
 
-    for (const auto& item : data->items)
-    {
-        AppendMenuW(menu, MF_STRING, MenuItemId(item.id), item.title.c_str());
-    }
+    for (const auto& item : data->items) AppendMenuItem(menu, item);
 
     const auto command = TrackPopupMenuEx(menu, TPM_RETURNCMD | TPM_RIGHTBUTTON, point.x, point.y, m_hwnd, nullptr);
     DestroyMenu(menu);

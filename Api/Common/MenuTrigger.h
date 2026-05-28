@@ -7,7 +7,10 @@ enum class MenuTrigger
     None = 0,
     LeftClick = 1 << 0,
     MiddleClick = 1 << 1,
-    RightClick = 1 << 2
+    RightClick = 1 << 2,
+
+    LeftRight = LeftClick | RightClick,
+    All = LeftClick | MiddleClick | RightClick
 };
 
 inline auto operator|(MenuTrigger left, MenuTrigger right) -> MenuTrigger

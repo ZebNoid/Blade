@@ -23,6 +23,7 @@ enum class Props
     State,
     Lifetime,
     MenuTrigger,
+    Shortcut,
     ContextMenus,
 
     Layout,
@@ -49,6 +50,7 @@ inline auto to_string(Props p) -> std::wstring {
     case Props::State:   return L"State";
     case Props::Lifetime:   return L"Lifetime";
     case Props::MenuTrigger:   return L"MenuTrigger";
+    case Props::Shortcut:   return L"Shortcut";
     case Props::ContextMenus:   return L"ContextMenus";
 
     case Props::Layout:   return L"Layout";
