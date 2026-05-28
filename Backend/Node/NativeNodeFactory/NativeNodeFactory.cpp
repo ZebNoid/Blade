@@ -3,6 +3,7 @@
 #include "App/AppBackend.h"
 #include "Common/Logger.h"
 #include "Components/Button/NativeButton.h"
+#include "Components/ContextArea/NativeContextArea.h"
 #include "Components/Tray/NativeTray.h"
 #include "WinApi/HwndApi/HwndApi.h"
 
@@ -23,6 +24,7 @@ auto NativeNodeFactory::registerFactories() -> void
 {
     m_registry.add(L"Window", [this](const auto& command) { return createWindow(command); });
     m_registry.add(L"Button", [this](const auto& command) { return createButton(command); });
+    m_registry.add(L"ContextArea", [this](const auto& command) { return createContextArea(command); });
     m_registry.add(L"Tray", [this](const auto& command) { return createTray(command); });
 }
 
@@ -133,6 +135,45 @@ auto NativeNodeFactory::createTray(const Api::ElementCommand& command) -> std::o
         .type = command.nodeType,
         .parent = command.parent,
         .native = std::move(tray),
+    };
+
+    return node;
+}
+
+auto NativeNodeFactory::createContextArea(const Api::ElementCommand& command) -> std::optional<NativeNode>
+{
+    auto* parent = m_backend->nodes().get(command.parent);
+
+    if (!parent)
+    {
+        LOG_E(L"[Error] createContextArea no parent");
+        return std::nullopt;
+    }
+
+    auto* parentWindow = dynamic_cast<NativeWindow*>(parent->native.get());
+
+    if (!parentWindow)
+    {
+        LOG_E(L"[Error] createContextArea parent is not NativeWindow");
+        return std::nullopt;
+    }
+
+    auto area = std::make_unique<NativeContextArea>();
+
+    if (!area->create(parentWindow, command.id))
+    {
+        LOG_E(L"[Error] createContextArea failed");
+        return std::nullopt;
+    }
+
+    area->applyProps(command.props);
+    area->applyEvents(command.events);
+
+    NativeNode node = {
+        .id = command.id,
+        .type = command.nodeType,
+        .parent = command.parent,
+        .native = std::move(area),
     };
 
     return node;

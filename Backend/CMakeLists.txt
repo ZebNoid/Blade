@@ -81,6 +81,8 @@ add_library(${PROJECT_NAME} STATIC
         Components/Window/NativeWindowPropsData/NativeWindowPropsData.h
         Components/Tray/NativeTray.cpp
         Components/Tray/NativeTray.h
+        Components/ContextArea/NativeContextArea.cpp
+        Components/ContextArea/NativeContextArea.h
         Components/Button/NativeButton.cpp
         Components/Button/NativeButton.h
         Components/Button/NativeButtonApi/NativeButtonApi.cpp

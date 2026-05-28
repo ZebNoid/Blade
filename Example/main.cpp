@@ -48,16 +48,17 @@ protected:
 
         Window(
             Column(
-                Button(L"Flex").set({.layout = {.flex = 1,},}),
-                ContextArea(
-                    // Column().set({.layout = {.flex = 1,},}),
-                    Button(L"File").set({.layout = {.flex = 1,},}).on({
-                        .drop = [](Api::Text files)
-                        {
-                            LOGF_D(L"Drop Button:\n%s", files.c_str());
-                        }
-                    }),
-                    Menu(
+                Button(L"Flex") //.set({.layout = {.flex = 1,},})
+                , ContextArea(
+                    Column().set({.layout = {.flex = 1,},})
+                    // Button(L"File") //.set({.layout = {.flex = 1,},})
+                    // .on({
+                    //     .drop = [](Api::Text files)
+                    //     {
+                    //         LOGF_D(L"Drop Button:\n%s", files.c_str());
+                    //     }
+                    // })
+                    , Menu(
                         MenuItem(L"Open").on({.click = [] { LOG(L"Menu Open"); }}),
                         MenuItem(L"Close").on({.click = [] { LOG(L"Menu Delete"); }})
                     ).set({.trigger = Api::MenuTrigger::RightClick})

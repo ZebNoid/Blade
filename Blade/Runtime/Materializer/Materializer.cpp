@@ -12,6 +12,28 @@ auto IsContextArea(const WidgetTree& widget) -> bool
     return widget.type == L"ContextArea";
 }
 
+auto HasNativeDescendant(const WidgetTree& widget) -> bool
+{
+    if (widget.layoutType == LayoutType::None) return true;
+
+    for (const auto& child : widget.children)
+    {
+        if (HasNativeDescendant(child)) return true;
+    }
+
+    return false;
+}
+
+auto IsNativeContextArea(const WidgetTree& widget) -> bool
+{
+    return IsContextArea(widget) && !widget.children.empty() && !HasNativeDescendant(widget.children.front());
+}
+
+auto ShouldMaterialize(const WidgetTree& widget, const LayoutNode& layout) -> bool
+{
+    return layout.layoutType == LayoutType::None || IsNativeContextArea(widget);
+}
+
 } // namespace
 
 auto Materializer::create(const WidgetTree& widgetTree, const LayoutNode& layoutTree) -> std::vector<Api::ElementCommand>
@@ -44,7 +66,7 @@ auto Materializer::createNode(
     const auto* ownContextMenus = !widget.overlays.empty() ? &widget.overlays : nullptr;
     const auto* activeContextMenus = contextMenus ? contextMenus : ownContextMenus;
 
-    if (layout.layoutType == LayoutType::None)
+    if (ShouldMaterialize(widget, layout))
     {
         out.push_back(MaterializerCommands::Create(widget, parent, MenuMaterializer::Build(activeContextMenus)));
 
@@ -81,7 +103,7 @@ auto Materializer::updateNode(
 {
     Api::Id currentParent = parent;
 
-    if (layout.layoutType == LayoutType::None)
+    if (ShouldMaterialize(widget, layout))
     {
         if (includeCurrent)
         {
