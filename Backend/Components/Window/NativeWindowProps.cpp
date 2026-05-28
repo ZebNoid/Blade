@@ -29,7 +29,6 @@ auto ApplyBounds(HWND hwnd, const NativeWindowPropsData& props) -> void
 {
     if (props.rect)
     {
-        LOGF_D(L" -> Apply::%s %s", to_string(Api::Props::Rect).c_str(), to_string(*props.rect).c_str());
         if (props.isNormal())
         {
             HwndApi::SetClientRect(hwnd, *props.rect);
@@ -41,7 +40,6 @@ auto ApplyBounds(HWND hwnd, const NativeWindowPropsData& props) -> void
     }
     else if (props.size)
     {
-        LOGF_D(L" -> Apply::%s %s", to_string(Api::Props::Size).c_str(), to_string(*props.size).c_str());
         if (props.isNormal()) HwndApi::SetClientSize(hwnd, *props.size);
     }
 }
