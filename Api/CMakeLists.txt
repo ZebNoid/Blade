@@ -17,6 +17,10 @@ add_library(${PROJECT_NAME} INTERFACE
         Common/Types.h
         Common/Thickness.h
         Common/LayoutProps.h
+        Common/Lifetime.h
+        Common/MenuData.h
+        Common/MenuTrigger.h
+        Common/Shortcut.h
         Common/Rect.h
         Common/Size.h
         Common/Point.h

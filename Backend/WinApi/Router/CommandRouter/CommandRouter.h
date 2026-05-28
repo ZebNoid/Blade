@@ -18,7 +18,7 @@ public:
 
     auto on(Api::Id id, WORD notificationCode, Api::BackendEvent event) -> void;
 
-    auto emit(Api::BackendEvent event) -> bool;
+    auto emit(Api::BackendEvent event) -> Api::EventResult;
 
     auto dispatch(WPARAM wParam, LPARAM lParam) -> bool;
 

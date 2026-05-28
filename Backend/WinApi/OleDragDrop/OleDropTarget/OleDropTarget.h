@@ -29,9 +29,9 @@ public:
 
 private:
     static auto HasFiles(IDataObject* data) -> bool;
-    static auto ReadFiles(IDataObject* data) -> Api::Text;
-    static auto SetCopyEffect(DWORD* effect, bool allow) -> void;
-    auto point(POINTL point) const -> POINT;
+    static auto ReadFiles(IDataObject* data, Api::Id id) -> Api::Text;
+    static auto ApplyEffect(DWORD* effect, bool allow) -> DWORD;
+    static auto ToPoint(POINTL point) -> POINT;
 
 private:
     LONG m_refs = 1;

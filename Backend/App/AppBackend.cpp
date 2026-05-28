@@ -1,6 +1,7 @@
 #include "AppBackend.h"
 
 #include "CommandDispatcher/CommandDispatcher.h"
+#include "Common/Logger.h"
 #include "WinApi/Window/WindowClass/WindowClass.h"
 #include "WinApi/Display/DisplayApi/DisplayApi.h"
 
@@ -28,9 +29,11 @@ auto AppBackend::runApp() -> int
         [&]
         {
             m_host.destroyClosedWindows();
+            m_nodes.collectGarbage();
 
-            if (m_host.count() == 0)
+            if (m_nodes.ownerCount() == 0)
             {
+                LOG_D(L"AppBackend::ownerCount 0 -> quit");
                 quit();
             }
         }

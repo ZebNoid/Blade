@@ -17,6 +17,13 @@ auto MaterializerCommands::Create(const WidgetTree& widget, Api::Id parent) -> A
     };
 }
 
+auto MaterializerCommands::Create(const WidgetTree& widget, Api::Id parent, const Api::ContextMenus& menus) -> Api::ElementCommand
+{
+    auto command = Create(widget, parent);
+    if (!menus.empty()) command.props[Api::Props::ContextMenus] = menus;
+    return command;
+}
+
 auto MaterializerCommands::Attach(const WidgetTree& widget, Api::Id parent) -> Api::ElementCommand
 {
     return {

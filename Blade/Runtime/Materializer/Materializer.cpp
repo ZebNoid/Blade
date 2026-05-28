@@ -1,8 +1,57 @@
 #include "Materializer.h"
 
 #include "Runtime/Materializer/MaterializerCommands/MaterializerCommands.h"
+#include "Runtime/Materializer/MenuMaterializer/MenuMaterializer.h"
 
 namespace Blade {
+
+namespace {
+
+auto IsContextArea(const WidgetTree& widget) -> bool
+{
+    return widget.type == L"ContextArea";
+}
+
+auto HasEvent(const WidgetTree& widget, Api::Events event) -> bool
+{
+    return widget.events.find(event) != widget.events.end();
+}
+
+auto HasNativeDescendant(const WidgetTree& widget) -> bool
+{
+    if (widget.layoutType == LayoutType::None) return true;
+
+    for (const auto& child : widget.children)
+    {
+        if (HasNativeDescendant(child)) return true;
+    }
+
+    return false;
+}
+
+auto IsNativeContextArea(const WidgetTree& widget) -> bool
+{
+    return IsContextArea(widget) && !widget.children.empty() && !HasNativeDescendant(widget.children.front());
+}
+
+auto ShouldMaterialize(const WidgetTree& widget, const LayoutNode& layout) -> bool
+{
+    return layout.layoutType == LayoutType::None || IsNativeContextArea(widget);
+}
+
+auto CreateCommand(
+    const WidgetTree& widget,
+    Api::Id parent,
+    const std::vector<WidgetTree>* contextMenus,
+    Api::Id dropTarget
+) -> Api::ElementCommand
+{
+    auto command = MaterializerCommands::Create(widget, parent, MenuMaterializer::Build(contextMenus));
+    if (dropTarget != Api::InvalidId && !HasEvent(widget, Api::Events::Drop)) command.props[Api::Props::DropTarget] = dropTarget;
+    return command;
+}
+
+} // namespace
 
 auto Materializer::create(const WidgetTree& widgetTree, const LayoutNode& layoutTree) -> std::vector<Api::ElementCommand>
 {
@@ -27,12 +76,17 @@ auto Materializer::createNode(
     const WidgetTree& widget,
     const LayoutNode& layout,
     std::vector<Api::ElementCommand>& out,
-    Api::Id parent
+    Api::Id parent,
+    const std::vector<WidgetTree>* contextMenus,
+    Api::Id dropTarget
 ) -> void
 {
-    if (layout.layoutType == LayoutType::None)
+    const auto* ownContextMenus = !widget.overlays.empty() ? &widget.overlays : nullptr;
+    const auto* activeContextMenus = contextMenus ? contextMenus : ownContextMenus;
+
+    if (ShouldMaterialize(widget, layout))
     {
-        out.push_back(MaterializerCommands::Create(widget, parent));
+        out.push_back(CreateCommand(widget, parent, activeContextMenus, dropTarget));
 
         if (parent != Api::InvalidId)
         {
@@ -49,9 +103,13 @@ auto Materializer::createNode(
         parent = widget.id;
     }
 
+    const auto isContextArea = IsContextArea(widget);
+    const auto* childContextMenus = isContextArea ? &widget.overlays : nullptr;
+    const auto childDropTarget = isContextArea && HasEvent(widget, Api::Events::Drop) ? widget.id : dropTarget;
+
     for (size_t i = 0; i < widget.children.size(); ++i)
     {
-        createNode(widget.children[i], layout.children[i], out, parent);
+        createNode(widget.children[i], layout.children[i], out, parent, childContextMenus, childDropTarget);
     }
 }
 
@@ -65,7 +123,7 @@ auto Materializer::updateNode(
 {
     Api::Id currentParent = parent;
 
-    if (layout.layoutType == LayoutType::None)
+    if (ShouldMaterialize(widget, layout))
     {
         if (includeCurrent)
         {

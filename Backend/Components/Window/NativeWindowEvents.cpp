@@ -15,6 +15,12 @@ auto HasEvent(const Api::EventSubscriptions& events, Api::Events event) -> bool
     return std::ranges::find(events, event) != events.end();
 }
 
+auto IsCanceled(const Api::EventResult& result) -> bool
+{
+    const auto* value = std::get_if<bool>(&result);
+    return value && !*value;
+}
+
 } // namespace
 
 auto NativeWindowEvents::Apply(NativeWindow& window, const Api::EventSubscriptions& events) -> void
@@ -30,10 +36,15 @@ auto NativeWindowEvents::Apply(NativeWindow& window, const Api::EventSubscriptio
         {
             if (hasClose)
             {
-                window.commandRouter().emit({
+                const auto result = window.commandRouter().emit({
                     .target = window.id(),
                     .type = Api::Events::Close
                 });
+
+                if (IsCanceled(result))
+                {
+                    return 0;
+                }
             }
 
             HwndApi::Destroy(hwnd);

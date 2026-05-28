@@ -23,6 +23,11 @@ auto LayoutTreeBuilder::BuildNode(const WidgetTree& tree) -> LayoutNode
         node.children.push_back(BuildNode(child));
     }
 
+    if (node.layoutType == LayoutType::Virtual && node.children.size() == 1)
+    {
+        node.layout = node.children.front().layout;
+    }
+
     return node;
 }
 

@@ -4,6 +4,7 @@
 #include "Components/Button/NativeButtonProps.h"
 #include "Event/EventMapper/EventMapper.h"
 #include "Property/PropertyMapper/PropertyMapper.h"
+#include "Property/PropertyReader.h"
 #include "WinApi/Window/Hwnd/Hwnd.h"
 #include "Components/Window/NativeWindow.h"
 
@@ -31,6 +32,16 @@ auto NativeButton::create(NativeWindow* parent, Api::Id id) -> bool
 
 auto NativeButton::applyProps(const Api::PropertyMap& propertyMap) -> void
 {
+    if (const auto* menus = PropertyReader::Get<Api::ContextMenus>(propertyMap, Api::Props::ContextMenus))
+    {
+        enableContextMenus(*menus);
+    }
+
+    if (const auto* target = PropertyReader::Get<Api::Id>(propertyMap, Api::Props::DropTarget))
+    {
+        enableDropTarget(*target);
+    }
+
     PropertyMapper::Apply(m_hwnd, propertyMap);
     NativeButtonProps::Apply(m_hwnd, propertyMap);
 }
@@ -42,13 +53,29 @@ auto NativeButton::applyEvents(const Api::EventSubscriptions& events) -> void
 
 auto NativeButton::enableDropTarget() -> void
 {
+    enableDropTarget(m_id);
+}
+
+auto NativeButton::enableDropTarget(Api::Id targetId) -> void
+{
     if (m_dropTarget || !m_hwnd) return;
 
     auto* parent = dynamic_cast<NativeWindow*>(m_parent);
     if (!parent) return;
 
-    auto dropTarget = std::make_unique<OleDropTarget>(m_id, parent->commandRouter());
+    auto dropTarget = std::make_unique<OleDropTarget>(targetId, parent->commandRouter());
     if (dropTarget->registerHwnd(m_hwnd)) m_dropTarget = std::move(dropTarget);
+}
+
+auto NativeButton::enableContextMenus(Api::ContextMenus menus) -> void
+{
+    if (m_contextMenu || !m_hwnd || menus.empty()) return;
+
+    auto* parent = dynamic_cast<NativeWindow*>(m_parent);
+    if (!parent) return;
+
+    auto contextMenu = std::make_unique<NativeContextMenu>();
+    if (contextMenu->attach(m_hwnd, m_id, parent->commandRouter(), std::move(menus))) m_contextMenu = std::move(contextMenu);
 }
 
 auto NativeButton::isAlive() const -> bool

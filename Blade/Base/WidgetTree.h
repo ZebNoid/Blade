@@ -28,6 +28,7 @@ struct WidgetTree
     Api::EventMap events;
 
     std::vector<WidgetTree> children;
+    std::vector<WidgetTree> overlays;
 };
 
 } // namespace

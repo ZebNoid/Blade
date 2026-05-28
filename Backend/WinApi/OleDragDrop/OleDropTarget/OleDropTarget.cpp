@@ -20,6 +20,23 @@ auto FileFormat() -> FORMATETC
     };
 }
 
+auto HandleValue(HWND hwnd) -> std::uintptr_t
+{
+    return reinterpret_cast<std::uintptr_t>(hwnd);
+}
+
+auto Contains(const std::vector<std::uintptr_t>& handles, HWND hwnd) -> bool
+{
+    const auto value = HandleValue(hwnd);
+
+    for (const auto handle : handles)
+    {
+        if (handle == value) return true;
+    }
+
+    return false;
+}
+
 } // namespace
 
 OleDropTarget::OleDropTarget(Api::Id id, CommandRouter& router)
@@ -38,16 +55,17 @@ OleDropTarget::~OleDropTarget()
 auto OleDropTarget::registerHwnd(HWND hwnd) -> bool
 {
     if (!hwnd) return false;
+    if (Contains(m_hwnds, hwnd)) return true;
 
     const auto result = RegisterDragDrop(hwnd, this);
     if (FAILED(result))
     {
-        LOGF_E(L"[Error] OleDropTarget::RegisterDragDrop failed [%08X]", static_cast<unsigned>(result));
+        LOGF_E(L"[Error] OleDropTarget::RegisterDragDrop failed id=%d hwnd=%p [%08X]", m_id, hwnd, static_cast<unsigned>(result));
         return false;
     }
 
-    m_hwnds.push_back(reinterpret_cast<std::uintptr_t>(hwnd));
-    LOGF_D(L"OleDropTarget::RegisterDragDrop [%p]", hwnd);
+    m_hwnds.push_back(HandleValue(hwnd));
+    LOGF_D(L"OleDropTarget::RegisterDragDrop id=%d hwnd=%p", m_id, hwnd);
     return true;
 }
 
@@ -81,18 +99,19 @@ auto OleDropTarget::Release() -> ULONG
 auto OleDropTarget::DragEnter(IDataObject* data, DWORD keyState, POINTL point, DWORD* effect) -> HRESULT
 {
     m_allowDrop = HasFiles(data);
-    SetCopyEffect(effect, m_allowDrop);
+    const auto dropEffect = ApplyEffect(effect, m_allowDrop);
 
-    auto pt = this->point(point);
-    if (m_helper) m_helper->DragEnter(nullptr, data, &pt, *effect);
+    auto pt = ToPoint(point);
+    if (m_helper) m_helper->DragEnter(nullptr, data, &pt, dropEffect);
     return S_OK;
 }
 
 auto OleDropTarget::DragOver(DWORD keyState, POINTL point, DWORD* effect) -> HRESULT
 {
-    SetCopyEffect(effect, m_allowDrop);
-    auto pt = this->point(point);
-    if (m_helper) m_helper->DragOver(&pt, *effect);
+    const auto dropEffect = ApplyEffect(effect, m_allowDrop);
+
+    auto pt = ToPoint(point);
+    if (m_helper) m_helper->DragOver(&pt, dropEffect);
     return S_OK;
 }
 
@@ -105,11 +124,11 @@ auto OleDropTarget::DragLeave() -> HRESULT
 
 auto OleDropTarget::Drop(IDataObject* data, DWORD keyState, POINTL point, DWORD* effect) -> HRESULT
 {
-    const auto files = ReadFiles(data);
-    SetCopyEffect(effect, !files.empty());
+    const auto files = ReadFiles(data, m_id);
+    const auto dropEffect = ApplyEffect(effect, !files.empty());
     m_allowDrop = false;
-    auto pt = this->point(point);
-    if (m_helper) m_helper->Drop(data, &pt, *effect);
+    auto pt = ToPoint(point);
+    if (m_helper) m_helper->Drop(data, &pt, dropEffect);
 
     if (!files.empty())
     {
@@ -131,7 +150,7 @@ auto OleDropTarget::HasFiles(IDataObject* data) -> bool
     return data->QueryGetData(&format) == S_OK;
 }
 
-auto OleDropTarget::ReadFiles(IDataObject* data) -> Api::Text
+auto OleDropTarget::ReadFiles(IDataObject* data, Api::Id id) -> Api::Text
 {
     if (!data) return {};
 
@@ -141,7 +160,7 @@ auto OleDropTarget::ReadFiles(IDataObject* data) -> Api::Text
     const auto getDataResult = data->GetData(&format, &storage);
     if (FAILED(getDataResult))
     {
-        LOGF_E(L"[Error] OleDropTarget::GetData failed [%08X]", static_cast<unsigned>(getDataResult));
+        LOGF_E(L"[Error] OleDropTarget::GetData failed id=%d [%08X]", id, static_cast<unsigned>(getDataResult));
         return {};
     }
 
@@ -168,12 +187,14 @@ auto OleDropTarget::ReadFiles(IDataObject* data) -> Api::Text
     return result;
 }
 
-auto OleDropTarget::SetCopyEffect(DWORD* effect, bool allow) -> void
+auto OleDropTarget::ApplyEffect(DWORD* effect, bool allow) -> DWORD
 {
-    if (effect) *effect = allow ? DROPEFFECT_COPY : DROPEFFECT_NONE;
+    const auto value = allow ? DROPEFFECT_COPY : DROPEFFECT_NONE;
+    if (effect) *effect = value;
+    return value;
 }
 
-auto OleDropTarget::point(POINTL point) const -> POINT
+auto OleDropTarget::ToPoint(POINTL point) -> POINT
 {
     return {
         .x = point.x,

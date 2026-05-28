@@ -7,9 +7,13 @@
 #include "CaptionProps.h"
 #include "Events/Events.h"
 #include "LayoutProps.h"
+#include "Lifetime.h"
+#include "MenuTrigger.h"
+#include "MenuData.h"
 #include "Point.h"
 #include "Props.h"
 #include "Rect.h"
+#include "Shortcut.h"
 #include "Size.h"
 #include "Types.h"
 #include "WindowPlacementProps.h"
@@ -30,11 +34,16 @@ using PropertyValue = std::variant<
     int,
     float,
     double,
+    Api::Id,
     Api::Text,
     Api::Point,
     Api::Size,
     Api::Rect,
     Api::CaptionProps,
+    Api::Lifetime,
+    Api::MenuTrigger,
+    Api::Shortcut,
+    Api::ContextMenus,
     Api::WindowPlacementProps,
     Api::WindowState,
     LayoutProps

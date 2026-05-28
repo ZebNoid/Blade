@@ -46,6 +46,11 @@ auto WidgetTreeRegistry::assignNodeIds(WidgetTree& node) -> void
     {
         assignNodeIds(child);
     }
+
+    for (auto& overlay : node.overlays)
+    {
+        assignNodeIds(overlay);
+    }
 }
 
 auto WidgetTreeRegistry::findIn(WidgetTree& node, Api::Id widgetId) -> WidgetTree*
@@ -58,6 +63,14 @@ auto WidgetTreeRegistry::findIn(WidgetTree& node, Api::Id widgetId) -> WidgetTre
     for (auto& child : node.children)
     {
         if (auto* widget = findIn(child, widgetId))
+        {
+            return widget;
+        }
+    }
+
+    for (auto& overlay : node.overlays)
+    {
+        if (auto* widget = findIn(overlay, widgetId))
         {
             return widget;
         }

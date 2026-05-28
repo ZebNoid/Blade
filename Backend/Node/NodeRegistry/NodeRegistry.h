@@ -19,6 +19,7 @@ public:
     auto clear() -> void;
 
     auto count() const -> size_t;
+    auto ownerCount() const -> size_t;
 
     auto collectGarbage() -> void;
 

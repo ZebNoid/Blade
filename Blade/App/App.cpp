@@ -5,14 +5,32 @@
 
 namespace Blade {
 
+App* App::s_current = nullptr;
+
 auto App::run() -> int
 {
+    s_current = this;
+
     onSetup();
-    if (const auto code = initBackend(); code < 0) return code;
+    if (const auto code = initBackend(); code < 0)
+    {
+        if (s_current == this) s_current = nullptr;
+        return code;
+    }
 
     onCreate();
 
-    return m_backend->runApp();
+    const auto result = m_backend->runApp();
+    if (s_current == this) s_current = nullptr;
+    return result;
+}
+
+auto App::Quit() -> void
+{
+    if (s_current && s_current->m_backend)
+    {
+        s_current->m_backend->quit();
+    }
 }
 
 auto App::addToTree(const RootWidget& rootWidget) -> void

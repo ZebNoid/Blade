@@ -58,24 +58,22 @@ auto CommandRouter::on(Api::Id id, WORD notificationCode, Api::BackendEvent even
     });
 }
 
-auto CommandRouter::emit(Api::BackendEvent event) -> bool
+auto CommandRouter::emit(Api::BackendEvent event) -> Api::EventResult
 {
     if (event.type == Api::Events::Unknown)
     {
-        return false;
+        return {};
     }
 
     if (!m_handler || !*m_handler)
     {
-        return false;
+        return {};
     }
 
-    (*m_handler)({
+    return (*m_handler)({
         .type = Api::BackendMessageType::Event,
         .payload = event
     });
-
-    return true;
 }
 
 auto CommandRouter::dispatch(WPARAM wParam, LPARAM lParam) -> bool
@@ -109,7 +107,8 @@ auto CommandRouter::dispatch(WPARAM wParam, LPARAM lParam) -> bool
 
     auto event = subscription->event;
     event.target = id;
-    return emit(event);
+    emit(event);
+    return true;
 }
 
 } // namespace Blade::Backend

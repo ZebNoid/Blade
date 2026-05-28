@@ -43,6 +43,11 @@ auto PropertyMapper::Apply(HWND hwnd, const Api::PropertyMap& props) -> void
             break;
 
         case Api::Props::IsDefault:
+        case Api::Props::ContextMenus:
+        case Api::Props::MenuTrigger:
+        case Api::Props::Shortcut:
+        case Api::Props::DropTarget:
+        case Api::Props::Lifetime:
             break;
 
         default:

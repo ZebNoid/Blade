@@ -4,6 +4,7 @@
 #include "Runtime/LayoutEngine/Algorithm/LayoutLeaf/LayoutLeaf.h"
 #include "Runtime/LayoutEngine/Algorithm/LayoutRow/LayoutRow.h"
 #include "Runtime/LayoutEngine/Algorithm/LayoutStack/LayoutStack.h"
+#include "Runtime/LayoutEngine/Algorithm/LayoutVirtual/LayoutVirtual.h"
 
 
 namespace Blade {
@@ -25,6 +26,9 @@ auto LayoutEngine::Measure(
 
     case LayoutType::Stack:
         return LayoutStack::Measure(ctx);
+
+    case LayoutType::Virtual:
+        return LayoutVirtual::Measure(ctx);
 
     case LayoutType::None:
     default:
@@ -52,6 +56,10 @@ auto LayoutEngine::Arrange(
 
     case LayoutType::Stack:
         LayoutStack::Arrange(ctx);
+        break;
+
+    case LayoutType::Virtual:
+        LayoutVirtual::Arrange(ctx);
         break;
 
     default:

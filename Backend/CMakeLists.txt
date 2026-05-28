@@ -32,6 +32,8 @@ add_library(${PROJECT_NAME} STATIC
         WinApi/Interop/OleScope/OleScope.h
         WinApi/OleDragDrop/OleDropTarget/OleDropTarget.cpp
         WinApi/OleDragDrop/OleDropTarget/OleDropTarget.h
+        WinApi/Menu/NativeContextMenu/NativeContextMenu.cpp
+        WinApi/Menu/NativeContextMenu/NativeContextMenu.h
         WinApi/HwndApi/HwndApi.cpp
         WinApi/HwndApi/HwndApi.h
         WinApi/Display/DisplayApi/DisplayApi.cpp
@@ -77,6 +79,10 @@ add_library(${PROJECT_NAME} STATIC
         Components/Window/NativeWindowProps.h
         Components/Window/NativeWindowPropsData/NativeWindowPropsData.cpp
         Components/Window/NativeWindowPropsData/NativeWindowPropsData.h
+        Components/Tray/NativeTray.cpp
+        Components/Tray/NativeTray.h
+        Components/ContextArea/NativeContextArea.cpp
+        Components/ContextArea/NativeContextArea.h
         Components/Button/NativeButton.cpp
         Components/Button/NativeButton.h
         Components/Button/NativeButtonApi/NativeButtonApi.cpp

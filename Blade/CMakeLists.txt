@@ -1,4 +1,4 @@
-project(Blade VERSION 0.3.9)
+project(Blade VERSION 0.4.0)
 
 # Use the names to logic check
 if (NOT PROJECT_IS_TOP_LEVEL)
@@ -16,10 +16,20 @@ add_library(${PROJECT_NAME} STATIC
         Widget/Window/Window.h
         Widget/Window/WindowProps.h
         Widget/Window/WindowEvents.h
+        Widget/Tray/Tray.h
+        Widget/Tray/TrayProps.h
 
         Widget/Button/Button.h
         Widget/Button/ButtonProps.h
         Widget/Button/ButtonEvents.h
+        Widget/ContextArea/ContextArea.h
+        Widget/ContextArea/ContextAreaEvents.h
+        Widget/Menu/Menu.h
+        Widget/Menu/MenuItem.h
+        Widget/Menu/MenuItemEvents.h
+        Widget/Menu/MenuItemProps.h
+        Widget/Menu/MenuSeparator.h
+        Widget/Menu/MenuProps.h
 
         Widget/Layout/Column/Column.h
         Widget/Layout/Column/ColumnProps.h
@@ -32,6 +42,8 @@ add_library(${PROJECT_NAME} STATIC
         Runtime/Materializer/Materializer.h
         Runtime/Materializer/MaterializerCommands/MaterializerCommands.cpp
         Runtime/Materializer/MaterializerCommands/MaterializerCommands.h
+        Runtime/Materializer/MenuMaterializer/MenuMaterializer.cpp
+        Runtime/Materializer/MenuMaterializer/MenuMaterializer.h
         Runtime/WidgetTreeRegistry/WidgetTreeRegistry.cpp
         Runtime/WidgetTreeRegistry/WidgetTreeRegistry.h
         Runtime/EventRuntime/EventRuntime.cpp
@@ -64,6 +76,8 @@ add_library(${PROJECT_NAME} STATIC
         Runtime/LayoutEngine/Algorithm/LayoutLinearArrange/LayoutLinearArrange.h
         Runtime/LayoutEngine/Algorithm/LayoutStack/LayoutStack.cpp
         Runtime/LayoutEngine/Algorithm/LayoutStack/LayoutStack.h
+        Runtime/LayoutEngine/Algorithm/LayoutVirtual/LayoutVirtual.cpp
+        Runtime/LayoutEngine/Algorithm/LayoutVirtual/LayoutVirtual.h
         Runtime/LayoutEngine/Geometry/LayoutAxis.h
         Runtime/LayoutEngine/Geometry/LayoutGeometry.h
         Runtime/LayoutEngine/LayoutEngine/LayoutEngine.cpp
