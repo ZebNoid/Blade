@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Base/Widget.h"
+#include "ContextAreaEvents.h"
+#include "Runtime/Normalize/Normalize.h"
 
 namespace Blade {
 
@@ -18,6 +20,12 @@ public:
             m_tree.overlays.push_back(menus.tree()),
             ...
         );
+    }
+
+    auto on(ContextAreaEvents events) -> ContextArea&
+    {
+        m_tree.events = Normalize::Events(events);
+        return *this;
     }
 };
 

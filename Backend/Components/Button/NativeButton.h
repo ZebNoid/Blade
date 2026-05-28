@@ -20,6 +20,7 @@ public:
 
     auto applyEvents(const Api::EventSubscriptions& events) -> void override;
     auto enableDropTarget() -> void;
+    auto enableDropTarget(Api::Id targetId) -> void;
     auto enableContextMenus(Api::ContextMenus menus) -> void;
 
     auto isAlive() const -> bool override;

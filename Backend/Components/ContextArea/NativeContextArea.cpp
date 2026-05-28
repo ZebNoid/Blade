@@ -1,11 +1,22 @@
 #include "NativeContextArea.h"
 
+#include <algorithm>
+
 #include "Components/Window/NativeWindow.h"
 #include "Property/PropertyMapper/PropertyMapper.h"
 #include "Property/PropertyReader.h"
 #include "WinApi/Window/Hwnd/Hwnd.h"
 
 namespace Blade::Backend {
+
+namespace {
+
+auto HasEvent(const Api::EventSubscriptions& events, Api::Events event) -> bool
+{
+    return std::ranges::find(events, event) != events.end();
+}
+
+} // namespace
 
 auto NativeContextArea::create(NativeWindow* parent, Api::Id id) -> bool
 {
@@ -33,11 +44,17 @@ auto NativeContextArea::applyProps(const Api::PropertyMap& propertyMap) -> void
         enableContextMenus(*menus);
     }
 
+    if (const auto* target = PropertyReader::Get<Api::Id>(propertyMap, Api::Props::DropTarget))
+    {
+        enableDropTarget(*target);
+    }
+
     PropertyMapper::Apply(m_hwnd, propertyMap);
 }
 
-auto NativeContextArea::applyEvents(const Api::EventSubscriptions&) -> void
+auto NativeContextArea::applyEvents(const Api::EventSubscriptions& events) -> void
 {
+    if (HasEvent(events, Api::Events::Drop)) enableDropTarget();
 }
 
 auto NativeContextArea::isAlive() const -> bool
@@ -58,6 +75,22 @@ auto NativeContextArea::enableContextMenus(Api::ContextMenus menus) -> void
 
     auto contextMenu = std::make_unique<NativeContextMenu>();
     if (contextMenu->attach(m_hwnd, m_id, parent->commandRouter(), std::move(menus))) m_contextMenu = std::move(contextMenu);
+}
+
+auto NativeContextArea::enableDropTarget() -> void
+{
+    enableDropTarget(m_id);
+}
+
+auto NativeContextArea::enableDropTarget(Api::Id targetId) -> void
+{
+    if (m_dropTarget || !m_hwnd) return;
+
+    auto* parent = dynamic_cast<NativeWindow*>(m_parent);
+    if (!parent) return;
+
+    auto dropTarget = std::make_unique<OleDropTarget>(targetId, parent->commandRouter());
+    if (dropTarget->registerHwnd(m_hwnd)) m_dropTarget = std::move(dropTarget);
 }
 
 } // namespace Blade::Backend

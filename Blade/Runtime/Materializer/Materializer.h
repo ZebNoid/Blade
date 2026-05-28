@@ -21,7 +21,8 @@ private:
         const LayoutNode& layout,
         std::vector<Api::ElementCommand>& out,
         Api::Id parent = Api::InvalidId,
-        const std::vector<WidgetTree>* contextMenus = nullptr
+        const std::vector<WidgetTree>* contextMenus = nullptr,
+        Api::Id dropTarget = Api::InvalidId
     ) -> void;
 
     auto updateNode(

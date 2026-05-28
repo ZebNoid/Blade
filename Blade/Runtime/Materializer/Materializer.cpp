@@ -12,6 +12,11 @@ auto IsContextArea(const WidgetTree& widget) -> bool
     return widget.type == L"ContextArea";
 }
 
+auto HasEvent(const WidgetTree& widget, Api::Events event) -> bool
+{
+    return widget.events.find(event) != widget.events.end();
+}
+
 auto HasNativeDescendant(const WidgetTree& widget) -> bool
 {
     if (widget.layoutType == LayoutType::None) return true;
@@ -32,6 +37,18 @@ auto IsNativeContextArea(const WidgetTree& widget) -> bool
 auto ShouldMaterialize(const WidgetTree& widget, const LayoutNode& layout) -> bool
 {
     return layout.layoutType == LayoutType::None || IsNativeContextArea(widget);
+}
+
+auto CreateCommand(
+    const WidgetTree& widget,
+    Api::Id parent,
+    const std::vector<WidgetTree>* contextMenus,
+    Api::Id dropTarget
+) -> Api::ElementCommand
+{
+    auto command = MaterializerCommands::Create(widget, parent, MenuMaterializer::Build(contextMenus));
+    if (dropTarget != Api::InvalidId && !HasEvent(widget, Api::Events::Drop)) command.props[Api::Props::DropTarget] = dropTarget;
+    return command;
 }
 
 } // namespace
@@ -60,7 +77,8 @@ auto Materializer::createNode(
     const LayoutNode& layout,
     std::vector<Api::ElementCommand>& out,
     Api::Id parent,
-    const std::vector<WidgetTree>* contextMenus
+    const std::vector<WidgetTree>* contextMenus,
+    Api::Id dropTarget
 ) -> void
 {
     const auto* ownContextMenus = !widget.overlays.empty() ? &widget.overlays : nullptr;
@@ -68,7 +86,7 @@ auto Materializer::createNode(
 
     if (ShouldMaterialize(widget, layout))
     {
-        out.push_back(MaterializerCommands::Create(widget, parent, MenuMaterializer::Build(activeContextMenus)));
+        out.push_back(CreateCommand(widget, parent, activeContextMenus, dropTarget));
 
         if (parent != Api::InvalidId)
         {
@@ -85,11 +103,13 @@ auto Materializer::createNode(
         parent = widget.id;
     }
 
-    const auto* childContextMenus = IsContextArea(widget) ? &widget.overlays : nullptr;
+    const auto isContextArea = IsContextArea(widget);
+    const auto* childContextMenus = isContextArea ? &widget.overlays : nullptr;
+    const auto childDropTarget = isContextArea && HasEvent(widget, Api::Events::Drop) ? widget.id : dropTarget;
 
     for (size_t i = 0; i < widget.children.size(); ++i)
     {
-        createNode(widget.children[i], layout.children[i], out, parent, childContextMenus);
+        createNode(widget.children[i], layout.children[i], out, parent, childContextMenus, childDropTarget);
     }
 }
 

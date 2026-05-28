@@ -2,6 +2,7 @@
 
 #include "WinApi/Menu/NativeContextMenu/NativeContextMenu.h"
 #include "WinApi/NativeElement/NativeElement.h"
+#include "WinApi/OleDragDrop/OleDropTarget/OleDropTarget.h"
 
 namespace Blade::Backend {
 
@@ -17,9 +18,12 @@ public:
     auto attachChild(INativeElement* child) -> void override;
 
 private:
+    auto enableDropTarget() -> void;
+    auto enableDropTarget(Api::Id targetId) -> void;
     auto enableContextMenus(Api::ContextMenus menus) -> void;
 
 private:
+    std::unique_ptr<OleDropTarget> m_dropTarget;
     std::unique_ptr<NativeContextMenu> m_contextMenu;
 };
 

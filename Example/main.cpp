@@ -62,7 +62,12 @@ protected:
                         MenuItem(L"Open").on({.click = [] { LOG(L"Menu Open"); }}),
                         MenuItem(L"Close").on({.click = [] { LOG(L"Menu Delete"); }})
                     ).set({.trigger = Api::MenuTrigger::RightClick})
-                )
+                ).on({
+                .drop = [](Api::Text files)
+                {
+                    LOGF_D(L"Drop ContextArea:\n%s", files.c_str());
+                },
+                })
             )
         ).set({
             .title = L"Context Menu",
