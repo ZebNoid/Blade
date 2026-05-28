@@ -114,7 +114,8 @@ Window(
 }).build(this);
 ```
 
-Supported `WindowProps`:
+<details>
+<summary>Supported <code>WindowProps</code></summary>
 
 | Property | Type | Default | Example |
 | --- | --- | --- | --- |
@@ -132,14 +133,20 @@ Supported `WindowProps`:
 | `state` | `Api::WindowState` | `Normal` | `Api::WindowState::Maximized` |
 | `lifetime` | `Api::Lifetime` | `Owner` | `Api::Lifetime::Ignore` |
 
-Supported `WindowEvents`:
+</details>
+
+<details>
+<summary>Supported <code>WindowEvents</code></summary>
 
 | Event | Callback |
 | --- | --- |
 | `close` | return `false` to cancel close |
 | `drop` | receives dropped file paths as text |
 
-Window placement factories:
+</details>
+
+<details>
+<summary><code>WindowPlacement</code> factories</summary>
 
 ```c++
 Api::WindowPlacement::Manual({100, 100})
@@ -157,6 +164,8 @@ Most placement factories accept offset and monitor index:
 Api::WindowPlacement::Center({20, 0}, 1)
 ```
 
+</details>
+
 ### Tray
 
 `Tray` creates a system tray icon. It can be used without any windows.
@@ -173,13 +182,16 @@ Tray(
 }).build(this);
 ```
 
-Supported `TrayProps`:
+<details>
+<summary>Supported <code>TrayProps</code></summary>
 
 | Property | Type | Default | Example |
 | --- | --- | --- | --- |
 | `title` | `Api::Text` | `L"Blade"` | `L"Blade Tray"` |
 | `icon` | `Api::Text` | empty | `L"app.ico"` or `L"app.png"` |
 | `lifetime` | `Api::Lifetime` | `Owner` | `Api::Lifetime::Ignore` |
+
+</details>
 
 ## Controls
 
@@ -195,7 +207,8 @@ Button(L"Run").set({
 })
 ```
 
-Supported `ButtonProps`:
+<details>
+<summary>Supported <code>ButtonProps</code></summary>
 
 | Property | Type | Default | Example |
 | --- | --- | --- | --- |
@@ -203,13 +216,18 @@ Supported `ButtonProps`:
 | `size` | `Api::Size` | `{100, 50}` | `{120, 40}` |
 | `isDefault` | `bool` | `false` | `true` |
 
-Supported `ButtonEvents`:
+</details>
+
+<details>
+<summary>Supported <code>ButtonEvents</code></summary>
 
 | Event | Callback |
 | --- | --- |
 | `click` | no arguments |
 | `focus` | returns bool |
 | `drop` | receives dropped file paths as text |
+
+</details>
 
 ## Menu
 
@@ -232,13 +250,17 @@ ContextArea(
 )
 ```
 
-Supported `MenuProps`:
+<details>
+<summary>Supported <code>MenuProps</code></summary>
 
 | Property | Type | Default | Example |
 | --- | --- | --- | --- |
 | `trigger` | `Api::MenuTrigger` | `RightClick` | `Api::MenuTrigger::LeftRight` |
 
-Supported `MenuTrigger` values:
+</details>
+
+<details>
+<summary>Supported <code>MenuTrigger</code> values</summary>
 
 | Value | Meaning |
 | --- | --- |
@@ -249,13 +271,19 @@ Supported `MenuTrigger` values:
 | `LeftRight` | left or right mouse button |
 | `All` | left, middle, or right mouse button |
 
-Supported `MenuItemProps`:
+</details>
+
+<details>
+<summary>Supported <code>MenuItemProps</code></summary>
 
 | Property | Type | Default | Example |
 | --- | --- | --- | --- |
 | `shortcut` | `Api::Shortcut` | `Api::Shortcut::None()` | `Api::Shortcut::Ctrl(L'Q')` |
 
-Shortcut factories:
+</details>
+
+<details>
+<summary><code>Shortcut</code> factories</summary>
 
 ```c++
 Api::Shortcut::None()
@@ -265,6 +293,8 @@ Api::Shortcut::Shift(L'F')
 ```
 
 Currently shortcuts are displayed in the native menu. Keyboard handling is not implemented yet.
+
+</details>
 
 ## Layout
 
@@ -302,7 +332,8 @@ Stack(
 )
 ```
 
-Supported `ColumnProps` and `RowProps`:
+<details>
+<summary>Supported <code>ColumnProps</code> and <code>RowProps</code></summary>
 
 | Property | Type | Default | Example |
 | --- | --- | --- | --- |
@@ -311,13 +342,19 @@ Supported `ColumnProps` and `RowProps`:
 | `mainAxisAlignment` | `MainAxisAlignment` | `Start` | `MainAxisAlignment::Center` |
 | `crossAxisAlignment` | `CrossAxisAlignment` | `Stretch` | `CrossAxisAlignment::Center` |
 
-Supported `StackProps`:
+</details>
+
+<details>
+<summary>Supported <code>StackProps</code></summary>
 
 | Property | Type | Default | Example |
 | --- | --- | --- | --- |
 | `layout` | `Api::LayoutProps` | default layout | `{ .padding = {8} }` |
 
-Supported `Api::LayoutProps`:
+</details>
+
+<details>
+<summary>Supported <code>Api::LayoutProps</code></summary>
 
 | Property | Type | Default | Example |
 | --- | --- | --- | --- |
@@ -325,7 +362,10 @@ Supported `Api::LayoutProps`:
 | `padding` | `Api::Thickness` | `{}` | `{4, 8, 4, 8}` |
 | `flex` | `int` | `0` | `1` |
 
-Alignment values:
+</details>
+
+<details>
+<summary>Supported alignment values</summary>
 
 ```c++
 MainAxisAlignment::Start
@@ -340,3 +380,5 @@ CrossAxisAlignment::Center
 CrossAxisAlignment::End
 CrossAxisAlignment::Stretch
 ```
+
+</details>
