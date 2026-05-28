@@ -57,14 +57,41 @@ auto main() -> int
 }
 ```
 
-## Contents
+## Content
+
+<details>
+<summary>Show navigation</summary>
 
 - [Application](#application)
 - [Syntax](#syntax)
 - [Root Widgets](#root-widgets)
+  - [Window](#window)
+    - [Window Properties](#window-properties)
+    - [Window Events](#window-events)
+    - [WindowPlacement Factories](#windowplacement-factories)
+  - [Tray](#tray)
+    - [Tray Properties](#tray-properties)
 - [Controls](#controls)
+  - [Button](#button)
+    - [Button Properties](#button-properties)
+    - [Button Events](#button-events)
 - [Menu](#menu)
+  - [Menu Separator](#menu-separator)
+  - [Submenu](#submenu)
+  - [Menu Properties](#menu-properties)
+  - [MenuTrigger Values](#menutrigger-values)
+  - [MenuItem Properties](#menuitem-properties)
+  - [Shortcut Factories](#shortcut-factories)
 - [Layout](#layout)
+  - [Column](#column)
+  - [Row](#row)
+  - [Stack](#stack)
+  - [Column and Row Properties](#column-and-row-properties)
+  - [Stack Properties](#stack-properties)
+  - [Layout Properties](#layout-properties)
+  - [Alignment Values](#alignment-values)
+
+</details>
 
 ## Application
 
@@ -114,6 +141,7 @@ Window(
 }).build(this);
 ```
 
+<a id="window-properties"></a>
 <details>
 <summary>Supported <code>WindowProps</code></summary>
 
@@ -135,6 +163,7 @@ Window(
 
 </details>
 
+<a id="window-events"></a>
 <details>
 <summary>Supported <code>WindowEvents</code></summary>
 
@@ -145,6 +174,7 @@ Window(
 
 </details>
 
+<a id="windowplacement-factories"></a>
 <details>
 <summary><code>WindowPlacement</code> factories</summary>
 
@@ -182,6 +212,7 @@ Tray(
 }).build(this);
 ```
 
+<a id="tray-properties"></a>
 <details>
 <summary>Supported <code>TrayProps</code></summary>
 
@@ -207,6 +238,7 @@ Button(L"Run").set({
 })
 ```
 
+<a id="button-properties"></a>
 <details>
 <summary>Supported <code>ButtonProps</code></summary>
 
@@ -218,6 +250,7 @@ Button(L"Run").set({
 
 </details>
 
+<a id="button-events"></a>
 <details>
 <summary>Supported <code>ButtonEvents</code></summary>
 
@@ -238,11 +271,6 @@ ContextArea(
     Button(L"File"),
     Menu(
         MenuItem(L"Open").on({ .click = [] { LOG(L"Open"); } }),
-        MenuItem(L"Export",
-            MenuItem(L"PNG").on({ .click = [] { LOG(L"PNG"); } }),
-            MenuItem(L"PDF").on({ .click = [] { LOG(L"PDF"); } })
-        ),
-        MenuSeparator(),
         MenuItem(L"Exit").set({
             .shortcut = Api::Shortcut::Ctrl(L'Q')
         }).on({ .click = [] { App::Quit(); } })
@@ -250,6 +278,28 @@ ContextArea(
 )
 ```
 
+### Menu Separator
+
+```c++
+Menu(
+    MenuItem(L"Open").on({ .click = [] { LOG(L"Open"); } }),
+    MenuSeparator(),
+    MenuItem(L"Exit").on({ .click = [] { App::Quit(); } })
+)
+```
+
+### Submenu
+
+```c++
+Menu(
+    MenuItem(L"Export",
+        MenuItem(L"PNG").on({ .click = [] { LOG(L"PNG"); } }),
+        MenuItem(L"PDF").on({ .click = [] { LOG(L"PDF"); } })
+    )
+)
+```
+
+<a id="menu-properties"></a>
 <details>
 <summary>Supported <code>MenuProps</code></summary>
 
@@ -259,6 +309,7 @@ ContextArea(
 
 </details>
 
+<a id="menutrigger-values"></a>
 <details>
 <summary>Supported <code>MenuTrigger</code> values</summary>
 
@@ -273,6 +324,7 @@ ContextArea(
 
 </details>
 
+<a id="menuitem-properties"></a>
 <details>
 <summary>Supported <code>MenuItemProps</code></summary>
 
@@ -282,6 +334,7 @@ ContextArea(
 
 </details>
 
+<a id="shortcut-factories"></a>
 <details>
 <summary><code>Shortcut</code> factories</summary>
 
@@ -332,6 +385,7 @@ Stack(
 )
 ```
 
+<a id="column-and-row-properties"></a>
 <details>
 <summary>Supported <code>ColumnProps</code> and <code>RowProps</code></summary>
 
@@ -344,6 +398,7 @@ Stack(
 
 </details>
 
+<a id="stack-properties"></a>
 <details>
 <summary>Supported <code>StackProps</code></summary>
 
@@ -353,6 +408,7 @@ Stack(
 
 </details>
 
+<a id="layout-properties"></a>
 <details>
 <summary>Supported <code>Api::LayoutProps</code></summary>
 
@@ -364,6 +420,7 @@ Stack(
 
 </details>
 
+<a id="alignment-values"></a>
 <details>
 <summary>Supported alignment values</summary>
 
