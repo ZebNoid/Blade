@@ -21,6 +21,7 @@ public:
 
     // TODO for all or only for window?
     virtual auto isAlive() const -> bool = 0;
+    virtual auto isLifetimeOwner() const -> bool = 0;
 
     virtual auto attachChild(INativeElement* child) -> void = 0;
 };

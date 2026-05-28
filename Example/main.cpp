@@ -21,11 +21,12 @@ protected:
         Tray(
             Menu(
                 MenuItem(L"Open").on({ .click = [] { LOG(L"Tray Open"); } }),
-                MenuItem(L"Exit").on({ .click = [] { LOG(L"Tray Exit"); } })
+                MenuItem(L"Exit").on({ .click = [] { App::Quit(); } })
             ).set({ .trigger = Api::MenuTrigger::LeftClick | Api::MenuTrigger::RightClick })
         ).set({
             .title = L"Blade Tray",
             .icon = L"test/app.ico",
+            // .lifetime = Api::Lifetime::Ignore,
         }).build(this);
 
         // Window(
@@ -58,6 +59,10 @@ protected:
             .size = {800, 600},
             .placement = Api::WindowPlacement::Center({0, 0}, 1),
         }).on({
+            .close = []()
+            {
+                return true;
+            },
             .drop = [](Api::Text files)
             {
                 LOGF_D(L"Drop Window:\n%s", files.c_str());
@@ -129,6 +134,7 @@ protected:
             {
                 LOG(L"Window 1 Close");
                 // TODO fix application won't close from context menu close
+                return Api::EventResult{};
             },
             .drop = [](Api::Text files)
             {

@@ -7,6 +7,7 @@
 #include "CaptionProps.h"
 #include "Events/Events.h"
 #include "LayoutProps.h"
+#include "Lifetime.h"
 #include "MenuTrigger.h"
 #include "MenuData.h"
 #include "Point.h"
@@ -37,6 +38,7 @@ using PropertyValue = std::variant<
     Api::Size,
     Api::Rect,
     Api::CaptionProps,
+    Api::Lifetime,
     Api::MenuTrigger,
     Api::ContextMenus,
     Api::WindowPlacementProps,

@@ -21,6 +21,7 @@ enum class Props
     MinSize,
     MaxSize,
     State,
+    Lifetime,
     MenuTrigger,
     ContextMenus,
 
@@ -46,6 +47,7 @@ inline auto to_string(Props p) -> std::wstring {
     case Props::MinSize:   return L"MinSize";
     case Props::MaxSize:   return L"MaxSize";
     case Props::State:   return L"State";
+    case Props::Lifetime:   return L"Lifetime";
     case Props::MenuTrigger:   return L"MenuTrigger";
     case Props::ContextMenus:   return L"ContextMenus";
 

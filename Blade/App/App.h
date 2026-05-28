@@ -17,6 +17,7 @@ public:
     virtual ~App() = default;
 
     auto run() -> int;
+    static auto Quit() -> void;
 
 protected:
     template <typename TBackend, typename... Args>
@@ -40,6 +41,8 @@ private:
     auto onBackendMessage(const Api::BackendMessage& message) -> Api::EventResult;
 
 private:
+    static App* s_current;
+
     std::unique_ptr<Api::ApiBackend> m_backend;
     WidgetTreeRegistry m_trees;
     EventRuntime m_eventRuntime;

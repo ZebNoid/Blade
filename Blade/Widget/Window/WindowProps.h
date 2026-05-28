@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Common/CaptionProps.h"
+#include "Common/Lifetime.h"
 #include "Common/Size.h"
 #include "Common/Types.h"
 #include "Common/WindowState.h"
@@ -25,6 +26,7 @@ struct WindowProps
     Api::CaptionProps caption{};
     Api::WindowPlacementProps placement = Api::WindowPlacement::Default();
     Api::WindowState state = Api::WindowState::Normal;
+    Api::Lifetime lifetime = Api::Lifetime::Owner;
 
     auto visit(PropsVisitor& v) const -> void
     {
@@ -40,6 +42,7 @@ struct WindowProps
         v.set(Api::Props::MaxSize, maxSize);
         v.set(Api::Props::Caption, caption);
         v.set(Api::Props::State, state);
+        v.set(Api::Props::Lifetime, lifetime);
     }
 };
 
