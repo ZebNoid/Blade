@@ -1,52 +1,11 @@
 #include "Materializer.h"
 
 #include "Runtime/Materializer/MaterializerCommands/MaterializerCommands.h"
+#include "Runtime/Materializer/MenuMaterializer/MenuMaterializer.h"
 
 namespace Blade {
 
 namespace {
-
-template <typename T>
-auto Get(const Api::PropertyMap& map, Api::Props prop) -> const T*
-{
-    const auto it = map.find(prop);
-    return it == map.end() ? nullptr : std::get_if<T>(&it->second);
-}
-
-auto Trigger(const WidgetTree& menu) -> Api::MenuTrigger
-{
-    const auto* trigger = Get<Api::MenuTrigger>(menu.backend.create, Api::Props::MenuTrigger);
-    return trigger ? *trigger : Api::MenuTrigger::RightClick;
-}
-
-auto Title(const WidgetTree& item) -> Api::Text
-{
-    const auto* title = Get<Api::Text>(item.backend.create, Api::Props::Title);
-    return title ? *title : L"";
-}
-
-auto BuildMenus(const std::vector<WidgetTree>* overlays) -> Api::ContextMenus
-{
-    Api::ContextMenus result;
-    if (!overlays) return result;
-
-    for (const auto& menu : *overlays)
-    {
-        Api::MenuData data{ .trigger = Trigger(menu) };
-
-        for (const auto& item : menu.children)
-        {
-            data.items.push_back({
-                .id = item.id,
-                .title = Title(item)
-            });
-        }
-
-        result.push_back(std::move(data));
-    }
-
-    return result;
-}
 
 auto IsContextArea(const WidgetTree& widget) -> bool
 {
@@ -87,7 +46,7 @@ auto Materializer::createNode(
 
     if (layout.layoutType == LayoutType::None)
     {
-        out.push_back(MaterializerCommands::Create(widget, parent, BuildMenus(activeContextMenus)));
+        out.push_back(MaterializerCommands::Create(widget, parent, MenuMaterializer::Build(activeContextMenus)));
 
         if (parent != Api::InvalidId)
         {
