@@ -28,8 +28,9 @@ auto AppBackend::runApp() -> int
         [&]
         {
             m_host.destroyClosedWindows();
+            m_nodes.collectGarbage();
 
-            if (m_host.count() == 0)
+            if (m_host.count() == 0 && m_nodes.count() == 0)
             {
                 quit();
             }

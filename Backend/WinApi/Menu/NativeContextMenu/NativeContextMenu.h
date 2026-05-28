@@ -15,13 +15,13 @@ public:
     ~NativeContextMenu();
 
     auto attach(HWND hwnd, Api::Id ownerId, CommandRouter& router, Api::ContextMenus menus) -> bool;
+    auto showAtCursor(Api::MenuTrigger trigger) -> bool;
 
 private:
     static auto CALLBACK Proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, UINT_PTR id, DWORD_PTR data) -> LRESULT;
 
     auto handle(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> std::optional<LRESULT>;
     auto show(Api::MenuTrigger trigger, POINT point) -> bool;
-    auto showAtCursor(Api::MenuTrigger trigger) -> bool;
     auto showAtClientPoint(Api::MenuTrigger trigger, LPARAM lParam) -> bool;
     auto find(Api::MenuTrigger trigger) const -> const Api::MenuData*;
 

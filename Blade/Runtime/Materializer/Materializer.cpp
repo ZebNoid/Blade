@@ -82,9 +82,12 @@ auto Materializer::createNode(
     const std::vector<WidgetTree>* contextMenus
 ) -> void
 {
+    const auto* ownContextMenus = !widget.overlays.empty() ? &widget.overlays : nullptr;
+    const auto* activeContextMenus = contextMenus ? contextMenus : ownContextMenus;
+
     if (layout.layoutType == LayoutType::None)
     {
-        out.push_back(MaterializerCommands::Create(widget, parent, BuildMenus(contextMenus)));
+        out.push_back(MaterializerCommands::Create(widget, parent, BuildMenus(activeContextMenus)));
 
         if (parent != Api::InvalidId)
         {

@@ -3,6 +3,7 @@
 #include "App/AppBackend.h"
 #include "Common/Logger.h"
 #include "Components/Button/NativeButton.h"
+#include "Components/Tray/NativeTray.h"
 #include "WinApi/HwndApi/HwndApi.h"
 
 
@@ -22,6 +23,7 @@ auto NativeNodeFactory::registerFactories() -> void
 {
     m_registry.add(L"Window", [this](const auto& command) { return createWindow(command); });
     m_registry.add(L"Button", [this](const auto& command) { return createButton(command); });
+    m_registry.add(L"Tray", [this](const auto& command) { return createTray(command); });
 }
 
 auto NativeNodeFactory::createWindow(const Api::ElementCommand& command) -> std::optional<NativeNode>
@@ -108,6 +110,29 @@ auto NativeNodeFactory::createButton(const Api::ElementCommand& command) -> std:
         .type = command.nodeType,
         .parent = command.parent,
         .native = std::move(button),
+    };
+
+    return node;
+}
+
+auto NativeNodeFactory::createTray(const Api::ElementCommand& command) -> std::optional<NativeNode>
+{
+    auto tray = std::make_unique<NativeTray>();
+
+    if (!tray->create(m_backend->handle(), command.id, m_backend->messageHandler()))
+    {
+        LOG_E(L"[Error] createTray failed");
+        return std::nullopt;
+    }
+
+    tray->applyProps(command.props);
+    tray->applyEvents(command.events);
+
+    NativeNode node = {
+        .id = command.id,
+        .type = command.nodeType,
+        .parent = command.parent,
+        .native = std::move(tray),
     };
 
     return node;

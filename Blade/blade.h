@@ -3,6 +3,7 @@
 #include "App/App.h"
 
 #include "Widget/Window/Window.h"
+#include "Widget/Tray/Tray.h"
 #include "Widget/Button/Button.h"
 #include "Widget/ContextArea/ContextArea.h"
 #include "Widget/Menu/Menu.h"

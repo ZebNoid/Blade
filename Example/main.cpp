@@ -18,6 +18,16 @@ protected:
 
     auto onCreate() -> void override
     {
+        Tray(
+            Menu(
+                MenuItem(L"Open").on({ .click = [] { LOG(L"Tray Open"); } }),
+                MenuItem(L"Exit").on({ .click = [] { LOG(L"Tray Exit"); } })
+            ).set({ .trigger = Api::MenuTrigger::LeftClick })
+        ).set({
+            .title = L"Blade Tray",
+            .icon = L"test/app.ico",
+        }).build(this);
+
         // Window(
         //     Button(L"Button")
         // ).set({
