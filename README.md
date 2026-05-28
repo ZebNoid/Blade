@@ -24,14 +24,11 @@
 > This code written with **LLM** assistance
 > 
 
-## Example
-
 ```c++
 #include "blade.h"
 #include "App/AppBackend.h"
 
 using namespace Blade;
-
 
 class Sandbox : public App
 {
@@ -44,24 +41,302 @@ protected:
     auto onCreate() -> void override
     {
         Window(
-            Button(L"Button").set({.isDefault = true,})
+            Button(L"Quit").on({ .click = [] { App::Quit(); } })
         ).set({
-            .title = L"Window",
-            .size = {800, 300},
-            .position = {500, 400},
-        }).build(this);
-
-        Window().set({
-            .title = L"Window 2",
-            .size = {400, 500},
+            .title = L"Hello Blade",
+            .size = {400, 200},
+            .placement = Api::WindowPlacement::Center()
         }).build(this);
     }
 };
-
 
 auto main() -> int
 {
     Sandbox app;
     return app.run();
 }
+```
+
+## Contents
+
+- [Application](#application)
+- [Syntax](#syntax)
+- [Root Widgets](#root-widgets)
+- [Controls](#controls)
+- [Menu](#menu)
+- [Layout](#layout)
+
+## Application
+
+Blade apps inherit from `Blade::App`. Use `onSetup()` to select a backend and `onCreate()` to create root widgets.
+
+`App::Quit()` stops the application message loop and can be called from callbacks.
+
+## Syntax
+
+Widget properties are configured with `.set(...)`.
+
+```c++
+Button(L"Run").set({
+    .size = {120, 40}
+})
+```
+
+Widget events are configured with `.on(...)`.
+
+```c++
+Button(L"Quit").on({
+    .click = [] { App::Quit(); }
+})
+```
+
+Root widgets start working after `.build(this)`.
+
+```c++
+Window(Button(L"Quit")).build(this);
+Tray(Menu(MenuItem(L"Exit"))).build(this);
+```
+
+## Root Widgets
+
+### Window
+
+```c++
+Window(
+    Button(L"Close").on({ .click = [] { App::Quit(); } })
+).set({
+    .title = L"Window",
+    .size = {800, 600},
+    .placement = Api::WindowPlacement::Center(),
+    .minSize = {320, 240}
+}).on({
+    .close = [] { return true; }
+}).build(this);
+```
+
+Supported `WindowProps`:
+
+| Property | Type | Default | Example |
+| --- | --- | --- | --- |
+| `title` | `Api::Text` | `L"Blade"` | `L"Settings"` |
+| `icon` | `Api::Text` | empty | `L"app.ico"` or `L"app.png"` |
+| `size` | `Api::Size` | `{800, 600}` | `{1024, 768}` |
+| `visible` | `bool` | `true` | `false` |
+| `resizable` | `bool` | `true` | `false` |
+| `topMost` | `bool` | `false` | `true` |
+| `taskbar` | `bool` | `true` | `false` |
+| `minSize` | `Api::Size` | `{0, 0}` | `{320, 240}` |
+| `maxSize` | `Api::Size` | `{0, 0}` | `{1920, 1080}` |
+| `caption` | `Api::CaptionProps` | visible, all buttons | `{ .visible = false }` |
+| `placement` | `Api::WindowPlacementProps` | `Api::WindowPlacement::Default()` | `Api::WindowPlacement::Center({0, 0}, 1)` |
+| `state` | `Api::WindowState` | `Normal` | `Api::WindowState::Maximized` |
+| `lifetime` | `Api::Lifetime` | `Owner` | `Api::Lifetime::Ignore` |
+
+Supported `WindowEvents`:
+
+| Event | Callback |
+| --- | --- |
+| `close` | return `false` to cancel close |
+| `drop` | receives dropped file paths as text |
+
+Window placement factories:
+
+```c++
+Api::WindowPlacement::Manual({100, 100})
+Api::WindowPlacement::Center()
+Api::WindowPlacement::TopLeft()
+Api::WindowPlacement::TopRight()
+Api::WindowPlacement::TopFill()
+Api::WindowPlacement::LeftFill()
+Api::WindowPlacement::Fill()
+```
+
+Most placement factories accept offset and monitor index:
+
+```c++
+Api::WindowPlacement::Center({20, 0}, 1)
+```
+
+### Tray
+
+`Tray` creates a system tray icon. It can be used without any windows.
+
+```c++
+Tray(
+    Menu(
+        MenuItem(L"Open").on({ .click = [] { LOG(L"Open"); } }),
+        MenuItem(L"Exit").on({ .click = [] { App::Quit(); } })
+    ).set({ .trigger = Api::MenuTrigger::LeftRight })
+).set({
+    .title = L"Blade",
+    .icon = L"app.ico"
+}).build(this);
+```
+
+Supported `TrayProps`:
+
+| Property | Type | Default | Example |
+| --- | --- | --- | --- |
+| `title` | `Api::Text` | `L"Blade"` | `L"Blade Tray"` |
+| `icon` | `Api::Text` | empty | `L"app.ico"` or `L"app.png"` |
+| `lifetime` | `Api::Lifetime` | `Owner` | `Api::Lifetime::Ignore` |
+
+## Controls
+
+### Button
+
+```c++
+Button(L"Run").set({
+    .size = {120, 40},
+    .isDefault = true
+}).on({
+    .click = [] { LOG(L"Clicked"); },
+    .drop = [](Api::Text files) { LOGF_D(L"Drop:\n%s", files.c_str()); }
+})
+```
+
+Supported `ButtonProps`:
+
+| Property | Type | Default | Example |
+| --- | --- | --- | --- |
+| `layout` | `Api::LayoutProps` | default layout | `{ .flex = 1 }` |
+| `size` | `Api::Size` | `{100, 50}` | `{120, 40}` |
+| `isDefault` | `bool` | `false` | `true` |
+
+Supported `ButtonEvents`:
+
+| Event | Callback |
+| --- | --- |
+| `click` | no arguments |
+| `focus` | returns bool |
+| `drop` | receives dropped file paths as text |
+
+## Menu
+
+Menus are attached through `ContextArea`, `Tray`, or other widgets that support context menus.
+
+```c++
+ContextArea(
+    Button(L"File"),
+    Menu(
+        MenuItem(L"Open").on({ .click = [] { LOG(L"Open"); } }),
+        MenuItem(L"Export",
+            MenuItem(L"PNG").on({ .click = [] { LOG(L"PNG"); } }),
+            MenuItem(L"PDF").on({ .click = [] { LOG(L"PDF"); } })
+        ),
+        MenuSeparator(),
+        MenuItem(L"Exit").set({
+            .shortcut = Api::Shortcut::Ctrl(L'Q')
+        }).on({ .click = [] { App::Quit(); } })
+    ).set({ .trigger = Api::MenuTrigger::RightClick })
+)
+```
+
+Supported `MenuProps`:
+
+| Property | Type | Default | Example |
+| --- | --- | --- | --- |
+| `trigger` | `Api::MenuTrigger` | `RightClick` | `Api::MenuTrigger::LeftRight` |
+
+Supported `MenuTrigger` values:
+
+| Value | Meaning |
+| --- | --- |
+| `None` | disabled |
+| `LeftClick` | left mouse button |
+| `MiddleClick` | middle mouse button |
+| `RightClick` | right mouse button |
+| `LeftRight` | left or right mouse button |
+| `All` | left, middle, or right mouse button |
+
+Supported `MenuItemProps`:
+
+| Property | Type | Default | Example |
+| --- | --- | --- | --- |
+| `shortcut` | `Api::Shortcut` | `Api::Shortcut::None()` | `Api::Shortcut::Ctrl(L'Q')` |
+
+Shortcut factories:
+
+```c++
+Api::Shortcut::None()
+Api::Shortcut::Ctrl(L'Q')
+Api::Shortcut::Alt(L'X')
+Api::Shortcut::Shift(L'F')
+```
+
+Currently shortcuts are displayed in the native menu. Keyboard handling is not implemented yet.
+
+## Layout
+
+### Column
+
+```c++
+Column(
+    Button(L"Top"),
+    Button(L"Bottom")
+).set({
+    .gap = 8,
+    .mainAxisAlignment = MainAxisAlignment::Center,
+    .crossAxisAlignment = CrossAxisAlignment::Stretch
+})
+```
+
+### Row
+
+```c++
+Row(
+    Button(L"One"),
+    Button(L"Two").set({ .layout = { .flex = 1 } })
+).set({
+    .gap = 8,
+    .crossAxisAlignment = CrossAxisAlignment::Center
+})
+```
+
+### Stack
+
+```c++
+Stack(
+    Button(L"Back"),
+    Button(L"Front")
+)
+```
+
+Supported `ColumnProps` and `RowProps`:
+
+| Property | Type | Default | Example |
+| --- | --- | --- | --- |
+| `gap` | `int` | `0` | `8` |
+| `layout` | `Api::LayoutProps` | default layout | `{ .padding = {8} }` |
+| `mainAxisAlignment` | `MainAxisAlignment` | `Start` | `MainAxisAlignment::Center` |
+| `crossAxisAlignment` | `CrossAxisAlignment` | `Stretch` | `CrossAxisAlignment::Center` |
+
+Supported `StackProps`:
+
+| Property | Type | Default | Example |
+| --- | --- | --- | --- |
+| `layout` | `Api::LayoutProps` | default layout | `{ .padding = {8} }` |
+
+Supported `Api::LayoutProps`:
+
+| Property | Type | Default | Example |
+| --- | --- | --- | --- |
+| `margin` | `Api::Thickness` | `{}` | `{8}` |
+| `padding` | `Api::Thickness` | `{}` | `{4, 8, 4, 8}` |
+| `flex` | `int` | `0` | `1` |
+
+Alignment values:
+
+```c++
+MainAxisAlignment::Start
+MainAxisAlignment::Center
+MainAxisAlignment::End
+MainAxisAlignment::SpaceBetween
+MainAxisAlignment::SpaceAround
+MainAxisAlignment::SpaceEvenly
+
+CrossAxisAlignment::Start
+CrossAxisAlignment::Center
+CrossAxisAlignment::End
+CrossAxisAlignment::Stretch
 ```
