@@ -123,7 +123,7 @@ auto NativeContextMenu::find(Api::MenuTrigger trigger) const -> const Api::MenuD
 {
     for (const auto& menu : m_menus)
     {
-        if (menu.trigger == trigger) return &menu;
+        if (Api::Has(menu.trigger, trigger)) return &menu;
     }
 
     return nullptr;

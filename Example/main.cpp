@@ -22,7 +22,7 @@ protected:
             Menu(
                 MenuItem(L"Open").on({ .click = [] { LOG(L"Tray Open"); } }),
                 MenuItem(L"Exit").on({ .click = [] { LOG(L"Tray Exit"); } })
-            ).set({ .trigger = Api::MenuTrigger::LeftClick })
+            ).set({ .trigger = Api::MenuTrigger::LeftClick | Api::MenuTrigger::RightClick })
         ).set({
             .title = L"Blade Tray",
             .icon = L"test/app.ico",
