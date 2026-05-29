@@ -16,10 +16,34 @@ protected:
         use<Backend::AppBackend>();
     }
 
+    auto testButton() -> auto
+    {
+        return Button(L"testButton");
+    }
+
+    auto testWindow() -> auto
+    {
+        return Window(
+            Column(
+                Button(L"Button"),
+                testButton().set({
+                    .layout = {.flex = 1,}
+                })
+            )
+        ).set({
+            .title = L"Test",
+            .size = {800, 600},
+            .placement = Api::WindowPlacement::BottomRight({-50, -50}, 1),
+        });
+    }
+
+
     auto onCreate() -> void override
     {
         auto trayId = std::make_shared<Api::Id>(Api::InvalidId);
         auto windowId = std::make_shared<Api::Id>(Api::InvalidId);
+
+        // testWindow().mount();
 
         *trayId = Tray(
             Menu(
@@ -69,7 +93,7 @@ protected:
             {
                 UI::Show(*windowId);
             },
-        }).mount(this);
+        }).mount();
 
         // Window(
         //     Button(L"Button")
@@ -119,7 +143,7 @@ protected:
             {
                 LOGF_D(L"Drop Window:\n%s", files.c_str());
             }
-        }).mount(this);
+        }).mount();
     }
 };
 

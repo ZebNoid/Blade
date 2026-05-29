@@ -8,9 +8,9 @@ namespace Blade {
 class RootWidget : public Widget
 {
 public:
-    auto mount(App* app) -> Api::Id
+    auto mount() -> Api::Id
     {
-        return app->addToTree(*this);
+        return App::MountRoot(*this);
     }
 };
 

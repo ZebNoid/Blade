@@ -35,7 +35,7 @@ auto App::DestroyRoot(Api::Id rootId) -> void
     Process({ .command = Api::AppCommandType::DestroyRoot, .target = rootId });
 }
 
-auto App::addToTree(const RootWidget& rootWidget) -> Api::Id
+auto App::mountRoot(const RootWidget& rootWidget) -> Api::Id
 {
     auto tree = rootWidget.tree();
 
@@ -43,6 +43,11 @@ auto App::addToTree(const RootWidget& rootWidget) -> Api::Id
 
     m_eventRuntime.registerTree(root);
     return root.id;
+}
+
+auto App::MountRoot(const RootWidget& rootWidget) -> Api::Id
+{
+    return s_current ? s_current->mountRoot(rootWidget) : Api::InvalidId;
 }
 
 auto App::initBackend() -> int

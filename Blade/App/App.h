@@ -37,12 +37,13 @@ protected:
 protected:
 
 private:
-    auto addToTree(const RootWidget& rootWidget) -> Api::Id;
+    auto mountRoot(const RootWidget& rootWidget) -> Api::Id;
 
     auto initBackend() -> int;
 
     auto onBackendMessage(const Api::BackendMessage& message) -> Api::EventResult;
 
+    static auto MountRoot(const RootWidget& rootWidget) -> Api::Id;
     static auto Process(Api::AppCommand command) -> void;
 
 private:

@@ -46,7 +46,7 @@ protected:
             .title = L"Hello Blade",
             .size = {400, 200},
             .placement = Api::WindowPlacement::Center()
-        }).mount(this);
+        }).mount();
     }
 };
 
@@ -105,8 +105,8 @@ Blade apps inherit from `Blade::App`. Use `onSetup()` to select a backend and `o
 Use `UI` to send commands to already created UI elements by id.
 
 ```c++
-auto windowId = Window(...).mount(this);
-auto trayId = Tray(...).mount(this);
+auto windowId = Window(...).mount();
+auto trayId = Tray(...).mount();
 
 UI::Show(windowId);
 UI::Hide(windowId);
@@ -140,11 +140,11 @@ Button(L"Quit").on({
 })
 ```
 
-Root widgets are attached to the app runtime with `.mount(this)`.
+Root widgets are attached to the app runtime with `.mount()`.
 
 ```c++
-Window(Button(L"Quit")).mount(this);
-Tray(Menu(MenuItem(L"Exit"))).mount(this);
+Window(Button(L"Quit")).mount();
+Tray(Menu(MenuItem(L"Exit"))).mount();
 ```
 
 ## Root Widgets
@@ -161,7 +161,7 @@ Window(
     .minSize = {320, 240}
 }).on({
     .close = [] { return true; }
-}).mount(this);
+}).mount();
 ```
 
 <a id="window-properties"></a>
@@ -232,7 +232,7 @@ Tray(
 ).set({
     .title = L"Blade",
     .icon = L"app.ico"
-}).mount(this);
+}).mount();
 ```
 
 <a id="tray-properties"></a>

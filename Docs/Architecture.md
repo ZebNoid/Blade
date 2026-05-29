@@ -32,7 +32,7 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    UserCode["User code\nWindow(...).set(...).on(...).mount(this)"]
+    UserCode["User code\nWindow(...).set(...).on(...).mount()"]
     WidgetTree["WidgetTree\nwidgets, props, events, overlays"]
     RuntimeTree["WidgetTreeRegistry\nassign ids and keep roots"]
     LayoutPass["LayoutPass::Compute"]
