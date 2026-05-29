@@ -111,7 +111,7 @@ auto App::Process(Api::AppCommand command) -> void
         return;
     }
 
-    if (command.command == Api::AppCommandType::DestroyRoot)
+    if (command.command == Api::AppCommandType::UnmountRoot)
     {
         if (s_current->m_rootLifecycle) s_current->m_rootLifecycle->destroyRoot(command.target);
         return;

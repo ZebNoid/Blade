@@ -98,11 +98,11 @@ auto main() -> int
 
 Blade apps inherit from `Blade::App`. Use `onSetup()` to select a backend and `onCreate()` to create root widgets.
 
-`App::Quit()` stops the application message loop and can be called from callbacks.
+`App` owns application lifecycle. `App::Quit()` stops the application message loop and can be called from callbacks.
 
 ## Runtime UI Commands
 
-Use `UI` to send commands to already created UI elements by id.
+Use `UI` to send runtime commands to already mounted UI elements by id.
 
 ```c++
 auto windowId = Window(...).mount();
@@ -121,7 +121,7 @@ UI::Tray::Icon(trayId, L"app.ico");
 UI::Tray::Title(trayId, L"Blade");
 ```
 
-`Show` and `Hide` are generic UI commands. Window-only and tray-only commands live in `UI::Window` and `UI::Tray`.
+`Show`, `Hide`, and `Unmount` are generic UI commands. Window-only and tray-only commands live in `UI::Window` and `UI::Tray`.
 
 ## Syntax
 

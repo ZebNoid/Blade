@@ -25,7 +25,7 @@ flowchart LR
 ## Modules
 
 - `Api` contains shared public contracts: commands, messages, props, events, and common data types.
-- `Blade` contains user-facing widgets and runtime logic that converts widget trees into layout and backend commands.
+- `Blade` contains user-facing widgets, the `UI` runtime command facade, and runtime logic that converts widget trees into layout and backend commands.
 - `Backend` contains native implementation details and executes commands through WinAPI.
 
 ## Runtime Flow
@@ -33,6 +33,7 @@ flowchart LR
 ```mermaid
 flowchart TD
     UserCode["User code\nWindow(...).set(...).on(...).mount()"]
+    Mount["RootWidget::mount\nuses active App"]
     WidgetTree["WidgetTree\nwidgets, props, events, overlays"]
     RuntimeTree["WidgetTreeRegistry\nassign ids and keep roots"]
     LayoutPass["LayoutPass::Compute"]
@@ -46,7 +47,8 @@ flowchart TD
     Messages["BackendMessage\nresize / event"]
     EventRuntime["EventRuntime\ncallbacks"]
 
-    UserCode --> WidgetTree
+    UserCode --> Mount
+    Mount --> WidgetTree
     WidgetTree --> RuntimeTree
     RuntimeTree --> LayoutPass
     LayoutPass --> LayoutTree
@@ -71,14 +73,15 @@ flowchart TD
     linkStyle 5 stroke:#444,stroke-width:1.5px
     linkStyle 6 stroke:#444,stroke-width:1.5px
     linkStyle 7 stroke:#444,stroke-width:1.5px
-    linkStyle 8 stroke:#2563eb,stroke-width:2px
+    linkStyle 8 stroke:#444,stroke-width:1.5px
     linkStyle 9 stroke:#2563eb,stroke-width:2px
     linkStyle 10 stroke:#2563eb,stroke-width:2px
     linkStyle 11 stroke:#2563eb,stroke-width:2px
     linkStyle 12 stroke:#2563eb,stroke-width:2px
-    linkStyle 13 stroke:#16a34a,stroke-width:2px
+    linkStyle 13 stroke:#2563eb,stroke-width:2px
     linkStyle 14 stroke:#16a34a,stroke-width:2px
     linkStyle 15 stroke:#16a34a,stroke-width:2px
+    linkStyle 16 stroke:#16a34a,stroke-width:2px
 ```
 
 ## Materializer

@@ -101,7 +101,7 @@ protected:
         //     .title = L"Test",
         //     .size = {800, 600},
         //     .placement = Api::WindowPlacement::Manual({3300, 400}),
-        // }).mount(this);
+        // }).mount();
 
         *windowId = Window(
             Column(

@@ -13,7 +13,7 @@ enum class AppCommandType
     WindowRestore,
     TrayIcon,
     TrayTitle,
-    DestroyRoot
+    UnmountRoot
 };
 
 inline auto to_string(AppCommandType c) -> std::wstring
@@ -29,7 +29,7 @@ inline auto to_string(AppCommandType c) -> std::wstring
     case AppCommandType::WindowRestore: return L"WindowRestore";
     case AppCommandType::TrayIcon: return L"TrayIcon";
     case AppCommandType::TrayTitle: return L"TrayTitle";
-    case AppCommandType::DestroyRoot: return L"DestroyRoot";
+    case AppCommandType::UnmountRoot: return L"UnmountRoot";
     default: return L"Unknown";
     }
 }

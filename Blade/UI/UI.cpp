@@ -16,7 +16,7 @@ auto UI::Hide(Api::Id id) -> void
 
 auto UI::Unmount(Api::Id id) -> void
 {
-    Send({ .command = Api::AppCommandType::DestroyRoot, .target = id });
+    Send({ .command = Api::AppCommandType::UnmountRoot, .target = id });
 }
 
 auto UI::Window::Close(Api::Id id) -> void
