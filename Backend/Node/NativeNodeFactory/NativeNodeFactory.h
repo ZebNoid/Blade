@@ -2,6 +2,7 @@
 #include <optional>
 
 #include "Command/ElementCommand.h"
+#include "Node/NativeCreateContext/NativeCreateContext.h"
 #include "Node/NativeFactoryRegistry/NativeFactoryRegistry.h"
 #include "Node/NativeNode/NativeNode.h"
 
@@ -31,6 +32,7 @@ private:
 
 private:
     AppBackend* m_backend = nullptr;
+    NativeCreateContext m_context;
     NativeFactoryRegistry m_registry;
 };
 

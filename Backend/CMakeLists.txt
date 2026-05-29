@@ -10,6 +10,8 @@ add_library(${PROJECT_NAME} STATIC
         App/AppBackend.h
         AppCommandDispatcher/AppCommandDispatcher.cpp
         AppCommandDispatcher/AppCommandDispatcher.h
+        Resource/ResourceManager/ResourceManager.cpp
+        Resource/ResourceManager/ResourceManager.h
 
         WindowHost/WindowHost.cpp
         WindowHost/WindowHost.h
@@ -27,7 +29,6 @@ add_library(${PROJECT_NAME} STATIC
 
         WinApi/AppRuntime/AppRuntime.cpp
         WinApi/AppRuntime/AppRuntime.h
-
         WinApi/Interop/ComScope/ComScope.cpp
         WinApi/Interop/ComScope/ComScope.h
         WinApi/Interop/OleScope/OleScope.cpp
@@ -42,6 +43,8 @@ add_library(${PROJECT_NAME} STATIC
         WinApi/Display/DisplayApi/DisplayApi.h
         WinApi/Resource/ImageLoader/ImageLoader.cpp
         WinApi/Resource/ImageLoader/ImageLoader.h
+        WinApi/Resource/FontApi/FontApi.cpp
+        WinApi/Resource/FontApi/FontApi.h
         WinApi/Resource/IconImageLoader/IconImageLoader.cpp
         WinApi/Resource/IconImageLoader/IconImageLoader.h
         WinApi/Resource/WicImageLoader/WicImageLoader.cpp
@@ -51,6 +54,7 @@ add_library(${PROJECT_NAME} STATIC
 
         Node/NativeNode/NativeNode.cpp
         Node/NativeNode/NativeNode.h
+        Node/NativeCreateContext/NativeCreateContext.h
         Node/NodeRegistry/NodeRegistry.cpp
         Node/NodeRegistry/NodeRegistry.h
         Node/NativeFactoryRegistry/NativeFactoryRegistry.cpp
@@ -83,6 +87,8 @@ add_library(${PROJECT_NAME} STATIC
         Components/Window/NativeWindowPropsData/NativeWindowPropsData.h
         Components/Tray/NativeTray.cpp
         Components/Tray/NativeTray.h
+        Components/Tray/NativeTrayApi/NativeTrayApi.cpp
+        Components/Tray/NativeTrayApi/NativeTrayApi.h
         Components/ContextArea/NativeContextArea.cpp
         Components/ContextArea/NativeContextArea.h
         Components/Button/NativeButton.cpp

@@ -10,11 +10,12 @@
 namespace Blade::Backend {
 
 class NativeWindow;
+struct NativeCreateContext;
 
 class NativeButton : public NativeElement
 {
 public:
-    auto create(NativeWindow* parent, Api::Id id) -> bool;
+    auto create(NativeWindow* parent, Api::Id id, const NativeCreateContext& context) -> bool;
 
     auto applyProps(const Api::PropertyMap& propertyMap) -> void override;
 

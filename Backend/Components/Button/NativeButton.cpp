@@ -3,20 +3,22 @@
 #include "Common/Logger.h"
 #include "Components/Button/NativeButtonProps.h"
 #include "Event/EventMapper/EventMapper.h"
+#include "Node/NativeCreateContext/NativeCreateContext.h"
 #include "Property/PropertyMapper/PropertyMapper.h"
 #include "Property/PropertyReader.h"
+#include "Resource/ResourceManager/ResourceManager.h"
+#include "WinApi/HwndApi/HwndApi.h"
 #include "WinApi/Window/Hwnd/Hwnd.h"
 #include "Components/Window/NativeWindow.h"
 
 
 namespace Blade::Backend {
 
-auto NativeButton::create(NativeWindow* parent, Api::Id id) -> bool
+auto NativeButton::create(NativeWindow* parent, Api::Id id, const NativeCreateContext& context) -> bool
 {
     m_parent = parent;
     m_id = id;
 
-    // TODO system font create_system_ui_font
     m_hwnd = Hwnd::Create({
         .className = TEXT("BUTTON"),
         .windowName = TEXT("Button"),
@@ -24,8 +26,10 @@ auto NativeButton::create(NativeWindow* parent, Api::Id id) -> bool
         .style = WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | BS_PUSHBUTTON | BS_NOTIFY,
         .size = {100, 50}, // TODO dev
         .menu = reinterpret_cast<HMENU>(static_cast<UINT_PTR>(m_id)),
-        .hInstance = GetModuleHandle(nullptr),
+        .hInstance = context.instance,
     });
+
+    if (m_hwnd && context.resources) HwndApi::SetFont(m_hwnd, context.resources->defaultFont());
 
     return m_hwnd != nullptr;
 }

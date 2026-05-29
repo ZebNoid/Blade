@@ -3,9 +3,10 @@
 #include <algorithm>
 #include <commctrl.h>
 
-#include "Common/Logger.h"
+#include "Components/Tray/NativeTrayApi/NativeTrayApi.h"
 #include "Property/PropertyReader.h"
 #include "WinApi/Resource/ImageLoader/ImageLoader.h"
+#include "WinApi/HwndApi/HwndApi.h"
 #include "WinApi/Window/Hwnd/Hwnd.h"
 
 namespace Blade::Backend {
@@ -13,8 +14,6 @@ namespace Blade::Backend {
 namespace {
 
 constexpr UINT TrayCallback = WM_APP + 1;
-constexpr UINT_PTR SubclassId = 1;
-
 auto CopyTip(NOTIFYICONDATAW& data, const Api::Text& title) -> void
 {
     wcsncpy_s(data.szTip, title.c_str(), _TRUNCATE);
@@ -26,7 +25,7 @@ NativeTray::~NativeTray()
 {
     destroy();
 
-    if (m_icon) DestroyIcon(m_icon);
+    NativeTrayApi::DestroyIcon(m_icon);
 }
 
 auto NativeTray::create(HINSTANCE hInstance, Api::Id id, Api::BackendMessageHandler* handler) -> bool
@@ -43,7 +42,7 @@ auto NativeTray::create(HINSTANCE hInstance, Api::Id id, Api::BackendMessageHand
 
     if (!m_hwnd) return false;
 
-    SetWindowSubclass(m_hwnd, Proc, SubclassId, reinterpret_cast<DWORD_PTR>(this));
+    NativeTrayApi::SetSubclass(m_hwnd, Proc, reinterpret_cast<DWORD_PTR>(this));
 
     m_data.cbSize = sizeof(NOTIFYICONDATAW);
     m_data.hWnd = m_hwnd;
@@ -126,12 +125,10 @@ auto NativeTray::applyEvents(const Api::EventSubscriptions& events) -> void
 auto NativeTray::destroy() -> void
 {
     if (!m_hwnd) return;
-// TODO winapi commands
-    // HwndApi::Destroy(m_hwnd); ??
 
-    Shell_NotifyIconW(NIM_DELETE, &m_data);
-    RemoveWindowSubclass(m_hwnd, Proc, SubclassId);
-    DestroyWindow(m_hwnd);
+    notify(NIM_DELETE);
+    NativeTrayApi::RemoveSubclass(m_hwnd, Proc);
+    HwndApi::Destroy(m_hwnd);
     m_hwnd = nullptr;
     m_alive = false;
 }
@@ -149,7 +146,7 @@ auto NativeTray::setIcon(const Api::Text& path) -> void
 {
     if (m_icon)
     {
-        DestroyIcon(m_icon);
+        NativeTrayApi::DestroyIcon(m_icon);
         m_icon = nullptr;
     }
 
@@ -187,10 +184,7 @@ auto NativeTray::emitClick() -> void
 
 auto NativeTray::notify(DWORD message) -> bool
 {
-    if (Shell_NotifyIconW(message, &m_data)) return true;
-
-    LOGF_E(L"[Error] NativeTray::Shell_NotifyIcon failed id=%d message=%lu [%lu]", m_id, message, GetLastError());
-    return false;
+    return NativeTrayApi::Notify(message, m_data, m_id);
 }
 
 } // namespace Blade::Backend

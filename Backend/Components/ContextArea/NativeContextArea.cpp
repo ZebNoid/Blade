@@ -3,6 +3,7 @@
 #include <algorithm>
 
 #include "Components/Window/NativeWindow.h"
+#include "Node/NativeCreateContext/NativeCreateContext.h"
 #include "Property/PropertyMapper/PropertyMapper.h"
 #include "Property/PropertyReader.h"
 #include "WinApi/Window/Hwnd/Hwnd.h"
@@ -18,7 +19,7 @@ auto HasEvent(const Api::EventSubscriptions& events, Api::Events event) -> bool
 
 } // namespace
 
-auto NativeContextArea::create(NativeWindow* parent, Api::Id id) -> bool
+auto NativeContextArea::create(NativeWindow* parent, Api::Id id, const NativeCreateContext& context) -> bool
 {
     if (!parent) return false;
 
@@ -31,7 +32,7 @@ auto NativeContextArea::create(NativeWindow* parent, Api::Id id) -> bool
         .parent = parent->handle(),
         .style = WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | SS_NOTIFY,
         .menu = reinterpret_cast<HMENU>(static_cast<UINT_PTR>(m_id)),
-        .hInstance = GetModuleHandle(nullptr),
+        .hInstance = context.instance,
     });
 
     return m_hwnd != nullptr;

@@ -32,9 +32,7 @@ public:
     static auto GetPosition(HWND hwnd) -> Api::Point;
 
     static auto SetFont(HWND hwnd, HFONT font) -> void;
-    static auto GetFont(
-        HWND hwnd
-    ) -> HFONT;
+    static auto GetFont(HWND hwnd) -> HFONT;
 
     static auto Show(HWND hwnd, int cmdShow = SW_SHOW) -> void;
     static auto SetVisible(HWND hwnd, bool visible) -> void;

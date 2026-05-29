@@ -10,7 +10,12 @@
 
 namespace Blade::Backend {
 
-NativeNodeFactory::NativeNodeFactory(AppBackend* backend) : m_backend(backend)
+NativeNodeFactory::NativeNodeFactory(AppBackend* backend)
+    : m_backend(backend)
+    , m_context{
+          .instance = backend->handle(),
+          .resources = &backend->resources(),
+      }
 {
     registerFactories();
 }
@@ -98,7 +103,7 @@ auto NativeNodeFactory::createButton(const Api::ElementCommand& command) -> std:
         return std::nullopt;
     }
 
-    if (!button->create(parentWindow, command.id))
+    if (!button->create(parentWindow, command.id, m_context))
     {
         LOG_E(L"[Error] createButton failed");
         return std::nullopt;
@@ -160,7 +165,7 @@ auto NativeNodeFactory::createContextArea(const Api::ElementCommand& command) ->
 
     auto area = std::make_unique<NativeContextArea>();
 
-    if (!area->create(parentWindow, command.id))
+    if (!area->create(parentWindow, command.id, m_context))
     {
         LOG_E(L"[Error] createContextArea failed");
         return std::nullopt;

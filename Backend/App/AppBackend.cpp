@@ -101,6 +101,11 @@ auto AppBackend::factory() -> NativeNodeFactory&
     return m_factory;
 }
 
+auto AppBackend::resources() -> ResourceManager&
+{
+    return m_resources;
+}
+
 auto AppBackend::handle() -> HINSTANCE
 {
     return m_hInstance;

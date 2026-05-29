@@ -4,6 +4,7 @@
 
 #include "Api/ApiBackend.h"
 #include "Node/NodeRegistry/NodeRegistry.h"
+#include "Resource/ResourceManager/ResourceManager.h"
 #include "WinApi/AppRuntime/AppRuntime.h"
 #include "WinApi/Interop/OleScope/OleScope.h"
 #include "WindowHost/WindowHost.h"
@@ -57,6 +58,8 @@ public:
 
     auto factory() -> NativeNodeFactory&;
 
+    auto resources() -> ResourceManager&;
+
     auto handle() -> HINSTANCE;
 
 private:
@@ -68,6 +71,7 @@ private:
     WindowHost m_host;
 
     NodeRegistry m_nodes;
+    ResourceManager m_resources;
 
     CommandDispatcher m_dispatcher;
 
