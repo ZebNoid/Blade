@@ -3,6 +3,7 @@
 #include "Command/ElementCommand.h"
 #include "Base/WidgetTree.h"
 #include "Runtime/LayoutEngine/Data/LayoutNode.h"
+#include "Runtime/Materializer/MaterializerState.h"
 
 
 namespace Blade {
@@ -30,8 +31,7 @@ private:
         const LayoutNode& layout,
         std::vector<Api::ElementCommand>& out,
         Api::Id parent = Api::InvalidId,
-        const std::vector<WidgetTree>* contextMenus = nullptr,
-        Api::Id dropTarget = Api::InvalidId
+        MaterializerState state = {}
     ) -> void;
 
     auto updateNode(

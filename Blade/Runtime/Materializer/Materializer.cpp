@@ -52,16 +52,15 @@ auto Materializer::createNode(
     const LayoutNode& layout,
     std::vector<Api::ElementCommand>& out,
     Api::Id parent,
-    const std::vector<WidgetTree>* contextMenus,
-    Api::Id dropTarget
+    MaterializerState state
 ) -> void
 {
     const auto* ownContextMenus = !widget.overlays.empty() ? &widget.overlays : nullptr;
-    const auto* activeContextMenus = contextMenus ? contextMenus : ownContextMenus;
+    const auto* activeContextMenus = state.contextMenus ? state.contextMenus : ownContextMenus;
 
     if (MaterializerRules::ShouldMaterialize(widget, layout))
     {
-        out.push_back(MaterializerRules::CreateCommand(widget, parent, activeContextMenus, dropTarget));
+        out.push_back(MaterializerRules::CreateCommand(widget, parent, activeContextMenus, state.dropTarget));
 
         if (parent != Api::InvalidId)
         {
@@ -79,12 +78,13 @@ auto Materializer::createNode(
     }
 
     const auto isContextArea = MaterializerRules::IsContextArea(widget);
-    const auto* childContextMenus = isContextArea ? &widget.overlays : nullptr;
-    const auto childDropTarget = isContextArea && MaterializerRules::HasEvent(widget, Api::Events::Drop) ? widget.id : dropTarget;
+    auto childState = state;
+    if (isContextArea) childState.contextMenus = &widget.overlays;
+    if (isContextArea && MaterializerRules::HasEvent(widget, Api::Events::Drop)) childState.dropTarget = widget.id;
 
     for (size_t i = 0; i < widget.children.size(); ++i)
     {
-        createNode(widget.children[i], layout.children[i], out, parent, childContextMenus, childDropTarget);
+        createNode(widget.children[i], layout.children[i], out, parent, childState);
     }
 }
 

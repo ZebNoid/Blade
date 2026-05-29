@@ -41,6 +41,7 @@ add_library(${PROJECT_NAME} STATIC
 
         Runtime/Materializer/Materializer.cpp
         Runtime/Materializer/Materializer.h
+        Runtime/Materializer/MaterializerState.h
         Runtime/Materializer/MaterializerCommands/MaterializerCommands.cpp
         Runtime/Materializer/MaterializerCommands/MaterializerCommands.h
         Runtime/Materializer/MaterializerRules/MaterializerRules.cpp
