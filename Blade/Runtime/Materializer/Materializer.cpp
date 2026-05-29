@@ -6,17 +6,17 @@
 
 namespace Blade {
 
-auto Materializer::create(const WidgetTree& widgetTree, const LayoutNode& layoutTree) -> std::vector<Api::ElementCommand>
+auto Materializer::Create(const WidgetTree& widgetTree, const LayoutNode& layoutTree) -> std::vector<Api::ElementCommand>
 {
     return MaterializerCreate::Build(widgetTree, layoutTree);
 }
 
-auto Materializer::update(const WidgetTree& widgetTree, const LayoutNode& layoutTree, bool includeRoot) -> std::vector<Api::ElementCommand>
+auto Materializer::Update(const WidgetTree& widgetTree, const LayoutNode& layoutTree, bool includeRoot) -> std::vector<Api::ElementCommand>
 {
     return MaterializerUpdate::Build(widgetTree, layoutTree, includeRoot);
 }
 
-auto Materializer::updateChanged(
+auto Materializer::UpdateChanged(
     const WidgetTree& widgetTree,
     const LayoutNode& previousLayout,
     const LayoutNode& layoutTree,
@@ -26,7 +26,7 @@ auto Materializer::updateChanged(
     return MaterializerUpdate::BuildChanged(widgetTree, previousLayout, layoutTree, includeRoot);
 }
 
-auto Materializer::remove(const WidgetTree& widgetTree) -> std::vector<Api::ElementCommand>
+auto Materializer::Remove(const WidgetTree& widgetTree) -> std::vector<Api::ElementCommand>
 {
     return MaterializerRemove::Build(widgetTree);
 }

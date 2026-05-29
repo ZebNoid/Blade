@@ -2,8 +2,25 @@
 
 #include "Runtime/Materializer/MaterializerCommands/MaterializerCommands.h"
 #include "Runtime/Materializer/MaterializerRules/MaterializerRules.h"
+#include "Runtime/Materializer/MenuMaterializer/MenuMaterializer.h"
 
 namespace Blade {
+
+namespace {
+
+auto CreateCommand(
+    const WidgetTree& widget,
+    Api::Id parent,
+    const std::vector<WidgetTree>* contextMenus,
+    Api::Id dropTarget
+) -> Api::ElementCommand
+{
+    auto command = MaterializerCommands::Create(widget, parent, MenuMaterializer::Build(contextMenus));
+    if (dropTarget != Api::InvalidId && !MaterializerRules::HasEvent(widget, Api::Events::Drop)) command.props[Api::Props::DropTarget] = true;
+    return command;
+}
+
+} // namespace
 
 auto MaterializerCreate::Build(const WidgetTree& widgetTree, const LayoutNode& layoutTree) -> std::vector<Api::ElementCommand>
 {
@@ -27,7 +44,7 @@ auto MaterializerCreate::createNode(
 
     if (MaterializerRules::ShouldMaterialize(widget, layout))
     {
-        out.push_back(MaterializerRules::CreateCommand(widget, parent, activeContextMenus, state.dropTarget));
+        out.push_back(CreateCommand(widget, parent, activeContextMenus, state.dropTarget));
 
         if (parent != Api::InvalidId)
         {

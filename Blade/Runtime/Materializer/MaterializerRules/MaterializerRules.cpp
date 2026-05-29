@@ -1,8 +1,5 @@
 #include "MaterializerRules.h"
 
-#include "Runtime/Materializer/MaterializerCommands/MaterializerCommands.h"
-#include "Runtime/Materializer/MenuMaterializer/MenuMaterializer.h"
-
 namespace Blade {
 
 auto MaterializerRules::IsContextArea(const WidgetTree& widget) -> bool
@@ -32,18 +29,6 @@ auto MaterializerRules::SameRect(const LayoutNode* previousLayout, const LayoutN
     const auto& a = previousLayout->rect;
     const auto& b = layout.rect;
     return a.x == b.x && a.y == b.y && a.width == b.width && a.height == b.height;
-}
-
-auto MaterializerRules::CreateCommand(
-    const WidgetTree& widget,
-    Api::Id parent,
-    const std::vector<WidgetTree>* contextMenus,
-    Api::Id dropTarget
-) -> Api::ElementCommand
-{
-    auto command = MaterializerCommands::Create(widget, parent, MenuMaterializer::Build(contextMenus));
-    if (dropTarget != Api::InvalidId && !HasEvent(widget, Api::Events::Drop)) command.props[Api::Props::DropTarget] = true;
-    return command;
 }
 
 auto MaterializerRules::HasNativeDescendant(const WidgetTree& widget) -> bool

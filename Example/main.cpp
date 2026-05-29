@@ -23,24 +23,32 @@ protected:
 
         *trayId = Tray(
             Menu(
-                MenuItem(L"Show").on({.click = [windowId]() -> void
-                {
-                    App::ShowWindow(*windowId);
-                    LOG(L"Show");
-                }}),
-                MenuItem(L"Export",
-                         MenuItem(L"PNG").on({
+                MenuItem(L"Show").on({
+                    .click = [windowId]() -> void
+                    {
+                        App::ShowWindow(*windowId);
+                        LOG(L"Show");
+                    }
+                }),
+                MenuItem(L"Hide").on({
+                    .click = [windowId]() -> void
+                    {
+                        App::HideWindow(*windowId);
+                        LOG(L"Hide");
+                    }
+                }),
+                MenuItem(L"Tray Icon",
+                         MenuItem(L"app.png").on({
                              .click = [trayId, windowId]() -> void
                              {
                                  App::SetTrayIcon(*trayId, L"test/app.png");
                                  LOG(L"PNG");
                              }
                          }),
-                         MenuItem(L"PDF").on({
+                         MenuItem(L"0ad.png").on({
                              .click = [trayId, windowId]()-> void
                              {
                                  App::SetTrayIcon(*trayId, L"test/0ad.png");
-
                                  LOG(L"PDF");
                              }
                          })
@@ -103,7 +111,8 @@ protected:
             .close = [windowId]() -> bool
             {
                 App::HideWindow(*windowId);
-                App::Quit(); // TODO dev only
+                // App::Quit(); // TODO dev only
+                LOGF_D(L"Close Window");
                 return false;
             },
             .drop = [](const Api::Text& files) -> void

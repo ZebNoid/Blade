@@ -27,7 +27,6 @@ private:
 private:
     Api::ApiBackend* m_backend = nullptr;
     WidgetTreeRegistry& m_trees;
-    Materializer m_materializer;
     std::unordered_map<Api::Id, LayoutNode> m_layoutTrees;
     std::unordered_map<Api::Id, Api::Size> m_pendingResize;
     bool m_sending = false;

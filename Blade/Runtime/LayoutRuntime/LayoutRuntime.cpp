@@ -15,7 +15,7 @@ auto LayoutRuntime::mount(WidgetTree tree) -> WidgetTree&
 {
     auto& root = m_trees.add(std::move(tree));
     auto layoutTree = LayoutPass::Compute(root, root.layout.size);
-    auto commands = m_materializer.create(root, layoutTree);
+    auto commands = Materializer::Create(root, layoutTree);
 
     m_layoutTrees.insert_or_assign(root.id, std::move(layoutTree));
     send(std::move(commands));
@@ -32,7 +32,7 @@ auto LayoutRuntime::unmount(Api::Id rootId) -> void
         return;
     }
 
-    send(m_materializer.remove(*root));
+    send(Materializer::Remove(*root));
     m_layoutTrees.erase(rootId);
     m_pendingResize.erase(rootId);
     m_trees.remove(rootId);
@@ -59,11 +59,11 @@ auto LayoutRuntime::resizeRoot(Api::Id rootId, const Api::Size& size) -> void
 
     if (previous == m_layoutTrees.end())
     {
-        commands = m_materializer.update(*root, layoutTree, false);
+        commands = Materializer::Update(*root, layoutTree, false);
     }
     else
     {
-        commands = m_materializer.updateChanged(*root, previous->second, layoutTree, false);
+        commands = Materializer::UpdateChanged(*root, previous->second, layoutTree, false);
     }
 
     m_layoutTrees.insert_or_assign(rootId, std::move(layoutTree));
