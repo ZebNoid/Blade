@@ -16,6 +16,10 @@ public:
 
     auto find(Api::Id widgetId) -> WidgetTree*;
 
+    auto remove(Api::Id rootId) -> void;
+
+    auto clear() -> void;
+
 private:
     auto assignIds(WidgetTree& tree) -> void;
 

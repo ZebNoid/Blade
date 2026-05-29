@@ -12,11 +12,14 @@ class EventRuntime
 {
 public:
     auto registerTree(const WidgetTree& tree) -> void;
+    auto unregisterTree(const WidgetTree& tree) -> void;
+    auto clear() -> void;
 
     auto dispatch(const Api::BackendEvent& event) -> Api::EventResult;
 
 private:
     auto registerTree(const WidgetTree& tree, Api::Id parent) -> void;
+    auto unregisterNode(const WidgetTree& tree) -> void;
     auto hasHandler(Api::Id target, Api::Events event) const -> bool;
     auto dispatchNode(Api::Id target, const Api::BackendEvent& event, Api::EventContext& context) -> Api::EventResult;
     auto parentOf(Api::Id target) const -> Api::Id;

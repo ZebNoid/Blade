@@ -10,6 +10,17 @@ auto EventRuntime::registerTree(const WidgetTree& tree) -> void
     registerTree(tree, Api::InvalidId);
 }
 
+auto EventRuntime::unregisterTree(const WidgetTree& tree) -> void
+{
+    unregisterNode(tree);
+}
+
+auto EventRuntime::clear() -> void
+{
+    m_events.clear();
+    m_parents.clear();
+}
+
 auto EventRuntime::registerTree(const WidgetTree& tree, Api::Id parent) -> void
 {
     if (!tree.events.empty())
@@ -30,6 +41,22 @@ auto EventRuntime::registerTree(const WidgetTree& tree, Api::Id parent) -> void
     for (const auto& overlay : tree.overlays)
     {
         registerTree(overlay, tree.id);
+    }
+}
+
+auto EventRuntime::unregisterNode(const WidgetTree& tree) -> void
+{
+    m_events.erase(tree.id);
+    m_parents.erase(tree.id);
+
+    for (const auto& child : tree.children)
+    {
+        unregisterNode(child);
+    }
+
+    for (const auto& overlay : tree.overlays)
+    {
+        unregisterNode(overlay);
     }
 }
 

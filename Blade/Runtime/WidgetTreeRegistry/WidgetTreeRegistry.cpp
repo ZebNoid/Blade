@@ -30,6 +30,16 @@ auto WidgetTreeRegistry::find(Api::Id widgetId) -> WidgetTree*
     return nullptr;
 }
 
+auto WidgetTreeRegistry::remove(Api::Id rootId) -> void
+{
+    m_roots.erase(rootId);
+}
+
+auto WidgetTreeRegistry::clear() -> void
+{
+    m_roots.clear();
+}
+
 auto WidgetTreeRegistry::assignIds(WidgetTree& tree) -> void
 {
     assignNodeIds(tree);
