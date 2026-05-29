@@ -61,10 +61,7 @@ auto WidgetTreeRegistry::ownerCount() const -> size_t
 
     for (const auto& [rootId, tree] : m_roots)
     {
-        const auto it = tree.backend.create.find(Api::Props::Lifetime);
-        const auto* lifetime = it == tree.backend.create.end() ? nullptr : std::get_if<Api::Lifetime>(&it->second);
-
-        if (!lifetime || *lifetime == Api::Lifetime::Owner)
+        if (tree.lifetime == Api::Lifetime::Owner)
         {
             ++count;
         }

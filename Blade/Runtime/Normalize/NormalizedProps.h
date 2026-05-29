@@ -1,6 +1,7 @@
 #pragma once
 #include <utility>
 
+#include "Common/Lifetime.h"
 #include "Common/Property.h"
 #include "Runtime/LayoutEngine/Data/LayoutData.h"
 
@@ -27,6 +28,8 @@ struct NormalizedProps
     BackendProps backend;
 
     LayoutData layout;
+    Api::Lifetime lifetime = Api::Lifetime::Owner;
+    bool hasLifetime = false;
     bool hasLayout = false;
     bool hasSize = false;
     bool hasPosition = false;

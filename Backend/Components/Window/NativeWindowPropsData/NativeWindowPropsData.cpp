@@ -38,7 +38,6 @@ auto NativeWindowPropsData::RemoveHandled(Api::PropertyMap& propertyMap) -> void
     propertyMap.erase(Api::Props::MaxSize);
     propertyMap.erase(Api::Props::State);
     propertyMap.erase(Api::Props::ContextMenus);
-    propertyMap.erase(Api::Props::Lifetime);
 }
 
 auto NativeWindowPropsData::isNormal() const -> bool

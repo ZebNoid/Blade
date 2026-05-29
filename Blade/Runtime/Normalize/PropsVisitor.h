@@ -52,6 +52,14 @@ public:
             m_props.backend.create[prop] = value;
             break;
 
+        case Api::Props::Lifetime:
+            if (const auto* lifetime = std::get_if<Api::Lifetime>(&value))
+            {
+                m_props.lifetime = *lifetime;
+                m_props.hasLifetime = true;
+            }
+            break;
+
         default:
             m_props.backend.create[prop] = value;
             break;
