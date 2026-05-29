@@ -32,6 +32,19 @@ auto WidgetTreeRegistry::find(Api::Id widgetId) -> WidgetTree*
     return nullptr;
 }
 
+auto WidgetTreeRegistry::rootIds() const -> std::vector<Api::Id>
+{
+    std::vector<Api::Id> ids;
+    ids.reserve(m_roots.size());
+
+    for (const auto& [rootId, _] : m_roots)
+    {
+        ids.push_back(rootId);
+    }
+
+    return ids;
+}
+
 auto WidgetTreeRegistry::remove(Api::Id rootId) -> void
 {
     m_roots.erase(rootId);

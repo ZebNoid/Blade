@@ -52,6 +52,7 @@ private:
     auto onBackendMessage(const Api::BackendMessage& message) -> Api::EventResult;
 
     auto destroyRoot(Api::Id rootId) -> void;
+    auto quit() -> void;
 
     static auto Process(Api::AppCommand command) -> void;
 
@@ -63,6 +64,7 @@ private:
     EventRuntime m_eventRuntime;
     std::unique_ptr<LayoutRuntime> m_layoutRuntime;
     std::unordered_set<Api::Id> m_destroyingRoots;
+    bool m_quitting = false;
 
     friend class RootWidget;
 };

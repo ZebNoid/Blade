@@ -147,12 +147,35 @@ auto App::destroyRoot(Api::Id rootId) -> void
     m_layoutRuntime->unmount(rootId);
     m_destroyingRoots.erase(rootId);
 
-    if (m_trees.ownerCount() == 0) Quit();
+    if (!m_quitting && m_trees.ownerCount() == 0) Quit();
+}
+
+auto App::quit() -> void
+{
+    if (m_quitting) return;
+
+    m_quitting = true;
+
+    for (const auto rootId : m_trees.rootIds())
+    {
+        destroyRoot(rootId);
+    }
+
+    if (m_backend)
+    {
+        m_backend->process({ .command = Api::AppCommandType::Quit });
+    }
 }
 
 auto App::Process(Api::AppCommand command) -> void
 {
     if (!s_current) return;
+
+    if (command.command == Api::AppCommandType::Quit)
+    {
+        s_current->quit();
+        return;
+    }
 
     if (command.command == Api::AppCommandType::DestroyRoot)
     {

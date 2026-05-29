@@ -16,6 +16,8 @@ public:
 
     auto find(Api::Id widgetId) -> WidgetTree*;
 
+    auto rootIds() const -> std::vector<Api::Id>;
+
     auto remove(Api::Id rootId) -> void;
 
     auto clear() -> void;
