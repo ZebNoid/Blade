@@ -160,6 +160,11 @@ auto HwndApi::Update(HWND hwnd) -> void
     UpdateWindow(hwnd);
 }
 
+auto HwndApi::Close(HWND hwnd) -> void
+{
+    SendMessageW(hwnd, WM_CLOSE, 0, 0);
+}
+
 auto HwndApi::Destroy(HWND hwnd) -> void
 {
     DestroyWindow(hwnd);

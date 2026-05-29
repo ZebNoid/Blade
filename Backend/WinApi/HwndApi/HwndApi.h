@@ -39,6 +39,7 @@ public:
     static auto Show(HWND hwnd, int cmdShow = SW_SHOW) -> void;
     static auto SetVisible(HWND hwnd, bool visible) -> void;
     static auto Update(HWND hwnd) -> void;
+    static auto Close(HWND hwnd) -> void;
     static auto Destroy(HWND hwnd) -> void;
 
     static auto GetSizeFromLParam(LPARAM lParam) -> Api::Size;

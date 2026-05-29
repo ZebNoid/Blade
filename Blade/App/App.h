@@ -18,6 +18,14 @@ public:
 
     auto run() -> int;
     static auto Quit() -> void;
+    static auto CloseWindow(Api::Id windowId) -> void;
+    static auto ShowWindow(Api::Id windowId) -> void;
+    static auto HideWindow(Api::Id windowId) -> void;
+    static auto MinimizeWindow(Api::Id windowId) -> void;
+    static auto MaximizeWindow(Api::Id windowId) -> void;
+    static auto RestoreWindow(Api::Id windowId) -> void;
+    static auto SetTrayIcon(Api::Id trayId, Api::Text icon) -> void;
+    static auto SetTrayTitle(Api::Id trayId, Api::Text title) -> void;
 
 protected:
     template <typename TBackend, typename... Args>
@@ -34,11 +42,13 @@ protected:
 protected:
 
 private:
-    auto addToTree(const RootWidget& rootWidget) -> void;
+    auto addToTree(const RootWidget& rootWidget) -> Api::Id;
 
     auto initBackend() -> int;
 
     auto onBackendMessage(const Api::BackendMessage& message) -> Api::EventResult;
+
+    static auto Process(Api::AppCommand command) -> void;
 
 private:
     static App* s_current;

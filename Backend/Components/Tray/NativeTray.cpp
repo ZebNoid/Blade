@@ -99,12 +99,12 @@ auto NativeTray::applyProps(const Api::PropertyMap& propertyMap) -> void
 {
     if (const auto* title = PropertyReader::Get<Api::Text>(propertyMap, Api::Props::Title))
     {
-        updateTitle(*title);
+        setTitle(*title);
     }
 
     if (const auto* icon = PropertyReader::Get<Api::Text>(propertyMap, Api::Props::Icon))
     {
-        updateIcon(*icon);
+        setIcon(*icon);
     }
 
     if (const auto* menus = PropertyReader::Get<Api::ContextMenus>(propertyMap, Api::Props::ContextMenus))
@@ -131,7 +131,7 @@ auto NativeTray::attachChild(INativeElement*) -> void
 {
 }
 
-auto NativeTray::updateIcon(const Api::Text& path) -> void
+auto NativeTray::setIcon(const Api::Text& path) -> void
 {
     if (m_icon)
     {
@@ -149,7 +149,7 @@ auto NativeTray::updateIcon(const Api::Text& path) -> void
     }
 }
 
-auto NativeTray::updateTitle(const Api::Text& title) -> void
+auto NativeTray::setTitle(const Api::Text& title) -> void
 {
     CopyTip(m_data, title);
     notify(NIM_MODIFY);

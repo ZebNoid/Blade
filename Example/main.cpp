@@ -18,12 +18,21 @@ protected:
 
     auto onCreate() -> void override
     {
-        Tray(
+        auto trayId = std::make_shared<Api::Id>(Api::InvalidId);
+
+        *trayId = Tray(
             Menu(
                 MenuItem(L"Open").on({.click = [] { LOG(L"Open"); }}),
                 MenuItem(L"Export",
-                         MenuItem(L"PNG").on({.click = [] { LOG(L"PNG"); }}),
-                         MenuItem(L"PDF").on({.click = [] { LOG(L"PDF"); }})
+                         MenuItem(L"PNG").on({.click = [trayId] {
+                             App::SetTrayIcon(*trayId, L"test/app.png");
+                             LOG(L"PNG");
+                         }}),
+                         MenuItem(L"PDF").on({.click = [trayId]
+                         {
+                             App::SetTrayIcon(*trayId, L"test/0ad.png");
+                             LOG(L"PDF");
+                         }})
                 ),
                 MenuSeparator(),
                 MenuItem(L"Exit").set({
@@ -35,6 +44,7 @@ protected:
         ).set({
             .title = L"Blade Tray",
             .icon = L"test/app.ico",
+            // .icon = L"test/0ad.png",
             // .lifetime = Api::Lifetime::Ignore,
         }).build(this);
 

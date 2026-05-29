@@ -21,13 +21,13 @@ public:
     auto applyEvents(const Api::EventSubscriptions& events) -> void override;
     auto isAlive() const -> bool override;
     auto attachChild(INativeElement* child) -> void override;
+    auto setIcon(const Api::Text& path) -> void;
+    auto setTitle(const Api::Text& title) -> void;
 
 private:
     static auto CALLBACK Proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, UINT_PTR id, DWORD_PTR data) -> LRESULT;
     auto handle(UINT msg, WPARAM wParam, LPARAM lParam) -> std::optional<LRESULT>;
 
-    auto updateIcon(const Api::Text& path) -> void;
-    auto updateTitle(const Api::Text& title) -> void;
     auto updateContextMenus(const Api::ContextMenus& menus) -> void;
     auto updateLifetime(Api::Lifetime lifetime) -> void;
     auto notify(DWORD message) -> bool;

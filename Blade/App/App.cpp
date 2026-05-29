@@ -27,21 +27,57 @@ auto App::run() -> int
 
 auto App::Quit() -> void
 {
-    if (s_current && s_current->m_backend)
-    {
-        s_current->m_backend->process({
-            .command = Api::AppCommandType::Quit
-        });
-    }
+    Process({ .command = Api::AppCommandType::Quit });
 }
 
-auto App::addToTree(const RootWidget& rootWidget) -> void
+auto App::CloseWindow(Api::Id windowId) -> void
+{
+    Process({ .command = Api::AppCommandType::CloseWindow, .target = windowId });
+}
+
+auto App::ShowWindow(Api::Id windowId) -> void
+{
+    Process({ .command = Api::AppCommandType::ShowWindow, .target = windowId });
+}
+
+auto App::HideWindow(Api::Id windowId) -> void
+{
+    Process({ .command = Api::AppCommandType::HideWindow, .target = windowId });
+}
+
+auto App::MinimizeWindow(Api::Id windowId) -> void
+{
+    Process({ .command = Api::AppCommandType::MinimizeWindow, .target = windowId });
+}
+
+auto App::MaximizeWindow(Api::Id windowId) -> void
+{
+    Process({ .command = Api::AppCommandType::MaximizeWindow, .target = windowId });
+}
+
+auto App::RestoreWindow(Api::Id windowId) -> void
+{
+    Process({ .command = Api::AppCommandType::RestoreWindow, .target = windowId });
+}
+
+auto App::SetTrayIcon(Api::Id trayId, Api::Text icon) -> void
+{
+    Process({ .command = Api::AppCommandType::SetTrayIcon, .target = trayId, .payload = std::move(icon) });
+}
+
+auto App::SetTrayTitle(Api::Id trayId, Api::Text title) -> void
+{
+    Process({ .command = Api::AppCommandType::SetTrayTitle, .target = trayId, .payload = std::move(title) });
+}
+
+auto App::addToTree(const RootWidget& rootWidget) -> Api::Id
 {
     auto tree = rootWidget.tree();
 
     auto& root = m_layoutRuntime->mount(std::move(tree));
 
     m_eventRuntime.registerTree(root);
+    return root.id;
 }
 
 auto App::initBackend() -> int
@@ -86,5 +122,12 @@ auto App::onBackendMessage(const Api::BackendMessage& message) -> Api::EventResu
     return {};
 }
 
+auto App::Process(Api::AppCommand command) -> void
+{
+    if (s_current && s_current->m_backend)
+    {
+        s_current->m_backend->process(command);
+    }
+}
 
 } // namespace
