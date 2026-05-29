@@ -59,6 +59,8 @@ add_library(${PROJECT_NAME} STATIC
         Runtime/LayoutRuntime/LayoutRuntime.h
         Runtime/LayoutRuntime/LayoutPass/LayoutPass.cpp
         Runtime/LayoutRuntime/LayoutPass/LayoutPass.h
+        Runtime/RootLifecycle/RootLifecycle.cpp
+        Runtime/RootLifecycle/RootLifecycle.h
         Runtime/Normalize/Normalize.h
         Runtime/Normalize/NormalizedProps.h
         Runtime/Normalize/PropsVisitor.h

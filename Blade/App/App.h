@@ -3,9 +3,8 @@
 #include "Api/ApiBackend.h"
 #include "Runtime/EventRuntime/EventRuntime.h"
 #include "Runtime/LayoutRuntime/LayoutRuntime.h"
+#include "Runtime/RootLifecycle/RootLifecycle.h"
 #include "Runtime/WidgetTreeRegistry/WidgetTreeRegistry.h"
-
-#include <unordered_set>
 
 
 namespace Blade {
@@ -51,9 +50,6 @@ private:
 
     auto onBackendMessage(const Api::BackendMessage& message) -> Api::EventResult;
 
-    auto destroyRoot(Api::Id rootId) -> void;
-    auto quit() -> void;
-
     static auto Process(Api::AppCommand command) -> void;
 
 private:
@@ -63,8 +59,7 @@ private:
     WidgetTreeRegistry m_trees;
     EventRuntime m_eventRuntime;
     std::unique_ptr<LayoutRuntime> m_layoutRuntime;
-    std::unordered_set<Api::Id> m_destroyingRoots;
-    bool m_quitting = false;
+    std::unique_ptr<RootLifecycle> m_rootLifecycle;
 
     friend class RootWidget;
 };

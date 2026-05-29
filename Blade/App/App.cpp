@@ -94,6 +94,7 @@ auto App::initBackend() -> int
     }
     m_backend->init();
     m_layoutRuntime = std::make_unique<LayoutRuntime>(m_backend.get(), m_trees);
+    m_rootLifecycle = std::make_unique<RootLifecycle>(m_backend.get(), m_trees, m_eventRuntime, *m_layoutRuntime);
     m_backend->setMessageHandler(
         [this](const Api::BackendMessage& message)
         {
@@ -127,44 +128,11 @@ auto App::onBackendMessage(const Api::BackendMessage& message) -> Api::EventResu
     if (message.type == Api::BackendMessageType::Destroyed)
     {
         const auto* destroyed = std::get_if<Api::BackendDestroyed>(&message.payload);
-        if (destroyed) destroyRoot(destroyed->target);
+        if (destroyed && m_rootLifecycle) m_rootLifecycle->destroyRoot(destroyed->target);
         return {};
     }
 
     return {};
-}
-
-auto App::destroyRoot(Api::Id rootId) -> void
-{
-    if (!m_layoutRuntime) return;
-    if (m_destroyingRoots.contains(rootId)) return;
-
-    auto* root = m_trees.root(rootId);
-    if (!root) return;
-
-    m_destroyingRoots.insert(rootId);
-    m_eventRuntime.unregisterTree(*root);
-    m_layoutRuntime->unmount(rootId);
-    m_destroyingRoots.erase(rootId);
-
-    if (!m_quitting && m_trees.ownerCount() == 0) Quit();
-}
-
-auto App::quit() -> void
-{
-    if (m_quitting) return;
-
-    m_quitting = true;
-
-    for (const auto rootId : m_trees.rootIds())
-    {
-        destroyRoot(rootId);
-    }
-
-    if (m_backend)
-    {
-        m_backend->process({ .command = Api::AppCommandType::Quit });
-    }
 }
 
 auto App::Process(Api::AppCommand command) -> void
@@ -173,13 +141,13 @@ auto App::Process(Api::AppCommand command) -> void
 
     if (command.command == Api::AppCommandType::Quit)
     {
-        s_current->quit();
+        if (s_current->m_rootLifecycle) s_current->m_rootLifecycle->quit();
         return;
     }
 
     if (command.command == Api::AppCommandType::DestroyRoot)
     {
-        s_current->destroyRoot(command.target);
+        if (s_current->m_rootLifecycle) s_current->m_rootLifecycle->destroyRoot(command.target);
         return;
     }
 
