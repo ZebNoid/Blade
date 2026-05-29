@@ -51,6 +51,6 @@ CheckOptions:
   - key: readability-identifier-naming.GlobalFunction
     value: CamelCase
 
-  # Global constants should be SCREAMING_SNAKE_CASE
+  # Constants follow the project PascalCase style
   - key: readability-identifier-naming.GlobalConstantCase
-    value: UPPER_CASE
+    value: CamelCase
