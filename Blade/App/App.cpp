@@ -146,6 +146,8 @@ auto App::destroyRoot(Api::Id rootId) -> void
     m_eventRuntime.unregisterTree(*root);
     m_layoutRuntime->unmount(rootId);
     m_destroyingRoots.erase(rootId);
+
+    if (m_trees.ownerCount() == 0) Quit();
 }
 
 auto App::Process(Api::AppCommand command) -> void

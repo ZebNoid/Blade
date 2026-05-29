@@ -30,12 +30,6 @@ auto AppBackend::runApp() -> int
         [&]
         {
             m_host.destroyClosedWindows();
-
-            if (m_nodes.ownerCount() == 0)
-            {
-                LOG_D(L"AppBackend::ownerCount 0 -> quit");
-                quit();
-            }
         }
     );
 }

@@ -30,7 +30,6 @@ private:
     auto handle(UINT msg, WPARAM wParam, LPARAM lParam) -> std::optional<LRESULT>;
 
     auto updateContextMenus(const Api::ContextMenus& menus) -> void;
-    auto updateLifetime(Api::Lifetime lifetime) -> void;
     auto notify(DWORD message) -> bool;
 
 private:

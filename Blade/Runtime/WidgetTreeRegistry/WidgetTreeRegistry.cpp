@@ -1,5 +1,7 @@
 #include "WidgetTreeRegistry.h"
 
+#include "Common/Lifetime.h"
+
 
 namespace Blade {
 
@@ -38,6 +40,24 @@ auto WidgetTreeRegistry::remove(Api::Id rootId) -> void
 auto WidgetTreeRegistry::clear() -> void
 {
     m_roots.clear();
+}
+
+auto WidgetTreeRegistry::ownerCount() const -> size_t
+{
+    size_t count = 0;
+
+    for (const auto& [rootId, tree] : m_roots)
+    {
+        const auto it = tree.backend.create.find(Api::Props::Lifetime);
+        const auto* lifetime = it == tree.backend.create.end() ? nullptr : std::get_if<Api::Lifetime>(&it->second);
+
+        if (!lifetime || *lifetime == Api::Lifetime::Owner)
+        {
+            ++count;
+        }
+    }
+
+    return count;
 }
 
 auto WidgetTreeRegistry::assignIds(WidgetTree& tree) -> void

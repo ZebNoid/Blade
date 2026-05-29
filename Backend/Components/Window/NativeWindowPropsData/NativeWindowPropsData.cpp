@@ -20,7 +20,6 @@ auto NativeWindowPropsData::Read(const Api::PropertyMap& propertyMap) -> NativeW
         .maxSize = PropertyReader::Get<Api::Size>(propertyMap, Api::Props::MaxSize),
         .state = PropertyReader::Get<Api::WindowState>(propertyMap, Api::Props::State),
         .contextMenus = PropertyReader::Get<Api::ContextMenus>(propertyMap, Api::Props::ContextMenus),
-        .lifetime = PropertyReader::Get<Api::Lifetime>(propertyMap, Api::Props::Lifetime),
     };
 }
 

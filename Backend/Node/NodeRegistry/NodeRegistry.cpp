@@ -40,19 +40,4 @@ auto NodeRegistry::count() const -> size_t
     return m_nodes.size();
 }
 
-auto NodeRegistry::ownerCount() const -> size_t
-{
-    size_t count = 0;
-
-    for (const auto& [_, node] : m_nodes)
-    {
-        if (node.native && node.native->isAlive() && node.native->isLifetimeOwner())
-        {
-            ++count;
-        }
-    }
-
-    return count;
-}
-
 } // namespace

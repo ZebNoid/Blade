@@ -19,11 +19,6 @@ auto NativeElement::parent() const -> NativeElement*
     return m_parent;
 }
 
-auto NativeElement::isLifetimeOwner() const -> bool
-{
-    return m_lifetimeOwner;
-}
-
 auto NativeElement::destroy() -> void
 {
     if (m_hwnd)

@@ -107,10 +107,6 @@ auto NativeTray::applyProps(const Api::PropertyMap& propertyMap) -> void
         updateContextMenus(*menus);
     }
 
-    if (const auto* lifetime = PropertyReader::Get<Api::Lifetime>(propertyMap, Api::Props::Lifetime))
-    {
-        updateLifetime(*lifetime);
-    }
 }
 
 auto NativeTray::applyEvents(const Api::EventSubscriptions&) -> void
@@ -169,11 +165,6 @@ auto NativeTray::updateContextMenus(const Api::ContextMenus& menus) -> void
 
     auto contextMenu = std::make_unique<NativeContextMenu>();
     if (contextMenu->attach(m_hwnd, m_id, m_commandRouter, menus)) m_contextMenu = std::move(contextMenu);
-}
-
-auto NativeTray::updateLifetime(Api::Lifetime lifetime) -> void
-{
-    m_lifetimeOwner = lifetime == Api::Lifetime::Owner;
 }
 
 auto NativeTray::notify(DWORD message) -> bool

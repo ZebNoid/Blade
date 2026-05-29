@@ -23,13 +23,16 @@ protected:
 
         *trayId = Tray(
             Menu(
-                MenuItem(L"Open").on({.click = [] { LOG(L"Open"); }}),
+                MenuItem(L"Show").on({.click = [windowId]() -> void
+                {
+                    App::ShowWindow(*windowId);
+                    LOG(L"Show");
+                }}),
                 MenuItem(L"Export",
                          MenuItem(L"PNG").on({
                              .click = [trayId, windowId]() -> void
                              {
                                  App::SetTrayIcon(*trayId, L"test/app.png");
-                                 App::HideWindow(*windowId);
                                  LOG(L"PNG");
                              }
                          }),
@@ -37,7 +40,7 @@ protected:
                              .click = [trayId, windowId]()-> void
                              {
                                  App::SetTrayIcon(*trayId, L"test/0ad.png");
-                                 App::ShowWindow(*windowId);
+
                                  LOG(L"PDF");
                              }
                          })
@@ -52,8 +55,7 @@ protected:
         ).set({
             .title = L"Blade Tray",
             .icon = L"test/app.ico",
-            // .icon = L"test/0ad.png",
-            // .lifetime = Api::Lifetime::Ignore,
+            .lifetime = Api::Lifetime::Owner,
         }).build(this);
 
         // Window(
@@ -91,11 +93,13 @@ protected:
             .title = L"Context Menu",
             .size = {800, 600},
             .placement = Api::WindowPlacement::Center({0, 0}, 1),
+            .lifetime = Api::Lifetime::Ignore,
         }).on({
-            .close = []() -> bool
+            .close = [windowId]() -> bool
             {
-                App::Quit();
-                return true;
+                App::HideWindow(*windowId);
+                // App::Quit();
+                return false;
             },
             .drop = [](const Api::Text& files) -> void
             {
