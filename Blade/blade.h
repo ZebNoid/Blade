@@ -1,6 +1,7 @@
 #pragma once
 
 #include "App/App.h"
+#include "UI/UI/UI.h"
 
 #include "Widget/Window/Window.h"
 #include "Widget/Tray/Tray.h"

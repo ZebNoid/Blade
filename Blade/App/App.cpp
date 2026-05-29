@@ -30,46 +30,6 @@ auto App::Quit() -> void
     Process({ .command = Api::AppCommandType::Quit });
 }
 
-auto App::Show(Api::Id id) -> void
-{
-    Process({ .command = Api::AppCommandType::Show, .target = id });
-}
-
-auto App::Hide(Api::Id id) -> void
-{
-    Process({ .command = Api::AppCommandType::Hide, .target = id });
-}
-
-auto App::CloseWindow(Api::Id windowId) -> void
-{
-    Process({ .command = Api::AppCommandType::CloseWindow, .target = windowId });
-}
-
-auto App::MinimizeWindow(Api::Id windowId) -> void
-{
-    Process({ .command = Api::AppCommandType::MinimizeWindow, .target = windowId });
-}
-
-auto App::MaximizeWindow(Api::Id windowId) -> void
-{
-    Process({ .command = Api::AppCommandType::MaximizeWindow, .target = windowId });
-}
-
-auto App::RestoreWindow(Api::Id windowId) -> void
-{
-    Process({ .command = Api::AppCommandType::RestoreWindow, .target = windowId });
-}
-
-auto App::SetTrayIcon(Api::Id trayId, Api::Text icon) -> void
-{
-    Process({ .command = Api::AppCommandType::SetTrayIcon, .target = trayId, .payload = std::move(icon) });
-}
-
-auto App::SetTrayTitle(Api::Id trayId, Api::Text title) -> void
-{
-    Process({ .command = Api::AppCommandType::SetTrayTitle, .target = trayId, .payload = std::move(title) });
-}
-
 auto App::DestroyRoot(Api::Id rootId) -> void
 {
     Process({ .command = Api::AppCommandType::DestroyRoot, .target = rootId });

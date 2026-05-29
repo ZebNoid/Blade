@@ -10,6 +10,7 @@
 namespace Blade {
 
 class RootWidget;
+class UI;
 
 
 class App
@@ -19,14 +20,6 @@ public:
 
     auto run() -> int;
     static auto Quit() -> void;
-    static auto Show(Api::Id id) -> void;
-    static auto Hide(Api::Id id) -> void;
-    static auto CloseWindow(Api::Id windowId) -> void;
-    static auto MinimizeWindow(Api::Id windowId) -> void;
-    static auto MaximizeWindow(Api::Id windowId) -> void;
-    static auto RestoreWindow(Api::Id windowId) -> void;
-    static auto SetTrayIcon(Api::Id trayId, Api::Text icon) -> void;
-    static auto SetTrayTitle(Api::Id trayId, Api::Text title) -> void;
     static auto DestroyRoot(Api::Id rootId) -> void;
 
 protected:
@@ -62,6 +55,7 @@ private:
     std::unique_ptr<RootLifecycle> m_rootLifecycle;
 
     friend class RootWidget;
+    friend class UI;
 };
 
 

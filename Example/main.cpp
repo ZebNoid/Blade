@@ -26,14 +26,14 @@ protected:
                 MenuItem(L"Show").on({
                     .click = [windowId]() -> void
                     {
-                        App::Show(*windowId);
+                        UI::Show(*windowId);
                         LOG(L"Show");
                     }
                 }),
                 MenuItem(L"Hide").on({
                     .click = [windowId]() -> void
                     {
-                        App::Hide(*windowId);
+                        UI::Hide(*windowId);
                         LOG(L"Hide");
                     }
                 }),
@@ -41,14 +41,14 @@ protected:
                          MenuItem(L"app.png").on({
                              .click = [trayId, windowId]() -> void
                              {
-                                 App::SetTrayIcon(*trayId, L"test/app.png");
+                                 UI::Tray::Icon(*trayId, L"test/app.png");
                                  LOG(L"PNG");
                              }
                          }),
                          MenuItem(L"0ad.png").on({
                              .click = [trayId, windowId]()-> void
                              {
-                                 App::SetTrayIcon(*trayId, L"test/0ad.png");
+                                 UI::Tray::Icon(*trayId, L"test/0ad.png");
                                  LOG(L"PDF");
                              }
                          })
@@ -67,7 +67,7 @@ protected:
         }).on({
             .click = [windowId]() -> void
             {
-                App::Show(*windowId);
+                UI::Show(*windowId);
             },
         }).build(this);
 
@@ -110,7 +110,7 @@ protected:
         }).on({
             .close = [windowId]() -> bool
             {
-                App::Hide(*windowId);
+                UI::Hide(*windowId);
                 // App::Quit(); // TODO dev only
                 LOGF_D(L"Close Window");
                 return false;

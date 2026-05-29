@@ -8,6 +8,8 @@ endif ()
 add_library(${PROJECT_NAME} STATIC
         App/App.cpp
         App/App.h
+        UI/UI/UI.cpp
+        UI/UI/UI.h
 
         Base/Widget.h
         Base/RootWidget.h
