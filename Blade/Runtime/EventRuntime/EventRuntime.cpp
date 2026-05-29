@@ -7,39 +7,68 @@ namespace Blade {
 
 auto EventRuntime::registerTree(const WidgetTree& tree) -> void
 {
+    registerTree(tree, Api::InvalidId);
+}
+
+auto EventRuntime::registerTree(const WidgetTree& tree, Api::Id parent) -> void
+{
     if (!tree.events.empty())
     {
         m_events.insert_or_assign(tree.id, tree.events);
     }
 
+    if (parent != Api::InvalidId)
+    {
+        m_parents.insert_or_assign(tree.id, parent);
+    }
+
     for (const auto& child : tree.children)
     {
-        registerTree(child);
+        registerTree(child, tree.id);
     }
 
     for (const auto& overlay : tree.overlays)
     {
-        registerTree(overlay);
+        registerTree(overlay, tree.id);
     }
 }
 
 auto EventRuntime::dispatch(const Api::BackendEvent& event) -> Api::EventResult
 {
-    const auto nodeIt = m_events.find(event.target);
-
-    if (nodeIt == m_events.end())
+    for (auto target = event.target; target != Api::InvalidId; target = parentOf(target))
     {
-        return {};
+        if (hasHandler(target, event.type))
+        {
+            return dispatchNode(target, event);
+        }
     }
+
+    return {};
+}
+
+auto EventRuntime::hasHandler(Api::Id target, Api::Events event) const -> bool
+{
+    const auto nodeIt = m_events.find(target);
+    return nodeIt != m_events.end() && nodeIt->second.contains(event);
+}
+
+auto EventRuntime::dispatchNode(Api::Id target, const Api::BackendEvent& event) -> Api::EventResult
+{
+    const auto nodeIt = m_events.find(target);
+
+    if (nodeIt == m_events.end()) return {};
 
     const auto eventIt = nodeIt->second.find(event.type);
 
-    if (eventIt == nodeIt->second.end())
-    {
-        return {};
-    }
+    if (eventIt == nodeIt->second.end()) return {};
 
     return InvokeEvent(eventIt->second, event);
+}
+
+auto EventRuntime::parentOf(Api::Id target) const -> Api::Id
+{
+    const auto it = m_parents.find(target);
+    return it == m_parents.end() ? Api::InvalidId : it->second;
 }
 
 } // namespace Blade

@@ -24,12 +24,11 @@ protected:
             Menu(
                 MenuItem(L"Open").on({.click = [] { LOG(L"Open"); }}),
                 MenuItem(L"Export",
-                         MenuItem(L"PNG").on({.click = [trayId] {
+                         MenuItem(L"PNG").on({.click = [trayId]() -> void {
                              App::SetTrayIcon(*trayId, L"test/app.png");
                              LOG(L"PNG");
                          }}),
-                         MenuItem(L"PDF").on({.click = [trayId]
-                         {
+                         MenuItem(L"PDF").on({.click = [trayId]()-> void {
                              App::SetTrayIcon(*trayId, L"test/0ad.png");
                              LOG(L"PDF");
                          }})
