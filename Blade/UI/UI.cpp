@@ -16,32 +16,32 @@ auto UI::Hide(Api::Id id) -> void
 
 auto UI::Window::Close(Api::Id id) -> void
 {
-    Send({ .command = Api::AppCommandType::CloseWindow, .target = id });
+    Send({ .command = Api::AppCommandType::WindowClose, .target = id });
 }
 
 auto UI::Window::Minimize(Api::Id id) -> void
 {
-    Send({ .command = Api::AppCommandType::MinimizeWindow, .target = id });
+    Send({ .command = Api::AppCommandType::WindowMinimize, .target = id });
 }
 
 auto UI::Window::Maximize(Api::Id id) -> void
 {
-    Send({ .command = Api::AppCommandType::MaximizeWindow, .target = id });
+    Send({ .command = Api::AppCommandType::WindowMaximize, .target = id });
 }
 
 auto UI::Window::Restore(Api::Id id) -> void
 {
-    Send({ .command = Api::AppCommandType::RestoreWindow, .target = id });
+    Send({ .command = Api::AppCommandType::WindowRestore, .target = id });
 }
 
 auto UI::Tray::Icon(Api::Id id, Api::Text icon) -> void
 {
-    Send({ .command = Api::AppCommandType::SetTrayIcon, .target = id, .payload = std::move(icon) });
+    Send({ .command = Api::AppCommandType::TrayIcon, .target = id, .payload = std::move(icon) });
 }
 
 auto UI::Tray::Title(Api::Id id, Api::Text title) -> void
 {
-    Send({ .command = Api::AppCommandType::SetTrayTitle, .target = id, .payload = std::move(title) });
+    Send({ .command = Api::AppCommandType::TrayTitle, .target = id, .payload = std::move(title) });
 }
 
 auto UI::Send(Api::AppCommand command) -> void

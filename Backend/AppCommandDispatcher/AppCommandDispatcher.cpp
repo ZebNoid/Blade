@@ -53,7 +53,7 @@ auto AppCommandDispatcher::dispatch(const Api::AppCommand& command) -> void
         if (m_backend) m_backend->quit();
         break;
 
-    case Api::AppCommandType::CloseWindow:
+    case Api::AppCommandType::WindowClose:
         ApplyHwnd(m_backend, command.target, [](HWND hwnd) { HwndApi::Close(hwnd); });
         break;
 
@@ -65,26 +65,26 @@ auto AppCommandDispatcher::dispatch(const Api::AppCommand& command) -> void
         ApplyHwnd(m_backend, command.target, [](HWND hwnd) { HwndApi::SetVisible(hwnd, false); });
         break;
 
-    case Api::AppCommandType::MinimizeWindow:
+    case Api::AppCommandType::WindowMinimize:
         ApplyHwnd(m_backend, command.target, [](HWND hwnd) { HwndApi::Show(hwnd, SW_MINIMIZE); });
         break;
 
-    case Api::AppCommandType::MaximizeWindow:
+    case Api::AppCommandType::WindowMaximize:
         ApplyHwnd(m_backend, command.target, [](HWND hwnd) { HwndApi::Show(hwnd, SW_MAXIMIZE); });
         break;
 
-    case Api::AppCommandType::RestoreWindow:
+    case Api::AppCommandType::WindowRestore:
         ApplyHwnd(m_backend, command.target, [](HWND hwnd) { HwndApi::Show(hwnd, SW_RESTORE); });
         break;
 
-    case Api::AppCommandType::SetTrayIcon:
+    case Api::AppCommandType::TrayIcon:
         if (auto* tray = Tray(m_backend, command.target); tray)
         {
             if (const auto* icon = TextPayload(command)) tray->setIcon(*icon);
         }
         break;
 
-    case Api::AppCommandType::SetTrayTitle:
+    case Api::AppCommandType::TrayTitle:
         if (auto* tray = Tray(m_backend, command.target); tray)
         {
             if (const auto* title = TextPayload(command)) tray->setTitle(*title);

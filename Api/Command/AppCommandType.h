@@ -7,12 +7,12 @@ enum class AppCommandType
     Quit,
     Show,
     Hide,
-    CloseWindow,
-    MinimizeWindow,
-    MaximizeWindow,
-    RestoreWindow,
-    SetTrayIcon,
-    SetTrayTitle,
+    WindowClose,
+    WindowMinimize,
+    WindowMaximize,
+    WindowRestore,
+    TrayIcon,
+    TrayTitle,
     DestroyRoot
 };
 
@@ -23,12 +23,12 @@ inline auto to_string(AppCommandType c) -> std::wstring
     case AppCommandType::Quit: return L"Quit";
     case AppCommandType::Show: return L"Show";
     case AppCommandType::Hide: return L"Hide";
-    case AppCommandType::CloseWindow: return L"CloseWindow";
-    case AppCommandType::MinimizeWindow: return L"MinimizeWindow";
-    case AppCommandType::MaximizeWindow: return L"MaximizeWindow";
-    case AppCommandType::RestoreWindow: return L"RestoreWindow";
-    case AppCommandType::SetTrayIcon: return L"SetTrayIcon";
-    case AppCommandType::SetTrayTitle: return L"SetTrayTitle";
+    case AppCommandType::WindowClose: return L"WindowClose";
+    case AppCommandType::WindowMinimize: return L"WindowMinimize";
+    case AppCommandType::WindowMaximize: return L"WindowMaximize";
+    case AppCommandType::WindowRestore: return L"WindowRestore";
+    case AppCommandType::TrayIcon: return L"TrayIcon";
+    case AppCommandType::TrayTitle: return L"TrayTitle";
     case AppCommandType::DestroyRoot: return L"DestroyRoot";
     default: return L"Unknown";
     }
