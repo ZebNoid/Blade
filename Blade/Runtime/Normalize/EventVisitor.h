@@ -21,6 +21,12 @@ public:
         m_map[key] = value;
     }
 
+    auto set(const Api::Events& key, const Api::EventCallback& value) -> void
+    {
+        if (!value) return;
+        set(key, value.value());
+    }
+
     auto take() const -> const Api::EventMap&
     {
         return m_map;

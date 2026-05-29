@@ -34,6 +34,7 @@ add_library(${PROJECT_NAME} INTERFACE
         Common/Logger.h
 
         Events/Events.h
+        Events/EventContext.h
         Events/EventPayload.h
         Events/EventResult.h
         Events/BackendEvent.h

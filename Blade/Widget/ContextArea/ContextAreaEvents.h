@@ -7,7 +7,7 @@ namespace Blade {
 
 struct ContextAreaEvents
 {
-    Api::CallbackString drop = nullptr;
+    Api::EventCallback drop;
 
     auto visit(EventVisitor& v) const -> void
     {

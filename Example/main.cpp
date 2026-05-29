@@ -24,19 +24,25 @@ protected:
             Menu(
                 MenuItem(L"Open").on({.click = [] { LOG(L"Open"); }}),
                 MenuItem(L"Export",
-                         MenuItem(L"PNG").on({.click = [trayId]() -> void {
-                             App::SetTrayIcon(*trayId, L"test/app.png");
-                             LOG(L"PNG");
-                         }}),
-                         MenuItem(L"PDF").on({.click = [trayId]()-> void {
-                             App::SetTrayIcon(*trayId, L"test/0ad.png");
-                             LOG(L"PDF");
-                         }})
+                         MenuItem(L"PNG").on({
+                             .click = [trayId]() -> void
+                             {
+                                 App::SetTrayIcon(*trayId, L"test/app.png");
+                                 LOG(L"PNG");
+                             }
+                         }),
+                         MenuItem(L"PDF").on({
+                             .click = [trayId]()-> void
+                             {
+                                 App::SetTrayIcon(*trayId, L"test/0ad.png");
+                                 LOG(L"PDF");
+                             }
+                         })
                 ),
                 MenuSeparator(),
                 MenuItem(L"Exit").set({
                     .shortcut = Api::Shortcut::Ctrl(L'Q')
-                }).on({.click = [] { App::Quit(); }})
+                }).on({.click = []() -> void { App::Quit(); }})
             ).set({
                 .trigger = Api::MenuTrigger::LeftRight,
             })
@@ -68,14 +74,14 @@ protected:
                     //     }
                     // })
                     , Menu(
-                        MenuItem(L"Open").on({.click = [] { LOG(L"Menu Open"); }}),
-                        MenuItem(L"Close").on({.click = [] { LOG(L"Menu Delete"); }})
+                        MenuItem(L"Open").on({.click = []() -> void { LOG(L"Menu Open"); }}),
+                        MenuItem(L"Close").on({.click = []() -> void { LOG(L"Menu Delete"); }})
                     ).set({.trigger = Api::MenuTrigger::RightClick})
                 ).on({
-                .drop = [](Api::Text files)
-                {
-                    LOGF_D(L"Drop ContextArea:\n%s", files.c_str());
-                },
+                    .drop = [](const Api::Text& files) -> void
+                    {
+                        LOGF_D(L"Drop ContextArea:\n%s", files.c_str());
+                    },
                 })
             )
         ).set({
@@ -83,12 +89,12 @@ protected:
             .size = {800, 600},
             .placement = Api::WindowPlacement::Center({0, 0}, 1),
         }).on({
-            .close = []()
+            .close = []() -> bool
             {
                 App::Quit();
                 return true;
             },
-            .drop = [](Api::Text files)
+            .drop = [](const Api::Text& files) -> void
             {
                 LOGF_D(L"Drop Window:\n%s", files.c_str());
             }

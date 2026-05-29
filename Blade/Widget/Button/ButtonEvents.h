@@ -7,9 +7,9 @@ namespace Blade {
 
 struct ButtonEvents
 {
-    Api::CallbackVoid click = nullptr;
-    Api::CallbackBool focus = nullptr;
-    Api::CallbackString drop = nullptr;
+    Api::EventCallback click;
+    Api::EventCallback focus;
+    Api::EventCallback drop;
 
     auto visit(EventVisitor& v) const -> void
     {

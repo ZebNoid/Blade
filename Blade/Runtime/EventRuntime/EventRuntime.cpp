@@ -62,7 +62,7 @@ auto EventRuntime::dispatchNode(Api::Id target, const Api::BackendEvent& event) 
 
     if (eventIt == nodeIt->second.end()) return {};
 
-    return InvokeEvent(eventIt->second, event);
+    return InvokeEvent(eventIt->second, event, target);
 }
 
 auto EventRuntime::parentOf(Api::Id target) const -> Api::Id

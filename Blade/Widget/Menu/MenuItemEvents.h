@@ -7,7 +7,7 @@ namespace Blade {
 
 struct MenuItemEvents
 {
-    Api::CallbackVoid click = nullptr;
+    Api::EventCallback click;
 
     auto visit(EventVisitor& v) const -> void
     {
