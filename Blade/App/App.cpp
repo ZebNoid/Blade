@@ -29,7 +29,9 @@ auto App::Quit() -> void
 {
     if (s_current && s_current->m_backend)
     {
-        s_current->m_backend->quit();
+        s_current->m_backend->process({
+            .command = Api::AppCommandType::Quit
+        });
     }
 }
 

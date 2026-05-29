@@ -12,6 +12,7 @@ namespace Blade::Backend {
 AppBackend::AppBackend()
     : m_hInstance(GetModuleHandle(nullptr))
     , m_dispatcher(this)
+    , m_appDispatcher(this)
     , m_factory(this)
 {
 }
@@ -85,6 +86,11 @@ auto AppBackend::messageHandler() -> Api::BackendMessageHandler*
 auto AppBackend::process(const Api::ElementCommand& command) -> void
 {
     m_dispatcher.dispatch(command); // With Error !
+}
+
+auto AppBackend::process(const Api::AppCommand& command) -> void
+{
+    m_appDispatcher.dispatch(command);
 }
 
 auto AppBackend::host() -> WindowHost&

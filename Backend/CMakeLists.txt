@@ -8,6 +8,8 @@ endif ()
 add_library(${PROJECT_NAME} STATIC
         App/AppBackend.cpp
         App/AppBackend.h
+        AppCommandDispatcher/AppCommandDispatcher.cpp
+        AppCommandDispatcher/AppCommandDispatcher.h
 
         WindowHost/WindowHost.cpp
         WindowHost/WindowHost.h

@@ -8,6 +8,8 @@ endif ()
 add_library(${PROJECT_NAME} INTERFACE
         Api/ApiWidget.h
         Api/ApiBackend.h
+        Command/AppCommand.h
+        Command/AppCommandType.h
         Command/ElementCommand.h
         Command/ElementCommandType.h
         Message/BackendMessage.h
