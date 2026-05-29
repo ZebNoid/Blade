@@ -26,7 +26,6 @@ using PropertyValue = std::variant<
     int,
     float,
     double,
-    Api::Id,
     Api::Text,
     Api::Point,
     Api::Size,

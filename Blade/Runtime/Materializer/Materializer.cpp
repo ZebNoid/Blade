@@ -47,7 +47,7 @@ auto CreateCommand(
 ) -> Api::ElementCommand
 {
     auto command = MaterializerCommands::Create(widget, parent, MenuMaterializer::Build(contextMenus));
-    if (dropTarget != Api::InvalidId && !HasEvent(widget, Api::Events::Drop)) command.props[Api::Props::DropTarget] = dropTarget;
+    if (dropTarget != Api::InvalidId && !HasEvent(widget, Api::Events::Drop)) command.props[Api::Props::DropTarget] = true;
     return command;
 }
 

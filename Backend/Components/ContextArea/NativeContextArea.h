@@ -19,7 +19,6 @@ public:
 
 private:
     auto enableDropTarget() -> void;
-    auto enableDropTarget(Api::Id targetId) -> void;
     auto enableContextMenus(Api::ContextMenus menus) -> void;
 
 private:

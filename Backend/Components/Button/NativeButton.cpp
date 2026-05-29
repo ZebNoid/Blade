@@ -37,9 +37,9 @@ auto NativeButton::applyProps(const Api::PropertyMap& propertyMap) -> void
         enableContextMenus(*menus);
     }
 
-    if (const auto* target = PropertyReader::Get<Api::Id>(propertyMap, Api::Props::DropTarget))
+    if (const auto* dropTarget = PropertyReader::Get<bool>(propertyMap, Api::Props::DropTarget); dropTarget && *dropTarget)
     {
-        enableDropTarget(*target);
+        enableDropTarget();
     }
 
     PropertyMapper::Apply(m_hwnd, propertyMap);
@@ -53,17 +53,12 @@ auto NativeButton::applyEvents(const Api::EventSubscriptions& events) -> void
 
 auto NativeButton::enableDropTarget() -> void
 {
-    enableDropTarget(m_id);
-}
-
-auto NativeButton::enableDropTarget(Api::Id targetId) -> void
-{
     if (m_dropTarget || !m_hwnd) return;
 
     auto* parent = dynamic_cast<NativeWindow*>(m_parent);
     if (!parent) return;
 
-    auto dropTarget = std::make_unique<OleDropTarget>(targetId, parent->commandRouter());
+    auto dropTarget = std::make_unique<OleDropTarget>(m_id, parent->commandRouter());
     if (dropTarget->registerHwnd(m_hwnd)) m_dropTarget = std::move(dropTarget);
 }
 
