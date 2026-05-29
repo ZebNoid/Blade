@@ -46,7 +46,7 @@ protected:
             .title = L"Hello Blade",
             .size = {400, 200},
             .placement = Api::WindowPlacement::Center()
-        }).build(this);
+        }).mount(this);
     }
 };
 
@@ -63,6 +63,7 @@ auto main() -> int
 <summary>Show navigation</summary>
 
 - [Application](#application)
+- [Runtime UI Commands](#runtime-ui-commands)
 - [Syntax](#syntax)
 - [Root Widgets](#root-widgets)
   - [Window](#window)
@@ -99,6 +100,28 @@ Blade apps inherit from `Blade::App`. Use `onSetup()` to select a backend and `o
 
 `App::Quit()` stops the application message loop and can be called from callbacks.
 
+## Runtime UI Commands
+
+Use `UI` to send commands to already created UI elements by id.
+
+```c++
+auto windowId = Window(...).mount(this);
+auto trayId = Tray(...).mount(this);
+
+UI::Show(windowId);
+UI::Hide(windowId);
+
+UI::Window::Close(windowId);
+UI::Window::Minimize(windowId);
+UI::Window::Maximize(windowId);
+UI::Window::Restore(windowId);
+
+UI::Tray::Icon(trayId, L"app.ico");
+UI::Tray::Title(trayId, L"Blade");
+```
+
+`Show` and `Hide` are generic UI commands. Window-only and tray-only commands live in `UI::Window` and `UI::Tray`.
+
 ## Syntax
 
 Widget properties are configured with `.set(...)`.
@@ -117,11 +140,11 @@ Button(L"Quit").on({
 })
 ```
 
-Root widgets start working after `.build(this)`.
+Root widgets are attached to the app runtime with `.mount(this)`.
 
 ```c++
-Window(Button(L"Quit")).build(this);
-Tray(Menu(MenuItem(L"Exit"))).build(this);
+Window(Button(L"Quit")).mount(this);
+Tray(Menu(MenuItem(L"Exit"))).mount(this);
 ```
 
 ## Root Widgets
@@ -138,7 +161,7 @@ Window(
     .minSize = {320, 240}
 }).on({
     .close = [] { return true; }
-}).build(this);
+}).mount(this);
 ```
 
 <a id="window-properties"></a>
@@ -209,7 +232,7 @@ Tray(
 ).set({
     .title = L"Blade",
     .icon = L"app.ico"
-}).build(this);
+}).mount(this);
 ```
 
 <a id="tray-properties"></a>

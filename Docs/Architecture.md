@@ -11,11 +11,15 @@ flowchart LR
     Api -- "execute command" --> Backend
     Backend -- "BackendMessage\nresize / event" --> Api
     Api -- "dispatch callback" --> Blade
+    Blade -- "AppCommand\nUI / app lifecycle" --> Api
+    Api -- "execute app command" --> Backend
 
     linkStyle 2 stroke:#2563eb,stroke-width:2px
     linkStyle 3 stroke:#2563eb,stroke-width:2px
     linkStyle 4 stroke:#16a34a,stroke-width:2px
     linkStyle 5 stroke:#16a34a,stroke-width:2px
+    linkStyle 6 stroke:#2563eb,stroke-width:2px
+    linkStyle 7 stroke:#2563eb,stroke-width:2px
 ```
 
 ## Modules
@@ -28,7 +32,7 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    UserCode["User code\nWindow(...).set(...).on(...).build(this)"]
+    UserCode["User code\nWindow(...).set(...).on(...).mount(this)"]
     WidgetTree["WidgetTree\nwidgets, props, events, overlays"]
     RuntimeTree["WidgetTreeRegistry\nassign ids and keep roots"]
     LayoutPass["LayoutPass::Compute"]
@@ -36,6 +40,8 @@ flowchart TD
     LayoutEngine["LayoutEngine\nmeasure and arrange"]
     Materializer["Materializer"]
     Commands["ElementCommand list"]
+    UI["UI\nruntime commands"]
+    AppCommand["AppCommand"]
     Backend["Backend"]
     Messages["BackendMessage\nresize / event"]
     EventRuntime["EventRuntime\ncallbacks"]
@@ -50,6 +56,9 @@ flowchart TD
     RuntimeTree --> Materializer
     Materializer --> Commands
     Commands --> Backend
+    UserCode --> UI
+    UI --> AppCommand
+    AppCommand --> Backend
     Backend --> Messages
     Messages --> EventRuntime
     EventRuntime --> UserCode
@@ -64,9 +73,12 @@ flowchart TD
     linkStyle 7 stroke:#444,stroke-width:1.5px
     linkStyle 8 stroke:#2563eb,stroke-width:2px
     linkStyle 9 stroke:#2563eb,stroke-width:2px
-    linkStyle 10 stroke:#16a34a,stroke-width:2px
-    linkStyle 11 stroke:#16a34a,stroke-width:2px
-    linkStyle 12 stroke:#16a34a,stroke-width:2px
+    linkStyle 10 stroke:#2563eb,stroke-width:2px
+    linkStyle 11 stroke:#2563eb,stroke-width:2px
+    linkStyle 12 stroke:#2563eb,stroke-width:2px
+    linkStyle 13 stroke:#16a34a,stroke-width:2px
+    linkStyle 14 stroke:#16a34a,stroke-width:2px
+    linkStyle 15 stroke:#16a34a,stroke-width:2px
 ```
 
 ## Materializer

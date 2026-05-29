@@ -69,7 +69,7 @@ protected:
             {
                 UI::Show(*windowId);
             },
-        }).build(this);
+        }).mount(this);
 
         // Window(
         //     Button(L"Button")
@@ -77,7 +77,7 @@ protected:
         //     .title = L"Test",
         //     .size = {800, 600},
         //     .placement = Api::WindowPlacement::Manual({3300, 400}),
-        // }).build(this);
+        // }).mount(this);
 
         *windowId = Window(
             Column(
@@ -119,7 +119,7 @@ protected:
             {
                 LOGF_D(L"Drop Window:\n%s", files.c_str());
             }
-        }).build(this);
+        }).mount(this);
     }
 };
 
