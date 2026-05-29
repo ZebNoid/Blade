@@ -33,11 +33,20 @@ auto EventRuntime::registerTree(const WidgetTree& tree, Api::Id parent) -> void
         m_parents.insert_or_assign(tree.id, parent);
     }
 
+    registerChildren(tree);
+    registerOverlays(tree);
+}
+
+auto EventRuntime::registerChildren(const WidgetTree& tree) -> void
+{
     for (const auto& child : tree.children)
     {
         registerTree(child, tree.id);
     }
+}
 
+auto EventRuntime::registerOverlays(const WidgetTree& tree) -> void
+{
     for (const auto& overlay : tree.overlays)
     {
         registerTree(overlay, Api::InvalidId);

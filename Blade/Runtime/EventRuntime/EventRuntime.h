@@ -19,6 +19,8 @@ public:
 
 private:
     auto registerTree(const WidgetTree& tree, Api::Id parent) -> void;
+    auto registerChildren(const WidgetTree& tree) -> void;
+    auto registerOverlays(const WidgetTree& tree) -> void;
     auto unregisterNode(const WidgetTree& tree) -> void;
     auto hasHandler(Api::Id target, Api::Events event) const -> bool;
     auto dispatchNode(Api::Id target, const Api::BackendEvent& event, Api::EventContext& context) -> Api::EventResult;
