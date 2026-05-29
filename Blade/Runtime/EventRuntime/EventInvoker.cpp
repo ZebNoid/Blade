@@ -61,40 +61,30 @@ auto InvokeCallback(const Api::CallbackBool& callback, const Api::BackendEvent& 
     return {};
 }
 
-auto Context(const Api::BackendEvent& event, Api::Id currentTarget) -> Api::EventContext
-{
-    return {
-        .target = event.target,
-        .currentTarget = currentTarget,
-        .type = event.type,
-        .payload = &event.payload
-    };
-}
-
-auto InvokeCallback(const Api::CallbackContext& callback, const Api::BackendEvent& event, Api::Id currentTarget) -> Api::EventResult
+auto InvokeCallback(const Api::CallbackContext& callback, Api::EventContext& context) -> Api::EventResult
 {
     if (!callback)
     {
         return {};
     }
 
-    callback(Context(event, currentTarget));
+    callback(context);
     return {};
 }
 
-auto InvokeCallback(const Api::CallbackContextResult& callback, const Api::BackendEvent& event, Api::Id currentTarget) -> Api::EventResult
+auto InvokeCallback(const Api::CallbackContextResult& callback, Api::EventContext& context) -> Api::EventResult
 {
     if (!callback)
     {
         return {};
     }
 
-    return callback(Context(event, currentTarget));
+    return callback(context);
 }
 
 } // namespace
 
-auto InvokeEvent(const Api::EventsValue& callback, const Api::BackendEvent& event, Api::Id currentTarget) -> Api::EventResult
+auto InvokeEvent(const Api::EventsValue& callback, const Api::BackendEvent& event, Api::EventContext& context) -> Api::EventResult
 {
     if (const auto* value = std::get_if<Api::CallbackVoid>(&callback))
     {
@@ -118,12 +108,12 @@ auto InvokeEvent(const Api::EventsValue& callback, const Api::BackendEvent& even
 
     if (const auto* value = std::get_if<Api::CallbackContext>(&callback))
     {
-        return InvokeCallback(*value, event, currentTarget);
+        return InvokeCallback(*value, context);
     }
 
     if (const auto* value = std::get_if<Api::CallbackContextResult>(&callback))
     {
-        return InvokeCallback(*value, event, currentTarget);
+        return InvokeCallback(*value, context);
     }
 
     return {};

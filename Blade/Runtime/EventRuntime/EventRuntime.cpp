@@ -35,15 +35,24 @@ auto EventRuntime::registerTree(const WidgetTree& tree, Api::Id parent) -> void
 
 auto EventRuntime::dispatch(const Api::BackendEvent& event) -> Api::EventResult
 {
+    Api::EventResult result;
+    Api::EventContext context{
+        .target = event.target,
+        .type = event.type,
+        .payload = &event.payload
+    };
+
     for (auto target = event.target; target != Api::InvalidId; target = parentOf(target))
     {
         if (hasHandler(target, event.type))
         {
-            return dispatchNode(target, event);
+            context.currentTarget = target;
+            result = dispatchNode(target, event, context);
+            if (context.propagationStopped) return result;
         }
     }
 
-    return {};
+    return result;
 }
 
 auto EventRuntime::hasHandler(Api::Id target, Api::Events event) const -> bool
@@ -52,7 +61,7 @@ auto EventRuntime::hasHandler(Api::Id target, Api::Events event) const -> bool
     return nodeIt != m_events.end() && nodeIt->second.contains(event);
 }
 
-auto EventRuntime::dispatchNode(Api::Id target, const Api::BackendEvent& event) -> Api::EventResult
+auto EventRuntime::dispatchNode(Api::Id target, const Api::BackendEvent& event, Api::EventContext& context) -> Api::EventResult
 {
     const auto nodeIt = m_events.find(target);
 
@@ -62,7 +71,7 @@ auto EventRuntime::dispatchNode(Api::Id target, const Api::BackendEvent& event) 
 
     if (eventIt == nodeIt->second.end()) return {};
 
-    return InvokeEvent(eventIt->second, event, target);
+    return InvokeEvent(eventIt->second, event, context);
 }
 
 auto EventRuntime::parentOf(Api::Id target) const -> Api::Id

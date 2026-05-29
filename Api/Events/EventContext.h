@@ -12,6 +12,12 @@ struct EventContext
     Api::Id currentTarget = Api::InvalidId;
     Api::Events type = Api::Events::Unknown;
     const Api::EventPayload* payload = nullptr;
+    bool propagationStopped = false;
+
+    auto stopPropagation() -> void
+    {
+        propagationStopped = true;
+    }
 };
 
 } // namespace Blade::Api

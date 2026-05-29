@@ -13,8 +13,8 @@ using CallbackVoid = std::function<void()>;
 using CallbackResult = std::function<Api::EventResult()>;
 using CallbackString = std::function<void(Api::Text)>;
 using CallbackBool = std::function<void(bool)>;
-using CallbackContext = std::function<void(const Api::EventContext&)>;
-using CallbackContextResult = std::function<Api::EventResult(const Api::EventContext&)>;
+using CallbackContext = std::function<void(Api::EventContext&)>;
+using CallbackContextResult = std::function<Api::EventResult(Api::EventContext&)>;
 
 using EventsValue = std::variant<
     CallbackVoid,
@@ -55,11 +55,11 @@ private:
         {
             m_value = CallbackVoid(std::forward<Callback>(callback));
         }
-        else if constexpr (std::is_invocable_r_v<Api::EventResult, T, const Api::EventContext&>)
+        else if constexpr (std::is_invocable_r_v<Api::EventResult, T, Api::EventContext&>)
         {
             m_value = CallbackContextResult(std::forward<Callback>(callback));
         }
-        else if constexpr (std::is_invocable_r_v<void, T, const Api::EventContext&>)
+        else if constexpr (std::is_invocable_r_v<void, T, Api::EventContext&>)
         {
             m_value = CallbackContext(std::forward<Callback>(callback));
         }
