@@ -40,7 +40,7 @@ auto EventRuntime::registerTree(const WidgetTree& tree, Api::Id parent) -> void
 
     for (const auto& overlay : tree.overlays)
     {
-        registerTree(overlay, tree.id);
+        registerTree(overlay, Api::InvalidId);
     }
 }
 
