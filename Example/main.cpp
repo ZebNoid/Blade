@@ -19,22 +19,25 @@ protected:
     auto onCreate() -> void override
     {
         auto trayId = std::make_shared<Api::Id>(Api::InvalidId);
+        auto windowId = std::make_shared<Api::Id>(Api::InvalidId);
 
         *trayId = Tray(
             Menu(
                 MenuItem(L"Open").on({.click = [] { LOG(L"Open"); }}),
                 MenuItem(L"Export",
                          MenuItem(L"PNG").on({
-                             .click = [trayId]() -> void
+                             .click = [trayId, windowId]() -> void
                              {
                                  App::SetTrayIcon(*trayId, L"test/app.png");
+                                 App::HideWindow(*windowId);
                                  LOG(L"PNG");
                              }
                          }),
                          MenuItem(L"PDF").on({
-                             .click = [trayId]()-> void
+                             .click = [trayId, windowId]()-> void
                              {
                                  App::SetTrayIcon(*trayId, L"test/0ad.png");
+                                 App::ShowWindow(*windowId);
                                  LOG(L"PDF");
                              }
                          })
@@ -61,7 +64,7 @@ protected:
         //     .placement = Api::WindowPlacement::Manual({3300, 400}),
         // }).build(this);
 
-        Window(
+        *windowId = Window(
             Column(
                 Button(L"Flex") //.set({.layout = {.flex = 1,},})
                 , ContextArea(

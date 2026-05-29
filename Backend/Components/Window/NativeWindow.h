@@ -39,7 +39,7 @@ public:
     auto setMaxSize(const Api::Size& size) -> void;
     auto applyMinMax(MINMAXINFO* info) const -> void;
 
-    auto destroy() -> void;
+    auto destroy() -> void override;
     auto markDead() -> void;
 
 private:

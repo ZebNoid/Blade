@@ -19,6 +19,8 @@ public:
 
     virtual auto applyEvents(const Api::EventSubscriptions&) -> void = 0;
 
+    virtual auto destroy() -> void = 0;
+
     // TODO for all or only for window?
     virtual auto isAlive() const -> bool = 0;
     virtual auto isLifetimeOwner() const -> bool = 0;

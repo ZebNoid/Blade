@@ -15,6 +15,8 @@ public:
 
     auto mount(WidgetTree tree) -> WidgetTree&;
 
+    auto unmount(Api::Id rootId) -> void;
+
     auto resizeRoot(Api::Id rootId, const Api::Size& size) -> void;
 
 private:

@@ -39,6 +39,11 @@ auto ShouldMaterialize(const WidgetTree& widget, const LayoutNode& layout) -> bo
     return layout.layoutType == LayoutType::None || IsNativeContextArea(widget);
 }
 
+auto ShouldMaterialize(const WidgetTree& widget) -> bool
+{
+    return widget.layoutType == LayoutType::None || IsNativeContextArea(widget);
+}
+
 auto CreateCommand(
     const WidgetTree& widget,
     Api::Id parent,
@@ -67,6 +72,15 @@ auto Materializer::update(const WidgetTree& widgetTree, const LayoutNode& layout
     std::vector<Api::ElementCommand> commands;
 
     updateNode(widgetTree, layoutTree, commands, Api::InvalidId, includeRoot);
+
+    return commands;
+}
+
+auto Materializer::remove(const WidgetTree& widgetTree) -> std::vector<Api::ElementCommand>
+{
+    std::vector<Api::ElementCommand> commands;
+
+    removeNode(widgetTree, commands);
 
     return commands;
 }
@@ -136,6 +150,24 @@ auto Materializer::updateNode(
     for (size_t i = 0; i < widget.children.size(); ++i)
     {
         updateNode(widget.children[i], layout.children[i], out, currentParent, true);
+    }
+}
+
+auto Materializer::removeNode(const WidgetTree& widget, std::vector<Api::ElementCommand>& out) -> void
+{
+    for (const auto& child : widget.children)
+    {
+        removeNode(child, out);
+    }
+
+    for (const auto& overlay : widget.overlays)
+    {
+        removeNode(overlay, out);
+    }
+
+    if (ShouldMaterialize(widget))
+    {
+        out.push_back(MaterializerCommands::Remove(widget));
     }
 }
 

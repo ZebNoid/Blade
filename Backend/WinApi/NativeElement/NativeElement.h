@@ -12,6 +12,7 @@ public:
     auto id() const -> Api::Id;
     auto parent() const -> NativeElement*;
     auto isLifetimeOwner() const -> bool override;
+    auto destroy() -> void override;
 
 protected:
     HWND m_hwnd = nullptr;

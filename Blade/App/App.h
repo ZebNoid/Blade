@@ -26,6 +26,7 @@ public:
     static auto RestoreWindow(Api::Id windowId) -> void;
     static auto SetTrayIcon(Api::Id trayId, Api::Text icon) -> void;
     static auto SetTrayTitle(Api::Id trayId, Api::Text title) -> void;
+    static auto DestroyRoot(Api::Id rootId) -> void;
 
 protected:
     template <typename TBackend, typename... Args>

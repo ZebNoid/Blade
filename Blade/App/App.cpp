@@ -70,6 +70,17 @@ auto App::SetTrayTitle(Api::Id trayId, Api::Text title) -> void
     Process({ .command = Api::AppCommandType::SetTrayTitle, .target = trayId, .payload = std::move(title) });
 }
 
+auto App::DestroyRoot(Api::Id rootId) -> void
+{
+    if (!s_current || !s_current->m_layoutRuntime) return;
+
+    auto* root = s_current->m_trees.root(rootId);
+    if (!root) return;
+
+    s_current->m_eventRuntime.unregisterTree(*root);
+    s_current->m_layoutRuntime->unmount(rootId);
+}
+
 auto App::addToTree(const RootWidget& rootWidget) -> Api::Id
 {
     auto tree = rootWidget.tree();

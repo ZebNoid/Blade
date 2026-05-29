@@ -19,6 +19,7 @@ public:
 
     auto applyProps(const Api::PropertyMap& propertyMap) -> void override;
     auto applyEvents(const Api::EventSubscriptions& events) -> void override;
+    auto destroy() -> void override;
     auto isAlive() const -> bool override;
     auto attachChild(INativeElement* child) -> void override;
     auto setIcon(const Api::Text& path) -> void;

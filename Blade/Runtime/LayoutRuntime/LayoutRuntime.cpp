@@ -21,6 +21,20 @@ auto LayoutRuntime::mount(WidgetTree tree) -> WidgetTree&
     return root;
 }
 
+auto LayoutRuntime::unmount(Api::Id rootId) -> void
+{
+    auto* root = m_trees.root(rootId);
+
+    if (!root)
+    {
+        return;
+    }
+
+    send(m_materializer.remove(*root));
+    m_pendingResize.erase(rootId);
+    m_trees.remove(rootId);
+}
+
 auto LayoutRuntime::resizeRoot(Api::Id rootId, const Api::Size& size) -> void
 {
     auto* root = m_trees.root(rootId);

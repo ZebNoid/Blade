@@ -15,6 +15,8 @@ public:
 
     auto update(const WidgetTree& widgetTree, const LayoutNode& layoutTree, bool includeRoot = false) -> std::vector<Api::ElementCommand>;
 
+    auto remove(const WidgetTree& widgetTree) -> std::vector<Api::ElementCommand>;
+
 private:
     auto createNode(
         const WidgetTree& widget,
@@ -32,6 +34,8 @@ private:
         Api::Id parent = Api::InvalidId,
         bool includeCurrent = true
     ) -> void;
+
+    auto removeNode(const WidgetTree& widget, std::vector<Api::ElementCommand>& out) -> void;
 };
 
 

@@ -23,12 +23,7 @@ auto CopyTip(NOTIFYICONDATAW& data, const Api::Text& title) -> void
 
 NativeTray::~NativeTray()
 {
-    if (m_hwnd)
-    {
-        Shell_NotifyIconW(NIM_DELETE, &m_data);
-        RemoveWindowSubclass(m_hwnd, Proc, SubclassId);
-        DestroyWindow(m_hwnd);
-    }
+    destroy();
 
     if (m_icon) DestroyIcon(m_icon);
 }
@@ -120,6 +115,19 @@ auto NativeTray::applyProps(const Api::PropertyMap& propertyMap) -> void
 
 auto NativeTray::applyEvents(const Api::EventSubscriptions&) -> void
 {
+}
+
+auto NativeTray::destroy() -> void
+{
+    if (!m_hwnd) return;
+// TODO winapi commands
+    // HwndApi::Destroy(m_hwnd); ??
+
+    Shell_NotifyIconW(NIM_DELETE, &m_data);
+    RemoveWindowSubclass(m_hwnd, Proc, SubclassId);
+    DestroyWindow(m_hwnd);
+    m_hwnd = nullptr;
+    m_alive = false;
 }
 
 auto NativeTray::isAlive() const -> bool

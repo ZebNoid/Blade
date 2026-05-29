@@ -1,5 +1,6 @@
 #include "NativeElement.h"
 
+#include "WinApi/HwndApi/HwndApi.h"
 
 namespace Blade::Backend {
 
@@ -21,6 +22,15 @@ auto NativeElement::parent() const -> NativeElement*
 auto NativeElement::isLifetimeOwner() const -> bool
 {
     return m_lifetimeOwner;
+}
+
+auto NativeElement::destroy() -> void
+{
+    if (m_hwnd)
+    {
+        HwndApi::Destroy(m_hwnd);
+        m_hwnd = nullptr;
+    }
 }
 
 } // namespace Blade::Backend
