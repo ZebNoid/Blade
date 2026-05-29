@@ -1,6 +1,7 @@
 #pragma once
 #include <utility>
 
+#include "Common/LayoutProps.h"
 #include "Common/Property.h"
 #include "Props/LayoutProps/CrossAxisAlignment.h"
 #include "Props/LayoutProps/MainAxisAlignment.h"
@@ -19,15 +20,6 @@ public:
     {
         switch (prop)
         {
-        case Api::Props::Layout:
-            if (const auto* layout =
-                    std::get_if<Api::LayoutProps>(&value))
-            {
-                m_props.layout.box = *layout;
-                m_props.hasLayout = true;
-            }
-            break;
-
         case Api::Props::Size:
             if (const auto* size =
                     std::get_if<Api::Size>(&value))
@@ -64,6 +56,14 @@ public:
             m_props.backend.create[prop] = value;
             break;
         }
+    }
+
+    auto set(const Api::Props& prop, const Api::LayoutProps& value) -> void
+    {
+        if (prop != Api::Props::Layout) return;
+
+        m_props.layout.box = value;
+        m_props.hasLayout = true;
     }
 
     auto set(

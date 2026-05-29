@@ -6,7 +6,6 @@ if (NOT PROJECT_IS_TOP_LEVEL)
 endif ()
 
 add_library(${PROJECT_NAME} INTERFACE
-        Api/ApiWidget.h
         Api/ApiBackend.h
         Command/AppCommand.h
         Command/AppCommandType.h

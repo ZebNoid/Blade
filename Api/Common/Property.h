@@ -6,7 +6,6 @@
 #include "Callbacks.h"
 #include "CaptionProps.h"
 #include "Events/Events.h"
-#include "LayoutProps.h"
 #include "Lifetime.h"
 #include "MenuTrigger.h"
 #include "MenuData.h"
@@ -45,8 +44,7 @@ using PropertyValue = std::variant<
     Api::Shortcut,
     Api::ContextMenus,
     Api::WindowPlacementProps,
-    Api::WindowState,
-    LayoutProps
+    Api::WindowState
 >;
 
 
