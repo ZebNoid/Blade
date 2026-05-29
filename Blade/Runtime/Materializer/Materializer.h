@@ -23,26 +23,6 @@ public:
     ) -> std::vector<Api::ElementCommand>;
 
     auto remove(const WidgetTree& widgetTree) -> std::vector<Api::ElementCommand>;
-
-private:
-    auto updateNode(
-        const WidgetTree& widget,
-        const LayoutNode& layout,
-        std::vector<Api::ElementCommand>& out,
-        Api::Id parent = Api::InvalidId,
-        bool includeCurrent = true
-    ) -> void;
-
-    auto updateChangedNode(
-        const WidgetTree& widget,
-        const LayoutNode* previousLayout,
-        const LayoutNode& layout,
-        std::vector<Api::ElementCommand>& out,
-        Api::Id parent = Api::InvalidId,
-        bool includeCurrent = true
-    ) -> void;
-
-    auto removeNode(const WidgetTree& widget, std::vector<Api::ElementCommand>& out) -> void;
 };
 
 

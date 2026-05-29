@@ -48,6 +48,10 @@ add_library(${PROJECT_NAME} STATIC
         Runtime/Materializer/MaterializerCommands/MaterializerCommands.h
         Runtime/Materializer/MaterializerRules/MaterializerRules.cpp
         Runtime/Materializer/MaterializerRules/MaterializerRules.h
+        Runtime/Materializer/MaterializerRemove/MaterializerRemove.cpp
+        Runtime/Materializer/MaterializerRemove/MaterializerRemove.h
+        Runtime/Materializer/MaterializerUpdate/MaterializerUpdate.cpp
+        Runtime/Materializer/MaterializerUpdate/MaterializerUpdate.h
         Runtime/Materializer/MenuMaterializer/MenuMaterializer.cpp
         Runtime/Materializer/MenuMaterializer/MenuMaterializer.h
         Runtime/WidgetTreeRegistry/WidgetTreeRegistry.cpp

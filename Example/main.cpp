@@ -103,7 +103,7 @@ protected:
             .close = [windowId]() -> bool
             {
                 App::HideWindow(*windowId);
-                // App::Quit();
+                App::Quit(); // TODO dev only
                 return false;
             },
             .drop = [](const Api::Text& files) -> void
