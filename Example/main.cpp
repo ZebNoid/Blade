@@ -135,7 +135,7 @@ protected:
             .close = [windowId]() -> bool
             {
                 UI::Hide(*windowId);
-                // App::Quit(); // TODO dev only
+                App::Quit(); // TODO dev only
                 LOGF_D(L"Close Window");
                 return false;
             },

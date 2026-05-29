@@ -47,7 +47,13 @@ auto App::mountRoot(const RootWidget& rootWidget) -> Api::Id
 
 auto App::MountRoot(const RootWidget& rootWidget) -> Api::Id
 {
-    return s_current ? s_current->mountRoot(rootWidget) : Api::InvalidId;
+    if (!s_current)
+    {
+        LOG_W(L"RootWidget::mount called without active App");
+        return Api::InvalidId;
+    }
+
+    return s_current->mountRoot(rootWidget);
 }
 
 auto App::initBackend() -> int
