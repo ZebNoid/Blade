@@ -6,6 +6,16 @@ Blade is split into three main modules:
 flowchart LR
     Backend["Backend\nnative implementation"] <--> Api["Api\npublic contracts"]
     Blade["Blade\ndeclarative widgets and runtime"] <--> Api
+
+    Blade -- "ElementCommand" --> Api
+    Api -- "execute command" --> Backend
+    Backend -- "BackendMessage\nresize / event" --> Api
+    Api -- "dispatch callback" --> Blade
+
+    linkStyle 2 stroke:#2563eb,stroke-width:2px
+    linkStyle 3 stroke:#2563eb,stroke-width:2px
+    linkStyle 4 stroke:#16a34a,stroke-width:2px
+    linkStyle 5 stroke:#16a34a,stroke-width:2px
 ```
 
 ## Modules
@@ -27,6 +37,8 @@ flowchart TD
     Materializer["Materializer"]
     Commands["ElementCommand list"]
     Backend["Backend"]
+    Messages["BackendMessage\nresize / event"]
+    EventRuntime["EventRuntime\ncallbacks"]
 
     UserCode --> WidgetTree
     WidgetTree --> RuntimeTree
@@ -38,6 +50,23 @@ flowchart TD
     RuntimeTree --> Materializer
     Materializer --> Commands
     Commands --> Backend
+    Backend --> Messages
+    Messages --> EventRuntime
+    EventRuntime --> UserCode
+
+    linkStyle 0 stroke:#444,stroke-width:1.5px
+    linkStyle 1 stroke:#444,stroke-width:1.5px
+    linkStyle 2 stroke:#444,stroke-width:1.5px
+    linkStyle 3 stroke:#444,stroke-width:1.5px
+    linkStyle 4 stroke:#444,stroke-width:1.5px
+    linkStyle 5 stroke:#444,stroke-width:1.5px
+    linkStyle 6 stroke:#444,stroke-width:1.5px
+    linkStyle 7 stroke:#444,stroke-width:1.5px
+    linkStyle 8 stroke:#2563eb,stroke-width:2px
+    linkStyle 9 stroke:#2563eb,stroke-width:2px
+    linkStyle 10 stroke:#16a34a,stroke-width:2px
+    linkStyle 11 stroke:#16a34a,stroke-width:2px
+    linkStyle 12 stroke:#16a34a,stroke-width:2px
 ```
 
 ## Materializer
@@ -61,6 +90,15 @@ flowchart TD
     Materializer --> Attach
     Materializer --> Update
     Materializer --> Visible
+
+    linkStyle 0 stroke:#444,stroke-width:1.5px
+    linkStyle 1 stroke:#444,stroke-width:1.5px
+    linkStyle 2 stroke:#444,stroke-width:1.5px
+    linkStyle 3 stroke:#444,stroke-width:1.5px
+    linkStyle 4 stroke:#2563eb,stroke-width:2px
+    linkStyle 5 stroke:#2563eb,stroke-width:2px
+    linkStyle 6 stroke:#2563eb,stroke-width:2px
+    linkStyle 7 stroke:#2563eb,stroke-width:2px
 ```
 
 ## Layout Engine
@@ -83,4 +121,9 @@ flowchart TD
     Measure --> Stack["LayoutStack"]
     Measure --> Leaf["LayoutLeaf"]
     Measure --> Virtual["LayoutVirtual"]
+
+    linkStyle 0 stroke:#444,stroke-width:1.5px
+    linkStyle 1 stroke:#444,stroke-width:1.5px
+    linkStyle 2 stroke:#444,stroke-width:1.5px
+    linkStyle 3 stroke:#444,stroke-width:1.5px
 ```
