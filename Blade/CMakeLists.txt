@@ -18,6 +18,7 @@ add_library(${PROJECT_NAME} STATIC
         Widget/Window/WindowEvents.h
         Widget/Tray/Tray.h
         Widget/Tray/TrayProps.h
+        Widget/Tray/TrayEvents.h
 
         Widget/Button/Button.h
         Widget/Button/ButtonProps.h

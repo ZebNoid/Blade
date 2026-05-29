@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Base/RootWidget.h"
+#include "TrayEvents.h"
 #include "TrayProps.h"
 #include "Runtime/Normalize/Normalize.h"
 
@@ -30,6 +31,12 @@ public:
     auto set(TrayProps props) -> Tray&
     {
         Normalize::PropsMerge(m_tree, props);
+        return *this;
+    }
+
+    auto on(TrayEvents events) -> Tray&
+    {
+        m_tree.events = Normalize::Events(events);
         return *this;
     }
 };

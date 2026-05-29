@@ -50,12 +50,17 @@ protected:
                     .shortcut = Api::Shortcut::Ctrl(L'Q')
                 }).on({.click = []() -> void { App::Quit(); }})
             ).set({
-                .trigger = Api::MenuTrigger::LeftRight,
+                .trigger = Api::MenuTrigger::RightClick,
             })
         ).set({
             .title = L"Blade Tray",
             .icon = L"test/app.ico",
             .lifetime = Api::Lifetime::Owner,
+        }).on({
+            .click = [windowId]() -> void
+            {
+                App::ShowWindow(*windowId);
+            },
         }).build(this);
 
         // Window(

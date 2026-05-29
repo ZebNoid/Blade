@@ -1,5 +1,6 @@
 #include "NativeTray.h"
 
+#include <algorithm>
 #include <commctrl.h>
 
 #include "Common/Logger.h"
@@ -69,21 +70,29 @@ auto CALLBACK NativeTray::Proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam
 
 auto NativeTray::handle(UINT msg, WPARAM, LPARAM lParam) -> std::optional<LRESULT>
 {
-    if (msg != TrayCallback || !m_contextMenu) return {};
+    if (msg != TrayCallback) return {};
+
+    bool handled = false;
 
     switch (lParam)
     {
     case WM_RBUTTONUP:
-        m_contextMenu->showAtCursor(Api::MenuTrigger::RightClick);
-        return 0;
+        handled = m_contextMenu && m_contextMenu->showAtCursor(Api::MenuTrigger::RightClick);
+        return handled ? std::optional<LRESULT>{0} : std::nullopt;
 
     case WM_MBUTTONUP:
-        m_contextMenu->showAtCursor(Api::MenuTrigger::MiddleClick);
-        return 0;
+        handled = m_contextMenu && m_contextMenu->showAtCursor(Api::MenuTrigger::MiddleClick);
+        return handled ? std::optional<LRESULT>{0} : std::nullopt;
 
     case WM_LBUTTONUP:
-        m_contextMenu->showAtCursor(Api::MenuTrigger::LeftClick);
-        return 0;
+        if (m_hasClick)
+        {
+            emitClick();
+            handled = true;
+        }
+
+        if (m_contextMenu && m_contextMenu->showAtCursor(Api::MenuTrigger::LeftClick)) handled = true;
+        return handled ? std::optional<LRESULT>{0} : std::nullopt;
 
     default:
         return {};
@@ -109,8 +118,9 @@ auto NativeTray::applyProps(const Api::PropertyMap& propertyMap) -> void
 
 }
 
-auto NativeTray::applyEvents(const Api::EventSubscriptions&) -> void
+auto NativeTray::applyEvents(const Api::EventSubscriptions& events) -> void
 {
+    m_hasClick = std::ranges::find(events, Api::Events::Click) != events.end();
 }
 
 auto NativeTray::destroy() -> void
@@ -165,6 +175,14 @@ auto NativeTray::updateContextMenus(const Api::ContextMenus& menus) -> void
 
     auto contextMenu = std::make_unique<NativeContextMenu>();
     if (contextMenu->attach(m_hwnd, m_id, m_commandRouter, menus)) m_contextMenu = std::move(contextMenu);
+}
+
+auto NativeTray::emitClick() -> void
+{
+    m_commandRouter.emit({
+        .target = m_id,
+        .type = Api::Events::Click
+    });
 }
 
 auto NativeTray::notify(DWORD message) -> bool

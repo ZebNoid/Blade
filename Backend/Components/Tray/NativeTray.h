@@ -30,10 +30,12 @@ private:
     auto handle(UINT msg, WPARAM wParam, LPARAM lParam) -> std::optional<LRESULT>;
 
     auto updateContextMenus(const Api::ContextMenus& menus) -> void;
+    auto emitClick() -> void;
     auto notify(DWORD message) -> bool;
 
 private:
     bool m_alive = true;
+    bool m_hasClick = false;
     NOTIFYICONDATAW m_data{};
     HICON m_icon = nullptr;
     CommandRouter m_commandRouter;
