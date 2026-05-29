@@ -3,7 +3,6 @@
 #include "Command/ElementCommand.h"
 #include "Base/WidgetTree.h"
 #include "Runtime/LayoutEngine/Data/LayoutNode.h"
-#include "Runtime/Materializer/MaterializerState.h"
 
 
 namespace Blade {
@@ -26,14 +25,6 @@ public:
     auto remove(const WidgetTree& widgetTree) -> std::vector<Api::ElementCommand>;
 
 private:
-    auto createNode(
-        const WidgetTree& widget,
-        const LayoutNode& layout,
-        std::vector<Api::ElementCommand>& out,
-        Api::Id parent = Api::InvalidId,
-        MaterializerState state = {}
-    ) -> void;
-
     auto updateNode(
         const WidgetTree& widget,
         const LayoutNode& layout,
