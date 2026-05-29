@@ -30,11 +30,6 @@ auto App::Quit() -> void
     Process({ .command = Api::AppCommandType::Quit });
 }
 
-auto App::DestroyRoot(Api::Id rootId) -> void
-{
-    Process({ .command = Api::AppCommandType::DestroyRoot, .target = rootId });
-}
-
 auto App::mountRoot(const RootWidget& rootWidget) -> Api::Id
 {
     auto tree = rootWidget.tree();

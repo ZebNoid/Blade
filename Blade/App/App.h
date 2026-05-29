@@ -20,7 +20,6 @@ public:
 
     auto run() -> int;
     static auto Quit() -> void;
-    static auto DestroyRoot(Api::Id rootId) -> void;
 
 protected:
     template <typename TBackend, typename... Args>

@@ -110,6 +110,7 @@ auto trayId = Tray(...).mount();
 
 UI::Show(windowId);
 UI::Hide(windowId);
+UI::Unmount(windowId);
 
 UI::Window::Close(windowId);
 UI::Window::Minimize(windowId);

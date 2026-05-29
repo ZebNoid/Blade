@@ -9,6 +9,7 @@ class UI
 public:
     static auto Show(Api::Id id) -> void;
     static auto Hide(Api::Id id) -> void;
+    static auto Unmount(Api::Id id) -> void;
 
     class Window
     {
