@@ -56,6 +56,15 @@ auto CreateCommand(
     return command;
 }
 
+auto SameRect(const LayoutNode* previousLayout, const LayoutNode& layout) -> bool
+{
+    if (!previousLayout) return false;
+
+    const auto& a = previousLayout->rect;
+    const auto& b = layout.rect;
+    return a.x == b.x && a.y == b.y && a.width == b.width && a.height == b.height;
+}
+
 } // namespace
 
 auto Materializer::create(const WidgetTree& widgetTree, const LayoutNode& layoutTree) -> std::vector<Api::ElementCommand>
@@ -72,6 +81,20 @@ auto Materializer::update(const WidgetTree& widgetTree, const LayoutNode& layout
     std::vector<Api::ElementCommand> commands;
 
     updateNode(widgetTree, layoutTree, commands, Api::InvalidId, includeRoot);
+
+    return commands;
+}
+
+auto Materializer::updateChanged(
+    const WidgetTree& widgetTree,
+    const LayoutNode& previousLayout,
+    const LayoutNode& layoutTree,
+    bool includeRoot
+) -> std::vector<Api::ElementCommand>
+{
+    std::vector<Api::ElementCommand> commands;
+
+    updateChangedNode(widgetTree, &previousLayout, layoutTree, commands, Api::InvalidId, includeRoot);
 
     return commands;
 }
@@ -150,6 +173,34 @@ auto Materializer::updateNode(
     for (size_t i = 0; i < widget.children.size(); ++i)
     {
         updateNode(widget.children[i], layout.children[i], out, currentParent, true);
+    }
+}
+
+auto Materializer::updateChangedNode(
+    const WidgetTree& widget,
+    const LayoutNode* previousLayout,
+    const LayoutNode& layout,
+    std::vector<Api::ElementCommand>& out,
+    Api::Id parent,
+    bool includeCurrent
+) -> void
+{
+    Api::Id currentParent = parent;
+
+    if (ShouldMaterialize(widget, layout))
+    {
+        if (includeCurrent && !SameRect(previousLayout, layout))
+        {
+            out.push_back(MaterializerCommands::Update(layout, widget, parent));
+        }
+
+        currentParent = widget.id;
+    }
+
+    for (size_t i = 0; i < widget.children.size(); ++i)
+    {
+        const auto* previousChild = previousLayout && i < previousLayout->children.size() ? &previousLayout->children[i] : nullptr;
+        updateChangedNode(widget.children[i], previousChild, layout.children[i], out, currentParent, true);
     }
 }
 
