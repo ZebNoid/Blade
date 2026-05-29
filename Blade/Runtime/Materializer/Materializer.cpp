@@ -1,71 +1,9 @@
 #include "Materializer.h"
 
 #include "Runtime/Materializer/MaterializerCommands/MaterializerCommands.h"
-#include "Runtime/Materializer/MenuMaterializer/MenuMaterializer.h"
+#include "Runtime/Materializer/MaterializerRules/MaterializerRules.h"
 
 namespace Blade {
-
-namespace {
-
-auto IsContextArea(const WidgetTree& widget) -> bool
-{
-    return widget.type == L"ContextArea";
-}
-
-auto HasEvent(const WidgetTree& widget, Api::Events event) -> bool
-{
-    return widget.events.find(event) != widget.events.end();
-}
-
-auto HasNativeDescendant(const WidgetTree& widget) -> bool
-{
-    if (widget.layoutType == LayoutType::None) return true;
-
-    for (const auto& child : widget.children)
-    {
-        if (HasNativeDescendant(child)) return true;
-    }
-
-    return false;
-}
-
-auto IsNativeContextArea(const WidgetTree& widget) -> bool
-{
-    return IsContextArea(widget) && !widget.children.empty() && !HasNativeDescendant(widget.children.front());
-}
-
-auto ShouldMaterialize(const WidgetTree& widget, const LayoutNode& layout) -> bool
-{
-    return layout.layoutType == LayoutType::None || IsNativeContextArea(widget);
-}
-
-auto ShouldMaterialize(const WidgetTree& widget) -> bool
-{
-    return widget.layoutType == LayoutType::None || IsNativeContextArea(widget);
-}
-
-auto CreateCommand(
-    const WidgetTree& widget,
-    Api::Id parent,
-    const std::vector<WidgetTree>* contextMenus,
-    Api::Id dropTarget
-) -> Api::ElementCommand
-{
-    auto command = MaterializerCommands::Create(widget, parent, MenuMaterializer::Build(contextMenus));
-    if (dropTarget != Api::InvalidId && !HasEvent(widget, Api::Events::Drop)) command.props[Api::Props::DropTarget] = true;
-    return command;
-}
-
-auto SameRect(const LayoutNode* previousLayout, const LayoutNode& layout) -> bool
-{
-    if (!previousLayout) return false;
-
-    const auto& a = previousLayout->rect;
-    const auto& b = layout.rect;
-    return a.x == b.x && a.y == b.y && a.width == b.width && a.height == b.height;
-}
-
-} // namespace
 
 auto Materializer::create(const WidgetTree& widgetTree, const LayoutNode& layoutTree) -> std::vector<Api::ElementCommand>
 {
@@ -121,9 +59,9 @@ auto Materializer::createNode(
     const auto* ownContextMenus = !widget.overlays.empty() ? &widget.overlays : nullptr;
     const auto* activeContextMenus = contextMenus ? contextMenus : ownContextMenus;
 
-    if (ShouldMaterialize(widget, layout))
+    if (MaterializerRules::ShouldMaterialize(widget, layout))
     {
-        out.push_back(CreateCommand(widget, parent, activeContextMenus, dropTarget));
+        out.push_back(MaterializerRules::CreateCommand(widget, parent, activeContextMenus, dropTarget));
 
         if (parent != Api::InvalidId)
         {
@@ -140,9 +78,9 @@ auto Materializer::createNode(
         parent = widget.id;
     }
 
-    const auto isContextArea = IsContextArea(widget);
+    const auto isContextArea = MaterializerRules::IsContextArea(widget);
     const auto* childContextMenus = isContextArea ? &widget.overlays : nullptr;
-    const auto childDropTarget = isContextArea && HasEvent(widget, Api::Events::Drop) ? widget.id : dropTarget;
+    const auto childDropTarget = isContextArea && MaterializerRules::HasEvent(widget, Api::Events::Drop) ? widget.id : dropTarget;
 
     for (size_t i = 0; i < widget.children.size(); ++i)
     {
@@ -160,7 +98,7 @@ auto Materializer::updateNode(
 {
     Api::Id currentParent = parent;
 
-    if (ShouldMaterialize(widget, layout))
+    if (MaterializerRules::ShouldMaterialize(widget, layout))
     {
         if (includeCurrent)
         {
@@ -187,9 +125,9 @@ auto Materializer::updateChangedNode(
 {
     Api::Id currentParent = parent;
 
-    if (ShouldMaterialize(widget, layout))
+    if (MaterializerRules::ShouldMaterialize(widget, layout))
     {
-        if (includeCurrent && !SameRect(previousLayout, layout))
+        if (includeCurrent && !MaterializerRules::SameRect(previousLayout, layout))
         {
             out.push_back(MaterializerCommands::Update(layout, widget, parent));
         }
@@ -216,7 +154,7 @@ auto Materializer::removeNode(const WidgetTree& widget, std::vector<Api::Element
         removeNode(overlay, out);
     }
 
-    if (ShouldMaterialize(widget))
+    if (MaterializerRules::ShouldMaterialize(widget))
     {
         out.push_back(MaterializerCommands::Remove(widget));
     }
