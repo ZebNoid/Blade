@@ -30,7 +30,6 @@ auto AppBackend::runApp() -> int
         [&]
         {
             m_host.destroyClosedWindows();
-            m_nodes.collectGarbage();
 
             if (m_nodes.ownerCount() == 0)
             {

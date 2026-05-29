@@ -58,6 +58,16 @@ auto CommandRouter::on(Api::Id id, WORD notificationCode, Api::BackendEvent even
     });
 }
 
+auto CommandRouter::emit(const Api::BackendMessage& message) -> Api::EventResult
+{
+    if (!m_handler || !*m_handler)
+    {
+        return {};
+    }
+
+    return (*m_handler)(message);
+}
+
 auto CommandRouter::emit(Api::BackendEvent event) -> Api::EventResult
 {
     if (event.type == Api::Events::Unknown)
@@ -65,12 +75,7 @@ auto CommandRouter::emit(Api::BackendEvent event) -> Api::EventResult
         return {};
     }
 
-    if (!m_handler || !*m_handler)
-    {
-        return {};
-    }
-
-    return (*m_handler)({
+    return emit({
         .type = Api::BackendMessageType::Event,
         .payload = event
     });

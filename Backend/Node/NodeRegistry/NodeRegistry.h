@@ -21,8 +21,6 @@ public:
     auto count() const -> size_t;
     auto ownerCount() const -> size_t;
 
-    auto collectGarbage() -> void;
-
 private:
     std::unordered_map<Api::Id, NativeNode> m_nodes;
 };

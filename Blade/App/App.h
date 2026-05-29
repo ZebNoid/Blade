@@ -5,6 +5,8 @@
 #include "Runtime/LayoutRuntime/LayoutRuntime.h"
 #include "Runtime/WidgetTreeRegistry/WidgetTreeRegistry.h"
 
+#include <unordered_set>
+
 
 namespace Blade {
 
@@ -60,6 +62,7 @@ private:
     WidgetTreeRegistry m_trees;
     EventRuntime m_eventRuntime;
     std::unique_ptr<LayoutRuntime> m_layoutRuntime;
+    std::unordered_set<Api::Id> m_destroyingRoots;
 
     friend class RootWidget;
 };

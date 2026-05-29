@@ -34,6 +34,10 @@ auto EventMapper::Apply(NativeWindow& window, const Api::EventSubscriptions& eve
         [&window](HWND, UINT, WPARAM, LPARAM) -> int
         {
             window.markDead();
+            window.commandRouter().emit({
+                .type = Api::BackendMessageType::Destroyed,
+                .payload = Api::BackendDestroyed{ .target = window.id() }
+            });
             return 0;
         }
     );

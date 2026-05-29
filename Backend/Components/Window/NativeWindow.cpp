@@ -120,6 +120,7 @@ auto NativeWindow::destroy() -> void
 auto NativeWindow::markDead() -> void
 {
     m_alive = false;
+    m_hwnd = nullptr;
 }
 
 auto NativeWindow::isAlive() const -> bool

@@ -55,24 +55,4 @@ auto NodeRegistry::ownerCount() const -> size_t
     return count;
 }
 
-auto NodeRegistry::collectGarbage() -> void
-{
-    // TODO where to use?
-    std::erase_if(
-        m_nodes,
-        [](const auto& pair)
-        {
-            const auto& node = pair.second;
-
-            if (!node.native)
-            {
-                return true;
-            }
-
-            return !node.native->isAlive();
-        }
-    );
-}
-
-
 } // namespace

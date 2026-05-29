@@ -7,7 +7,8 @@ enum class BackendMessageType
 {
     Unknown,
     Resize,
-    Event
+    Event,
+    Destroyed
 };
 
 } // namespace Blade::Api
