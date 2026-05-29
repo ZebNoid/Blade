@@ -30,19 +30,19 @@ auto App::Quit() -> void
     Process({ .command = Api::AppCommandType::Quit });
 }
 
+auto App::Show(Api::Id id) -> void
+{
+    Process({ .command = Api::AppCommandType::Show, .target = id });
+}
+
+auto App::Hide(Api::Id id) -> void
+{
+    Process({ .command = Api::AppCommandType::Hide, .target = id });
+}
+
 auto App::CloseWindow(Api::Id windowId) -> void
 {
     Process({ .command = Api::AppCommandType::CloseWindow, .target = windowId });
-}
-
-auto App::ShowWindow(Api::Id windowId) -> void
-{
-    Process({ .command = Api::AppCommandType::ShowWindow, .target = windowId });
-}
-
-auto App::HideWindow(Api::Id windowId) -> void
-{
-    Process({ .command = Api::AppCommandType::HideWindow, .target = windowId });
 }
 
 auto App::MinimizeWindow(Api::Id windowId) -> void

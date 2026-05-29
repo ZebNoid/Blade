@@ -57,11 +57,11 @@ auto AppCommandDispatcher::dispatch(const Api::AppCommand& command) -> void
         ApplyHwnd(m_backend, command.target, [](HWND hwnd) { HwndApi::Close(hwnd); });
         break;
 
-    case Api::AppCommandType::ShowWindow:
+    case Api::AppCommandType::Show:
         ApplyHwnd(m_backend, command.target, [](HWND hwnd) { HwndApi::SetVisible(hwnd, true); });
         break;
 
-    case Api::AppCommandType::HideWindow:
+    case Api::AppCommandType::Hide:
         ApplyHwnd(m_backend, command.target, [](HWND hwnd) { HwndApi::SetVisible(hwnd, false); });
         break;
 

@@ -26,14 +26,14 @@ protected:
                 MenuItem(L"Show").on({
                     .click = [windowId]() -> void
                     {
-                        App::ShowWindow(*windowId);
+                        App::Show(*windowId);
                         LOG(L"Show");
                     }
                 }),
                 MenuItem(L"Hide").on({
                     .click = [windowId]() -> void
                     {
-                        App::HideWindow(*windowId);
+                        App::Hide(*windowId);
                         LOG(L"Hide");
                     }
                 }),
@@ -67,7 +67,7 @@ protected:
         }).on({
             .click = [windowId]() -> void
             {
-                App::ShowWindow(*windowId);
+                App::Show(*windowId);
             },
         }).build(this);
 
@@ -110,7 +110,7 @@ protected:
         }).on({
             .close = [windowId]() -> bool
             {
-                App::HideWindow(*windowId);
+                App::Hide(*windowId);
                 // App::Quit(); // TODO dev only
                 LOGF_D(L"Close Window");
                 return false;

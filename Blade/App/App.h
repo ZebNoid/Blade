@@ -19,9 +19,9 @@ public:
 
     auto run() -> int;
     static auto Quit() -> void;
+    static auto Show(Api::Id id) -> void;
+    static auto Hide(Api::Id id) -> void;
     static auto CloseWindow(Api::Id windowId) -> void;
-    static auto ShowWindow(Api::Id windowId) -> void;
-    static auto HideWindow(Api::Id windowId) -> void;
     static auto MinimizeWindow(Api::Id windowId) -> void;
     static auto MaximizeWindow(Api::Id windowId) -> void;
     static auto RestoreWindow(Api::Id windowId) -> void;
