@@ -49,6 +49,8 @@ private:
 
     auto onBackendMessage(const Api::BackendMessage& message) -> Api::EventResult;
 
+    auto destroyRoot(Api::Id rootId) -> void;
+
     static auto Process(Api::AppCommand command) -> void;
 
 private:

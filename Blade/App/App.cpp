@@ -72,13 +72,7 @@ auto App::SetTrayTitle(Api::Id trayId, Api::Text title) -> void
 
 auto App::DestroyRoot(Api::Id rootId) -> void
 {
-    if (!s_current || !s_current->m_layoutRuntime) return;
-
-    auto* root = s_current->m_trees.root(rootId);
-    if (!root) return;
-
-    s_current->m_eventRuntime.unregisterTree(*root);
-    s_current->m_layoutRuntime->unmount(rootId);
+    Process({ .command = Api::AppCommandType::DestroyRoot, .target = rootId });
 }
 
 auto App::addToTree(const RootWidget& rootWidget) -> Api::Id
@@ -133,8 +127,27 @@ auto App::onBackendMessage(const Api::BackendMessage& message) -> Api::EventResu
     return {};
 }
 
+auto App::destroyRoot(Api::Id rootId) -> void
+{
+    if (!m_layoutRuntime) return;
+
+    auto* root = m_trees.root(rootId);
+    if (!root) return;
+
+    m_eventRuntime.unregisterTree(*root);
+    m_layoutRuntime->unmount(rootId);
+}
+
 auto App::Process(Api::AppCommand command) -> void
 {
+    if (!s_current) return;
+
+    if (command.command == Api::AppCommandType::DestroyRoot)
+    {
+        s_current->destroyRoot(command.target);
+        return;
+    }
+
     if (s_current && s_current->m_backend)
     {
         s_current->m_backend->process(command);

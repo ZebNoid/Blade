@@ -12,7 +12,8 @@ enum class AppCommandType
     MaximizeWindow,
     RestoreWindow,
     SetTrayIcon,
-    SetTrayTitle
+    SetTrayTitle,
+    DestroyRoot
 };
 
 inline auto to_string(AppCommandType c) -> std::wstring
@@ -28,6 +29,7 @@ inline auto to_string(AppCommandType c) -> std::wstring
     case AppCommandType::RestoreWindow: return L"RestoreWindow";
     case AppCommandType::SetTrayIcon: return L"SetTrayIcon";
     case AppCommandType::SetTrayTitle: return L"SetTrayTitle";
+    case AppCommandType::DestroyRoot: return L"DestroyRoot";
     default: return L"Unknown";
     }
 }
