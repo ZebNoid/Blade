@@ -175,6 +175,8 @@ Common modifiers are available on widgets through the base fluent chain.
 | Method | Meaning | Example |
 | --- | --- | --- |
 | `size(Api::Size)` | preferred widget size | `.size({120, 40})` |
+| `minSize(Api::Size)` | minimum measured size | `.minSize({80, 24})` |
+| `maxSize(Api::Size)` | maximum measured size, zero axis means unconstrained | `.maxSize({240, 0})` |
 | `flex(int)` | flex grow value for parent layout | `.flex(1)` |
 | `visible(bool)` | initial visibility | `.visible(false)` |
 | `padding(Api::Thickness)` | layout/render padding | `.padding({8})` |

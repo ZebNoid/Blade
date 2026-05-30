@@ -1,4 +1,5 @@
 #include "Layout/LayoutAlignmentTests.h"
+#include "Layout/LayoutConstraintsTests.h"
 #include "Layout/LayoutPaddingTests.h"
 
 #include <exception>
@@ -9,6 +10,7 @@ auto main() -> int
     try
     {
         Blade::Tests::RunLayoutAlignmentTests();
+        Blade::Tests::RunLayoutConstraintsTests();
         Blade::Tests::RunLayoutPaddingTests();
         return 0;
     }

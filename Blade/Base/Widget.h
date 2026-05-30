@@ -70,6 +70,18 @@ public:
         return self();
     }
 
+    auto minSize(Api::Size value) -> TSelf&
+    {
+        this->applyMinSize(value);
+        return self();
+    }
+
+    auto maxSize(Api::Size value) -> TSelf&
+    {
+        this->applyMaxSize(value);
+        return self();
+    }
+
     auto flex(int value) -> TSelf&
     {
         this->applyFlex(value);

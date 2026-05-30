@@ -31,7 +31,7 @@ auto LayoutLinear::Measure(LayoutContext& ctx, LayoutAxis axis) -> Api::Size
         maxCross = max(maxCross, LayoutAxisGeometry::CrossSize(axis, size));
     }
 
-    node.desiredSize = LayoutGeometry::Inflate(LayoutAxisGeometry::Size(axis, totalMain, maxCross), node.layout.box.padding);
+    node.desiredSize = LayoutGeometry::Constrain(LayoutGeometry::Inflate(LayoutAxisGeometry::Size(axis, totalMain, maxCross), node.layout.box.padding), node.layout.box.minSize, node.layout.box.maxSize);
     return node.desiredSize;
 }
 

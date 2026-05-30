@@ -24,7 +24,7 @@ auto LayoutLeaf::Measure(LayoutContext& ctx) -> Api::Size
         node.desiredSize.height = childrenSize.height;
     }
 
-    node.desiredSize = LayoutGeometry::Inflate(node.desiredSize, node.layout.box.padding);
+    node.desiredSize = LayoutGeometry::Constrain(LayoutGeometry::Inflate(node.desiredSize, node.layout.box.padding), node.layout.box.minSize, node.layout.box.maxSize);
     return node.desiredSize;
 }
 

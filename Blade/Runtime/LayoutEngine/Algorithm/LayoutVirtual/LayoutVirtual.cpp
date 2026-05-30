@@ -20,7 +20,7 @@ auto LayoutVirtual::Measure(LayoutContext& ctx) -> Api::Size
     if (node.layout.size.width > 0) node.desiredSize.width = node.layout.size.width;
     if (node.layout.size.height > 0) node.desiredSize.height = node.layout.size.height;
 
-    node.desiredSize = LayoutGeometry::Inflate(node.desiredSize, node.layout.box.padding);
+    node.desiredSize = LayoutGeometry::Constrain(LayoutGeometry::Inflate(node.desiredSize, node.layout.box.padding), node.layout.box.minSize, node.layout.box.maxSize);
     return node.desiredSize;
 }
 

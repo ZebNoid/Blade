@@ -57,6 +57,16 @@ protected:
         m_tree.backend.create[Api::Props::Size] = value;
     }
 
+    auto applyMinSize(Api::Size value) -> void
+    {
+        m_tree.layout.box.minSize = value;
+    }
+
+    auto applyMaxSize(Api::Size value) -> void
+    {
+        m_tree.layout.box.maxSize = value;
+    }
+
     auto applyFlex(int value) -> void
     {
         m_tree.layout.box.flex = value;

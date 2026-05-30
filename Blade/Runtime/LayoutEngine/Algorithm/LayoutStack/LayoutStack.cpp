@@ -22,7 +22,7 @@ auto LayoutStack::Measure(LayoutContext& ctx) -> Api::Size
         maxHeight = max(maxHeight, size.height);
     }
 
-    node.desiredSize = LayoutGeometry::Inflate({ maxWidth, maxHeight }, node.layout.box.padding);
+    node.desiredSize = LayoutGeometry::Constrain(LayoutGeometry::Inflate({ maxWidth, maxHeight }, node.layout.box.padding), node.layout.box.minSize, node.layout.box.maxSize);
     return node.desiredSize;
 }
 

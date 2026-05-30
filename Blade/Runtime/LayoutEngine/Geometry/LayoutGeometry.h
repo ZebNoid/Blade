@@ -8,15 +8,14 @@
 
 namespace Blade {
 
-class LayoutGeometry
-{
-public:
-    static auto NonNegative(int value) -> int
+namespace LayoutGeometry {
+
+    inline auto NonNegative(int value) -> int
     {
         return max(0, value);
     }
 
-    static auto Inflate(const Api::Size& size, const Api::Thickness& thickness) -> Api::Size
+    inline auto Inflate(const Api::Size& size, const Api::Thickness& thickness) -> Api::Size
     {
         return {
             size.width + thickness.left + thickness.right,
@@ -24,7 +23,7 @@ public:
         };
     }
 
-    static auto Deflate(const Api::Rect& rect, const Api::Thickness& thickness) -> Api::Rect
+    inline auto Deflate(const Api::Rect& rect, const Api::Thickness& thickness) -> Api::Rect
     {
         return {
             rect.x + thickness.left,
@@ -34,7 +33,19 @@ public:
         };
     }
 
-    static auto MainAxisOffset(MainAxisAlignment alignment, int available, int content, int itemCount) -> int
+    inline auto Constrain(const Api::Size& size, const Api::Size& minSize, const Api::Size& maxSize) -> Api::Size
+    {
+        auto result = size;
+
+        if (minSize.width > 0) result.width = max(result.width, minSize.width);
+        if (minSize.height > 0) result.height = max(result.height, minSize.height);
+        if (maxSize.width > 0) result.width = min(result.width, maxSize.width);
+        if (maxSize.height > 0) result.height = min(result.height, maxSize.height);
+
+        return result;
+    }
+
+    inline auto MainAxisOffset(MainAxisAlignment alignment, int available, int content, int itemCount) -> int
     {
         const int freeSpace = NonNegative(available - content);
 
@@ -63,7 +74,7 @@ public:
         }
     }
 
-    static auto MainAxisGap(MainAxisAlignment alignment, int baseGap, int available, int content, int itemCount) -> int
+    inline auto MainAxisGap(MainAxisAlignment alignment, int baseGap, int available, int content, int itemCount) -> int
     {
         const int freeSpace = NonNegative(available - content);
 
@@ -91,6 +102,7 @@ public:
             return baseGap;
         }
     }
-};
+
+} // namespace LayoutGeometry
 
 } // namespace Blade

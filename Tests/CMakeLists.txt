@@ -5,6 +5,8 @@ add_executable(${PROJECT_NAME}
         Core/Expect.h
         Layout/LayoutAlignmentTests.cpp
         Layout/LayoutAlignmentTests.h
+        Layout/LayoutConstraintsTests.cpp
+        Layout/LayoutConstraintsTests.h
         Layout/LayoutPaddingTests.cpp
         Layout/LayoutPaddingTests.h
 )
