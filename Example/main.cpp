@@ -92,7 +92,19 @@ protected:
                 , Stack(
                     Button(L"Flex")
                     ,Button(L"Flex").padding(8)
-                    , Label(L"------------ Native Label ------------------------------------").padding(16)
+                    , Label(L"------------ Native Label ------------------------------------")
+                        .padding(16)
+                        .borderRadius(8)
+                        .states({
+                            .normal = Api::Modifier().background(Api::Color::Green()),
+                            .hover = Api::Modifier().background(Api::Color::Red()),
+                            .focus = Api::Modifier().background(Api::Color::Blue()),
+                            .pressed = Api::Modifier().background(Api::Color::DarkRed()),
+                            .disabled = Api::Modifier().background(Api::Color::Gray()),
+                        })
+                        .borderColor(Api::Color::Black())
+                        .padding(16)
+                        .color(Api::Color::White())
                     , Label(L" | | | | | | Native Label").padding(12)
                 )
                 , ContextArea(

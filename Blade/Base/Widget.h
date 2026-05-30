@@ -44,6 +44,26 @@ public:
         return modifier(Api::Modifier().background(value));
     }
 
+    auto borderRadius(int value) -> TSelf&
+    {
+        return modifier(Api::Modifier().borderRadius(value));
+    }
+
+    auto borderColor(Api::Color value) -> TSelf&
+    {
+        return modifier(Api::Modifier().borderColor(value));
+    }
+
+    auto color(Api::Color value) -> TSelf&
+    {
+        return modifier(Api::Modifier().color(value));
+    }
+
+    auto states(const Api::ModifierStates& value) -> TSelf&
+    {
+        return modifier(Api::Modifier().states(value));
+    }
+
     auto size(Api::Size value) -> TSelf&
     {
         return modifier(Api::Modifier().size(value));

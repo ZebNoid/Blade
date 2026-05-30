@@ -35,6 +35,18 @@ protected:
     {
     }
 
+    auto applyModifier(const Api::BorderRadiusModifier&) -> void
+    {
+    }
+
+    auto applyModifier(const Api::BorderColorModifier&) -> void
+    {
+    }
+
+    auto applyModifier(const Api::TextColorModifier&) -> void
+    {
+    }
+
     auto applyModifier(const Api::SizeModifier& modifier) -> void
     {
         m_tree.layout.size = modifier.value;
@@ -49,6 +61,10 @@ protected:
     auto applyModifier(const Api::VisibleModifier& modifier) -> void
     {
         m_tree.backend.create[Api::Props::Visible] = modifier.value;
+    }
+
+    auto applyModifier(const Api::StateModifiers&) -> void
+    {
     }
 
     auto applyEvent(Api::Events event, Api::EventCallback callback) -> void

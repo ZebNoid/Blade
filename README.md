@@ -125,7 +125,22 @@ UI::Tray::Title(trayId, L"Blade");
 
 ## Syntax
 
-Widget properties are configured with `.set(...)`.
+Widgets support fluent modifiers for common layout and visual options.
+
+```c++
+Label(L"Status")
+    .padding(8)
+    .states({
+        .normal = Api::Modifier().background(Api::Color::Green()),
+        .hover = Api::Modifier().background(Api::Color::Red()),
+    })
+    .padding(16)
+```
+
+> [!CAUTION]
+> Nested `.states(...)` inside `ModifierStates` branches are ignored and logged as a warning. State branches are intended to contain plain modifiers only.
+
+Widget-specific properties can still be configured with `.set(...)`.
 
 ```c++
 Button(L"Run").set({

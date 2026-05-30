@@ -15,6 +15,13 @@ auto VirtualWrapper(Api::Text type, WidgetTree child) -> WidgetTree
     return wrapper;
 }
 
+auto StateBranch(const Api::StateModifiers& states, WidgetTree child) -> WidgetTree
+{
+    auto wrapper = VirtualWrapper(L"Modifier.States", std::move(child));
+    wrapper.modifier.states(states);
+    return wrapper;
+}
+
 } // namespace
 
 auto ModifierTreeBuilder::Expand(WidgetTree tree) -> WidgetTree
@@ -66,6 +73,10 @@ auto ModifierTreeBuilder::wrap(WidgetTree node, const Api::ModifierOp& op) -> Wi
             else if constexpr (std::is_same_v<T, Api::BackgroundModifier>)
             {
                 return VirtualWrapper(L"Modifier.Background", std::move(node));
+            }
+            else if constexpr (std::is_same_v<T, Api::StateModifiers>)
+            {
+                return StateBranch(modifier, std::move(node));
             }
             else
             {
