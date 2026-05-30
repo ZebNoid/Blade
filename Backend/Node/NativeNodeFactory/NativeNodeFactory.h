@@ -35,6 +35,8 @@ private:
 
     auto createLabelSurface(const Api::ElementCommand& command) -> std::optional<NativeNode>;
 
+    auto createImageSurface(const Api::ElementCommand& command) -> std::optional<NativeNode>;
+
     auto createNativeLabel(const Api::ElementCommand& command) -> std::optional<NativeNode>;
 
     auto createTray(const Api::ElementCommand& command) -> std::optional<NativeNode>;

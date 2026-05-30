@@ -5,6 +5,7 @@
 #include "Components/Native/Button/NativeButton.h"
 #include "Components/Native/Label/NativeLabel.h"
 #include "Components/RenderSurface/RenderSurface.h"
+#include "Components/Surface/ImageSurface/ImageSurface.h"
 #include "Components/Surface/LabelSurface/LabelSurface.h"
 #include "Components/Tray/NativeTray.h"
 #include "Render/WindowSurfaceRuntime/WindowSurfaceRuntime.h"
@@ -13,6 +14,48 @@
 
 
 namespace Blade::Backend {
+
+namespace {
+
+template <typename Component>
+auto CreateWindowChild(AppBackend& backend, NativeCreateContext& context, const Api::ElementCommand& command, const wchar_t* source) -> std::optional<NativeNode>
+{
+    auto* parent = backend.nodes().get(command.parent);
+
+    if (!parent)
+    {
+        LOGF_E(L"[Error] %s no parent", source);
+        return std::nullopt;
+    }
+
+    auto* parentWindow = dynamic_cast<NativeWindow*>(parent->native.get());
+
+    if (!parentWindow)
+    {
+        LOGF_E(L"[Error] %s parent is not NativeWindow", source);
+        return std::nullopt;
+    }
+
+    auto component = std::make_unique<Component>();
+
+    if (!component->create(parentWindow, command.id, context))
+    {
+        LOGF_E(L"[Error] %s failed", source);
+        return std::nullopt;
+    }
+
+    component->applyProps(command.props);
+    component->applyEvents(command.events);
+
+    return NativeNode{
+        .id = command.id,
+        .type = command.nodeType,
+        .parent = command.parent,
+        .native = std::move(component),
+    };
+}
+
+} // namespace
 
 NativeNodeFactory::NativeNodeFactory(AppBackend* backend)
     : m_backend(backend)
@@ -57,6 +100,7 @@ auto NativeNodeFactory::registerFactories() -> void
         { Api::WidgetTypes::Window, Api::ComponentTypes::Window },
         { Api::WidgetTypes::Button, Api::ComponentTypes::Button },
         { Api::WidgetTypes::Label, UI::Label },
+        { Api::WidgetTypes::Image, UI::ImageSurface },
         { Api::WidgetTypes::ContextArea, Api::ComponentTypes::Surface },
         { Api::WidgetTypes::Tray, Api::ComponentTypes::Tray },
     });
@@ -65,6 +109,7 @@ auto NativeNodeFactory::registerFactories() -> void
     m_registry.add(Api::ComponentTypes::Button, [this](const auto& command) { return createButton(command); });
     m_registry.add(UI::Surface, [this](const auto& command) { return createSurface(command); });
     m_registry.add(UI::Label, [this](const auto& command) { return createLabelSurface(command); });
+    m_registry.add(UI::ImageSurface, [this](const auto& command) { return createImageSurface(command); });
     m_registry.add(UI::LabelNative, [this](const auto& command) { return createNativeLabel(command); });
     m_registry.add(Api::ComponentTypes::Tray, [this](const auto& command) { return createTray(command); });
 }
@@ -124,80 +169,12 @@ auto NativeNodeFactory::createWindow(const Api::ElementCommand& command) -> std:
 
 auto NativeNodeFactory::createButton(const Api::ElementCommand& command) -> std::optional<NativeNode>
 {
-    auto* parent = m_backend->nodes().get(command.parent);
-
-    if (!parent)
-    {
-        LOG_E(L"[Error] createButton no parent");
-        return std::nullopt;
-    }
-
-    auto button = std::make_unique<NativeButton>();
-
-    auto* parentWindow = dynamic_cast<NativeWindow*>(parent->native.get());
-
-    if (!parentWindow)
-    {
-        LOG_E(L"[Error] createButton parent is not NativeWindow");
-        return std::nullopt;
-    }
-
-    if (!button->create(parentWindow, command.id, m_context))
-    {
-        LOG_E(L"[Error] createButton failed");
-        return std::nullopt;
-    }
-
-    button->applyProps(command.props);
-    button->applyEvents(command.events);
-
-    NativeNode node = {
-        .id = command.id,
-        .type = command.nodeType,
-        .parent = command.parent,
-        .native = std::move(button),
-    };
-
-    return node;
+    return CreateWindowChild<NativeButton>(*m_backend, m_context, command, L"createButton");
 }
 
 auto NativeNodeFactory::createSurface(const Api::ElementCommand& command) -> std::optional<NativeNode>
 {
-    auto* parent = m_backend->nodes().get(command.parent);
-
-    if (!parent)
-    {
-        LOG_E(L"[Error] createSurface no parent");
-        return std::nullopt;
-    }
-
-    auto* parentWindow = dynamic_cast<NativeWindow*>(parent->native.get());
-
-    if (!parentWindow)
-    {
-        LOG_E(L"[Error] createSurface parent is not NativeWindow");
-        return std::nullopt;
-    }
-
-    auto surface = std::make_unique<RenderSurface>();
-
-    if (!surface->create(parentWindow, command.id, m_context))
-    {
-        LOG_E(L"[Error] createSurface failed");
-        return std::nullopt;
-    }
-
-    surface->applyProps(command.props);
-    surface->applyEvents(command.events);
-
-    NativeNode node = {
-        .id = command.id,
-        .type = command.nodeType,
-        .parent = command.parent,
-        .native = std::move(surface),
-    };
-
-    return node;
+    return CreateWindowChild<RenderSurface>(*m_backend, m_context, command, L"createSurface");
 }
 
 auto NativeNodeFactory::createTray(const Api::ElementCommand& command) -> std::optional<NativeNode>
@@ -225,80 +202,17 @@ auto NativeNodeFactory::createTray(const Api::ElementCommand& command) -> std::o
 
 auto NativeNodeFactory::createLabelSurface(const Api::ElementCommand& command) -> std::optional<NativeNode>
 {
-    auto* parent = m_backend->nodes().get(command.parent);
+    return CreateWindowChild<LabelSurface>(*m_backend, m_context, command, L"createLabelSurface");
+}
 
-    if (!parent)
-    {
-        LOG_E(L"[Error] createLabelSurface no parent");
-        return std::nullopt;
-    }
-
-    auto* parentWindow = dynamic_cast<NativeWindow*>(parent->native.get());
-
-    if (!parentWindow)
-    {
-        LOG_E(L"[Error] createLabelSurface parent is not NativeWindow");
-        return std::nullopt;
-    }
-
-    auto label = std::make_unique<LabelSurface>();
-
-    if (!label->create(parentWindow, command.id, m_context))
-    {
-        LOG_E(L"[Error] createLabelSurface failed");
-        return std::nullopt;
-    }
-
-    label->applyProps(command.props);
-    label->applyEvents(command.events);
-
-    NativeNode node = {
-        .id = command.id,
-        .type = command.nodeType,
-        .parent = command.parent,
-        .native = std::move(label),
-    };
-
-    return node;
+auto NativeNodeFactory::createImageSurface(const Api::ElementCommand& command) -> std::optional<NativeNode>
+{
+    return CreateWindowChild<ImageSurface>(*m_backend, m_context, command, L"createImageSurface");
 }
 
 auto NativeNodeFactory::createNativeLabel(const Api::ElementCommand& command) -> std::optional<NativeNode>
 {
-    auto* parent = m_backend->nodes().get(command.parent);
-
-    if (!parent)
-    {
-        LOG_E(L"[Error] createNativeLabel no parent");
-        return std::nullopt;
-    }
-
-    auto* parentWindow = dynamic_cast<NativeWindow*>(parent->native.get());
-
-    if (!parentWindow)
-    {
-        LOG_E(L"[Error] createNativeLabel parent is not NativeWindow");
-        return std::nullopt;
-    }
-
-    auto label = std::make_unique<NativeLabel>();
-
-    if (!label->create(parentWindow, command.id, m_context))
-    {
-        LOG_E(L"[Error] createNativeLabel failed");
-        return std::nullopt;
-    }
-
-    label->applyProps(command.props);
-    label->applyEvents(command.events);
-
-    NativeNode node = {
-        .id = command.id,
-        .type = command.nodeType,
-        .parent = command.parent,
-        .native = std::move(label),
-    };
-
-    return node;
+    return CreateWindowChild<NativeLabel>(*m_backend, m_context, command, L"createNativeLabel");
 }
 
 } // namespace

@@ -1,16 +1,18 @@
 #include "HwndApi.h"
 
+#include <windowsx.h>
+
 
 namespace Blade::Backend {
 
 namespace {
 
-auto GetWindowStyle(HWND hwnd) -> DWORD
+auto ReadWindowStyle(HWND hwnd) -> DWORD
 {
     return static_cast<DWORD>(GetWindowLongPtr(hwnd, GWL_STYLE));
 }
 
-auto GetWindowExStyle(HWND hwnd) -> DWORD
+auto ReadWindowExStyle(HWND hwnd) -> DWORD
 {
     return static_cast<DWORD>(GetWindowLongPtr(hwnd, GWL_EXSTYLE));
 }
@@ -18,7 +20,7 @@ auto GetWindowExStyle(HWND hwnd) -> DWORD
 auto ToOuterSize(HWND hwnd, const Api::Size& clientSize) -> Api::Size
 {
     RECT rect{0, 0, clientSize.width, clientSize.height};
-    AdjustWindowRectEx(&rect, GetWindowStyle(hwnd), FALSE, GetWindowExStyle(hwnd));
+    AdjustWindowRectEx(&rect, ReadWindowStyle(hwnd), FALSE, ReadWindowExStyle(hwnd));
     return {rect.right - rect.left, rect.bottom - rect.top};
 }
 
@@ -230,6 +232,14 @@ auto HwndApi::Destroy(HWND hwnd) -> void
     DestroyWindow(hwnd);
 }
 
+auto HwndApi::PointFromLParam(LPARAM lParam) -> Api::Point
+{
+    return {
+        .x = GET_X_LPARAM(lParam),
+        .y = GET_Y_LPARAM(lParam)
+    };
+}
+
 auto HwndApi::GetSizeFromLParam(LPARAM lParam) -> Api::Size
 {
     return {
@@ -238,5 +248,46 @@ auto HwndApi::GetSizeFromLParam(LPARAM lParam) -> Api::Size
     };
 }
 
+auto HwndApi::ToClientPoint(HWND hwnd, POINT point) -> Api::Point
+{
+    ScreenToClient(hwnd, &point);
+    return {point.x, point.y};
+}
+
+auto HwndApi::ToScreenPoint(HWND hwnd, Api::Point point) -> POINT
+{
+    POINT screenPoint{
+        .x = point.x,
+        .y = point.y
+    };
+
+    ClientToScreen(hwnd, &screenPoint);
+    return screenPoint;
+}
+
+auto HwndApi::TrackMouseLeave(HWND hwnd) -> void
+{
+    TRACKMOUSEEVENT event{
+        .cbSize = sizeof(TRACKMOUSEEVENT),
+        .dwFlags = TME_LEAVE,
+        .hwndTrack = hwnd
+    };
+    TrackMouseEvent(&event);
+}
+
+auto HwndApi::CaptureMouse(HWND hwnd) -> void
+{
+    SetCapture(hwnd);
+}
+
+auto HwndApi::ReleaseMouseCapture(HWND hwnd) -> void
+{
+    ReleaseCapture();
+}
+
+auto HwndApi::HasMouseCapture(HWND hwnd) -> bool
+{
+    return GetCapture() == hwnd;
+}
 
 } // namespace

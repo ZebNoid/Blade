@@ -45,10 +45,8 @@ auto MouseUp(AppBackend& backend, HWND hwnd, SurfaceHit hit) -> void
 
 auto ShowContextMenu(AppBackend& backend, HWND hwnd, Api::Point point, POINT screenPoint, Api::MenuTrigger trigger) -> bool
 {
-    const auto hit = Surface::HitTest::Hit(backend, point);
+    const auto hit = Surface::HitTest::ContextMenu(backend, point, trigger);
     if (!hit.valid()) return false;
-
-    if (!hit.surface->hasContextMenu(trigger)) return false;
 
     const auto shown = hit.surface->showContextMenu(trigger, screenPoint);
     if (shown) HwndApi::Invalidate(hwnd);

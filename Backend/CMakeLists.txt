@@ -118,6 +118,8 @@ add_library(${PROJECT_NAME} STATIC
         Components/RenderSurface/RenderSurface.h
         Components/Surface/LabelSurface/LabelSurface.cpp
         Components/Surface/LabelSurface/LabelSurface.h
+        Components/Surface/ImageSurface/ImageSurface.cpp
+        Components/Surface/ImageSurface/ImageSurface.h
         Components/Native/Label/NativeLabel.cpp
         Components/Native/Label/NativeLabel.h
         Components/Native/Button/NativeButton.cpp

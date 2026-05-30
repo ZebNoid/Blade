@@ -2,6 +2,7 @@
 
 #include "Common/Types.h"
 #include "Geometry/Point.h"
+#include "Menu/MenuTrigger.h"
 
 namespace Blade::Backend {
 
@@ -18,6 +19,7 @@ struct SurfaceHit
 
 namespace Surface::HitTest {
     auto Hit(AppBackend& backend, Api::Point point, bool requireDrop = false) -> SurfaceHit;
+    auto ContextMenu(AppBackend& backend, Api::Point point, Api::MenuTrigger trigger) -> SurfaceHit;
     auto Id(const SurfaceHit& hit) -> Api::Id;
     auto ById(AppBackend& backend, Api::Id id) -> SurfaceHit;
 } // namespace Surface::HitTest

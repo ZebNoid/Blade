@@ -43,7 +43,14 @@ public:
     static auto Close(HWND hwnd) -> void;
     static auto Destroy(HWND hwnd) -> void;
 
+    static auto PointFromLParam(LPARAM lParam) -> Api::Point;
     static auto GetSizeFromLParam(LPARAM lParam) -> Api::Size;
+    static auto ToClientPoint(HWND hwnd, POINT point) -> Api::Point;
+    static auto ToScreenPoint(HWND hwnd, Api::Point point) -> POINT;
+    static auto TrackMouseLeave(HWND hwnd) -> void;
+    static auto CaptureMouse(HWND hwnd) -> void;
+    static auto ReleaseMouseCapture(HWND hwnd) -> void;
+    static auto HasMouseCapture(HWND hwnd) -> bool;
 };
 
 } // namespace

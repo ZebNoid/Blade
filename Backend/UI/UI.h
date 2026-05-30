@@ -9,6 +9,7 @@ inline constexpr auto Button = Api::ComponentTypes::Button;
 inline constexpr auto Label = Api::ComponentTypes::LabelSurface;
 inline constexpr auto LabelNative = Api::ComponentTypes::Label;
 inline constexpr auto LabelSurface = Api::ComponentTypes::LabelSurface;
+inline constexpr auto ImageSurface = Api::ComponentTypes::ImageSurface;
 inline constexpr auto Tray = Api::ComponentTypes::Tray;
 inline constexpr auto Surface = Api::ComponentTypes::Surface;
 

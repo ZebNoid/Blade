@@ -141,7 +141,6 @@ auto OleDropTarget::Drop(IDataObject* data, DWORD keyState, POINTL point, DWORD*
     m_allowDrop = false;
     auto pt = ToPoint(point);
     if (m_helper) m_helper->Drop(data, &pt, dropEffect);
-    if (m_dragLeaveHandler) m_dragLeaveHandler();
 
     if (!files.empty())
     {
@@ -153,6 +152,7 @@ auto OleDropTarget::Drop(IDataObject* data, DWORD keyState, POINTL point, DWORD*
         });
     }
 
+    if (m_dragLeaveHandler) m_dragLeaveHandler();
     return S_OK;
 }
 

@@ -7,6 +7,7 @@
 #include <windows.h>
 #include <gdiplus.h>
 
+#include "Common/Types.h"
 #include "Style/Color.h"
 
 namespace Blade::Backend {
@@ -29,6 +30,7 @@ public:
     auto pen(Api::Color color, int width = 1) -> HPEN;
     auto gdiPlusBrush(Api::Color color) -> Gdiplus::SolidBrush*;
     auto gdiPlusPen(Api::Color color, int width = 1) -> Gdiplus::Pen*;
+    auto image(const Api::Text& path) -> Gdiplus::Image*;
 
 private:
     HFONT m_defaultFont = nullptr;
@@ -37,6 +39,7 @@ private:
     std::unordered_map<std::uint64_t, HPEN> m_pens;
     std::unordered_map<std::uint32_t, std::unique_ptr<Gdiplus::SolidBrush>> m_gdiPlusBrushes;
     std::unordered_map<std::uint64_t, std::unique_ptr<Gdiplus::Pen>> m_gdiPlusPens;
+    std::unordered_map<Api::Text, std::unique_ptr<Gdiplus::Image>> m_images;
 };
 
 } // namespace Blade::Backend

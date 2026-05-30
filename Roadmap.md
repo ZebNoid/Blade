@@ -127,11 +127,13 @@ Current native/custom split:
 - `NativeButton` uses WinAPI `BUTTON`.
 - `NativeLabel` uses WinAPI `STATIC`.
 - `LabelSurface` renders label text through the window-level surface path.
+- `ImageSurface` renders images through the window-level surface path.
 - Custom buttons should usually be Blade widgets built on top of `Surface`, modifiers, and events.
 
 - [ ] Add more native common controls.
 - [ ] Keep fallback native widgets available where useful.
 - [x] Split system `NativeLabel` from custom-rendered `LabelSurface`.
+- [x] Add `ImageSurface`.
 - [x] Keep `Button` mapped to native/system button by default.
 - [x] Add low-level custom render `Surface`.
 

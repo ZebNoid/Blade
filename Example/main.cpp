@@ -125,6 +125,7 @@ protected:
                             Label(L" -------------------- ContextArea Label -------------------- ").padding(12).flex(1)
                             , Row(
                                 Button(L"Button").padding(8).flex(1)
+                                , Image(L"test/app.png").flex(2)
                                 , Label(L"------------ Label States 2 ------------------------------------")
                                   .flex(1)
                                   .padding(16)

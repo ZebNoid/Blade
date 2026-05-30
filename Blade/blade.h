@@ -7,6 +7,7 @@
 #include "Widget/Tray/Tray.h"
 #include "Widget/Button/Button.h"
 #include "Widget/Label/Label.h"
+#include "Widget/Image/Image.h"
 #include "Widget/ContextArea/ContextArea.h"
 #include "Widget/Menu/Menu.h"
 #include "Widget/Menu/MenuItem.h"

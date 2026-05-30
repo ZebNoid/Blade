@@ -111,4 +111,17 @@ auto ResourceManager::gdiPlusPen(Api::Color color, int width) -> Gdiplus::Pen*
     return handle;
 }
 
+auto ResourceManager::image(const Api::Text& path) -> Gdiplus::Image*
+{
+    if (path.empty()) return nullptr;
+    if (const auto it = m_images.find(path); it != m_images.end()) return it->second.get();
+
+    auto image = std::make_unique<Gdiplus::Image>(path.c_str());
+    if (!image || image->GetLastStatus() != Gdiplus::Ok) return nullptr;
+
+    auto* handle = image.get();
+    m_images[path] = std::move(image);
+    return handle;
+}
+
 } // namespace Blade::Backend

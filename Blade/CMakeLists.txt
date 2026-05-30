@@ -28,6 +28,8 @@ add_library(${PROJECT_NAME} STATIC
         Widget/Button/ButtonEvents.h
         Widget/Label/Label.h
         Widget/Label/LabelProps.h
+        Widget/Image/Image.h
+        Widget/Image/ImageProps.h
         Widget/ContextArea/ContextArea.h
         Widget/ContextArea/ContextAreaEvents.h
         Widget/Menu/Menu.h

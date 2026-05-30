@@ -21,6 +21,7 @@ namespace WidgetTypes {
     inline constexpr WidgetType Label{3};
     inline constexpr WidgetType ContextArea{4};
     inline constexpr WidgetType Tray{5};
+    inline constexpr WidgetType Image{6};
 
     inline constexpr WidgetType Menu{20};
     inline constexpr WidgetType MenuItem{21};

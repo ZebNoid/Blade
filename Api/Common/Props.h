@@ -8,6 +8,7 @@ enum class Props
     Unknown,
     IsDefault,
     Title,
+    Source,
     Icon,
     Size,
     Position,
@@ -36,6 +37,7 @@ inline auto to_string(Props p) -> std::wstring {
     case Props::Unknown:   return L"Unknown";
     case Props::IsDefault:   return L"IsDefault";
     case Props::Title:   return L"Title";
+    case Props::Source:   return L"Source";
     case Props::Icon:   return L"Icon";
     case Props::Size:   return L"Size";
     case Props::Position:   return L"Position";
