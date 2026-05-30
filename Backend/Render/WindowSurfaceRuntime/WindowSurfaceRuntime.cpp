@@ -1,9 +1,11 @@
 #include "WindowSurfaceRuntime.h"
 
 #include <memory>
+#include <vector>
 #include <windowsx.h>
 
 #include "App/AppBackend.h"
+#include "Components/Custom/Surface/NativeCustom.h"
 #include "Components/Native/Label/NativeLabel.h"
 #include "Components/Window/NativeWindow.h"
 #include "Node/NativeNode/NativeNode.h"
@@ -13,6 +15,22 @@
 namespace Blade::Backend {
 
 namespace {
+
+struct VirtualHit
+{
+    Api::Id id = Api::InvalidId;
+    NativeCustom* surface = nullptr;
+    NativeLabel* label = nullptr;
+
+    auto valid() const -> bool { return surface || label; }
+};
+
+struct PaintItem
+{
+    int order = 0;
+    NativeCustom* surface = nullptr;
+    NativeLabel* label = nullptr;
+};
 
 auto PointFromLParam(LPARAM lParam) -> Api::Point
 {
@@ -39,15 +57,28 @@ auto ScreenPoint(HWND hwnd, LPARAM lParam) -> POINT
     return point;
 }
 
-auto PaintLabels(AppBackend& backend, HDC hdc) -> void
+auto PaintVirtuals(AppBackend& backend, HDC hdc) -> void
 {
+    std::vector<PaintItem> items;
+
     backend.nodes().forEach(
-        [&backend, hdc](NativeNode& node)
+        [&backend, &items](NativeNode& node)
         {
-            auto* label = dynamic_cast<NativeLabel*>(node.native.get());
-            if (label) label->paint(hdc, backend.resources(), backend.renderNodes());
+            const auto* render = backend.renderNodes().get(node.id);
+            const auto order = render ? render->order : 0;
+
+            if (auto* surface = dynamic_cast<NativeCustom*>(node.native.get())) items.push_back({order, surface, nullptr});
+            else if (auto* label = dynamic_cast<NativeLabel*>(node.native.get())) items.push_back({order, nullptr, label});
         }
     );
+
+    std::ranges::sort(items, {}, &PaintItem::order);
+
+    for (const auto& item : items)
+    {
+        if (item.surface) item.surface->paint(hdc, backend.resources(), backend.renderNodes());
+        if (item.label) item.label->paint(hdc, backend.resources(), backend.renderNodes());
+    }
 }
 
 auto PaintBuffered(HWND hwnd, HDC target, AppBackend& backend) -> void
@@ -60,7 +91,7 @@ auto PaintBuffered(HWND hwnd, HDC target, AppBackend& backend) -> void
     auto oldBitmap = SelectObject(memoryDc, bitmap);
 
     RenderApi::Fill(memoryDc, rect, backend.resources().windowBrush());
-    PaintLabels(backend, memoryDc);
+    PaintVirtuals(backend, memoryDc);
     BitBlt(target, 0, 0, rect.width, rect.height, memoryDc, 0, 0, SRCCOPY);
 
     SelectObject(memoryDc, oldBitmap);
@@ -68,23 +99,27 @@ auto PaintBuffered(HWND hwnd, HDC target, AppBackend& backend) -> void
     DeleteDC(memoryDc);
 }
 
-auto HitLabel(AppBackend& backend, Api::Point point, bool requireDrop = false) -> NativeLabel*
+auto HitVirtual(AppBackend& backend, Api::Point point, bool requireDrop = false) -> VirtualHit
 {
-    NativeLabel* result = nullptr;
+    VirtualHit result;
     int resultOrder = -1;
 
     backend.nodes().forEach(
         [&](NativeNode& node)
         {
+            auto* surface = dynamic_cast<NativeCustom*>(node.native.get());
             auto* label = dynamic_cast<NativeLabel*>(node.native.get());
-            if (!label || !label->hitTest(point)) return;
-            if (requireDrop && !label->wantsDrop()) return;
+            const auto hit = surface ? surface->hitTest(point) : label && label->hitTest(point);
+            if (!hit) return;
+
+            const auto wantsDrop = surface ? surface->wantsDrop() : label->wantsDrop();
+            if (requireDrop && !wantsDrop) return;
 
             const auto* render = backend.renderNodes().get(node.id);
             const auto order = render ? render->order : 0;
-            if (!result || order >= resultOrder)
+            if (!result.valid() || order >= resultOrder)
             {
-                result = label;
+                result = {node.id, surface, label};
                 resultOrder = order;
             }
         }
@@ -93,18 +128,63 @@ auto HitLabel(AppBackend& backend, Api::Point point, bool requireDrop = false) -
     return result;
 }
 
-auto LabelById(AppBackend& backend, Api::Id id) -> NativeLabel*
+auto HitId(const VirtualHit& hit) -> Api::Id
+{
+    return hit.valid() ? hit.id : Api::InvalidId;
+}
+
+auto VirtualById(AppBackend& backend, Api::Id id) -> VirtualHit
 {
     const auto* node = backend.nodes().get(id);
-    return node ? dynamic_cast<NativeLabel*>(node->native.get()) : nullptr;
+    if (!node) return {};
+
+    auto* surface = dynamic_cast<NativeCustom*>(node->native.get());
+    auto* label = dynamic_cast<NativeLabel*>(node->native.get());
+    return {id, surface, label};
+}
+
+auto Hover(AppBackend& backend, VirtualHit hit, bool hovered) -> bool
+{
+    if (hit.surface) return hit.surface->hover(backend.renderNodes(), hovered);
+    return hit.label && hit.label->hover(backend.renderNodes(), hovered);
+}
+
+auto DragOver(AppBackend& backend, VirtualHit hit, bool active) -> bool
+{
+    if (hit.surface) return hit.surface->dragOver(backend.renderNodes(), active);
+    return hit.label && hit.label->dragOver(backend.renderNodes(), active);
+}
+
+auto MouseDown(AppBackend& backend, VirtualHit hit) -> bool
+{
+    if (hit.surface) return hit.surface->mouseDown(backend.renderNodes());
+    return hit.label && hit.label->mouseDown(backend.renderNodes());
+}
+
+auto MouseUp(AppBackend& backend, VirtualHit hit) -> bool
+{
+    if (hit.surface) return hit.surface->mouseUp(backend.renderNodes());
+    return hit.label && hit.label->mouseUp(backend.renderNodes());
+}
+
+auto Focus(AppBackend& backend, VirtualHit hit, bool focused) -> bool
+{
+    if (hit.surface) return hit.surface->focus(backend.renderNodes(), focused);
+    return hit.label && hit.label->focus(backend.renderNodes(), focused);
 }
 
 auto ShowContextMenu(AppBackend& backend, HWND hwnd, Api::Point point, POINT screenPoint, Api::MenuTrigger trigger) -> bool
 {
-    auto* label = HitLabel(backend, point);
-    if (!label || !label->hasContextMenu(trigger)) return false;
+    const auto hit = HitVirtual(backend, point);
+    if (!hit.valid()) return false;
 
-    const auto shown = label->showContextMenu(trigger, screenPoint);
+    const auto hasMenu = hit.surface ? hit.surface->hasContextMenu(trigger) : hit.label->hasContextMenu(trigger);
+    if (!hasMenu) return false;
+
+    const auto shown = hit.surface
+        ? hit.surface->showContextMenu(trigger, screenPoint)
+        : hit.label->showContextMenu(trigger, screenPoint);
+
     if (shown) HwndApi::Invalidate(hwnd);
     return shown;
 }
@@ -141,21 +221,21 @@ auto WindowSurfaceRuntime::Attach(AppBackend& backend, NativeWindow& window) -> 
     window.setDropTargetResolver(
         [&backend, &window, dragOverLabel](POINT screenPoint) -> Api::Id
         {
-            auto* label = HitLabel(backend, ToClientPoint(window.handle(), screenPoint), true);
-            const auto target = label ? label->id() : Api::InvalidId;
+            const auto hit = HitVirtual(backend, ToClientPoint(window.handle(), screenPoint), true);
+            const auto target = HitId(hit);
             if (*dragOverLabel == target) return target;
 
-            if (auto* previous = LabelById(backend, *dragOverLabel); previous && previous->dragOver(backend.renderNodes(), false)) HwndApi::Invalidate(window.handle());
+            if (DragOver(backend, VirtualById(backend, *dragOverLabel), false)) HwndApi::Invalidate(window.handle());
             *dragOverLabel = target;
-            if (label && label->dragOver(backend.renderNodes(), true)) HwndApi::Invalidate(window.handle());
-            return label ? label->id() : Api::InvalidId;
+            if (DragOver(backend, hit, true)) HwndApi::Invalidate(window.handle());
+            return target;
         }
     );
 
     window.setDropDragLeaveHandler(
         [&backend, &window, dragOverLabel]
         {
-            if (auto* previous = LabelById(backend, *dragOverLabel); previous && previous->dragOver(backend.renderNodes(), false)) HwndApi::Invalidate(window.handle());
+            if (DragOver(backend, VirtualById(backend, *dragOverLabel), false)) HwndApi::Invalidate(window.handle());
             *dragOverLabel = Api::InvalidId;
         }
     );
@@ -164,13 +244,13 @@ auto WindowSurfaceRuntime::Attach(AppBackend& backend, NativeWindow& window) -> 
         WM_MOUSEMOVE,
         [&backend, hoveredLabel](HWND hwnd, UINT, WPARAM, LPARAM lParam) -> int
         {
-            auto* label = HitLabel(backend, PointFromLParam(lParam));
-            const auto hoveredId = label ? label->id() : Api::InvalidId;
+            const auto hit = HitVirtual(backend, PointFromLParam(lParam));
+            const auto hoveredId = HitId(hit);
             if (*hoveredLabel == hoveredId) return 1;
 
-            if (auto* previous = LabelById(backend, *hoveredLabel); previous && previous->hover(backend.renderNodes(), false)) HwndApi::Invalidate(hwnd);
+            if (Hover(backend, VirtualById(backend, *hoveredLabel), false)) HwndApi::Invalidate(hwnd);
             *hoveredLabel = hoveredId;
-            if (label && label->hover(backend.renderNodes(), true)) HwndApi::Invalidate(hwnd);
+            if (Hover(backend, hit, true)) HwndApi::Invalidate(hwnd);
 
             TRACKMOUSEEVENT event{
                 .cbSize = sizeof(TRACKMOUSEEVENT),
@@ -178,7 +258,7 @@ auto WindowSurfaceRuntime::Attach(AppBackend& backend, NativeWindow& window) -> 
                 .hwndTrack = hwnd
             };
             TrackMouseEvent(&event);
-            return label ? 0 : 1;
+            return hit.valid() ? 0 : 1;
         }
     );
 
@@ -186,7 +266,7 @@ auto WindowSurfaceRuntime::Attach(AppBackend& backend, NativeWindow& window) -> 
         WM_MOUSELEAVE,
         [&backend, hoveredLabel](HWND hwnd, UINT, WPARAM, LPARAM) -> int
         {
-            if (auto* previous = LabelById(backend, *hoveredLabel); previous && previous->hover(backend.renderNodes(), false)) HwndApi::Invalidate(hwnd);
+            if (Hover(backend, VirtualById(backend, *hoveredLabel), false)) HwndApi::Invalidate(hwnd);
             *hoveredLabel = Api::InvalidId;
             return 0;
         }
@@ -196,19 +276,19 @@ auto WindowSurfaceRuntime::Attach(AppBackend& backend, NativeWindow& window) -> 
         WM_LBUTTONDOWN,
         [&backend, pressedLabel, focusedLabel](HWND hwnd, UINT, WPARAM, LPARAM lParam) -> int
         {
-            auto* label = HitLabel(backend, PointFromLParam(lParam));
-            if (!label) return 1;
+            const auto hit = HitVirtual(backend, PointFromLParam(lParam));
+            if (!hit.valid()) return 1;
 
-            if (*focusedLabel != label->id())
+            if (*focusedLabel != HitId(hit))
             {
-                if (auto* previous = LabelById(backend, *focusedLabel); previous && previous->focus(backend.renderNodes(), false)) HwndApi::Invalidate(hwnd);
-                *focusedLabel = label->id();
-                if (label->focus(backend.renderNodes(), true)) HwndApi::Invalidate(hwnd);
+                if (Focus(backend, VirtualById(backend, *focusedLabel), false)) HwndApi::Invalidate(hwnd);
+                *focusedLabel = HitId(hit);
+                if (Focus(backend, hit, true)) HwndApi::Invalidate(hwnd);
             }
 
-            *pressedLabel = label->id();
+            *pressedLabel = HitId(hit);
             SetCapture(hwnd);
-            if (label->mouseDown(backend.renderNodes())) HwndApi::Invalidate(hwnd);
+            if (MouseDown(backend, hit)) HwndApi::Invalidate(hwnd);
             return 0;
         }
     );
@@ -222,7 +302,7 @@ auto WindowSurfaceRuntime::Attach(AppBackend& backend, NativeWindow& window) -> 
             if (*pressedLabel != Api::InvalidId)
             {
                 if (GetCapture() == hwnd) ReleaseCapture();
-                if (auto* label = LabelById(backend, *pressedLabel); label && label->mouseUp(backend.renderNodes())) HwndApi::Invalidate(hwnd);
+                if (MouseUp(backend, VirtualById(backend, *pressedLabel))) HwndApi::Invalidate(hwnd);
                 *pressedLabel = Api::InvalidId;
                 return 0;
             }

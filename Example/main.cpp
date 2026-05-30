@@ -90,9 +90,9 @@ protected:
                 Column(
                     Button(L"Flex")
                     , Stack(
-                        Label(L"------------ Native Label ------------------------------------")
+                        Label(L"------------ Bottom Label ------------------------------------")
                         .padding(16)
-                        .borderRadius(16)
+                        .borderRadius(0)
                         .states({
                             .normal = Api::Modifier().background(Api::Color::Green()),
                             .hover = Api::Modifier().background(Api::Color::Red()),
@@ -104,9 +104,9 @@ protected:
                         .padding(16)
                         .color(Api::Color::White())
                         , Row(
-                            Label(L" | | | | | | Native Label").padding(12).flex(1)
-                            , Label(L" | | | | | | Native Label").padding(12).flex(1)
-                        )
+                            Label(L" | | | Top Label Left | | | ").padding(12).flex(1)
+                            , Label(L"| | | Top Label Right | | | ").padding(12).flex(1)
+                        ).flex(1)
                     )
                     , Button(L"Button").padding(8)
 
@@ -129,7 +129,7 @@ protected:
                     , Row(
                         Label(L" | | | | | | Native Label").padding(12).flex(1)
                         , Label(L" | | | | | | Native Label").padding(12).flex(1)
-                    ).flex(1)
+                    )//.flex(1)
 
                     , ContextArea(
                         Column(
