@@ -101,15 +101,6 @@ auto RenderSurface::showContextMenu(Api::MenuTrigger trigger, POINT screenPoint)
     return NativeContextMenu::Show(parentWindow->handle(), parentWindow->commandRouter(), m_contextMenus, trigger, screenPoint);
 }
 
-auto RenderSurface::currentRenderState() const -> Api::WidgetState
-{
-    if (m_state.dragOver) return Api::WidgetState::DragOver;
-    if (m_state.pressed) return Api::WidgetState::Pressed;
-    if (m_state.hovered) return Api::WidgetState::Hover;
-    if (m_state.focused) return Api::WidgetState::Focus;
-    return Api::WidgetState::Normal;
-}
-
 auto RenderSurface::hover(RenderRegistry& renderNodes, bool hovered) -> bool
 {
     if (m_state.hovered == hovered) return false;
@@ -151,7 +142,7 @@ auto RenderSurface::focus(RenderRegistry& renderNodes, bool focused) -> bool
 
 auto RenderSurface::updateState(RenderRegistry& renderNodes) -> bool
 {
-    return renderNodes.setState(m_id, currentRenderState());
+    return renderNodes.setState(m_id, VisualState(m_state));
 }
 
 auto RenderSurface::emit(Api::Events event, Api::EventPayload payload) -> void

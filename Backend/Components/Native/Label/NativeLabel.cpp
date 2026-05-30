@@ -173,11 +173,7 @@ auto NativeLabel::focus(RenderRegistry& renderNodes, bool focused) -> bool
 
 auto NativeLabel::updateState(RenderRegistry& renderNodes) -> bool
 {
-    if (m_state.dragOver) return setState(renderNodes, Api::WidgetState::DragOver);
-    if (m_state.pressed) return setState(renderNodes, Api::WidgetState::Pressed);
-    if (m_state.hovered) return setState(renderNodes, Api::WidgetState::Hover);
-    if (m_state.focused) return setState(renderNodes, Api::WidgetState::Focus);
-    return setState(renderNodes, Api::WidgetState::Normal);
+    return setState(renderNodes, VisualState(m_state));
 }
 
 } // namespace Blade::Backend

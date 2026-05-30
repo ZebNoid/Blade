@@ -3,6 +3,7 @@
 #include "Geometry/Rect.h"
 #include "Menu/MenuData.h"
 #include "Render/RenderOp.h"
+#include "Render/VirtualElementState/VirtualElementState.h"
 #include "WinApi/NativeElement/NativeElement.h"
 
 namespace Blade::Backend {
@@ -11,22 +12,6 @@ class NativeWindow;
 class RenderRegistry;
 class ResourceManager;
 struct NativeCreateContext;
-
-struct NativeLabelEvents
-{
-    bool click = false;
-    bool focus = false;
-    bool drop = false;
-};
-
-struct NativeLabelState
-{
-    bool visible = true;
-    bool pressed = false;
-    bool focused = false;
-    bool hovered = false;
-    bool dragOver = false;
-};
 
 // TODO change move to custom Surface / change to native STATIC
 class NativeLabel : public NativeElement
@@ -55,8 +40,8 @@ private:
 private:
     Api::Text m_text;
     Api::Rect m_rect{};
-    NativeLabelEvents m_events;
-    NativeLabelState m_state;
+    VirtualElementEvents m_events;
+    VirtualElementState m_state;
     Api::ContextMenus m_contextMenus;
 };
 
