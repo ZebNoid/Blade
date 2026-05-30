@@ -107,17 +107,31 @@ auto NativeLabel::setState(RenderRegistry& renderNodes, Api::WidgetState state) 
     return renderNodes.setState(m_id, state);
 }
 
+auto NativeLabel::hover(RenderRegistry& renderNodes, bool hovered) -> bool
+{
+    if (m_hovered == hovered) return false;
+    m_hovered = hovered;
+    return updateState(renderNodes);
+}
+
+auto NativeLabel::dragOver(RenderRegistry& renderNodes, bool active) -> bool
+{
+    if (m_dragOver == active) return false;
+    m_dragOver = active;
+    return updateState(renderNodes);
+}
+
 auto NativeLabel::mouseDown(RenderRegistry& renderNodes) -> bool
 {
     m_pressed = true;
-    return setState(renderNodes, Api::WidgetState::Pressed);
+    return updateState(renderNodes);
 }
 
 auto NativeLabel::mouseUp(RenderRegistry& renderNodes) -> bool
 {
     const auto wasPressed = m_pressed;
     m_pressed = false;
-    const auto changed = setState(renderNodes, m_focused ? Api::WidgetState::Focus : Api::WidgetState::Normal);
+    const auto changed = updateState(renderNodes);
 
     if (wasPressed && m_emitClick)
     {
@@ -139,7 +153,7 @@ auto NativeLabel::focus(RenderRegistry& renderNodes, bool focused) -> bool
     if (m_focused == focused) return false;
 
     m_focused = focused;
-    const auto changed = setState(renderNodes, focused ? Api::WidgetState::Focus : Api::WidgetState::Normal);
+    const auto changed = updateState(renderNodes);
 
     if (m_emitFocus)
     {
@@ -155,6 +169,15 @@ auto NativeLabel::focus(RenderRegistry& renderNodes, bool focused) -> bool
     }
 
     return changed;
+}
+
+auto NativeLabel::updateState(RenderRegistry& renderNodes) -> bool
+{
+    if (m_dragOver) return setState(renderNodes, Api::WidgetState::DragOver);
+    if (m_pressed) return setState(renderNodes, Api::WidgetState::Pressed);
+    if (m_hovered) return setState(renderNodes, Api::WidgetState::Hover);
+    if (m_focused) return setState(renderNodes, Api::WidgetState::Focus);
+    return setState(renderNodes, Api::WidgetState::Normal);
 }
 
 } // namespace Blade::Backend

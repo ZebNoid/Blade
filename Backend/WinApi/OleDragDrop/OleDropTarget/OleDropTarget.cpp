@@ -74,6 +74,11 @@ auto OleDropTarget::setTargetResolver(TargetResolver resolver) -> void
     m_targetResolver = std::move(resolver);
 }
 
+auto OleDropTarget::setDragLeaveHandler(DragLeaveHandler handler) -> void
+{
+    m_dragLeaveHandler = std::move(handler);
+}
+
 auto OleDropTarget::QueryInterface(REFIID iid, void** object) -> HRESULT
 {
     if (!object) return E_POINTER;
@@ -116,6 +121,7 @@ auto OleDropTarget::DragOver(DWORD keyState, POINTL point, DWORD* effect) -> HRE
     const auto dropEffect = ApplyEffect(effect, m_allowDrop);
 
     auto pt = ToPoint(point);
+    if (m_allowDrop && m_targetResolver) m_targetResolver(pt);
     if (m_helper) m_helper->DragOver(&pt, dropEffect);
     return S_OK;
 }
@@ -123,6 +129,7 @@ auto OleDropTarget::DragOver(DWORD keyState, POINTL point, DWORD* effect) -> HRE
 auto OleDropTarget::DragLeave() -> HRESULT
 {
     m_allowDrop = false;
+    if (m_dragLeaveHandler) m_dragLeaveHandler();
     if (m_helper) m_helper->DragLeave();
     return S_OK;
 }
@@ -134,6 +141,7 @@ auto OleDropTarget::Drop(IDataObject* data, DWORD keyState, POINTL point, DWORD*
     m_allowDrop = false;
     auto pt = ToPoint(point);
     if (m_helper) m_helper->Drop(data, &pt, dropEffect);
+    if (m_dragLeaveHandler) m_dragLeaveHandler();
 
     if (!files.empty())
     {

@@ -135,12 +135,60 @@ auto WindowSurfaceRuntime::Attach(AppBackend& backend, NativeWindow& window) -> 
 
     auto pressedLabel = std::make_shared<Api::Id>(Api::InvalidId);
     auto focusedLabel = std::make_shared<Api::Id>(Api::InvalidId);
+    auto hoveredLabel = std::make_shared<Api::Id>(Api::InvalidId);
+    auto dragOverLabel = std::make_shared<Api::Id>(Api::InvalidId);
 
     window.setDropTargetResolver(
-        [&backend, &window](POINT screenPoint) -> Api::Id
+        [&backend, &window, dragOverLabel](POINT screenPoint) -> Api::Id
         {
             auto* label = HitLabel(backend, ToClientPoint(window.handle(), screenPoint), true);
+            const auto target = label ? label->id() : Api::InvalidId;
+            if (*dragOverLabel == target) return target;
+
+            if (auto* previous = LabelById(backend, *dragOverLabel); previous && previous->dragOver(backend.renderNodes(), false)) HwndApi::Invalidate(window.handle());
+            *dragOverLabel = target;
+            if (label && label->dragOver(backend.renderNodes(), true)) HwndApi::Invalidate(window.handle());
             return label ? label->id() : Api::InvalidId;
+        }
+    );
+
+    window.setDropDragLeaveHandler(
+        [&backend, &window, dragOverLabel]
+        {
+            if (auto* previous = LabelById(backend, *dragOverLabel); previous && previous->dragOver(backend.renderNodes(), false)) HwndApi::Invalidate(window.handle());
+            *dragOverLabel = Api::InvalidId;
+        }
+    );
+
+    window.router().on(
+        WM_MOUSEMOVE,
+        [&backend, hoveredLabel](HWND hwnd, UINT, WPARAM, LPARAM lParam) -> int
+        {
+            auto* label = HitLabel(backend, PointFromLParam(lParam));
+            const auto hoveredId = label ? label->id() : Api::InvalidId;
+            if (*hoveredLabel == hoveredId) return 1;
+
+            if (auto* previous = LabelById(backend, *hoveredLabel); previous && previous->hover(backend.renderNodes(), false)) HwndApi::Invalidate(hwnd);
+            *hoveredLabel = hoveredId;
+            if (label && label->hover(backend.renderNodes(), true)) HwndApi::Invalidate(hwnd);
+
+            TRACKMOUSEEVENT event{
+                .cbSize = sizeof(TRACKMOUSEEVENT),
+                .dwFlags = TME_LEAVE,
+                .hwndTrack = hwnd
+            };
+            TrackMouseEvent(&event);
+            return label ? 0 : 1;
+        }
+    );
+
+    window.router().on(
+        WM_MOUSELEAVE,
+        [&backend, hoveredLabel](HWND hwnd, UINT, WPARAM, LPARAM) -> int
+        {
+            if (auto* previous = LabelById(backend, *hoveredLabel); previous && previous->hover(backend.renderNodes(), false)) HwndApi::Invalidate(hwnd);
+            *hoveredLabel = Api::InvalidId;
+            return 0;
         }
     );
 

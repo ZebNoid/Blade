@@ -12,6 +12,7 @@ class RenderRegistry;
 class ResourceManager;
 struct NativeCreateContext;
 
+// TODO change move to custom Surface and change to native STATIC
 class NativeLabel : public NativeElement
 {
 public:
@@ -26,9 +27,14 @@ public:
     auto hasContextMenu(Api::MenuTrigger trigger) const -> bool;
     auto showContextMenu(Api::MenuTrigger trigger, POINT screenPoint) -> bool;
     auto setState(RenderRegistry& renderNodes, Api::WidgetState state) -> bool;
+    auto hover(RenderRegistry& renderNodes, bool hovered) -> bool;
+    auto dragOver(RenderRegistry& renderNodes, bool active) -> bool;
     auto mouseDown(RenderRegistry& renderNodes) -> bool;
     auto mouseUp(RenderRegistry& renderNodes) -> bool;
     auto focus(RenderRegistry& renderNodes, bool focused) -> bool;
+
+private:
+    auto updateState(RenderRegistry& renderNodes) -> bool;
 
 private:
     Api::Text m_text;
@@ -39,6 +45,8 @@ private:
     bool m_emitDrop = false;
     bool m_pressed = false;
     bool m_focused = false;
+    bool m_hovered = false;
+    bool m_dragOver = false;
     Api::ContextMenus m_contextMenus;
 };
 

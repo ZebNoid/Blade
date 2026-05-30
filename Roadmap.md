@@ -66,6 +66,7 @@ Render definitions should be stored as flat command sequences per widget state:
 
 - [ ] Introduce a render context so `RenderApi` does not depend on `ResourceManager` directly.
 - [ ] Introduce proper render surfaces/layers.
+- [ ] Support hover and dragOver state for window-level virtual surfaces.
 - [ ] Support context menus for window-level virtual surfaces and areas.
 - [ ] Make modifier chains like `padding().background().padding().background()` semantically correct.
 - [ ] Move away from sibling child `HWND` composition limitations.
@@ -122,9 +123,11 @@ Widgets should be declarative API objects. Backend implementation choice should 
 Current native/custom split:
 
 - `NativeButton` uses WinAPI `BUTTON`.
-- `NativeLabel` is actually a custom-render label.
+- `NativeLabel` is temporarily a window-level virtual text renderer for performance testing.
 - Custom buttons should usually be Blade widgets built on top of `Surface`, modifiers, and events.
 
+- [ ] Move temporary virtual `NativeLabel` rendering into the future `Surface`/render-text path.
+- [ ] Add native common controls, including a real WinAPI `STATIC` label.
 - [ ] Keep fallback native widgets available where useful.
 - [x] Keep `Button` mapped to native/system button by default.
 - [x] Add low-level custom render `Surface`.

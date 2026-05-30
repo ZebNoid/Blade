@@ -59,6 +59,7 @@ auto NativeWindow::enableDropTarget() -> void
 
     auto dropTarget = std::make_unique<OleDropTarget>(m_id, m_commandRouter);
     dropTarget->setTargetResolver(m_dropTargetResolver);
+    dropTarget->setDragLeaveHandler(m_dropDragLeaveHandler);
     if (dropTarget->registerHwnd(m_hwnd)) m_dropTarget = std::move(dropTarget);
 }
 
@@ -66,6 +67,12 @@ auto NativeWindow::setDropTargetResolver(DropTargetResolver resolver) -> void
 {
     m_dropTargetResolver = std::move(resolver);
     if (m_dropTarget) m_dropTarget->setTargetResolver(m_dropTargetResolver);
+}
+
+auto NativeWindow::setDropDragLeaveHandler(DropDragLeaveHandler handler) -> void
+{
+    m_dropDragLeaveHandler = std::move(handler);
+    if (m_dropTarget) m_dropTarget->setDragLeaveHandler(m_dropDragLeaveHandler);
 }
 
 auto NativeWindow::enableContextMenus(Api::ContextMenus menus) -> void

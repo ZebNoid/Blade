@@ -16,6 +16,7 @@ class NativeWindow : public NativeElement
 {
 public:
     using DropTargetResolver = OleDropTarget::TargetResolver;
+    using DropDragLeaveHandler = OleDropTarget::DragLeaveHandler;
 
     auto create(HINSTANCE hInstance, Api::Id id) -> bool;
 
@@ -35,6 +36,7 @@ public:
     auto commandRouter() -> CommandRouter&;
     auto enableDropTarget() -> void;
     auto setDropTargetResolver(DropTargetResolver resolver) -> void;
+    auto setDropDragLeaveHandler(DropDragLeaveHandler handler) -> void;
     auto enableContextMenus(Api::ContextMenus menus) -> void;
 
     auto setMinSize(const Api::Size& size) -> void;
@@ -53,6 +55,7 @@ private:
     CommandRouter m_commandRouter;
     std::unique_ptr<OleDropTarget> m_dropTarget;
     DropTargetResolver m_dropTargetResolver;
+    DropDragLeaveHandler m_dropDragLeaveHandler;
     std::unique_ptr<NativeContextMenu> m_contextMenu;
 };
 
