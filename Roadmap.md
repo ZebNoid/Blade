@@ -63,11 +63,11 @@ Render definitions should be stored as flat command sequences per widget state:
 - dragOver.
 
 - [ ] Introduce a render context so `RenderApi` does not depend on `ResourceManager` directly.
-- [ ] Add custom-render widgets such as `CustomButton`.
 - [ ] Introduce proper render surfaces/layers.
 - [ ] Make modifier chains like `padding().background().padding().background()` semantically correct.
 - [ ] Move away from sibling child `HWND` composition limitations.
 - [x] Support basic render state switching for custom-based widgets.
+- [x] Add custom-render widgets such as `CustomButton`.
 - [x] Cache GDI+ brushes and pens for fallback custom rendering.
 - [x] Add GDI+ fallback custom rendering for anti-aliased shapes.
 - [x] Cache GDI resources in `ResourceManager` instead of creating brushes/pens during paint.
@@ -121,9 +121,9 @@ Current native/custom split:
 - `NativeLabel` is actually a custom-render label.
 - Future `CustomButton` should use custom rendering and render states.
 
-- [ ] Add `CustomButton`.
 - [ ] Decide whether the public `Button` maps to `NativeButton` or `CustomButton` by backend binding.
 - [ ] Keep fallback native widgets available where useful.
+- [x] Add `CustomButton`.
 
 ## Backend Resources
 

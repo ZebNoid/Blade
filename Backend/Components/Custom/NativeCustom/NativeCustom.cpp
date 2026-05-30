@@ -1,5 +1,7 @@
 #include "NativeCustom.h"
 
+#include <algorithm>
+
 #include "Components/Window/NativeWindow.h"
 #include "Property/PropertyMapper/PropertyMapper.h"
 #include "Render/RenderRegistry/RenderRegistry.h"
@@ -25,6 +27,11 @@ auto SetElement(HWND hwnd, LPARAM lParam) -> void
 auto GetElement(HWND hwnd) -> NativeCustom*
 {
     return reinterpret_cast<NativeCustom*>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
+}
+
+auto HasEvent(const Api::EventSubscriptions& events, Api::Events event) -> bool
+{
+    return std::ranges::find(events, event) != events.end();
 }
 
 } // namespace
@@ -60,8 +67,10 @@ auto NativeCustom::applyProps(const Api::PropertyMap& propertyMap) -> void
     HwndApi::Invalidate(m_hwnd);
 }
 
-auto NativeCustom::applyEvents(const Api::EventSubscriptions&) -> void
+auto NativeCustom::applyEvents(const Api::EventSubscriptions& events) -> void
 {
+    m_emitClick = HasEvent(events, Api::Events::Click);
+    m_emitFocus = HasEvent(events, Api::Events::Focus);
 }
 
 auto NativeCustom::isAlive() const -> bool
@@ -157,8 +166,10 @@ auto NativeCustom::handle(UINT msg, WPARAM, LPARAM) -> std::optional<LRESULT>
 
     if (msg == WM_LBUTTONUP)
     {
+        const auto wasPressed = m_pressed;
         m_pressed = false;
         updateRenderState(currentRenderState());
+        if (wasPressed && m_emitClick) emit(Api::Events::Click);
         return {};
     }
 
@@ -166,6 +177,7 @@ auto NativeCustom::handle(UINT msg, WPARAM, LPARAM) -> std::optional<LRESULT>
     {
         m_focused = true;
         updateRenderState(currentRenderState());
+        if (m_emitFocus) emit(Api::Events::Focus, true);
         return {};
     }
 
@@ -174,6 +186,7 @@ auto NativeCustom::handle(UINT msg, WPARAM, LPARAM) -> std::optional<LRESULT>
         m_focused = false;
         m_pressed = false;
         updateRenderState(currentRenderState());
+        if (m_emitFocus) emit(Api::Events::Focus, false);
         return {};
     }
 
@@ -223,6 +236,18 @@ auto NativeCustom::updateRegion(const Api::Rect& rect, int radius) -> void
     m_regionRadius = radius;
     m_regionSize = size;
     HwndApi::SetRoundedRegion(m_hwnd, size, radius);
+}
+
+auto NativeCustom::emit(Api::Events event, Api::EventPayload payload) -> void
+{
+    auto* parentWindow = dynamic_cast<NativeWindow*>(m_parent);
+    if (!parentWindow) return;
+
+    parentWindow->commandRouter().emit({
+        .target = m_id,
+        .type = event,
+        .payload = std::move(payload)
+    });
 }
 
 } // namespace Blade::Backend

@@ -3,9 +3,11 @@
 #include "App/AppBackend.h"
 #include "Logging/Logger.h"
 #include "Components/Button/NativeButton.h"
+#include "Components/Button/NativeCustomButton.h"
 #include "Components/ContextArea/NativeContextArea.h"
 #include "Components/Label/NativeLabel/NativeLabel.h"
 #include "Components/Tray/NativeTray.h"
+#include "UI/UI.h"
 #include "WinApi/HwndApi/HwndApi.h"
 
 
@@ -60,6 +62,7 @@ auto NativeNodeFactory::registerFactories() -> void
 
     m_registry.add(Api::ComponentTypes::Window, [this](const auto& command) { return createWindow(command); });
     m_registry.add(Api::ComponentTypes::Button, [this](const auto& command) { return createButton(command); });
+    m_registry.add(UI::ButtonCustom, [this](const auto& command) { return createCustomButton(command); });
     m_registry.add(Api::ComponentTypes::ContextArea, [this](const auto& command) { return createContextArea(command); });
     m_registry.add(Api::ComponentTypes::Label, [this](const auto& command) { return createLabel(command); });
     m_registry.add(Api::ComponentTypes::Tray, [this](const auto& command) { return createTray(command); });
@@ -139,6 +142,45 @@ auto NativeNodeFactory::createButton(const Api::ElementCommand& command) -> std:
     if (!button->create(parentWindow, command.id, m_context))
     {
         LOG_E(L"[Error] createButton failed");
+        return std::nullopt;
+    }
+
+    button->applyProps(command.props);
+    button->applyEvents(command.events);
+
+    NativeNode node = {
+        .id = command.id,
+        .type = command.nodeType,
+        .parent = command.parent,
+        .native = std::move(button),
+    };
+
+    return node;
+}
+
+auto NativeNodeFactory::createCustomButton(const Api::ElementCommand& command) -> std::optional<NativeNode>
+{
+    auto* parent = m_backend->nodes().get(command.parent);
+
+    if (!parent)
+    {
+        LOG_E(L"[Error] createCustomButton no parent");
+        return std::nullopt;
+    }
+
+    auto* parentWindow = dynamic_cast<NativeWindow*>(parent->native.get());
+
+    if (!parentWindow)
+    {
+        LOG_E(L"[Error] createCustomButton parent is not NativeWindow");
+        return std::nullopt;
+    }
+
+    auto button = std::make_unique<NativeCustomButton>();
+
+    if (!button->create(parentWindow, command.id, m_context))
+    {
+        LOG_E(L"[Error] createCustomButton failed");
         return std::nullopt;
     }
 

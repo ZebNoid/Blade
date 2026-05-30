@@ -113,6 +113,8 @@ add_library(${PROJECT_NAME} STATIC
         Components/Label/NativeLabel/NativeLabel.h
         Components/Button/NativeButton.cpp
         Components/Button/NativeButton.h
+        Components/Button/NativeCustomButton.cpp
+        Components/Button/NativeCustomButton.h
         Components/Button/NativeButtonApi/NativeButtonApi.cpp
         Components/Button/NativeButtonApi/NativeButtonApi.h
         Components/Button/NativeButtonProps.cpp

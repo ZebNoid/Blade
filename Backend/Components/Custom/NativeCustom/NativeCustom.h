@@ -36,10 +36,13 @@ private:
     auto updateRenderState(Api::WidgetState state) -> void;
     auto currentRenderState() const -> Api::WidgetState;
     auto updateRegion(const Api::Rect& rect, int radius) -> void;
+    auto emit(Api::Events event, Api::EventPayload payload = {}) -> void;
 
 private:
     ResourceManager* m_resources = nullptr;
     RenderRegistry* m_renderNodes = nullptr;
+    bool m_emitClick = false;
+    bool m_emitFocus = false;
     bool m_trackingMouse = false;
     bool m_hovered = false;
     bool m_pressed = false;
