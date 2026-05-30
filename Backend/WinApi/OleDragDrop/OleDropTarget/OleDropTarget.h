@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <functional>
 #include <oleidl.h>
 #include <shobjidl.h>
 #include <vector>
@@ -13,10 +14,13 @@ namespace Blade::Backend {
 class OleDropTarget : public IDropTarget
 {
 public:
+    using TargetResolver = std::function<Api::Id(POINT screenPoint)>;
+
     OleDropTarget(Api::Id id, CommandRouter& router);
     ~OleDropTarget();
 
     auto registerHwnd(HWND hwnd) -> bool;
+    auto setTargetResolver(TargetResolver resolver) -> void;
 
     auto QueryInterface(REFIID iid, void** object) -> HRESULT override;
     auto AddRef() -> ULONG override;
@@ -39,6 +43,7 @@ private:
     Api::Id m_id = Api::InvalidId;
     bool m_allowDrop = false;
     CommandRouter& m_router;
+    TargetResolver m_targetResolver;
     IDropTargetHelper* m_helper = nullptr;
 };
 

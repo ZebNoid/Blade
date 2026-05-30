@@ -1,5 +1,8 @@
 #include "NativeNodeFactory.h"
 
+#include <memory>
+#include <windowsx.h>
+
 #include "App/AppBackend.h"
 #include "Logging/Logger.h"
 #include "Components/Custom/Surface/NativeCustom.h"
@@ -12,6 +15,24 @@
 
 
 namespace Blade::Backend {
+
+namespace {
+
+auto PointFromLParam(LPARAM lParam) -> Api::Point
+{
+    return {
+        .x = GET_X_LPARAM(lParam),
+        .y = GET_Y_LPARAM(lParam)
+    };
+}
+
+auto ToClientPoint(HWND hwnd, POINT point) -> Api::Point
+{
+    ScreenToClient(hwnd, &point);
+    return {point.x, point.y};
+}
+
+} // namespace
 
 NativeNodeFactory::NativeNodeFactory(AppBackend* backend)
     : m_backend(backend)
@@ -120,6 +141,82 @@ auto NativeNodeFactory::createWindow(const Api::ElementCommand& command) -> std:
             );
 
             EndPaint(hwnd, &paint);
+            return 0;
+        }
+    );
+
+    auto pressedLabel = std::make_shared<Api::Id>(Api::InvalidId);
+    auto focusedLabel = std::make_shared<Api::Id>(Api::InvalidId);
+
+    auto hitLabel = [this](Api::Point point, bool requireDrop = false) -> NativeLabel*
+    {
+        NativeLabel* result = nullptr;
+        int resultOrder = -1;
+
+        m_backend->nodes().forEach(
+            [&](NativeNode& node)
+            {
+                auto* label = dynamic_cast<NativeLabel*>(node.native.get());
+                if (!label || !label->hitTest(point)) return;
+                if (requireDrop && !label->wantsDrop()) return;
+
+                const auto* render = m_backend->renderNodes().get(node.id);
+                const auto order = render ? render->order : 0;
+                if (!result || order >= resultOrder)
+                {
+                    result = label;
+                    resultOrder = order;
+                }
+            }
+        );
+
+        return result;
+    };
+
+    auto labelById = [this](Api::Id id) -> NativeLabel*
+    {
+        const auto* node = m_backend->nodes().get(id);
+        return node ? dynamic_cast<NativeLabel*>(node->native.get()) : nullptr;
+    };
+
+    nativeWindow->setDropTargetResolver(
+        [window = nativeWindow.get(), hitLabel](POINT screenPoint) -> Api::Id
+        {
+            auto* label = hitLabel(ToClientPoint(window->handle(), screenPoint), true);
+            return label ? label->id() : Api::InvalidId;
+        }
+    );
+
+    nativeWindow->router().on(
+        WM_LBUTTONDOWN,
+        [this, hitLabel, labelById, pressedLabel, focusedLabel](HWND hwnd, UINT, WPARAM, LPARAM lParam) -> int
+        {
+            auto* label = hitLabel(PointFromLParam(lParam));
+            if (!label) return 1;
+
+            if (*focusedLabel != label->id())
+            {
+                if (auto* previous = labelById(*focusedLabel); previous && previous->focus(m_backend->renderNodes(), false)) HwndApi::Invalidate(hwnd);
+                *focusedLabel = label->id();
+                if (label->focus(m_backend->renderNodes(), true)) HwndApi::Invalidate(hwnd);
+            }
+
+            *pressedLabel = label->id();
+            SetCapture(hwnd);
+            if (label->mouseDown(m_backend->renderNodes())) HwndApi::Invalidate(hwnd);
+            return 0;
+        }
+    );
+
+    nativeWindow->router().on(
+        WM_LBUTTONUP,
+        [this, labelById, pressedLabel](HWND hwnd, UINT, WPARAM, LPARAM) -> int
+        {
+            if (*pressedLabel == Api::InvalidId) return 1;
+
+            if (GetCapture() == hwnd) ReleaseCapture();
+            if (auto* label = labelById(*pressedLabel); label && label->mouseUp(m_backend->renderNodes())) HwndApi::Invalidate(hwnd);
+            *pressedLabel = Api::InvalidId;
             return 0;
         }
     );

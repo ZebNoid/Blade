@@ -15,6 +15,8 @@ namespace Blade::Backend {
 class NativeWindow : public NativeElement
 {
 public:
+    using DropTargetResolver = OleDropTarget::TargetResolver;
+
     auto create(HINSTANCE hInstance, Api::Id id) -> bool;
 
     auto applyEvents(const Api::EventSubscriptions& events) -> void override;
@@ -32,6 +34,7 @@ public:
 
     auto commandRouter() -> CommandRouter&;
     auto enableDropTarget() -> void;
+    auto setDropTargetResolver(DropTargetResolver resolver) -> void;
     auto enableContextMenus(Api::ContextMenus menus) -> void;
 
     auto setMinSize(const Api::Size& size) -> void;
@@ -49,6 +52,7 @@ private:
     MessageRouter m_router;
     CommandRouter m_commandRouter;
     std::unique_ptr<OleDropTarget> m_dropTarget;
+    DropTargetResolver m_dropTargetResolver;
     std::unique_ptr<NativeContextMenu> m_contextMenu;
 };
 

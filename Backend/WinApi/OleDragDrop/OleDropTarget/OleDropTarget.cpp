@@ -69,6 +69,11 @@ auto OleDropTarget::registerHwnd(HWND hwnd) -> bool
     return true;
 }
 
+auto OleDropTarget::setTargetResolver(TargetResolver resolver) -> void
+{
+    m_targetResolver = std::move(resolver);
+}
+
 auto OleDropTarget::QueryInterface(REFIID iid, void** object) -> HRESULT
 {
     if (!object) return E_POINTER;
@@ -132,8 +137,9 @@ auto OleDropTarget::Drop(IDataObject* data, DWORD keyState, POINTL point, DWORD*
 
     if (!files.empty())
     {
+        const auto target = m_targetResolver ? m_targetResolver(pt) : m_id;
         m_router.emit({
-            .target = m_id,
+            .target = target == Api::InvalidId ? m_id : target,
             .type = Api::Events::Drop,
             .payload = files
         });

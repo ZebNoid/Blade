@@ -58,7 +58,14 @@ auto NativeWindow::enableDropTarget() -> void
     if (m_dropTarget || !m_hwnd) return;
 
     auto dropTarget = std::make_unique<OleDropTarget>(m_id, m_commandRouter);
+    dropTarget->setTargetResolver(m_dropTargetResolver);
     if (dropTarget->registerHwnd(m_hwnd)) m_dropTarget = std::move(dropTarget);
+}
+
+auto NativeWindow::setDropTargetResolver(DropTargetResolver resolver) -> void
+{
+    m_dropTargetResolver = std::move(resolver);
+    if (m_dropTarget) m_dropTarget->setTargetResolver(m_dropTargetResolver);
 }
 
 auto NativeWindow::enableContextMenus(Api::ContextMenus menus) -> void
