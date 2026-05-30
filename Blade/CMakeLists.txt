@@ -79,6 +79,8 @@ add_library(${PROJECT_NAME} STATIC
         Runtime/Normalize/EventVisitor.h
         Runtime/ModifierTree/ModifierTreeBuilder.cpp
         Runtime/ModifierTree/ModifierTreeBuilder.h
+        Runtime/Render/RenderDefinitionBuilder.cpp
+        Runtime/Render/RenderDefinitionBuilder.h
         Runtime/LayoutEngine/Data/LayoutNode.h
         Runtime/LayoutEngine/Data/LayoutContext.h
         Runtime/LayoutEngine/Algorithm/LayoutLeaf/LayoutLeaf.cpp

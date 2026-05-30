@@ -66,17 +66,20 @@ public:
 
     auto size(Api::Size value) -> TSelf&
     {
-        return modifier(Api::Modifier().size(value));
+        this->applySize(value);
+        return self();
     }
 
     auto flex(int value) -> TSelf&
     {
-        return modifier(Api::Modifier().flex(value));
+        this->applyFlex(value);
+        return self();
     }
 
     auto visible(bool value = true) -> TSelf&
     {
-        return modifier(Api::Modifier().visible(value));
+        this->applyVisible(value);
+        return self();
     }
 
 private:

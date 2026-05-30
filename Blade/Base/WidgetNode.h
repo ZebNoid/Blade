@@ -47,24 +47,24 @@ protected:
     {
     }
 
-    auto applyModifier(const Api::SizeModifier& modifier) -> void
-    {
-        m_tree.layout.size = modifier.value;
-        m_tree.backend.create[Api::Props::Size] = modifier.value;
-    }
-
-    auto applyModifier(const Api::FlexModifier& modifier) -> void
-    {
-        m_tree.layout.box.flex = modifier.value;
-    }
-
-    auto applyModifier(const Api::VisibleModifier& modifier) -> void
-    {
-        m_tree.backend.create[Api::Props::Visible] = modifier.value;
-    }
-
     auto applyModifier(const Api::StateModifiers&) -> void
     {
+    }
+
+    auto applySize(Api::Size value) -> void
+    {
+        m_tree.layout.size = value;
+        m_tree.backend.create[Api::Props::Size] = value;
+    }
+
+    auto applyFlex(int value) -> void
+    {
+        m_tree.layout.box.flex = value;
+    }
+
+    auto applyVisible(bool value) -> void
+    {
+        m_tree.backend.create[Api::Props::Visible] = value;
     }
 
     auto applyEvent(Api::Events event, Api::EventCallback callback) -> void

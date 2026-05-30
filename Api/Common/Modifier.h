@@ -49,21 +49,6 @@ struct TextColorModifier
     Api::Color value{};
 };
 
-struct SizeModifier
-{
-    Api::Size value{};
-};
-
-struct FlexModifier
-{
-    int value = 0;
-};
-
-struct VisibleModifier
-{
-    bool value = true;
-};
-
 struct StateModifiers
 {
     std::shared_ptr<Modifier> normal{};
@@ -80,9 +65,6 @@ using ModifierOp = std::variant<
     Api::BorderRadiusModifier,
     Api::BorderColorModifier,
     Api::TextColorModifier,
-    Api::SizeModifier,
-    Api::FlexModifier,
-    Api::VisibleModifier,
     Api::StateModifiers
 >;
 
@@ -121,24 +103,6 @@ public:
     auto color(Api::Color value) -> Modifier&
     {
         m_ops.push_back(Api::TextColorModifier{value});
-        return *this;
-    }
-
-    auto size(Api::Size value) -> Modifier&
-    {
-        m_ops.push_back(Api::SizeModifier{value});
-        return *this;
-    }
-
-    auto flex(int value) -> Modifier&
-    {
-        m_ops.push_back(Api::FlexModifier{value});
-        return *this;
-    }
-
-    auto visible(bool value = true) -> Modifier&
-    {
-        m_ops.push_back(Api::VisibleModifier{value});
         return *this;
     }
 
