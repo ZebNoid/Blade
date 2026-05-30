@@ -1,8 +1,6 @@
 #include "LayoutPaddingTests.h"
 
-#include <stdexcept>
-#include <string>
-
+#include "Core/Expect.h"
 #include "Runtime/LayoutRuntime/LayoutPass/LayoutPass.h"
 #include "Runtime/ModifierTree/ModifierTreeBuilder.h"
 #include "Widget/Label/Label.h"
@@ -11,12 +9,6 @@
 namespace Blade::Tests {
 
 namespace {
-
-auto ExpectEqual(int actual, int expected, const char* name) -> void
-{
-    if (actual == expected) return;
-    throw std::runtime_error(std::string(name) + ": expected " + std::to_string(expected) + ", actual " + std::to_string(actual));
-}
 
 auto BuildLayout(WidgetTree tree, Api::Size available) -> LayoutNode
 {

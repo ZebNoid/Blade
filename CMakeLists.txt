@@ -5,6 +5,8 @@ set(CMAKE_CXX_STANDARD 20)
 
 include(cmake/Common.cmake)
 
+enable_testing()
+
 add_subdirectory(Api)
 add_subdirectory(Backend)
 add_subdirectory(Blade)

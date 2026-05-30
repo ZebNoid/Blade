@@ -56,12 +56,12 @@ protected:
         //             MenuItem(L"Tray Icon",
         //                      MenuItem(L"app.png").onClick([trayId, windowId]() -> void
         //                      {
-        //                          UI::Tray::Icon(*trayId, L"test/app.png");
+        //                          UI::Tray::Icon(*trayId, L"app1.png");
         //                          LOG(L"PNG");
         //                      }),
         //                      MenuItem(L"0ad.png").onClick([trayId, windowId]()-> void
         //                      {
-        //                          UI::Tray::Icon(*trayId, L"test/0ad.png");
+        //                          UI::Tray::Icon(*trayId, L"app2.png");
         //                          LOG(L"PDF");
         //                      })
         //             ),
@@ -71,7 +71,7 @@ protected:
         //             .onClick([]() -> void { App::Quit(); })
         //         ).trigger(Api::MenuTrigger::RightClick)
         //     ).title(L"Blade Tray")
-        //      .icon(L"test/app.ico")
+        //      .icon(L"app.png")
         //      .lifetime(Api::Lifetime::Owner)
         //      .onClick([windowId]() -> void
         //      {
@@ -87,98 +87,101 @@ protected:
         //  .mount();
 
         *windowId = Window(
-                Column(
-                    Button(L"Button Flex")
-                    , Stack(
-
-                        Label(L"------------ Bottom Label ------------------------------------")
-                        .flex(1)
-                        .padding(8)
-                        .borderRadius(8)
-                        .states({
-                            .normal = Api::Modifier().background(Api::Color::Hex("#1976D2")),
-                            .hover = Api::Modifier().background(Api::Color::Hex("#2196F3")),
-                            .focus = Api::Modifier().background(Api::Color::Hex("#0D47A1")),
-                            .pressed = Api::Modifier().background(Api::Color::Hex("#1565C0")),
-                            .disabled = Api::Modifier().background(Api::Color::Hex("#90CAF9")),
-                        })
-                        .borderColor(Api::Color::Black())
-                        .color(Api::Color::White())
-
-                        , Row(
-                            Label(L" | -> Top Label Left <- | ")
-                            // .background(Api::Color::Hex("#90CAF9"))
-                            .padding(12)
-                            .flex(1)
-                            , Label(L" | -> Top Label Right <- | ")
-                              .padding(12)
-                              // .background(Api::Color::Hex("#1565C0"))
-                              .flex(1)
-                        ).flex(1)
-                    )
-                    , Button(L"Button padding").padding(8)
-
-
-                    , ContextArea(
                         Column(
-                            Label(L" -------------------- ContextArea Label -------------------- ").padding(12).flex(1)
-                            , Row(
-                                Button(L"Button").padding(8).flex(1)
-                                , Image(L"test/app.png")
-                                  .size({120, 120})
-                                  .flex(2)
-                                  .states({
-                                      // .normal = Api::Modifier().background(Api::Color::Hex("#1976D2")),
-                                      // .hover = Api::Modifier().source(L"test/app.png"),
-                                  })
-                                , Label(L"------------ Label States 2 ------------------------------------")
-                                  .flex(1)
-                                  .padding(16)
-                                  .size({40, 40})
-                                  .borderRadius(32)
-                                  .states({
-                                      .normal = Api::Modifier().background(Api::Color::Hex("#1976D2")),
-                                      .hover = Api::Modifier().background(Api::Color::Hex("#2196F3")),
-                                      .focus = Api::Modifier().background(Api::Color::Hex("#0D47A1")),
-                                      .pressed = Api::Modifier().background(Api::Color::Hex("#1565C0")),
-                                      .disabled = Api::Modifier().background(Api::Color::Hex("#90CAF9")),
-                                  })
-                                  .borderColor(Api::Color::Hex("#2196F3"))
-                            ).flex(1)
-                        ).flex(1)
-                        // Button(L"File").onDrop([](Api::Text files) { LOGF_D(L"Drop Button:\n%s", files.c_str()); })
-                        , Menu(
-                            MenuItem(L"Open").onClick([]() -> void
+                            Button(L"Button Flex")
+                            , Stack(
+
+                                Label(L"------------ Bottom Label ------------------------------------")
+                                .flex(1)
+                                .padding(8)
+                                .borderRadius(8)
+                                .states({
+                                    .normal = Api::Modifier().background(Api::Color::Hex("#1976D2")),
+                                    .hover = Api::Modifier().background(Api::Color::Hex("#2196F3")),
+                                    .focus = Api::Modifier().background(Api::Color::Hex("#0D47A1")),
+                                    .pressed = Api::Modifier().background(Api::Color::Hex("#1565C0")),
+                                    .disabled = Api::Modifier().background(Api::Color::Hex("#90CAF9")),
+                                })
+                                .borderColor(Api::Color::Black())
+                                .color(Api::Color::White())
+
+                                , Row(
+                                    Label(L" | -> Top Label Left <- | ")
+                                    // .background(Api::Color::Hex("#90CAF9"))
+                                    .padding(12)
+                                    .flex(1)
+                                    , Label(L" | -> Top Label Right <- | ")
+                                      .padding(12)
+                                      // .background(Api::Color::Hex("#1565C0"))
+                                      .flex(1)
+                                ).flex(1)
+                            )
+                            , Button(L"Button padding").padding(8)
+
+
+                            , ContextArea(
+                                Column(
+                                    Label(L" -------------------- ContextArea Label -------------------- ").padding(12).
+                                    flex(1)
+                                    , Row(
+                                        Button(L"Button").padding(8).flex(1)
+                                        , Image(L"app1.png")
+                                          .size({120, 120})
+                                          .flex(2)
+                                          .states({
+                                              // .normal = Api::Modifier().background(Api::Color::Hex("#1976D2")),
+                                              // .hover = Api::Modifier().source(L"app1.png"),
+                                          })
+                                        , Label(L"------------ Label States 2 ------------------------------------")
+                                          .flex(1)
+                                          .padding(16)
+                                          .size({40, 40})
+                                          .borderRadius(32)
+                                          .states({
+                                              .normal = Api::Modifier().background(Api::Color::Hex("#1976D2")),
+                                              .hover = Api::Modifier().background(Api::Color::Hex("#2196F3")),
+                                              .focus = Api::Modifier().background(Api::Color::Hex("#0D47A1")),
+                                              .pressed = Api::Modifier().background(Api::Color::Hex("#1565C0")),
+                                              .disabled = Api::Modifier().background(Api::Color::Hex("#90CAF9")),
+                                          })
+                                          .borderColor(Api::Color::Hex("#2196F3"))
+                                    ).flex(1)
+                                ).flex(1)
+                                // Button(L"File").onDrop([](Api::Text files) { LOGF_D(L"Drop Button:\n%s", files.c_str()); })
+                                , Menu(
+                                    MenuItem(L"Open").onClick([]() -> void
+                                    {
+                                        LOG(L"Menu Open");
+                                    }),
+                                    MenuItem(L"Close").onClick([]() -> void
+                                    {
+                                        LOG(L"Menu Delete");
+                                        App::Quit();
+                                    })
+                                ).trigger(Api::MenuTrigger::RightClick)
+                            ).onDrop([](const Api::Text& files) -> void
                             {
-                                LOG(L"Menu Open");
-                            }),
-                            MenuItem(L"Close").onClick([]() -> void
-                            {
-                                LOG(L"Menu Delete");
-                                App::Quit();
+                                LOGF_D(L"Drop ContextArea:\n%s", files.c_str());
                             })
-                        ).trigger(Api::MenuTrigger::RightClick)
-                    ).onDrop([](const Api::Text& files) -> void
+                        )
+                    )
+                    .title(L"Context Menu")
+                    .icon(L"app.png")
+                    .size({800, 600})
+                    .placement(Api::WindowPlacement::Center({0, 0}, 1))
+                    .lifetime(Api::Lifetime::Ignore)
+                    .onClose([windowId]() -> bool
                     {
-                        LOGF_D(L"Drop ContextArea:\n%s", files.c_str());
+                        UI::Hide(*windowId);
+                        App::Quit(); // TODO dev only
+                        LOGF_D(L"Close Window");
+                        return false;
                     })
-                )
-            ).title(L"Context Menu")
-             .size({800, 600})
-             .placement(Api::WindowPlacement::Center({0, 0}, 1))
-             .lifetime(Api::Lifetime::Ignore)
-             .onClose([windowId]() -> bool
-             {
-                 UI::Hide(*windowId);
-                 App::Quit(); // TODO dev only
-                 LOGF_D(L"Close Window");
-                 return false;
-             })
-             .onDrop([](const Api::Text& files) -> void
-             {
-                 LOGF_D(L"Drop Window:\n%s", files.c_str());
-             })
-             .mount();
+                    .onDrop([](const Api::Text& files) -> void
+                    {
+                        LOGF_D(L"Drop Window:\n%s", files.c_str());
+                    })
+                    .mount();
     }
 };
 
