@@ -77,10 +77,13 @@ auto NativeCustom::onPaint(HDC hdc, const Api::Rect& rect) -> void
     const auto* node = m_renderNodes ? m_renderNodes->get(m_id) : nullptr;
     if (node)
     {
-        RenderApi::Draw(hdc, rect, node->render.forState(node->state));
+        const auto& render = node->render.forState(node->state);
+        updateRegion(rect, RenderApi::BorderRadius(render));
+        RenderApi::Draw(hdc, rect, render);
         return;
     }
 
+    updateRegion(rect, 0);
     if (m_resources) RenderApi::Fill(hdc, rect, m_resources->windowBrush());
 }
 
@@ -209,6 +212,16 @@ auto NativeCustom::currentRenderState() const -> Api::WidgetState
     if (m_hovered) return Api::WidgetState::Hover;
     if (m_focused) return Api::WidgetState::Focus;
     return Api::WidgetState::Normal;
+}
+
+auto NativeCustom::updateRegion(const Api::Rect& rect, int radius) -> void
+{
+    const auto size = rect.size();
+    if (m_regionRadius == radius && m_regionSize.width == size.width && m_regionSize.height == size.height) return;
+
+    m_regionRadius = radius;
+    m_regionSize = size;
+    HwndApi::SetRoundedRegion(m_hwnd, size, radius);
 }
 
 } // namespace Blade::Backend

@@ -94,7 +94,7 @@ protected:
                         , Button(L"Flex").padding(8)
                         , Label(L"------------ Native Label ------------------------------------")
                           .padding(16)
-                          .borderRadius(8)
+                          .borderRadius(16)
                           .states({
                               .normal = Api::Modifier().background(Api::Color::Green()),
                               .hover = Api::Modifier().background(Api::Color::Red()),
@@ -220,7 +220,7 @@ protected:
                                   .flex(1)
                                   .padding(16)
                                   .size({40, 40})
-                                  .borderRadius(8)
+                                  .borderRadius(32)
                                   .states({
                                       .normal = Api::Modifier().background(Api::Color::Green()),
                                       .hover = Api::Modifier().background(Api::Color::Red()),

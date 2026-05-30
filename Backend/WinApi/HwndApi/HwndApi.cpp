@@ -158,6 +158,19 @@ auto HwndApi::GetFont(HWND hwnd) -> HFONT
     return (HFONT)SendMessage(hwnd, WM_GETFONT, 0, 0);
 }
 
+auto HwndApi::SetRoundedRegion(HWND hwnd, const Api::Size& size, int radius) -> void
+{
+    if (radius <= 0)
+    {
+        SetWindowRgn(hwnd, nullptr, TRUE);
+        return;
+    }
+
+    const auto diameter = radius * 2;
+    const auto region = CreateRoundRectRgn(0, 0, size.width + 1, size.height + 1, diameter, diameter);
+    SetWindowRgn(hwnd, region, TRUE);
+}
+
 auto HwndApi::Show(HWND hwnd, int cmdShow) -> void
 {
     // SW_HIDE             0

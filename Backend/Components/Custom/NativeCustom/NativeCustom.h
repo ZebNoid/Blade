@@ -35,6 +35,7 @@ private:
     auto trackMouseLeave() -> void;
     auto updateRenderState(Api::WidgetState state) -> void;
     auto currentRenderState() const -> Api::WidgetState;
+    auto updateRegion(const Api::Rect& rect, int radius) -> void;
 
 private:
     ResourceManager* m_resources = nullptr;
@@ -43,6 +44,8 @@ private:
     bool m_hovered = false;
     bool m_pressed = false;
     bool m_focused = false;
+    Api::Size m_regionSize{};
+    int m_regionRadius = 0;
 };
 
 } // namespace Blade::Backend

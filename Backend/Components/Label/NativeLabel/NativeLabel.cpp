@@ -7,6 +7,30 @@
 
 namespace Blade::Backend {
 
+namespace {
+
+auto HasBackground(const Api::RenderDefinition& render) -> bool
+{
+    for (const auto& op : render.ops)
+    {
+        if (std::holds_alternative<Api::RenderBackground>(op)) return true;
+    }
+
+    return false;
+}
+
+auto HasBackground(const Api::RenderStates& render) -> bool
+{
+    return HasBackground(render.normal)
+        || HasBackground(render.hover)
+        || HasBackground(render.focus)
+        || HasBackground(render.pressed)
+        || HasBackground(render.disabled)
+        || HasBackground(render.dragOver);
+}
+
+} // namespace
+
 auto NativeLabel::applyProps(const Api::PropertyMap& propertyMap) -> void
 {
     if (const auto* text = PropertyReader::Get<Api::Text>(propertyMap, Api::Props::Title)) m_text = *text;
@@ -32,8 +56,9 @@ auto NativeLabel::hitTest() const -> LRESULT
 
 auto NativeLabel::exStyle() const -> DWORD
 {
-    // TODO change: use proper render surfaces instead of relying on WinAPI transparent child paint order.
-    return WS_EX_TRANSPARENT;
+    const auto* node = renderNodes() ? renderNodes()->get(id()) : nullptr;
+    // TODO change: transparent labels over sibling HWNDs require proper render surfaces/layers.
+    return node && HasBackground(node->render) ? 0 : WS_EX_TRANSPARENT;
 }
 
 } // namespace Blade::Backend

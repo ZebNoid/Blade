@@ -35,6 +35,7 @@ public:
     static auto SetFont(HWND hwnd, HFONT font) -> void;
     static auto GetFont(HWND hwnd) -> HFONT;
 
+    static auto SetRoundedRegion(HWND hwnd, const Api::Size& size, int radius) -> void;
     static auto Show(HWND hwnd, int cmdShow = SW_SHOW) -> void;
     static auto SetVisible(HWND hwnd, bool visible) -> void;
     static auto Invalidate(HWND hwnd) -> void;

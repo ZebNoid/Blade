@@ -92,6 +92,21 @@ auto RenderApi::Draw(HDC hdc, const Api::Rect& rect, const Api::RenderDefinition
     }
 }
 
+auto RenderApi::BorderRadius(const Api::RenderDefinition& render) -> int
+{
+    int radius = 0;
+
+    for (const auto& op : render.ops)
+    {
+        if (const auto* borderRadius = std::get_if<Api::RenderBorderRadius>(&op))
+        {
+            radius = borderRadius->radius;
+        }
+    }
+
+    return radius;
+}
+
 auto RenderApi::TextColor(const Api::RenderDefinition& render, COLORREF fallback) -> COLORREF
 {
     auto color = fallback;
