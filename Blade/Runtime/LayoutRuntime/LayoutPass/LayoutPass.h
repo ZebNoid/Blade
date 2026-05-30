@@ -5,12 +5,8 @@
 #include "Runtime/LayoutEngine/Data/LayoutNode.h"
 
 
-namespace Blade {
+namespace Blade::Layout::Pass {
 
-class LayoutPass
-{
-public:
-    static auto Compute(const WidgetTree& tree, const Api::Size& available) -> LayoutNode;
-};
+auto Compute(const WidgetTree& tree, const Api::Size& available) -> LayoutNode;
 
-} // namespace Blade
+} // namespace Blade::Layout::Pass

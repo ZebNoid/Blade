@@ -5,11 +5,11 @@
 #include "Runtime/LayoutEngine/LayoutTreeBuilder/LayoutTreeBuilder.h"
 
 
-namespace Blade {
+namespace Blade::Layout::Pass {
 
-auto LayoutPass::Compute(const WidgetTree& tree, const Api::Size& available) -> LayoutNode
+auto Compute(const WidgetTree& tree, const Api::Size& available) -> LayoutNode
 {
-    auto layoutTree = LayoutTreeBuilder::Build(tree);
+    auto layoutTree = Layout::TreeBuilder::Build(tree);
     layoutTree.layout.size = available;
 
     LayoutContext measureCtx{ .node = &layoutTree, .available = available };
@@ -25,4 +25,4 @@ auto LayoutPass::Compute(const WidgetTree& tree, const Api::Size& available) -> 
     return layoutTree;
 }
 
-} // namespace Blade
+} // namespace Blade::Layout::Pass

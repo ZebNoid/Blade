@@ -2,17 +2,8 @@
 #include "Base/WidgetTree.h"
 #include "Runtime/LayoutEngine/Data/LayoutNode.h"
 
-namespace Blade {
+namespace Blade::Layout::TreeBuilder {
 
+auto Build(const WidgetTree& tree) -> LayoutNode;
 
-class LayoutTreeBuilder
-{
-public:
-    static auto Build(const WidgetTree& tree) -> LayoutNode;
-
-private:
-    static auto BuildNode(const WidgetTree& tree) -> LayoutNode;
-};
-
-
-} // namespace
+} // namespace Blade::Layout::TreeBuilder

@@ -1,7 +1,7 @@
 #include "LayoutTreeBuilder.h"
 
 
-namespace Blade {
+namespace Blade::Layout::TreeBuilder {
 
 namespace {
 
@@ -14,14 +14,7 @@ auto InheritParentLayoutHints(LayoutNode& node) -> void
     node.layout.size = child.layout.size;
 }
 
-} // namespace
-
-auto LayoutTreeBuilder::Build(const WidgetTree& tree) -> LayoutNode
-{
-    return BuildNode(tree);
-}
-
-auto LayoutTreeBuilder::BuildNode(const WidgetTree& tree) -> LayoutNode
+auto BuildNode(const WidgetTree& tree) -> LayoutNode
 {
     LayoutNode node;
 
@@ -40,5 +33,11 @@ auto LayoutTreeBuilder::BuildNode(const WidgetTree& tree) -> LayoutNode
     return node;
 }
 
-
 } // namespace
+
+auto Build(const WidgetTree& tree) -> LayoutNode
+{
+    return BuildNode(tree);
+}
+
+} // namespace Blade::Layout::TreeBuilder

@@ -3,6 +3,8 @@ project(Tests)
 add_executable(${PROJECT_NAME}
         main.cpp
         Core/Expect.h
+        Core/TestRunner.cpp
+        Core/TestRunner.h
         Layout/LayoutAlignmentTests.cpp
         Layout/LayoutAlignmentTests.h
         Layout/LayoutConstraintsTests.cpp
@@ -17,6 +19,7 @@ add_executable(${PROJECT_NAME}
         Layout/LayoutSpacingTests.h
         Layout/LayoutStackTests.cpp
         Layout/LayoutStackTests.h
+        Layout/LayoutTestUtils.h
 )
 
 target_include_directories(${PROJECT_NAME}

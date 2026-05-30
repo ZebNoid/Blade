@@ -1,3 +1,4 @@
+#include "Core/TestRunner.h"
 #include "Layout/LayoutAlignmentTests.h"
 #include "Layout/LayoutConstraintsTests.h"
 #include "Layout/LayoutFlexTests.h"
@@ -6,25 +7,17 @@
 #include "Layout/LayoutSpacingTests.h"
 #include "Layout/LayoutStackTests.h"
 
-#include <exception>
-#include <iostream>
-
 auto main() -> int
 {
-    try
-    {
-        Blade::Tests::RunLayoutAlignmentTests();
-        Blade::Tests::RunLayoutConstraintsTests();
-        Blade::Tests::RunLayoutFlexTests();
-        Blade::Tests::RunLayoutPaddingTests();
-        Blade::Tests::RunLayoutRootModifierTests();
-        Blade::Tests::RunLayoutSpacingTests();
-        Blade::Tests::RunLayoutStackTests();
-        return 0;
-    }
-    catch (const std::exception& error)
-    {
-        std::cerr << error.what() << '\n';
-        return 1;
-    }
+    Blade::Tests::TestRunner runner;
+
+    runner.Run("Layout alignment", Blade::Tests::RunLayoutAlignmentTests);
+    runner.Run("Layout constraints", Blade::Tests::RunLayoutConstraintsTests);
+    runner.Run("Layout flex", Blade::Tests::RunLayoutFlexTests);
+    runner.Run("Layout padding", Blade::Tests::RunLayoutPaddingTests);
+    runner.Run("Layout root modifiers", Blade::Tests::RunLayoutRootModifierTests);
+    runner.Run("Layout spacing", Blade::Tests::RunLayoutSpacingTests);
+    runner.Run("Layout stack", Blade::Tests::RunLayoutStackTests);
+
+    return runner.Result();
 }

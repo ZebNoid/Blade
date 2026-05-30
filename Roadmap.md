@@ -67,6 +67,9 @@ Render definitions should be stored as flat command sequences per widget state:
 
 - [ ] Introduce a render context so `RenderApi` does not depend on `ResourceManager` directly.
 - [ ] Introduce proper render surfaces/layers.
+- [ ] Make `Window.padding(...)` affect the window content layout area.
+- [ ] Make `Window.background(...)` render the window client background.
+- [ ] Make surface hit zones respect `borderRadius` when practical.
 - [ ] Allow static virtual elements such as labels to opt out of hit-testing and pass input to elements behind them.
 - [ ] Make modifier chains like `padding().background().padding().background()` semantically correct.
 - [ ] Move away from sibling child `HWND` composition limitations.
@@ -112,6 +115,7 @@ Layout runtime should remain responsible only for layout calculation and layout-
 Render and events should stay outside layout runtime except where layout size/position affects them.
 
 - [ ] Revisit virtual wrapper behavior once render surfaces exist.
+- [ ] Distinguish widget default measured size from user-provided `.size(...)` when arranging virtual modifier wrappers.
 - [x] Keep layout engine independent from backend/native concepts.
 - [x] Add basic widget `minSize` / `maxSize` modifiers for measured size constraints.
 - [x] Add virtual layout wrappers for modifier effects.
