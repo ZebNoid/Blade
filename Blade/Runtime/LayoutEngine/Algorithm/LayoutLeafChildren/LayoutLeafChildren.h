@@ -5,9 +5,9 @@
 #include "Runtime/LayoutEngine/Data/LayoutNode.h"
 
 
-namespace Blade::LayoutLeafChildren {
+namespace Blade::Layout::LeafChildren {
 
 auto Measure(LayoutNode& node) -> Api::Size;
 auto Arrange(LayoutNode& node, const Api::Rect& contentRect) -> void;
 
-} // namespace Blade::LayoutLeafChildren
+} // namespace Blade::Layout::LeafChildren

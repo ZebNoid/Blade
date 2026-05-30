@@ -22,14 +22,14 @@ auto LayoutStack::Measure(LayoutContext& ctx) -> Api::Size
         maxHeight = max(maxHeight, size.height);
     }
 
-    node.desiredSize = LayoutGeometry::Constrain(LayoutGeometry::Inflate({ maxWidth, maxHeight }, node.layout.box.padding), node.layout.box.minSize, node.layout.box.maxSize);
+    node.desiredSize = Layout::Geometry::Constrain(Layout::Geometry::Inflate({ maxWidth, maxHeight }, node.layout.box.padding), node.layout.box.minSize, node.layout.box.maxSize);
     return node.desiredSize;
 }
 
 auto LayoutStack::Arrange(LayoutContext& ctx) -> void
 {
     auto& node = *ctx.node;
-    const auto contentRect = LayoutGeometry::Deflate(ctx.rect, node.layout.box.padding);
+    const auto contentRect = Layout::Geometry::Deflate(ctx.rect, node.layout.box.padding);
 
     for (auto& child : node.children)
     {

@@ -3,7 +3,7 @@
 #include "Runtime/LayoutEngine/Geometry/LayoutGeometry.h"
 
 
-namespace Blade::LayoutLinearArrange {
+namespace Blade::Layout::LinearArrange {
 
 auto MeasureContent(const LayoutNode& node, const Api::Rect& contentRect, LayoutAxis axis) -> Content
 {
@@ -19,15 +19,15 @@ auto MeasureContent(const LayoutNode& node, const Api::Rect& contentRect, Layout
 
         first = false;
 
-        const int flex = LayoutGeometry::NonNegative(child.layout.box.flex);
+        const int flex = Layout::Geometry::NonNegative(child.layout.box.flex);
 
-        content.size += flex > 0 ? 0 : LayoutAxisGeometry::MainSize(axis, child.desiredSize);
+        content.size += flex > 0 ? 0 : Layout::Axis::MainSize(axis, child.desiredSize);
         content.totalFlex += flex;
     }
 
     if (content.totalFlex > 0)
     {
-        content.flexSpace = LayoutGeometry::NonNegative(LayoutAxisGeometry::MainRectSize(axis, contentRect) - content.size);
+        content.flexSpace = Layout::Geometry::NonNegative(Layout::Axis::MainRectSize(axis, contentRect) - content.size);
         content.size += content.flexSpace;
     }
 
@@ -36,11 +36,11 @@ auto MeasureContent(const LayoutNode& node, const Api::Rect& contentRect, Layout
 
 auto ChildMainSize(const LayoutNode& child, const Content& content, LayoutAxis axis, FlexCursor& cursor) -> int
 {
-    const int flex = LayoutGeometry::NonNegative(child.layout.box.flex);
+    const int flex = Layout::Geometry::NonNegative(child.layout.box.flex);
 
     if (content.totalFlex <= 0 || flex <= 0)
     {
-        return LayoutAxisGeometry::MainSize(axis, child.desiredSize);
+        return Layout::Axis::MainSize(axis, child.desiredSize);
     }
 
     cursor.usedFlex += flex;
@@ -54,22 +54,22 @@ auto ChildMainSize(const LayoutNode& child, const Content& content, LayoutAxis a
 
 auto AlignCrossAxis(const LayoutNode& node, const LayoutNode& child, const Api::Rect& contentRect, LayoutAxis axis) -> CrossAxis
 {
-    const int available = LayoutGeometry::NonNegative(LayoutAxisGeometry::CrossRectSize(axis, contentRect));
+    const int available = Layout::Geometry::NonNegative(Layout::Axis::CrossRectSize(axis, contentRect));
 
     CrossAxis layout{
-        .position = LayoutAxisGeometry::CrossRectPosition(axis, contentRect),
-        .size = LayoutAxisGeometry::CrossSize(axis, child.desiredSize)
+        .position = Layout::Axis::CrossRectPosition(axis, contentRect),
+        .size = Layout::Axis::CrossSize(axis, child.desiredSize)
     };
 
     switch (node.layout.crossAxisAlignment)
     {
     case CrossAxisAlignment::Center:
-        layout.position += LayoutGeometry::NonNegative(available - layout.size) / 2;
+        layout.position += Layout::Geometry::NonNegative(available - layout.size) / 2;
         break;
 
     case CrossAxisAlignment::End:
-        layout.position = LayoutAxisGeometry::CrossRectPosition(axis, contentRect) +
-            LayoutAxisGeometry::CrossRectSize(axis, contentRect) -
+        layout.position = Layout::Axis::CrossRectPosition(axis, contentRect) +
+            Layout::Axis::CrossRectSize(axis, contentRect) -
             layout.size;
         break;
 
@@ -85,4 +85,4 @@ auto AlignCrossAxis(const LayoutNode& node, const LayoutNode& child, const Api::
     return layout;
 }
 
-} // namespace Blade::LayoutLinearArrange
+} // namespace Blade::Layout::LinearArrange

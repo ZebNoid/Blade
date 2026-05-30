@@ -7,6 +7,8 @@ add_executable(${PROJECT_NAME}
         Layout/LayoutAlignmentTests.h
         Layout/LayoutConstraintsTests.cpp
         Layout/LayoutConstraintsTests.h
+        Layout/LayoutFlexTests.cpp
+        Layout/LayoutFlexTests.h
         Layout/LayoutPaddingTests.cpp
         Layout/LayoutPaddingTests.h
 )

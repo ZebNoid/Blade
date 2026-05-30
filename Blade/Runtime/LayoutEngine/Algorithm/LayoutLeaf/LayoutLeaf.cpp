@@ -12,7 +12,7 @@ auto LayoutLeaf::Measure(LayoutContext& ctx) -> Api::Size
 
     node.desiredSize = node.layout.size;
 
-    const auto childrenSize = LayoutLeafChildren::Measure(node);
+    const auto childrenSize = Layout::LeafChildren::Measure(node);
 
     if (node.desiredSize.width == 0)
     {
@@ -24,16 +24,16 @@ auto LayoutLeaf::Measure(LayoutContext& ctx) -> Api::Size
         node.desiredSize.height = childrenSize.height;
     }
 
-    node.desiredSize = LayoutGeometry::Constrain(LayoutGeometry::Inflate(node.desiredSize, node.layout.box.padding), node.layout.box.minSize, node.layout.box.maxSize);
+    node.desiredSize = Layout::Geometry::Constrain(Layout::Geometry::Inflate(node.desiredSize, node.layout.box.padding), node.layout.box.minSize, node.layout.box.maxSize);
     return node.desiredSize;
 }
 
 auto LayoutLeaf::Arrange(LayoutContext& ctx) -> void
 {
     auto& node = *ctx.node;
-    const auto contentRect = LayoutGeometry::Deflate(ctx.rect, node.layout.box.padding);
+    const auto contentRect = Layout::Geometry::Deflate(ctx.rect, node.layout.box.padding);
 
-    LayoutLeafChildren::Arrange(node, contentRect);
+    Layout::LeafChildren::Arrange(node, contentRect);
 }
 
 } // namespace Blade

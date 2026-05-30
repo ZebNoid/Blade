@@ -4,7 +4,7 @@
 #include "Runtime/LayoutEngine/LayoutEngine/LayoutEngine.h"
 
 
-namespace Blade::LayoutLeafChildren {
+namespace Blade::Layout::LeafChildren {
 
 namespace {
 
@@ -46,4 +46,4 @@ auto Arrange(LayoutNode& node, const Api::Rect& contentRect) -> void
     }
 }
 
-} // namespace Blade::LayoutLeafChildren
+} // namespace Blade::Layout::LeafChildren

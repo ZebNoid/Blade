@@ -8,7 +8,7 @@
 
 namespace Blade {
 
-namespace LayoutGeometry {
+namespace Layout::Geometry {
 
     inline auto NonNegative(int value) -> int
     {
@@ -103,6 +103,6 @@ namespace LayoutGeometry {
         }
     }
 
-} // namespace LayoutGeometry
+} // namespace Layout::Geometry
 
 } // namespace Blade

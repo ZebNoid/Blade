@@ -5,7 +5,7 @@
 #include "Runtime/LayoutEngine/Geometry/LayoutAxis.h"
 
 
-namespace Blade::LayoutLinearArrange {
+namespace Blade::Layout::LinearArrange {
 
 struct Content
 {
@@ -30,4 +30,4 @@ auto MeasureContent(const LayoutNode& node, const Api::Rect& contentRect, Layout
 auto ChildMainSize(const LayoutNode& child, const Content& content, LayoutAxis axis, FlexCursor& cursor) -> int;
 auto AlignCrossAxis(const LayoutNode& node, const LayoutNode& child, const Api::Rect& contentRect, LayoutAxis axis) -> CrossAxis;
 
-} // namespace Blade::LayoutLinearArrange
+} // namespace Blade::Layout::LinearArrange

@@ -12,7 +12,7 @@ enum class LayoutAxis
     Vertical
 };
 
-namespace LayoutAxisGeometry {
+namespace Layout::Axis {
 
     inline auto MainSize(LayoutAxis axis, const Api::Size& size) -> int
     {
@@ -58,6 +58,6 @@ namespace LayoutAxisGeometry {
             : Api::Rect{crossPosition, mainPosition, crossSize, mainSize};
     }
 
-} // namespace LayoutAxisGeometry
+} // namespace Layout::Axis
 
 } // namespace Blade
