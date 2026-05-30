@@ -153,6 +153,7 @@ Hot paint paths should not repeatedly call:
 The current WinAPI backend is a fallback/native backend, not the final rendering model.
 
 - [ ] Solve Stack overlay cases through proper render surfaces/layers.
+- [ ] Add `DwmApi` for optional window backdrop effects, such as `.backdrop(Api::WindowBackdrop::Blur)`, ignored when unsupported by the system.
 - [x] Avoid adding public API only to hide fallback backend limitations.
 - [x] Track native `BUTTON` painting, hit-test, and z-order limitations.
 - [x] Track rounded transparent repaint artifacts as a fallback backend limitation.

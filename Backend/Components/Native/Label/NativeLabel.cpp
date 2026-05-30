@@ -1,179 +1,88 @@
 #include "NativeLabel.h"
 
-#include <algorithm>
-
 #include "Components/Window/NativeWindow.h"
+#include "Event/EventMapper/EventMapper.h"
+#include "Logging/Logger.h"
 #include "Node/NativeCreateContext/NativeCreateContext.h"
+#include "Property/PropertyMapper/PropertyMapper.h"
 #include "Property/PropertyReader.h"
-#include "Render/RenderRegistry/RenderRegistry.h"
 #include "Resource/ResourceManager/ResourceManager.h"
-#include "WinApi/Menu/NativeContextMenu/NativeContextMenu.h"
 #include "WinApi/HwndApi/HwndApi.h"
-#include "WinApi/Render/GdiPlusRenderApi/GdiPlusRenderApi.h"
-#include "WinApi/Render/RenderApi/RenderApi.h"
+#include "WinApi/Window/Hwnd/Hwnd.h"
 
 namespace Blade::Backend {
 
-namespace {
-
-auto HasEvent(const Api::EventSubscriptions& events, Api::Events event) -> bool
-{
-    return std::ranges::find(events, event) != events.end();
-}
-
-} // namespace
-
-auto NativeLabel::create(NativeWindow* parent, Api::Id id, const NativeCreateContext&) -> bool
+auto NativeLabel::create(NativeWindow* parent, Api::Id id, const NativeCreateContext& context) -> bool
 {
     if (!parent) return false;
 
     m_parent = parent;
     m_id = id;
-    m_hwnd = parent->handle();
+
+    m_hwnd = Hwnd::Create({
+        .className = TEXT("STATIC"),
+        .windowName = TEXT(""),
+        .parent = parent->handle(),
+        .style = WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | SS_LEFT | SS_NOTIFY,
+        .size = {100, 30},
+        .menu = reinterpret_cast<HMENU>(static_cast<UINT_PTR>(m_id)),
+        .hInstance = context.instance,
+    });
+
+    if (m_hwnd && context.resources) HwndApi::SetFont(m_hwnd, context.resources->defaultFont());
+
     return m_hwnd != nullptr;
 }
 
 auto NativeLabel::applyProps(const Api::PropertyMap& propertyMap) -> void
 {
-    if (const auto* text = PropertyReader::Get<Api::Text>(propertyMap, Api::Props::Title)) m_text = *text;
-    if (const auto* rect = PropertyReader::Get<Api::Rect>(propertyMap, Api::Props::Rect)) m_rect = *rect;
-    if (const auto* visible = PropertyReader::Get<bool>(propertyMap, Api::Props::Visible)) m_state.visible = *visible;
-    if (const auto* menus = PropertyReader::Get<Api::ContextMenus>(propertyMap, Api::Props::ContextMenus)) m_contextMenus = *menus;
+    if (const auto* menus = PropertyReader::Get<Api::ContextMenus>(propertyMap, Api::Props::ContextMenus))
+    {
+        enableContextMenus(*menus);
+    }
 
-    HwndApi::Invalidate(m_hwnd);
+    if (const auto* dropTarget = PropertyReader::Get<bool>(propertyMap, Api::Props::DropTarget); dropTarget && *dropTarget)
+    {
+        enableDropTarget();
+    }
+
+    PropertyMapper::Apply(m_hwnd, propertyMap);
 }
 
 auto NativeLabel::applyEvents(const Api::EventSubscriptions& events) -> void
 {
-    m_events.click = HasEvent(events, Api::Events::Click);
-    m_events.focus = HasEvent(events, Api::Events::Focus);
-    m_events.drop = HasEvent(events, Api::Events::Drop);
+    EventMapper::Apply(*this, events);
 }
 
 auto NativeLabel::isAlive() const -> bool
 {
-    return true;
+    return true; // TODO later
 }
 
 auto NativeLabel::attachChild(INativeElement*) -> void
 {
 }
 
-auto NativeLabel::paint(HDC hdc, ResourceManager& resources, RenderRegistry& renderNodes) -> void
+auto NativeLabel::enableDropTarget() -> void
 {
-    if (!m_state.visible) return;
+    if (m_dropTarget || !m_hwnd) return;
 
-    const auto* node = renderNodes.get(m_id);
-    if (node) GdiPlusRenderApi::Draw(hdc, m_rect, node->render.forState(node->state), resources);
+    auto* parent = dynamic_cast<NativeWindow*>(m_parent);
+    if (!parent) return;
 
-    const auto color = node ? RenderApi::TextColor(node->render.forState(node->state), resources.windowTextColor()) : resources.windowTextColor();
-    RenderApi::Text(hdc, m_text, m_rect, resources.defaultFont(), color);
+    auto dropTarget = std::make_unique<OleDropTarget>(m_id, parent->commandRouter());
+    if (dropTarget->registerHwnd(m_hwnd)) m_dropTarget = std::move(dropTarget);
 }
 
-auto NativeLabel::hitTest(Api::Point point) const -> bool
+auto NativeLabel::enableContextMenus(Api::ContextMenus menus) -> void
 {
-    if (!m_state.visible) return false;
-    return point.x >= m_rect.x
-        && point.y >= m_rect.y
-        && point.x < m_rect.x + m_rect.width
-        && point.y < m_rect.y + m_rect.height;
-}
+    if (m_contextMenu || !m_hwnd || menus.empty()) return;
 
-auto NativeLabel::wantsDrop() const -> bool
-{
-    return m_events.drop;
-}
+    auto* parent = dynamic_cast<NativeWindow*>(m_parent);
+    if (!parent) return;
 
-auto NativeLabel::hasContextMenu(Api::MenuTrigger trigger) const -> bool
-{
-    for (const auto& menu : m_contextMenus)
-    {
-        if (Api::Has(menu.trigger, trigger)) return true;
-    }
-
-    return false;
-}
-
-auto NativeLabel::showContextMenu(Api::MenuTrigger trigger, POINT screenPoint) -> bool
-{
-    auto* parentWindow = dynamic_cast<NativeWindow*>(m_parent);
-    if (!parentWindow) return false;
-
-    return NativeContextMenu::Show(parentWindow->handle(), parentWindow->commandRouter(), m_contextMenus, trigger, screenPoint);
-}
-
-auto NativeLabel::setState(RenderRegistry& renderNodes, Api::WidgetState state) -> bool
-{
-    return renderNodes.setState(m_id, state);
-}
-
-auto NativeLabel::hover(RenderRegistry& renderNodes, bool hovered) -> bool
-{
-    if (m_state.hovered == hovered) return false;
-    m_state.hovered = hovered;
-    return updateState(renderNodes);
-}
-
-auto NativeLabel::dragOver(RenderRegistry& renderNodes, bool active) -> bool
-{
-    if (m_state.dragOver == active) return false;
-    m_state.dragOver = active;
-    return updateState(renderNodes);
-}
-
-auto NativeLabel::mouseDown(RenderRegistry& renderNodes) -> bool
-{
-    m_state.pressed = true;
-    return updateState(renderNodes);
-}
-
-auto NativeLabel::mouseUp(RenderRegistry& renderNodes) -> bool
-{
-    const auto wasPressed = m_state.pressed;
-    m_state.pressed = false;
-    const auto changed = updateState(renderNodes);
-
-    if (wasPressed && m_events.click)
-    {
-        auto* parentWindow = dynamic_cast<NativeWindow*>(m_parent);
-        if (parentWindow)
-        {
-            parentWindow->commandRouter().emit({
-                .target = m_id,
-                .type = Api::Events::Click
-            });
-        }
-    }
-
-    return changed;
-}
-
-auto NativeLabel::focus(RenderRegistry& renderNodes, bool focused) -> bool
-{
-    if (m_state.focused == focused) return false;
-
-    m_state.focused = focused;
-    const auto changed = updateState(renderNodes);
-
-    if (m_events.focus)
-    {
-        auto* parentWindow = dynamic_cast<NativeWindow*>(m_parent);
-        if (parentWindow)
-        {
-            parentWindow->commandRouter().emit({
-                .target = m_id,
-                .type = Api::Events::Focus,
-                .payload = focused
-            });
-        }
-    }
-
-    return changed;
-}
-
-auto NativeLabel::updateState(RenderRegistry& renderNodes) -> bool
-{
-    return setState(renderNodes, VisualState(m_state));
+    auto contextMenu = std::make_unique<NativeContextMenu>();
+    if (contextMenu->attach(m_hwnd, m_id, parent->commandRouter(), std::move(menus))) m_contextMenu = std::move(contextMenu);
 }
 
 } // namespace Blade::Backend
