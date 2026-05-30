@@ -79,7 +79,7 @@ auto AppBackend::messageHandler() -> Api::BackendMessageHandler*
 
 auto AppBackend::process(const Api::ElementCommand& command) -> void
 {
-    m_dispatcher.dispatch(command); // With Error !
+    m_dispatcher.dispatch(command);
 }
 
 auto AppBackend::process(const Api::AppCommand& command) -> void
