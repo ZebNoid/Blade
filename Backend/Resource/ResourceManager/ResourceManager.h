@@ -1,9 +1,11 @@
 #pragma once
 
 #include <cstdint>
+#include <memory>
 #include <unordered_map>
 
 #include <windows.h>
+#include <gdiplus.h>
 
 #include "Style/Color.h"
 
@@ -25,12 +27,16 @@ public:
     auto windowTextColor() -> COLORREF;
     auto brush(Api::Color color) -> HBRUSH;
     auto pen(Api::Color color, int width = 1) -> HPEN;
+    auto gdiPlusBrush(Api::Color color) -> Gdiplus::SolidBrush*;
+    auto gdiPlusPen(Api::Color color, int width = 1) -> Gdiplus::Pen*;
 
 private:
     HFONT m_defaultFont = nullptr;
     bool m_defaultFontOwned = false;
     std::unordered_map<std::uint32_t, HBRUSH> m_brushes;
     std::unordered_map<std::uint64_t, HPEN> m_pens;
+    std::unordered_map<std::uint32_t, std::unique_ptr<Gdiplus::SolidBrush>> m_gdiPlusBrushes;
+    std::unordered_map<std::uint64_t, std::unique_ptr<Gdiplus::Pen>> m_gdiPlusPens;
 };
 
 } // namespace Blade::Backend

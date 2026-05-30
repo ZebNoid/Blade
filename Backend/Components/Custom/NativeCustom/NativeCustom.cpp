@@ -80,7 +80,7 @@ auto NativeCustom::onPaint(HDC hdc, const Api::Rect& rect) -> void
     {
         const auto& render = node->render.forState(node->state);
         updateRegion(rect, RenderApi::BorderRadius(render));
-        GdiPlusRenderApi::Draw(hdc, rect, render);
+        if (m_resources) GdiPlusRenderApi::Draw(hdc, rect, render, *m_resources);
         return;
     }
 

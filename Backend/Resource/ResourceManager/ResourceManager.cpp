@@ -25,6 +25,16 @@ auto PenKey(Api::Color color, int width) -> std::uint64_t
     return static_cast<std::uint64_t>(ColorKey(color)) | (static_cast<std::uint64_t>(safeWidth) << 32);
 }
 
+auto ToGdiPlusColor(Api::Color color) -> Gdiplus::Color
+{
+    return {
+        static_cast<BYTE>(std::clamp(color.a, 0, 255)),
+        static_cast<BYTE>(std::clamp(color.r, 0, 255)),
+        static_cast<BYTE>(std::clamp(color.g, 0, 255)),
+        static_cast<BYTE>(std::clamp(color.b, 0, 255))
+    };
+}
+
 } // namespace
 
 ResourceManager::~ResourceManager()
@@ -75,6 +85,29 @@ auto ResourceManager::pen(Api::Color color, int width) -> HPEN
     const auto safeWidth = width < 1 ? 1 : width;
     auto handle = CreatePen(PS_SOLID, safeWidth, RenderApi::ToColorRef(color));
     m_pens[key] = handle;
+    return handle;
+}
+
+auto ResourceManager::gdiPlusBrush(Api::Color color) -> Gdiplus::SolidBrush*
+{
+    const auto key = ColorKey(color);
+    if (const auto it = m_gdiPlusBrushes.find(key); it != m_gdiPlusBrushes.end()) return it->second.get();
+
+    auto brush = std::make_unique<Gdiplus::SolidBrush>(ToGdiPlusColor(color));
+    auto* handle = brush.get();
+    m_gdiPlusBrushes[key] = std::move(brush);
+    return handle;
+}
+
+auto ResourceManager::gdiPlusPen(Api::Color color, int width) -> Gdiplus::Pen*
+{
+    const auto key = PenKey(color, width);
+    if (const auto it = m_gdiPlusPens.find(key); it != m_gdiPlusPens.end()) return it->second.get();
+
+    const auto safeWidth = width < 1 ? 1 : width;
+    auto pen = std::make_unique<Gdiplus::Pen>(ToGdiPlusColor(color), static_cast<Gdiplus::REAL>(safeWidth));
+    auto* handle = pen.get();
+    m_gdiPlusPens[key] = std::move(pen);
     return handle;
 }
 
