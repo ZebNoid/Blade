@@ -11,8 +11,17 @@ namespace Blade::Backend {
 
 namespace {
 
+auto ClampRadius(const Api::Rect& rect, int radius) -> int
+{
+    if (radius <= 0 || rect.width <= 0 || rect.height <= 0) return 0;
+    const auto minSide = rect.width < rect.height ? rect.width : rect.height;
+    const auto maxRadius = minSide / 2;
+    return radius > maxRadius ? maxRadius : radius;
+}
+
 auto AddRoundRect(Gdiplus::GraphicsPath& path, const Api::Rect& rect, int radius) -> void
 {
+    radius = ClampRadius(rect, radius);
     const auto diameter = radius < 1 ? 1 : radius * 2;
     const auto right = rect.x + rect.width - 1;
     const auto bottom = rect.y + rect.height - 1;
@@ -64,6 +73,7 @@ auto GdiPlusRenderApi::Draw(HDC hdc, const Api::Rect& rect, const Api::RenderDef
 auto GdiPlusRenderApi::Fill(HDC hdc, const Api::Rect& rect, Api::Color color, ResourceManager& resources, int radius) -> void
 {
     if (color.a == 0 || rect.width <= 0 || rect.height <= 0) return;
+    radius = ClampRadius(rect, radius);
 
     auto graphics = Gdiplus::Graphics(hdc);
     Setup(graphics);
@@ -83,6 +93,7 @@ auto GdiPlusRenderApi::Fill(HDC hdc, const Api::Rect& rect, Api::Color color, Re
 auto GdiPlusRenderApi::Border(HDC hdc, const Api::Rect& rect, Api::Color color, ResourceManager& resources, int radius) -> void
 {
     if (color.a == 0 || rect.width <= 0 || rect.height <= 0) return;
+    radius = ClampRadius(rect, radius);
 
     auto graphics = Gdiplus::Graphics(hdc);
     Setup(graphics);

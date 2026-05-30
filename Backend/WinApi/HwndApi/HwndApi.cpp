@@ -46,6 +46,13 @@ auto RedrawParent(HWND hwnd, const RECT& oldRect, const RECT& newRect) -> void
     RedrawWindow(parent, &newRect, nullptr, RDW_INVALIDATE | RDW_ERASE);
 }
 
+auto ClampRadius(const Api::Size& size, int radius) -> int
+{
+    if (radius <= 0 || size.width <= 0 || size.height <= 0) return 0;
+    const auto maxRadius = (size.width < size.height ? size.width : size.height) / 2;
+    return radius > maxRadius ? maxRadius : radius;
+}
+
 } // namespace
 
 
@@ -160,6 +167,8 @@ auto HwndApi::GetFont(HWND hwnd) -> HFONT
 
 auto HwndApi::SetRoundedRegion(HWND hwnd, const Api::Size& size, int radius) -> void
 {
+    radius = ClampRadius(size, radius);
+
     if (radius <= 0)
     {
         SetWindowRgn(hwnd, nullptr, TRUE);
