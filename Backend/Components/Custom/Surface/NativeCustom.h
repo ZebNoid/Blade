@@ -1,13 +1,10 @@
 #pragma once
 
-#include <optional>
-
-#include "Common/Modifier.h"
 #include "Geometry/Rect.h"
+#include "Menu/MenuData.h"
 #include "Node/NativeCreateContext/NativeCreateContext.h"
-#include "WinApi/Menu/NativeContextMenu/NativeContextMenu.h"
 #include "WinApi/NativeElement/NativeElement.h"
-#include "WinApi/OleDragDrop/OleDropTarget/OleDropTarget.h"
+#include "Render/RenderOp.h"
 
 namespace Blade::Backend {
 
@@ -34,43 +31,22 @@ public:
     auto mouseUp(RenderRegistry& renderNodes) -> bool;
     auto focus(RenderRegistry& renderNodes, bool focused) -> bool;
 
-protected:
-    virtual auto onPaint(HDC hdc, const Api::Rect& rect) -> void;
-    virtual auto exStyle() const -> DWORD;
-    virtual auto hitTest() const -> LRESULT;
-    auto resources() const -> ResourceManager*;
-    auto renderNodes() const -> RenderRegistry*;
-
 private:
-    static auto CALLBACK Proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT;
-    auto handle(UINT msg, WPARAM wParam, LPARAM lParam) -> std::optional<LRESULT>;
-    auto trackMouseLeave() -> void;
-    auto updateRenderState(Api::WidgetState state) -> void;
     auto currentRenderState() const -> Api::WidgetState;
     auto updateState(RenderRegistry& renderNodes) -> bool;
-    auto updateRegion(const Api::Rect& rect, int radius) -> void;
     auto emit(Api::Events event, Api::EventPayload payload = {}) -> void;
-    auto enableDropTarget() -> void;
-    auto enableContextMenus(Api::ContextMenus menus) -> void;
 
 private:
-    ResourceManager* m_resources = nullptr;
-    RenderRegistry* m_renderNodes = nullptr;
-    std::unique_ptr<OleDropTarget> m_dropTarget;
-    std::unique_ptr<NativeContextMenu> m_contextMenu;
     Api::Rect m_rect{};
     bool m_visible = true;
     bool m_emitDrop = false;
     bool m_emitClick = false;
     bool m_emitFocus = false;
-    bool m_trackingMouse = false;
     bool m_hovered = false;
     bool m_pressed = false;
     bool m_focused = false;
     bool m_dragOver = false;
     Api::ContextMenus m_contextMenus;
-    Api::Size m_regionSize{};
-    int m_regionRadius = 0;
 };
 
 } // namespace Blade::Backend
