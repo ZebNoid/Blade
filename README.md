@@ -41,12 +41,12 @@ protected:
     auto onCreate() -> void override
     {
         Window(
-            Button(L"Quit").on({ .click = [] { App::Quit(); } })
-        ).set({
-            .title = L"Hello Blade",
-            .size = {400, 200},
-            .placement = Api::WindowPlacement::Center()
-        }).mount();
+            Button(L"Quit").onClick([] { App::Quit(); })
+        )
+            .title(L"Hello Blade")
+            .size({400, 200})
+            .placement(Api::WindowPlacement::Center())
+            .mount();
     }
 };
 
@@ -65,32 +65,32 @@ auto main() -> int
 - [Application](#application)
 - [Runtime UI Commands](#runtime-ui-commands)
 - [Syntax](#syntax)
+- [Common Modifiers](#common-modifiers)
 - [Root Widgets](#root-widgets)
   - [Window](#window)
-    - [Window Properties](#window-properties)
-    - [Window Events](#window-events)
+    - [Window Methods](#window-methods)
     - [WindowPlacement Factories](#windowplacement-factories)
   - [Tray](#tray)
-    - [Tray Properties](#tray-properties)
+    - [Tray Methods](#tray-methods)
 - [Controls](#controls)
   - [Button](#button)
-    - [Button Properties](#button-properties)
-    - [Button Events](#button-events)
+    - [Button Methods](#button-methods)
+  - [Label](#label)
+    - [Label Methods](#label-methods)
+  - [Image](#image)
+    - [Image Methods](#image-methods)
 - [Menu](#menu)
   - [Menu Separator](#menu-separator)
   - [Submenu](#submenu)
-  - [Menu Properties](#menu-properties)
+  - [Menu Methods](#menu-methods)
   - [MenuTrigger Values](#menutrigger-values)
-  - [MenuItem Properties](#menuitem-properties)
+  - [MenuItem Methods](#menuitem-methods)
   - [Shortcut Factories](#shortcut-factories)
 - [Layout](#layout)
   - [Column](#column)
   - [Row](#row)
   - [Stack](#stack)
-  - [Column and Row Properties](#column-and-row-properties)
-  - [Stack Properties](#stack-properties)
-  - [Layout Properties](#layout-properties)
-  - [Alignment Values](#alignment-values)
+  - [Layout Methods](#layout-methods)
 
 </details>
 
@@ -125,7 +125,7 @@ UI::Tray::Title(trayId, L"Blade");
 
 ## Syntax
 
-Widgets support fluent modifiers for common layout and visual options.
+Widgets use fluent methods for common layout, visual options, widget-specific configuration, and events.
 
 ```c++
 Label(L"Status")
@@ -140,22 +140,6 @@ Label(L"Status")
 > [!CAUTION]
 > Nested `.states(...)` inside `ModifierStates` branches are ignored and logged as a warning. State branches are intended to contain plain modifiers only.
 
-Widget-specific properties can still be configured with `.set(...)`.
-
-```c++
-Button(L"Run").set({
-    .size = {120, 40}
-})
-```
-
-Widget events are configured with `.on(...)`.
-
-```c++
-Button(L"Quit").on({
-    .click = [] { App::Quit(); }
-})
-```
-
 Root widgets are attached to the app runtime with `.mount()`.
 
 ```c++
@@ -163,53 +147,56 @@ Window(Button(L"Quit")).mount();
 Tray(Menu(MenuItem(L"Exit"))).mount();
 ```
 
+## Common Modifiers
+
+Common modifiers are available on widgets through the base fluent chain.
+
+<details>
+<summary>Common modifiers</summary>
+
+| Method | Meaning | Example |
+| --- | --- | --- |
+| `size(Api::Size)` | preferred widget size | `.size({120, 40})` |
+| `flex(int)` | flex grow value for parent layout | `.flex(1)` |
+| `visible(bool)` | initial visibility | `.visible(false)` |
+| `padding(Api::Thickness)` | layout/render padding | `.padding({8})` |
+| `padding(int)` | uniform padding | `.padding(8)` |
+| `background(Api::Color)` | background fill | `.background(Api::Color::Hex(L"#2196F3"))` |
+| `borderRadius(int)` | rounded corners | `.borderRadius(8)` |
+| `borderColor(Api::Color)` | border color | `.borderColor(Api::Color::Hex(L"#0D47A1"))` |
+| `color(Api::Color)` | text color | `.color(Api::Color::White())` |
+| `states(Api::ModifierStates)` | state-specific modifier branches | `.states({ .hover = Api::Modifier().background(Api::Color::Hex(L"#1976D2")) })` |
+| `modifier(Api::Modifier)` | append a raw modifier chain | `.modifier(Api::Modifier().padding(8))` |
+
+</details>
+
 ## Root Widgets
 
 ### Window
 
 ```c++
 Window(
-    Button(L"Close").on({ .click = [] { App::Quit(); } })
-).set({
-    .title = L"Window",
-    .size = {800, 600},
-    .placement = Api::WindowPlacement::Center(),
-    .minSize = {320, 240}
-}).on({
-    .close = [] { return true; }
-}).mount();
+    Button(L"Close").onClick([] { App::Quit(); })
+)
+    .title(L"Window")
+    .size({800, 600})
+    .placement(Api::WindowPlacement::Center())
+    .onClose([] { return true; })
+    .mount();
 ```
 
-<a id="window-properties"></a>
+<a id="window-methods"></a>
 <details>
-<summary>Supported <code>WindowProps</code></summary>
+<summary>Supported <code>Window</code> methods</summary>
 
-| Property | Type | Default | Example |
-| --- | --- | --- | --- |
-| `title` | `Api::Text` | `L"Blade"` | `L"Settings"` |
-| `icon` | `Api::Text` | empty | `L"app.ico"` or `L"app.png"` |
-| `size` | `Api::Size` | `{800, 600}` | `{1024, 768}` |
-| `visible` | `bool` | `true` | `false` |
-| `resizable` | `bool` | `true` | `false` |
-| `topMost` | `bool` | `false` | `true` |
-| `taskbar` | `bool` | `true` | `false` |
-| `minSize` | `Api::Size` | `{0, 0}` | `{320, 240}` |
-| `maxSize` | `Api::Size` | `{0, 0}` | `{1920, 1080}` |
-| `caption` | `Api::CaptionProps` | visible, all buttons | `{ .visible = false }` |
-| `placement` | `Api::WindowPlacementProps` | `Api::WindowPlacement::Default()` | `Api::WindowPlacement::Center({0, 0}, 1)` |
-| `state` | `Api::WindowState` | `Normal` | `Api::WindowState::Maximized` |
-| `lifetime` | `Api::Lifetime` | `Owner` | `Api::Lifetime::Ignore` |
-
-</details>
-
-<a id="window-events"></a>
-<details>
-<summary>Supported <code>WindowEvents</code></summary>
-
-| Event | Callback |
-| --- | --- |
-| `close` | return `false` to cancel close |
-| `drop` | receives dropped file paths as text |
+| Method | Type | Example |
+| --- | --- | --- |
+| `title(...)` | `Api::Text` | `.title(L"Settings")` |
+| `icon(...)` | `Api::Text` | `.icon(L"app.ico")` or `.icon(L"app.png")` |
+| `placement(...)` | `Api::WindowPlacementProps` | `.placement(Api::WindowPlacement::Center())` |
+| `lifetime(...)` | `Api::Lifetime` | `.lifetime(Api::Lifetime::Ignore)` |
+| `onClose(...)` | callback, return `false` to cancel close | `.onClose([] { return true; })` |
+| `onDrop(...)` | dropped file paths callback | `.onDrop([](Api::Text files) { LOG(files); })` |
 
 </details>
 
@@ -242,24 +229,25 @@ Api::WindowPlacement::Center({20, 0}, 1)
 ```c++
 Tray(
     Menu(
-        MenuItem(L"Open").on({ .click = [] { LOG(L"Open"); } }),
-        MenuItem(L"Exit").on({ .click = [] { App::Quit(); } })
-    ).set({ .trigger = Api::MenuTrigger::LeftRight })
-).set({
-    .title = L"Blade",
-    .icon = L"app.ico"
-}).mount();
+        MenuItem(L"Open").onClick([] { LOG(L"Open"); }),
+        MenuItem(L"Exit").onClick([] { App::Quit(); })
+    ).trigger(Api::MenuTrigger::LeftRight)
+)
+    .title(L"Blade")
+    .icon(L"app.ico")
+    .mount();
 ```
 
-<a id="tray-properties"></a>
+<a id="tray-methods"></a>
 <details>
-<summary>Supported <code>TrayProps</code></summary>
+<summary>Supported <code>Tray</code> methods</summary>
 
-| Property | Type | Default | Example |
-| --- | --- | --- | --- |
-| `title` | `Api::Text` | `L"Blade"` | `L"Blade Tray"` |
-| `icon` | `Api::Text` | empty | `L"app.ico"` or `L"app.png"` |
-| `lifetime` | `Api::Lifetime` | `Owner` | `Api::Lifetime::Ignore` |
+| Method | Type | Example |
+| --- | --- | --- |
+| `title(...)` | `Api::Text` | `.title(L"Blade Tray")` |
+| `icon(...)` | `Api::Text` | `.icon(L"app.ico")` or `.icon(L"app.png")` |
+| `lifetime(...)` | `Api::Lifetime` | `.lifetime(Api::Lifetime::Ignore)` |
+| `onClick(...)` | callback | `.onClick([] { LOG(L"Tray"); })` |
 
 </details>
 
@@ -268,36 +256,67 @@ Tray(
 ### Button
 
 ```c++
-Button(L"Run").set({
-    .size = {120, 40},
-    .isDefault = true
-}).on({
-    .click = [] { LOG(L"Clicked"); },
-    .drop = [](Api::Text files) { LOGF_D(L"Drop:\n%s", files.c_str()); }
-})
+Button(L"Run")
+    .size({120, 40})
+    .defaultButton()
+    .onClick([] { LOG(L"Clicked"); })
+    .onDrop([](Api::Text files) { LOGF_D(L"Drop:\n%s", files.c_str()); })
 ```
 
-<a id="button-properties"></a>
+<a id="button-methods"></a>
 <details>
-<summary>Supported <code>ButtonProps</code></summary>
+<summary>Supported <code>Button</code> methods</summary>
 
-| Property | Type | Default | Example |
-| --- | --- | --- | --- |
-| `layout` | `Api::LayoutProps` | default layout | `{ .flex = 1 }` |
-| `size` | `Api::Size` | `{100, 50}` | `{120, 40}` |
-| `isDefault` | `bool` | `false` | `true` |
+| Method | Type | Example |
+| --- | --- | --- |
+| `defaultButton(...)` | `bool`, default `true` | `.defaultButton()` |
+| `onClick(...)` | callback | `.onClick([] { LOG(L"Clicked"); })` |
+| `onFocus(...)` | callback | `.onFocus([](bool focused) { return focused; })` |
+| `onDrop(...)` | dropped file paths callback | `.onDrop([](Api::Text files) { LOG(files); })` |
 
 </details>
 
-<a id="button-events"></a>
-<details>
-<summary>Supported <code>ButtonEvents</code></summary>
+### Label
 
-| Event | Callback |
-| --- | --- |
-| `click` | no arguments |
-| `focus` | returns bool |
-| `drop` | receives dropped file paths as text |
+```c++
+Label(L"Status")
+    .padding(8)
+    .background(Api::Color::Hex(L"#E3F2FD"))
+```
+
+`Label` is rendered through the surface path by default.
+
+<a id="label-methods"></a>
+<details>
+<summary>Supported <code>Label</code> methods</summary>
+
+| Method | Type | Example |
+| --- | --- | --- |
+| `text(...)` | `Api::Text` | `.text(L"Ready")` |
+
+</details>
+
+### Image
+
+```c++
+Image(L"assets/logo.png")
+    .size({120, 120})
+```
+
+Use `source(...)` to change the displayed image source while building the widget.
+
+```c++
+Image(L"assets/logo.png")
+    .source(L"assets/preview.png")
+```
+
+<a id="image-methods"></a>
+<details>
+<summary>Supported <code>Image</code> methods</summary>
+
+| Method | Type | Example |
+| --- | --- | --- |
+| `source(...)` | `Api::Text` | `.source(L"app.png")` |
 
 </details>
 
@@ -309,11 +328,11 @@ Menus are attached through `ContextArea`, `Tray`, or other widgets that support 
 ContextArea(
     Button(L"File"),
     Menu(
-        MenuItem(L"Open").on({ .click = [] { LOG(L"Open"); } }),
-        MenuItem(L"Exit").set({
-            .shortcut = Api::Shortcut::Ctrl(L'Q')
-        }).on({ .click = [] { App::Quit(); } })
-    ).set({ .trigger = Api::MenuTrigger::RightClick })
+        MenuItem(L"Open").onClick([] { LOG(L"Open"); }),
+        MenuItem(L"Exit")
+            .shortcut(Api::Shortcut::Ctrl(L'Q'))
+            .onClick([] { App::Quit(); })
+    ).trigger(Api::MenuTrigger::RightClick)
 )
 ```
 
@@ -321,9 +340,9 @@ ContextArea(
 
 ```c++
 Menu(
-    MenuItem(L"Open").on({ .click = [] { LOG(L"Open"); } }),
+    MenuItem(L"Open").onClick([] { LOG(L"Open"); }),
     MenuSeparator(),
-    MenuItem(L"Exit").on({ .click = [] { App::Quit(); } })
+    MenuItem(L"Exit").onClick([] { App::Quit(); })
 )
 ```
 
@@ -332,19 +351,19 @@ Menu(
 ```c++
 Menu(
     MenuItem(L"Export",
-        MenuItem(L"PNG").on({ .click = [] { LOG(L"PNG"); } }),
-        MenuItem(L"PDF").on({ .click = [] { LOG(L"PDF"); } })
+        MenuItem(L"PNG").onClick([] { LOG(L"PNG"); }),
+        MenuItem(L"PDF").onClick([] { LOG(L"PDF"); })
     )
 )
 ```
 
-<a id="menu-properties"></a>
+<a id="menu-methods"></a>
 <details>
-<summary>Supported <code>MenuProps</code></summary>
+<summary>Supported <code>Menu</code> methods</summary>
 
-| Property | Type | Default | Example |
-| --- | --- | --- | --- |
-| `trigger` | `Api::MenuTrigger` | `RightClick` | `Api::MenuTrigger::LeftRight` |
+| Method | Type | Example |
+| --- | --- | --- |
+| `trigger(...)` | `Api::MenuTrigger` | `.trigger(Api::MenuTrigger::LeftRight)` |
 
 </details>
 
@@ -363,13 +382,14 @@ Menu(
 
 </details>
 
-<a id="menuitem-properties"></a>
+<a id="menuitem-methods"></a>
 <details>
-<summary>Supported <code>MenuItemProps</code></summary>
+<summary>Supported <code>MenuItem</code> methods</summary>
 
-| Property | Type | Default | Example |
-| --- | --- | --- | --- |
-| `shortcut` | `Api::Shortcut` | `Api::Shortcut::None()` | `Api::Shortcut::Ctrl(L'Q')` |
+| Method | Type | Example |
+| --- | --- | --- |
+| `shortcut(...)` | `Api::Shortcut` | `.shortcut(Api::Shortcut::Ctrl(L'Q'))` |
+| `onClick(...)` | callback | `.onClick([] { App::Quit(); })` |
 
 </details>
 
@@ -396,11 +416,7 @@ Currently shortcuts are displayed in the native menu. Keyboard handling is not i
 Column(
     Button(L"Top"),
     Button(L"Bottom")
-).set({
-    .gap = 8,
-    .mainAxisAlignment = MainAxisAlignment::Center,
-    .crossAxisAlignment = CrossAxisAlignment::Stretch
-})
+).gap(8)
 ```
 
 ### Row
@@ -408,11 +424,8 @@ Column(
 ```c++
 Row(
     Button(L"One"),
-    Button(L"Two").set({ .layout = { .flex = 1 } })
-).set({
-    .gap = 8,
-    .crossAxisAlignment = CrossAxisAlignment::Center
-})
+    Button(L"Two").flex(1)
+).gap(8)
 ```
 
 ### Stack
@@ -424,57 +437,15 @@ Stack(
 )
 ```
 
-<a id="column-and-row-properties"></a>
+<a id="layout-methods"></a>
 <details>
-<summary>Supported <code>ColumnProps</code> and <code>RowProps</code></summary>
+<summary>Supported layout methods</summary>
 
-| Property | Type | Default | Example |
-| --- | --- | --- | --- |
-| `gap` | `int` | `0` | `8` |
-| `layout` | `Api::LayoutProps` | default layout | `{ .padding = {8} }` |
-| `mainAxisAlignment` | `MainAxisAlignment` | `Start` | `MainAxisAlignment::Center` |
-| `crossAxisAlignment` | `CrossAxisAlignment` | `Stretch` | `CrossAxisAlignment::Center` |
-
-</details>
-
-<a id="stack-properties"></a>
-<details>
-<summary>Supported <code>StackProps</code></summary>
-
-| Property | Type | Default | Example |
-| --- | --- | --- | --- |
-| `layout` | `Api::LayoutProps` | default layout | `{ .padding = {8} }` |
-
-</details>
-
-<a id="layout-properties"></a>
-<details>
-<summary>Supported <code>Api::LayoutProps</code></summary>
-
-| Property | Type | Default | Example |
-| --- | --- | --- | --- |
-| `margin` | `Api::Thickness` | `{}` | `{8}` |
-| `padding` | `Api::Thickness` | `{}` | `{4, 8, 4, 8}` |
-| `flex` | `int` | `0` | `1` |
-
-</details>
-
-<a id="alignment-values"></a>
-<details>
-<summary>Supported alignment values</summary>
-
-```c++
-MainAxisAlignment::Start
-MainAxisAlignment::Center
-MainAxisAlignment::End
-MainAxisAlignment::SpaceBetween
-MainAxisAlignment::SpaceAround
-MainAxisAlignment::SpaceEvenly
-
-CrossAxisAlignment::Start
-CrossAxisAlignment::Center
-CrossAxisAlignment::End
-CrossAxisAlignment::Stretch
-```
+| Method | Applies to | Example |
+| --- | --- | --- |
+| `gap(...)` | `Column`, `Row` | `.gap(8)` |
+| `flex(...)` | child widgets inside layout | `Button(L"Two").flex(1)` |
+| `padding(...)` | widgets and layout containers | `Column(...).padding(8)` |
+| `size(...)` | widgets and root widgets | `Button(L"Run").size({120, 40})` |
 
 </details>

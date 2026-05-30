@@ -117,7 +117,12 @@ auto ResourceManager::image(const Api::Text& path) -> Gdiplus::Image*
     if (const auto it = m_images.find(path); it != m_images.end()) return it->second.get();
 
     auto image = std::make_unique<Gdiplus::Image>(path.c_str());
-    if (!image || image->GetLastStatus() != Gdiplus::Ok) return nullptr;
+    if (!image || image->GetLastStatus() != Gdiplus::Ok)
+    {
+        // TODO change: add explicit resource cache invalidation when runtime reload is supported.
+        m_images[path] = nullptr;
+        return nullptr;
+    }
 
     auto* handle = image.get();
     m_images[path] = std::move(image);

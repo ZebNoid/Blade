@@ -67,11 +67,11 @@ Render definitions should be stored as flat command sequences per widget state:
 
 - [ ] Introduce a render context so `RenderApi` does not depend on `ResourceManager` directly.
 - [ ] Introduce proper render surfaces/layers.
-- [ ] Support hover and dragOver state for window-level virtual surfaces.
-- [ ] Support context menus for window-level virtual surfaces and areas.
 - [ ] Allow static virtual elements such as labels to opt out of hit-testing and pass input to elements behind them.
 - [ ] Make modifier chains like `padding().background().padding().background()` semantically correct.
 - [ ] Move away from sibling child `HWND` composition limitations.
+- [x] Support hover and dragOver state for window-level virtual surfaces.
+- [x] Support context menus for window-level virtual surfaces and areas.
 - [x] Support basic render state switching for custom-based widgets.
 - [x] Move window-level virtual paint and event routing out of `NativeNodeFactory`.
 - [x] Add custom render `Surface`.
