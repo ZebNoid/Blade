@@ -12,6 +12,22 @@ class NativeWindow;
 class ResourceManager;
 class RenderRegistry;
 
+struct RenderSurfaceEvents
+{
+    bool click = false;
+    bool focus = false;
+    bool drop = false;
+};
+
+struct RenderSurfaceState
+{
+    bool visible = true;
+    bool hovered = false;
+    bool pressed = false;
+    bool focused = false;
+    bool dragOver = false;
+};
+
 class RenderSurface : public NativeElement
 {
 public:
@@ -38,14 +54,8 @@ private:
 
 private:
     Api::Rect m_rect{};
-    bool m_visible = true;
-    bool m_emitDrop = false;
-    bool m_emitClick = false;
-    bool m_emitFocus = false;
-    bool m_hovered = false;
-    bool m_pressed = false;
-    bool m_focused = false;
-    bool m_dragOver = false;
+    RenderSurfaceEvents m_events;
+    RenderSurfaceState m_state;
     Api::ContextMenus m_contextMenus;
 };
 

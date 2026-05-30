@@ -12,7 +12,23 @@ class RenderRegistry;
 class ResourceManager;
 struct NativeCreateContext;
 
-// TODO change move to custom Surface and change to native STATIC
+struct NativeLabelEvents
+{
+    bool click = false;
+    bool focus = false;
+    bool drop = false;
+};
+
+struct NativeLabelState
+{
+    bool visible = true;
+    bool pressed = false;
+    bool focused = false;
+    bool hovered = false;
+    bool dragOver = false;
+};
+
+// TODO change move to custom Surface / change to native STATIC
 class NativeLabel : public NativeElement
 {
 public:
@@ -39,14 +55,8 @@ private:
 private:
     Api::Text m_text;
     Api::Rect m_rect{};
-    bool m_visible = true;
-    bool m_emitClick = false;
-    bool m_emitFocus = false;
-    bool m_emitDrop = false;
-    bool m_pressed = false;
-    bool m_focused = false;
-    bool m_hovered = false;
-    bool m_dragOver = false;
+    NativeLabelEvents m_events;
+    NativeLabelState m_state;
     Api::ContextMenus m_contextMenus;
 };
 

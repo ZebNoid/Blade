@@ -37,7 +37,7 @@ auto NativeLabel::applyProps(const Api::PropertyMap& propertyMap) -> void
 {
     if (const auto* text = PropertyReader::Get<Api::Text>(propertyMap, Api::Props::Title)) m_text = *text;
     if (const auto* rect = PropertyReader::Get<Api::Rect>(propertyMap, Api::Props::Rect)) m_rect = *rect;
-    if (const auto* visible = PropertyReader::Get<bool>(propertyMap, Api::Props::Visible)) m_visible = *visible;
+    if (const auto* visible = PropertyReader::Get<bool>(propertyMap, Api::Props::Visible)) m_state.visible = *visible;
     if (const auto* menus = PropertyReader::Get<Api::ContextMenus>(propertyMap, Api::Props::ContextMenus)) m_contextMenus = *menus;
 
     HwndApi::Invalidate(m_hwnd);
@@ -45,9 +45,9 @@ auto NativeLabel::applyProps(const Api::PropertyMap& propertyMap) -> void
 
 auto NativeLabel::applyEvents(const Api::EventSubscriptions& events) -> void
 {
-    m_emitClick = HasEvent(events, Api::Events::Click);
-    m_emitFocus = HasEvent(events, Api::Events::Focus);
-    m_emitDrop = HasEvent(events, Api::Events::Drop);
+    m_events.click = HasEvent(events, Api::Events::Click);
+    m_events.focus = HasEvent(events, Api::Events::Focus);
+    m_events.drop = HasEvent(events, Api::Events::Drop);
 }
 
 auto NativeLabel::isAlive() const -> bool
@@ -61,7 +61,7 @@ auto NativeLabel::attachChild(INativeElement*) -> void
 
 auto NativeLabel::paint(HDC hdc, ResourceManager& resources, RenderRegistry& renderNodes) -> void
 {
-    if (!m_visible) return;
+    if (!m_state.visible) return;
 
     const auto* node = renderNodes.get(m_id);
     if (node) GdiPlusRenderApi::Draw(hdc, m_rect, node->render.forState(node->state), resources);
@@ -72,7 +72,7 @@ auto NativeLabel::paint(HDC hdc, ResourceManager& resources, RenderRegistry& ren
 
 auto NativeLabel::hitTest(Api::Point point) const -> bool
 {
-    if (!m_visible) return false;
+    if (!m_state.visible) return false;
     return point.x >= m_rect.x
         && point.y >= m_rect.y
         && point.x < m_rect.x + m_rect.width
@@ -81,7 +81,7 @@ auto NativeLabel::hitTest(Api::Point point) const -> bool
 
 auto NativeLabel::wantsDrop() const -> bool
 {
-    return m_emitDrop;
+    return m_events.drop;
 }
 
 auto NativeLabel::hasContextMenu(Api::MenuTrigger trigger) const -> bool
@@ -109,31 +109,31 @@ auto NativeLabel::setState(RenderRegistry& renderNodes, Api::WidgetState state) 
 
 auto NativeLabel::hover(RenderRegistry& renderNodes, bool hovered) -> bool
 {
-    if (m_hovered == hovered) return false;
-    m_hovered = hovered;
+    if (m_state.hovered == hovered) return false;
+    m_state.hovered = hovered;
     return updateState(renderNodes);
 }
 
 auto NativeLabel::dragOver(RenderRegistry& renderNodes, bool active) -> bool
 {
-    if (m_dragOver == active) return false;
-    m_dragOver = active;
+    if (m_state.dragOver == active) return false;
+    m_state.dragOver = active;
     return updateState(renderNodes);
 }
 
 auto NativeLabel::mouseDown(RenderRegistry& renderNodes) -> bool
 {
-    m_pressed = true;
+    m_state.pressed = true;
     return updateState(renderNodes);
 }
 
 auto NativeLabel::mouseUp(RenderRegistry& renderNodes) -> bool
 {
-    const auto wasPressed = m_pressed;
-    m_pressed = false;
+    const auto wasPressed = m_state.pressed;
+    m_state.pressed = false;
     const auto changed = updateState(renderNodes);
 
-    if (wasPressed && m_emitClick)
+    if (wasPressed && m_events.click)
     {
         auto* parentWindow = dynamic_cast<NativeWindow*>(m_parent);
         if (parentWindow)
@@ -150,12 +150,12 @@ auto NativeLabel::mouseUp(RenderRegistry& renderNodes) -> bool
 
 auto NativeLabel::focus(RenderRegistry& renderNodes, bool focused) -> bool
 {
-    if (m_focused == focused) return false;
+    if (m_state.focused == focused) return false;
 
-    m_focused = focused;
+    m_state.focused = focused;
     const auto changed = updateState(renderNodes);
 
-    if (m_emitFocus)
+    if (m_events.focus)
     {
         auto* parentWindow = dynamic_cast<NativeWindow*>(m_parent);
         if (parentWindow)
@@ -173,10 +173,10 @@ auto NativeLabel::focus(RenderRegistry& renderNodes, bool focused) -> bool
 
 auto NativeLabel::updateState(RenderRegistry& renderNodes) -> bool
 {
-    if (m_dragOver) return setState(renderNodes, Api::WidgetState::DragOver);
-    if (m_pressed) return setState(renderNodes, Api::WidgetState::Pressed);
-    if (m_hovered) return setState(renderNodes, Api::WidgetState::Hover);
-    if (m_focused) return setState(renderNodes, Api::WidgetState::Focus);
+    if (m_state.dragOver) return setState(renderNodes, Api::WidgetState::DragOver);
+    if (m_state.pressed) return setState(renderNodes, Api::WidgetState::Pressed);
+    if (m_state.hovered) return setState(renderNodes, Api::WidgetState::Hover);
+    if (m_state.focused) return setState(renderNodes, Api::WidgetState::Focus);
     return setState(renderNodes, Api::WidgetState::Normal);
 }
 

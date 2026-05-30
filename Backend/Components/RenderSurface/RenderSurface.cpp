@@ -36,18 +36,18 @@ auto RenderSurface::create(NativeWindow* parent, Api::Id id, const NativeCreateC
 auto RenderSurface::applyProps(const Api::PropertyMap& propertyMap) -> void
 {
     if (const auto* rect = PropertyReader::Get<Api::Rect>(propertyMap, Api::Props::Rect)) m_rect = *rect;
-    if (const auto* visible = PropertyReader::Get<bool>(propertyMap, Api::Props::Visible)) m_visible = *visible;
+    if (const auto* visible = PropertyReader::Get<bool>(propertyMap, Api::Props::Visible)) m_state.visible = *visible;
     if (const auto* menus = PropertyReader::Get<Api::ContextMenus>(propertyMap, Api::Props::ContextMenus)) m_contextMenus = *menus;
-    if (const auto* dropTarget = PropertyReader::Get<bool>(propertyMap, Api::Props::DropTarget); dropTarget && *dropTarget) m_emitDrop = true;
+    if (const auto* dropTarget = PropertyReader::Get<bool>(propertyMap, Api::Props::DropTarget); dropTarget && *dropTarget) m_events.drop = true;
 
     HwndApi::Invalidate(m_hwnd);
 }
 
 auto RenderSurface::applyEvents(const Api::EventSubscriptions& events) -> void
 {
-    m_emitClick = HasEvent(events, Api::Events::Click);
-    m_emitFocus = HasEvent(events, Api::Events::Focus);
-    if (HasEvent(events, Api::Events::Drop)) m_emitDrop = true;
+    m_events.click = HasEvent(events, Api::Events::Click);
+    m_events.focus = HasEvent(events, Api::Events::Focus);
+    if (HasEvent(events, Api::Events::Drop)) m_events.drop = true;
 }
 
 auto RenderSurface::isAlive() const -> bool
@@ -61,7 +61,7 @@ auto RenderSurface::attachChild(INativeElement*) -> void
 
 auto RenderSurface::paint(HDC hdc, ResourceManager& resources, RenderRegistry& renderNodes) -> void
 {
-    if (!m_visible) return;
+    if (!m_state.visible) return;
 
     const auto* node = renderNodes.get(m_id);
     if (!node) return;
@@ -71,7 +71,7 @@ auto RenderSurface::paint(HDC hdc, ResourceManager& resources, RenderRegistry& r
 
 auto RenderSurface::hitTest(Api::Point point) const -> bool
 {
-    if (!m_visible) return false;
+    if (!m_state.visible) return false;
     return point.x >= m_rect.x
         && point.y >= m_rect.y
         && point.x < m_rect.x + m_rect.width
@@ -80,7 +80,7 @@ auto RenderSurface::hitTest(Api::Point point) const -> bool
 
 auto RenderSurface::wantsDrop() const -> bool
 {
-    return m_emitDrop;
+    return m_events.drop;
 }
 
 auto RenderSurface::hasContextMenu(Api::MenuTrigger trigger) const -> bool
@@ -103,49 +103,49 @@ auto RenderSurface::showContextMenu(Api::MenuTrigger trigger, POINT screenPoint)
 
 auto RenderSurface::currentRenderState() const -> Api::WidgetState
 {
-    if (m_dragOver) return Api::WidgetState::DragOver;
-    if (m_pressed) return Api::WidgetState::Pressed;
-    if (m_hovered) return Api::WidgetState::Hover;
-    if (m_focused) return Api::WidgetState::Focus;
+    if (m_state.dragOver) return Api::WidgetState::DragOver;
+    if (m_state.pressed) return Api::WidgetState::Pressed;
+    if (m_state.hovered) return Api::WidgetState::Hover;
+    if (m_state.focused) return Api::WidgetState::Focus;
     return Api::WidgetState::Normal;
 }
 
 auto RenderSurface::hover(RenderRegistry& renderNodes, bool hovered) -> bool
 {
-    if (m_hovered == hovered) return false;
-    m_hovered = hovered;
+    if (m_state.hovered == hovered) return false;
+    m_state.hovered = hovered;
     return updateState(renderNodes);
 }
 
 auto RenderSurface::dragOver(RenderRegistry& renderNodes, bool active) -> bool
 {
-    if (m_dragOver == active) return false;
-    m_dragOver = active;
+    if (m_state.dragOver == active) return false;
+    m_state.dragOver = active;
     return updateState(renderNodes);
 }
 
 auto RenderSurface::mouseDown(RenderRegistry& renderNodes) -> bool
 {
-    m_pressed = true;
+    m_state.pressed = true;
     return updateState(renderNodes);
 }
 
 auto RenderSurface::mouseUp(RenderRegistry& renderNodes) -> bool
 {
-    const auto wasPressed = m_pressed;
-    m_pressed = false;
+    const auto wasPressed = m_state.pressed;
+    m_state.pressed = false;
     const auto changed = updateState(renderNodes);
-    if (wasPressed && m_emitClick) emit(Api::Events::Click);
+    if (wasPressed && m_events.click) emit(Api::Events::Click);
     return changed;
 }
 
 auto RenderSurface::focus(RenderRegistry& renderNodes, bool focused) -> bool
 {
-    if (m_focused == focused) return false;
+    if (m_state.focused == focused) return false;
 
-    m_focused = focused;
+    m_state.focused = focused;
     const auto changed = updateState(renderNodes);
-    if (m_emitFocus) emit(Api::Events::Focus, focused);
+    if (m_events.focus) emit(Api::Events::Focus, focused);
     return changed;
 }
 
