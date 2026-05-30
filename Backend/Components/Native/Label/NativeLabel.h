@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Geometry/Rect.h"
+#include "Menu/MenuData.h"
 #include "Render/RenderOp.h"
 #include "WinApi/NativeElement/NativeElement.h"
 
@@ -22,6 +23,8 @@ public:
     auto paint(HDC hdc, ResourceManager& resources, RenderRegistry& renderNodes) -> void;
     auto hitTest(Api::Point point) const -> bool;
     auto wantsDrop() const -> bool;
+    auto hasContextMenu(Api::MenuTrigger trigger) const -> bool;
+    auto showContextMenu(Api::MenuTrigger trigger, POINT screenPoint) -> bool;
     auto setState(RenderRegistry& renderNodes, Api::WidgetState state) -> bool;
     auto mouseDown(RenderRegistry& renderNodes) -> bool;
     auto mouseUp(RenderRegistry& renderNodes) -> bool;
@@ -36,6 +39,7 @@ private:
     bool m_emitDrop = false;
     bool m_pressed = false;
     bool m_focused = false;
+    Api::ContextMenus m_contextMenus;
 };
 
 } // namespace Blade::Backend

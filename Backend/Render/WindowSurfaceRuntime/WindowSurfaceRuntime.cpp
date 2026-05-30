@@ -28,6 +28,17 @@ auto ToClientPoint(HWND hwnd, POINT point) -> Api::Point
     return {point.x, point.y};
 }
 
+auto ScreenPoint(HWND hwnd, LPARAM lParam) -> POINT
+{
+    POINT point{
+        .x = GET_X_LPARAM(lParam),
+        .y = GET_Y_LPARAM(lParam)
+    };
+
+    ClientToScreen(hwnd, &point);
+    return point;
+}
+
 auto PaintLabels(AppBackend& backend, HDC hdc) -> void
 {
     backend.nodes().forEach(
@@ -88,6 +99,16 @@ auto LabelById(AppBackend& backend, Api::Id id) -> NativeLabel*
     return node ? dynamic_cast<NativeLabel*>(node->native.get()) : nullptr;
 }
 
+auto ShowContextMenu(AppBackend& backend, HWND hwnd, Api::Point point, POINT screenPoint, Api::MenuTrigger trigger) -> bool
+{
+    auto* label = HitLabel(backend, point);
+    if (!label || !label->hasContextMenu(trigger)) return false;
+
+    const auto shown = label->showContextMenu(trigger, screenPoint);
+    if (shown) HwndApi::Invalidate(hwnd);
+    return shown;
+}
+
 } // namespace
 
 auto WindowSurfaceRuntime::Attach(AppBackend& backend, NativeWindow& window) -> void
@@ -146,14 +167,41 @@ auto WindowSurfaceRuntime::Attach(AppBackend& backend, NativeWindow& window) -> 
 
     window.router().on(
         WM_LBUTTONUP,
-        [&backend, pressedLabel](HWND hwnd, UINT, WPARAM, LPARAM) -> int
+        [&backend, pressedLabel](HWND hwnd, UINT, WPARAM, LPARAM lParam) -> int
         {
-            if (*pressedLabel == Api::InvalidId) return 1;
+            const auto menuShown = ShowContextMenu(backend, hwnd, PointFromLParam(lParam), ScreenPoint(hwnd, lParam), Api::MenuTrigger::LeftClick);
 
-            if (GetCapture() == hwnd) ReleaseCapture();
-            if (auto* label = LabelById(backend, *pressedLabel); label && label->mouseUp(backend.renderNodes())) HwndApi::Invalidate(hwnd);
-            *pressedLabel = Api::InvalidId;
-            return 0;
+            if (*pressedLabel != Api::InvalidId)
+            {
+                if (GetCapture() == hwnd) ReleaseCapture();
+                if (auto* label = LabelById(backend, *pressedLabel); label && label->mouseUp(backend.renderNodes())) HwndApi::Invalidate(hwnd);
+                *pressedLabel = Api::InvalidId;
+                return 0;
+            }
+
+            return menuShown ? 0 : 1;
+        }
+    );
+
+    window.router().on(
+        WM_MBUTTONUP,
+        [&backend](HWND hwnd, UINT, WPARAM, LPARAM lParam) -> int
+        {
+            return ShowContextMenu(backend, hwnd, PointFromLParam(lParam), ScreenPoint(hwnd, lParam), Api::MenuTrigger::MiddleClick) ? 0 : 1;
+        }
+    );
+
+    window.router().on(
+        WM_CONTEXTMENU,
+        [&backend, &window](HWND hwnd, UINT, WPARAM, LPARAM lParam) -> int
+        {
+            POINT screenPoint{
+                .x = GET_X_LPARAM(lParam),
+                .y = GET_Y_LPARAM(lParam)
+            };
+
+            const auto clientPoint = ToClientPoint(window.handle(), screenPoint);
+            return ShowContextMenu(backend, hwnd, clientPoint, screenPoint, Api::MenuTrigger::RightClick) ? 0 : 1;
         }
     );
 }

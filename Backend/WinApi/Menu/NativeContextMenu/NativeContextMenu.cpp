@@ -58,6 +58,16 @@ auto AppendMenuItem(HMENU menu, const Api::MenuItemData& item) -> void
     AppendMenuW(menu, MF_STRING, MenuItemId(item.id), title.c_str());
 }
 
+auto Find(const Api::ContextMenus& menus, Api::MenuTrigger trigger) -> const Api::MenuData*
+{
+    for (const auto& menu : menus)
+    {
+        if (Api::Has(menu.trigger, trigger)) return &menu;
+    }
+
+    return nullptr;
+}
+
 } // namespace
 
 NativeContextMenu::~NativeContextMenu()
@@ -82,6 +92,29 @@ auto NativeContextMenu::attach(HWND hwnd, Api::Id ownerId, CommandRouter& router
     }
 
     LOGF_D(L"NativeContextMenu::Attach id=%d hwnd=%p", m_ownerId, hwnd);
+    return true;
+}
+
+auto NativeContextMenu::Show(HWND hwnd, CommandRouter& router, const Api::ContextMenus& menus, Api::MenuTrigger trigger, POINT point) -> bool
+{
+    const auto* data = Find(menus, trigger);
+    if (!hwnd || !data || data->items.empty()) return false;
+
+    auto menu = CreatePopupMenu();
+    if (!menu) return false;
+
+    for (const auto& item : data->items) AppendMenuItem(menu, item);
+
+    const auto command = TrackPopupMenuEx(menu, TPM_RETURNCMD | TPM_RIGHTBUTTON, point.x, point.y, hwnd, nullptr);
+    DestroyMenu(menu);
+
+    if (command == 0) return true;
+
+    router.emit({
+        .target = static_cast<Api::Id>(command),
+        .type = Api::Events::Click
+    });
+
     return true;
 }
 
@@ -119,25 +152,7 @@ auto NativeContextMenu::handle(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam
 
 auto NativeContextMenu::show(Api::MenuTrigger trigger, POINT point) -> bool
 {
-    const auto* data = find(trigger);
-    if (!data || data->items.empty()) return false;
-
-    auto menu = CreatePopupMenu();
-    if (!menu) return false;
-
-    for (const auto& item : data->items) AppendMenuItem(menu, item);
-
-    const auto command = TrackPopupMenuEx(menu, TPM_RETURNCMD | TPM_RIGHTBUTTON, point.x, point.y, m_hwnd, nullptr);
-    DestroyMenu(menu);
-
-    if (command == 0 || !m_router) return true;
-
-    m_router->emit({
-        .target = static_cast<Api::Id>(command),
-        .type = Api::Events::Click
-    });
-
-    return true;
+    return m_router ? Show(m_hwnd, *m_router, m_menus, trigger, point) : false;
 }
 
 auto NativeContextMenu::showAtCursor(Api::MenuTrigger trigger) -> bool
@@ -160,12 +175,7 @@ auto NativeContextMenu::showAtClientPoint(Api::MenuTrigger trigger, LPARAM lPara
 
 auto NativeContextMenu::find(Api::MenuTrigger trigger) const -> const Api::MenuData*
 {
-    for (const auto& menu : m_menus)
-    {
-        if (Api::Has(menu.trigger, trigger)) return &menu;
-    }
-
-    return nullptr;
+    return Find(m_menus, trigger);
 }
 
 } // namespace Blade::Backend

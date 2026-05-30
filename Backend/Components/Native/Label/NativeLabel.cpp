@@ -7,6 +7,7 @@
 #include "Property/PropertyReader.h"
 #include "Render/RenderRegistry/RenderRegistry.h"
 #include "Resource/ResourceManager/ResourceManager.h"
+#include "WinApi/Menu/NativeContextMenu/NativeContextMenu.h"
 #include "WinApi/HwndApi/HwndApi.h"
 #include "WinApi/Render/GdiPlusRenderApi/GdiPlusRenderApi.h"
 #include "WinApi/Render/RenderApi/RenderApi.h"
@@ -37,6 +38,7 @@ auto NativeLabel::applyProps(const Api::PropertyMap& propertyMap) -> void
     if (const auto* text = PropertyReader::Get<Api::Text>(propertyMap, Api::Props::Title)) m_text = *text;
     if (const auto* rect = PropertyReader::Get<Api::Rect>(propertyMap, Api::Props::Rect)) m_rect = *rect;
     if (const auto* visible = PropertyReader::Get<bool>(propertyMap, Api::Props::Visible)) m_visible = *visible;
+    if (const auto* menus = PropertyReader::Get<Api::ContextMenus>(propertyMap, Api::Props::ContextMenus)) m_contextMenus = *menus;
 
     HwndApi::Invalidate(m_hwnd);
 }
@@ -80,6 +82,24 @@ auto NativeLabel::hitTest(Api::Point point) const -> bool
 auto NativeLabel::wantsDrop() const -> bool
 {
     return m_emitDrop;
+}
+
+auto NativeLabel::hasContextMenu(Api::MenuTrigger trigger) const -> bool
+{
+    for (const auto& menu : m_contextMenus)
+    {
+        if (Api::Has(menu.trigger, trigger)) return true;
+    }
+
+    return false;
+}
+
+auto NativeLabel::showContextMenu(Api::MenuTrigger trigger, POINT screenPoint) -> bool
+{
+    auto* parentWindow = dynamic_cast<NativeWindow*>(m_parent);
+    if (!parentWindow) return false;
+
+    return NativeContextMenu::Show(parentWindow->handle(), parentWindow->commandRouter(), m_contextMenus, trigger, screenPoint);
 }
 
 auto NativeLabel::setState(RenderRegistry& renderNodes, Api::WidgetState state) -> bool

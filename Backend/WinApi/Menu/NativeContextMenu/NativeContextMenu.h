@@ -14,6 +14,8 @@ public:
     NativeContextMenu() = default;
     ~NativeContextMenu();
 
+    static auto Show(HWND hwnd, CommandRouter& router, const Api::ContextMenus& menus, Api::MenuTrigger trigger, POINT point) -> bool;
+
     auto attach(HWND hwnd, Api::Id ownerId, CommandRouter& router, Api::ContextMenus menus) -> bool;
     auto showAtCursor(Api::MenuTrigger trigger) -> bool;
 
