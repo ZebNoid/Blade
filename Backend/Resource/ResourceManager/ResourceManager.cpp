@@ -1,6 +1,7 @@
 #include "ResourceManager.h"
 
 #include "WinApi/Resource/FontApi/FontApi.h"
+#include "WinApi/Theme/ThemeApi/ThemeApi.h"
 
 namespace Blade::Backend {
 
@@ -20,6 +21,16 @@ auto ResourceManager::defaultFont() -> HFONT
     if (!m_defaultFont) m_defaultFont = FontApi::DefaultGuiFont();
 
     return m_defaultFont;
+}
+
+auto ResourceManager::windowBrush() -> HBRUSH
+{
+    return ThemeApi::WindowBrush();
+}
+
+auto ResourceManager::windowTextColor() -> COLORREF
+{
+    return ThemeApi::WindowTextColor();
 }
 
 } // namespace Blade::Backend

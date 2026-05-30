@@ -26,6 +26,7 @@ public:
 
     static auto SetRect(HWND hwnd, const Api::Rect& rect) -> void;
     static auto SetClientRect(HWND hwnd, const Api::Rect& rect) -> void;
+    static auto GetClientRect(HWND hwnd) -> Api::Rect;
     static auto GetSize(HWND hwnd) -> Api::Size;
     static auto SetPosition(HWND hwnd, const Api::Point& position) -> void;
     static auto BringToFront(HWND hwnd) -> void;
@@ -36,6 +37,7 @@ public:
 
     static auto Show(HWND hwnd, int cmdShow = SW_SHOW) -> void;
     static auto SetVisible(HWND hwnd, bool visible) -> void;
+    static auto Invalidate(HWND hwnd) -> void;
     static auto Update(HWND hwnd) -> void;
     static auto Close(HWND hwnd) -> void;
     static auto Destroy(HWND hwnd) -> void;

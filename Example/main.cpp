@@ -106,6 +106,12 @@ protected:
         *windowId = Window(
             Column(
                 Button(L"Flex") //.set({.layout = {.flex = 1,},})
+                , Stack(
+                    Button(L"Flex")
+                    ,Button(L"Flex").set({.layout = {.margin = 8, }})
+                    , Label(L"------------ Native Label ------------------------------------").set({.layout = {.margin = 16, }})
+                    , Label(L" | | | | | | Native Label").set({.layout = {.margin = 12, }})
+                )
                 , ContextArea(
                     Column().set({.layout = {.flex = 1,},})
                     // Button(L"File") //.set({.layout = {.flex = 1,},})

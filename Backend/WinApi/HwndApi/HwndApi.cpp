@@ -78,6 +78,13 @@ auto HwndApi::SetClientRect(HWND hwnd, const Api::Rect& rect) -> void
     SetRect(hwnd, {rect.position(), ToOuterSize(hwnd, rect.size())});
 }
 
+auto HwndApi::GetClientRect(HWND hwnd) -> Api::Rect
+{
+    RECT rect{};
+    if (::GetClientRect(hwnd, &rect)) return {0, 0, rect.right - rect.left, rect.bottom - rect.top};
+    return {};
+}
+
 auto HwndApi::GetSize(HWND hwnd) -> Api::Size
 {
     RECT rect;
@@ -153,6 +160,11 @@ auto HwndApi::SetVisible(HWND hwnd, bool visible) -> void
     {
         Update(hwnd);
     }
+}
+
+auto HwndApi::Invalidate(HWND hwnd) -> void
+{
+    InvalidateRect(hwnd, nullptr, TRUE);
 }
 
 auto HwndApi::Update(HWND hwnd) -> void

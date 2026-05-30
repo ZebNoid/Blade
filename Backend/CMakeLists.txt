@@ -41,6 +41,10 @@ add_library(${PROJECT_NAME} STATIC
         WinApi/HwndApi/HwndApi.h
         WinApi/Display/DisplayApi/DisplayApi.cpp
         WinApi/Display/DisplayApi/DisplayApi.h
+        WinApi/Theme/ThemeApi/ThemeApi.cpp
+        WinApi/Theme/ThemeApi/ThemeApi.h
+        WinApi/Render/RenderApi/RenderApi.cpp
+        WinApi/Render/RenderApi/RenderApi.h
         WinApi/Resource/ImageLoader/ImageLoader.cpp
         WinApi/Resource/ImageLoader/ImageLoader.h
         WinApi/Resource/FontApi/FontApi.cpp
@@ -91,6 +95,10 @@ add_library(${PROJECT_NAME} STATIC
         Components/Tray/NativeTrayApi/NativeTrayApi.h
         Components/ContextArea/NativeContextArea.cpp
         Components/ContextArea/NativeContextArea.h
+        Components/Custom/NativeCustom/NativeCustom.cpp
+        Components/Custom/NativeCustom/NativeCustom.h
+        Components/Label/NativeLabel/NativeLabel.cpp
+        Components/Label/NativeLabel/NativeLabel.h
         Components/Button/NativeButton.cpp
         Components/Button/NativeButton.h
         Components/Button/NativeButtonApi/NativeButtonApi.cpp

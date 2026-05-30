@@ -16,6 +16,8 @@ public:
     auto operator=(ResourceManager&&) -> ResourceManager& = delete;
 
     auto defaultFont() -> HFONT;
+    auto windowBrush() -> HBRUSH;
+    auto windowTextColor() -> COLORREF;
 
 private:
     HFONT m_defaultFont = nullptr;

@@ -28,6 +28,8 @@ private:
 
     auto createContextArea(const Api::ElementCommand& command) -> std::optional<NativeNode>;
 
+    auto createLabel(const Api::ElementCommand& command) -> std::optional<NativeNode>;
+
     auto createTray(const Api::ElementCommand& command) -> std::optional<NativeNode>;
 
 private:
