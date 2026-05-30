@@ -3,7 +3,7 @@
 #include <optional>
 #include <windows.h>
 
-#include "Common/MenuData.h"
+#include "Menu/MenuData.h"
 #include "WinApi/Router/CommandRouter/CommandRouter.h"
 
 namespace Blade::Backend {

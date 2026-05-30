@@ -13,6 +13,9 @@ add_library(${PROJECT_NAME} INTERFACE
         Command/ElementCommandType.h
         Message/BackendMessage.h
         Message/BackendMessageType.h
+        Menu/MenuData.h
+        Menu/MenuTrigger.h
+        Menu/Shortcut.h
         Render/RenderCommand.h
         Render/RenderCommandType.h
         Render/RenderOp.h
@@ -26,9 +29,6 @@ add_library(${PROJECT_NAME} INTERFACE
         Common/Modifier.h
         Common/LayoutProps.h
         Common/Lifetime.h
-        Common/MenuData.h
-        Common/MenuTrigger.h
-        Common/Shortcut.h
         Common/Rect.h
         Common/Size.h
         Common/Point.h

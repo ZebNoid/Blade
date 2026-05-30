@@ -2,9 +2,9 @@
 
 #include <vector>
 
-#include "MenuTrigger.h"
-#include "Shortcut.h"
-#include "Types.h"
+#include "Common/Types.h"
+#include "Menu/MenuTrigger.h"
+#include "Menu/Shortcut.h"
 
 namespace Blade::Api {
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Common/Shortcut.h"
+#include "Menu/Shortcut.h"
 #include "Runtime/Normalize/PropsVisitor.h"
 
 namespace Blade {

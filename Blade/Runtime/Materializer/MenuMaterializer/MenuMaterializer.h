@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Base/WidgetTree.h"
-#include "Common/MenuData.h"
+#include "Menu/MenuData.h"
 
 namespace Blade {
 

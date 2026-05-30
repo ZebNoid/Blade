@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Common/MenuTrigger.h"
+#include "Menu/MenuTrigger.h"
 #include "Runtime/Normalize/PropsVisitor.h"
 
 namespace Blade {
