@@ -3,9 +3,9 @@
 #include <unordered_map>
 #include <vector>
 
-#include "Common/ComponentType.h"
 #include "Common/Types.h"
-#include "Common/WidgetType.h"
+#include "Widget/ComponentType.h"
+#include "Widget/WidgetType.h"
 
 namespace Blade::Backend {
 

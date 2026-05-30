@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Common/ComponentType.h"
+#include "Widget/ComponentType.h"
 
 namespace Blade::Backend::UI {
 

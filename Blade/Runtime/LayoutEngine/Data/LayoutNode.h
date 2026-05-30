@@ -7,7 +7,7 @@
 #include "Common/Rect.h"
 #include "Common/Size.h"
 #include "Common/Types.h"
-#include "Common/WidgetType.h"
+#include "Widget/WidgetType.h"
 #include "LayoutType.h"
 
 

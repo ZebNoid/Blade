@@ -17,10 +17,10 @@ add_library(${PROJECT_NAME} INTERFACE
         Render/RenderCommandType.h
         Render/RenderOp.h
         Fabric/WindowPlacement.h
+        Widget/WidgetType.h
+        Widget/ComponentType.h
 
         Common/Types.h
-        Common/WidgetType.h
-        Common/ComponentType.h
         Common/Color.h
         Common/Thickness.h
         Common/Modifier.h

@@ -3,7 +3,7 @@
 #include "Command/ElementCommandType.h"
 #include "Common/Property.h"
 #include "Common/Types.h"
-#include "Common/WidgetType.h"
+#include "Widget/WidgetType.h"
 
 
 namespace Blade::Api {

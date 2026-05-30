@@ -4,7 +4,7 @@ This file keeps the project direction visible. It is not a micro-task list.
 
 ## Current Focus
 
-- [ ] Reorganize overloaded `Api/Common` into focused API folders.
+- [ ] Continue reorganizing overloaded `Api/Common` into focused API folders.
 - [ ] Add future render backends with proper surfaces/layers.
 - [ ] Move from a simple native-widget wrapper toward a declarative UI runtime.
 - [x] Add backend-specific widget bindings.
@@ -39,6 +39,7 @@ Api::WidgetTypes::Label  -> Api::ComponentTypes::Label
 - [ ] Keep debug names separate from runtime ids.
 - [ ] Allow overriding mappings with non-standard backend components, such as `Button -> CustomButton`.
 - [x] Prioritize root component ids before controls, such as `Window`, `Tray`, then `Button`.
+- [x] Move `WidgetType` and `ComponentType` from `Api/Common` to `Api/Widget`.
 - [x] Add `Api::ComponentType` for backend component identity.
 - [x] Add public `Backend::UI::*` aliases for standard backend component ids.
 - [x] Add default binding and supported component introspection on backend.

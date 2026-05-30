@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Common/Types.h"
-#include "Common/WidgetType.h"
+#include "Widget/WidgetType.h"
 #include "WinApi/NativeElement/INativeElement.h"
 
 

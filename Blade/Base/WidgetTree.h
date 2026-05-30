@@ -7,7 +7,7 @@
 #include "Common/Modifier.h"
 #include "Common/Property.h"
 #include "Common/Types.h"
-#include "Common/WidgetType.h"
+#include "Widget/WidgetType.h"
 #include "Runtime/LayoutEngine/Data/LayoutType.h"
 #include "Runtime/LayoutEngine/Data/LayoutData.h"
 #include "Runtime/Normalize/NormalizedProps.h"

@@ -4,7 +4,7 @@
 #include <optional>
 
 #include "Command/ElementCommand.h"
-#include "Common/ComponentType.h"
+#include "Widget/ComponentType.h"
 #include "Node/NativeNode/NativeNode.h"
 
 
