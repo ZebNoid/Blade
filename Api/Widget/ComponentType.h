@@ -23,6 +23,8 @@ namespace ComponentTypes {
     inline constexpr ComponentType Label{101};
     inline constexpr ComponentType ContextArea{102};
 
+    inline constexpr ComponentType Surface{200};
+
     inline constexpr auto Backend(uint32_t value) -> ComponentType
     {
         return {50000 + value};

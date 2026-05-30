@@ -32,12 +32,12 @@ Backends may implement the same API widget with different native/custom componen
 
 ```cpp
 Api::WidgetTypes::Button -> Api::ComponentTypes::Button
-Api::WidgetTypes::Button -> Backend::UI::ButtonCustom
+Api::WidgetTypes::Button -> Backend::UI::Surface
 Api::WidgetTypes::Label  -> Api::ComponentTypes::Label
 ```
 
 - [ ] Keep debug names separate from runtime ids.
-- [ ] Allow overriding mappings with non-standard backend components, such as `Button -> CustomButton`.
+- [ ] Allow overriding mappings with non-standard backend components, such as `Button -> Surface`.
 - [x] Prioritize root component ids before controls, such as `Window`, `Tray`, then `Button`.
 - [x] Move `WidgetType` and `ComponentType` from `Api/Common` to `Api/Widget`.
 - [x] Add `Api::ComponentType` for backend component identity.
@@ -67,7 +67,7 @@ Render definitions should be stored as flat command sequences per widget state:
 - [ ] Make modifier chains like `padding().background().padding().background()` semantically correct.
 - [ ] Move away from sibling child `HWND` composition limitations.
 - [x] Support basic render state switching for custom-based widgets.
-- [x] Add custom-render widgets such as `CustomButton`.
+- [x] Add custom render `Surface`.
 - [x] Cache GDI+ brushes and pens for fallback custom rendering.
 - [x] Add GDI+ fallback custom rendering for anti-aliased shapes.
 - [x] Cache GDI resources in `ResourceManager` instead of creating brushes/pens during paint.
@@ -119,11 +119,11 @@ Current native/custom split:
 
 - `NativeButton` uses WinAPI `BUTTON`.
 - `NativeLabel` is actually a custom-render label.
-- Future `CustomButton` should use custom rendering and render states.
+- Custom buttons should usually be Blade widgets built on top of `Surface`, modifiers, and events.
 
-- [ ] Decide whether the public `Button` maps to `NativeButton` or `CustomButton` by backend binding.
 - [ ] Keep fallback native widgets available where useful.
-- [x] Add `CustomButton`.
+- [x] Keep `Button` mapped to native/system button by default.
+- [x] Add low-level custom render `Surface`.
 
 ## Backend Resources
 

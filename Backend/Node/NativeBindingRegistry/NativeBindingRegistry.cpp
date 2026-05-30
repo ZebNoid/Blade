@@ -22,10 +22,10 @@ auto SupportedComponents() -> std::vector<ComponentInfo>
     return {
         { UI::Window, L"Window" },
         { UI::Button, L"Button" },
-        { UI::ButtonCustom, L"ButtonCustom" },
         { UI::Label, L"Label" },
         { UI::ContextArea, L"ContextArea" },
         { UI::Tray, L"Tray" },
+        { UI::Surface, L"Surface" },
     };
 }
 

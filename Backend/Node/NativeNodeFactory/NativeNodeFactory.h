@@ -31,7 +31,7 @@ private:
 
     auto createButton(const Api::ElementCommand& command) -> std::optional<NativeNode>;
 
-    auto createCustomButton(const Api::ElementCommand& command) -> std::optional<NativeNode>;
+    auto createSurface(const Api::ElementCommand& command) -> std::optional<NativeNode>;
 
     auto createContextArea(const Api::ElementCommand& command) -> std::optional<NativeNode>;
 
