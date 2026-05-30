@@ -7,6 +7,7 @@
 #include "Common/Modifier.h"
 #include "Common/Property.h"
 #include "Common/Types.h"
+#include "Common/WidgetType.h"
 #include "Runtime/LayoutEngine/Data/LayoutType.h"
 #include "Runtime/LayoutEngine/Data/LayoutData.h"
 #include "Runtime/Normalize/NormalizedProps.h"
@@ -19,7 +20,7 @@ struct WidgetTree
 {
     Api::Id id = 0;
 
-    Api::Text type; // "Window", "Button", "Column"
+    Api::WidgetType type = Api::WidgetTypes::Unknown;
 
     LayoutType layoutType = LayoutType::None;
     Api::Lifetime lifetime = Api::Lifetime::Owner;

@@ -12,14 +12,14 @@ class Tray : public RootWidget<Tray>
 public:
     Tray()
     {
-        m_tree.type = L"Tray";
+        m_tree.type = Api::WidgetTypes::Tray;
         Normalize::PropsMerge(m_tree, TrayProps{});
     }
 
     template <typename... TMenus>
     explicit Tray(TMenus&&... menus)
     {
-        m_tree.type = L"Tray";
+        m_tree.type = Api::WidgetTypes::Tray;
         Normalize::PropsMerge(m_tree, TrayProps{});
 
         (

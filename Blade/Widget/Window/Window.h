@@ -13,13 +13,13 @@ class Window : public RootWidget<Window>
 public:
     Window()
     {
-        m_tree.type = L"Window";
+        m_tree.type = Api::WidgetTypes::Window;
         Normalize::PropsMerge(m_tree, WindowProps{});
     }
 
     explicit Window(const WidgetNode& child)
     {
-        m_tree.type = L"Window";
+        m_tree.type = Api::WidgetTypes::Window;
         Normalize::PropsMerge(m_tree, WindowProps{});
 
         m_tree.children.push_back(

@@ -7,6 +7,7 @@
 #include "Common/Rect.h"
 #include "Common/Size.h"
 #include "Common/Types.h"
+#include "Common/WidgetType.h"
 #include "LayoutType.h"
 
 
@@ -16,7 +17,7 @@ struct LayoutNode
 {
     Api::Id id = Api::InvalidId;
 
-    Api::Text type; // TODO ?
+    Api::WidgetType type = Api::WidgetTypes::Unknown;
 
     LayoutType layoutType = LayoutType::None;
 

@@ -4,7 +4,7 @@ namespace Blade {
 
 auto MaterializerRules::IsContextArea(const WidgetTree& widget) -> bool
 {
-    return widget.type == L"ContextArea";
+    return widget.type == Api::WidgetTypes::ContextArea;
 }
 
 auto MaterializerRules::HasEvent(const WidgetTree& widget, Api::Events event) -> bool

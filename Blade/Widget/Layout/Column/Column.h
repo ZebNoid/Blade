@@ -13,7 +13,7 @@ class Column : public Widget<Column>
 public:
     Column()
     {
-        m_tree.type = L"Column";
+        m_tree.type = Api::WidgetTypes::Column;
         m_tree.layoutType = LayoutType::Column;
         Normalize::PropsMerge(m_tree, ColumnProps{});
     }
@@ -21,7 +21,7 @@ public:
     template <typename... TChildren>
     explicit Column(TChildren&&... children)
     {
-        m_tree.type = L"Column";
+        m_tree.type = Api::WidgetTypes::Column;
         m_tree.layoutType = LayoutType::Column;
         Normalize::PropsMerge(m_tree, ColumnProps{});
 

@@ -11,7 +11,7 @@ class Label : public Widget<Label>
 public:
     explicit Label(Api::Text text)
     {
-        m_tree.type = L"Label";
+        m_tree.type = Api::WidgetTypes::Label;
         Normalize::PropsMerge(m_tree, LabelProps{});
         m_tree.backend.create[Api::Props::Title] = std::move(text);
     }

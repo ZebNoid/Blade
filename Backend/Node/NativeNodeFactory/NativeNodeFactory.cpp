@@ -29,11 +29,11 @@ auto NativeNodeFactory::create(const Api::ElementCommand& command) -> std::optio
 
 auto NativeNodeFactory::registerFactories() -> void
 {
-    m_registry.add(L"Window", [this](const auto& command) { return createWindow(command); });
-    m_registry.add(L"Button", [this](const auto& command) { return createButton(command); });
-    m_registry.add(L"ContextArea", [this](const auto& command) { return createContextArea(command); });
-    m_registry.add(L"Label", [this](const auto& command) { return createLabel(command); });
-    m_registry.add(L"Tray", [this](const auto& command) { return createTray(command); });
+    m_registry.add(Api::WidgetTypes::Window, [this](const auto& command) { return createWindow(command); });
+    m_registry.add(Api::WidgetTypes::Button, [this](const auto& command) { return createButton(command); });
+    m_registry.add(Api::WidgetTypes::ContextArea, [this](const auto& command) { return createContextArea(command); });
+    m_registry.add(Api::WidgetTypes::Label, [this](const auto& command) { return createLabel(command); });
+    m_registry.add(Api::WidgetTypes::Tray, [this](const auto& command) { return createTray(command); });
 }
 
 auto NativeNodeFactory::createWindow(const Api::ElementCommand& command) -> std::optional<NativeNode>

@@ -47,7 +47,7 @@ auto Trigger(const WidgetTree& menu) -> Api::MenuTrigger
 
 auto IsSeparator(const WidgetTree& item) -> bool
 {
-    return item.type == L"MenuSeparator";
+    return item.type == Api::WidgetTypes::MenuSeparator;
 }
 
 auto Title(const WidgetTree& item) -> Api::Text

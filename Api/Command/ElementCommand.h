@@ -3,6 +3,7 @@
 #include "Command/ElementCommandType.h"
 #include "Common/Property.h"
 #include "Common/Types.h"
+#include "Common/WidgetType.h"
 
 
 namespace Blade::Api {
@@ -14,8 +15,7 @@ struct ElementCommand
     Api::Id id = InvalidId;
     Api::Id parent = InvalidId;
 
-    // TODO enum?
-    Api::Text nodeType; // "Button", "Window", "Column"
+    Api::WidgetType nodeType = Api::WidgetTypes::Unknown;
 
     Api::PropertyMap props;
     Api::EventSubscriptions events;

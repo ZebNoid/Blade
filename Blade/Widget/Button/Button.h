@@ -13,7 +13,7 @@ class Button : public Widget<Button>
 public:
     explicit Button(Api::Text text)
     {
-        m_tree.type = L"Button";
+        m_tree.type = Api::WidgetTypes::Button;
         Normalize::PropsMerge(m_tree, ButtonProps{});
         m_tree.backend.create[Api::Props::Title] = std::move(text);
     }

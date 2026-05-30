@@ -14,12 +14,12 @@ class NativeFactoryRegistry
 public:
     using Factory = std::function<std::optional<NativeNode>(const Api::ElementCommand&)>;
 
-    auto add(Api::Text type, Factory factory) -> void;
+    auto add(Api::WidgetType type, Factory factory) -> void;
 
     auto create(const Api::ElementCommand& command) -> std::optional<NativeNode>;
 
 private:
-    std::unordered_map<Api::Text, Factory> m_factories;
+    std::unordered_map<Api::WidgetType, Factory> m_factories;
 };
 
 } // namespace Blade::Backend

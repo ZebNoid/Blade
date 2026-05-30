@@ -12,7 +12,7 @@ public:
     template <typename TContent, typename... TMenus>
     explicit ContextArea(TContent&& content, TMenus&&... menus)
     {
-        m_tree.type = L"ContextArea";
+        m_tree.type = Api::WidgetTypes::ContextArea;
         m_tree.layoutType = LayoutType::Virtual;
         m_tree.children.push_back(content.tree());
 

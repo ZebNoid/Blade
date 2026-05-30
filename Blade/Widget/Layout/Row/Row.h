@@ -12,7 +12,7 @@ class Row : public Widget<Row>
 public:
     Row()
     {
-        m_tree.type = L"Row";
+        m_tree.type = Api::WidgetTypes::Row;
         m_tree.layoutType = LayoutType::Row;
         Normalize::PropsMerge(m_tree, RowProps{});
     }
@@ -20,7 +20,7 @@ public:
     template <typename... TChildren>
     explicit Row(TChildren&&... children)
     {
-        m_tree.type = L"Row";
+        m_tree.type = Api::WidgetTypes::Row;
         m_tree.layoutType = LayoutType::Row;
         Normalize::PropsMerge(m_tree, RowProps{});
 

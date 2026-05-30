@@ -3,9 +3,9 @@
 
 namespace Blade::Backend {
 
-auto NativeFactoryRegistry::add(Api::Text type, Factory factory) -> void
+auto NativeFactoryRegistry::add(Api::WidgetType type, Factory factory) -> void
 {
-    m_factories.insert_or_assign(std::move(type), std::move(factory));
+    m_factories.insert_or_assign(type, std::move(factory));
 }
 
 auto NativeFactoryRegistry::create(const Api::ElementCommand& command) -> std::optional<NativeNode>

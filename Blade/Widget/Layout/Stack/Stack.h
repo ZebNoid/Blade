@@ -12,7 +12,7 @@ class Stack : public Widget<Stack>
 public:
     Stack()
     {
-        m_tree.type = L"Stack";
+        m_tree.type = Api::WidgetTypes::Stack;
         m_tree.layoutType = LayoutType::Stack;
         Normalize::PropsMerge(m_tree, StackProps{});
     }
@@ -20,7 +20,7 @@ public:
     template <typename... TChildren>
     explicit Stack(TChildren&&... children)
     {
-        m_tree.type = L"Stack";
+        m_tree.type = Api::WidgetTypes::Stack;
         m_tree.layoutType = LayoutType::Stack;
         Normalize::PropsMerge(m_tree, StackProps{});
 

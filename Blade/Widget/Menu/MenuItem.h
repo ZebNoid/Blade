@@ -11,7 +11,7 @@ class MenuItem : public Widget<MenuItem>
 public:
     explicit MenuItem(Api::Text text)
     {
-        m_tree.type = L"MenuItem";
+        m_tree.type = Api::WidgetTypes::MenuItem;
         m_tree.layoutType = LayoutType::Virtual;
         m_tree.backend.create[Api::Props::Title] = std::move(text);
         Normalize::PropsMerge(m_tree, MenuItemProps{});
@@ -20,7 +20,7 @@ public:
     template <typename... TChildren>
     explicit MenuItem(Api::Text text, TChildren&&... children)
     {
-        m_tree.type = L"MenuItem";
+        m_tree.type = Api::WidgetTypes::MenuItem;
         m_tree.layoutType = LayoutType::Virtual;
         m_tree.backend.create[Api::Props::Title] = std::move(text);
         Normalize::PropsMerge(m_tree, MenuItemProps{});

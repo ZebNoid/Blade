@@ -11,7 +11,7 @@ class Menu : public Widget<Menu>
 public:
     Menu()
     {
-        m_tree.type = L"Menu";
+        m_tree.type = Api::WidgetTypes::Menu;
         m_tree.layoutType = LayoutType::Virtual;
         Normalize::PropsMerge(m_tree, MenuProps{});
     }
@@ -19,7 +19,7 @@ public:
     template <typename... TChildren>
     explicit Menu(TChildren&&... children)
     {
-        m_tree.type = L"Menu";
+        m_tree.type = Api::WidgetTypes::Menu;
         m_tree.layoutType = LayoutType::Virtual;
         Normalize::PropsMerge(m_tree, MenuProps{});
 

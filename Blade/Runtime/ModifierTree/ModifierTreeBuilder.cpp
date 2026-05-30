@@ -6,7 +6,7 @@ namespace Blade {
 
 namespace {
 
-auto VirtualWrapper(Api::Text type, WidgetTree child) -> WidgetTree
+auto VirtualWrapper(Api::WidgetType type, WidgetTree child) -> WidgetTree
 {
     WidgetTree wrapper;
     wrapper.type = std::move(type);
@@ -17,7 +17,7 @@ auto VirtualWrapper(Api::Text type, WidgetTree child) -> WidgetTree
 
 auto StateBranch(const Api::StateModifiers& states, WidgetTree child) -> WidgetTree
 {
-    auto wrapper = VirtualWrapper(L"Modifier.States", std::move(child));
+    auto wrapper = VirtualWrapper(Api::WidgetTypes::ModifierStates, std::move(child));
     wrapper.modifier.states(states);
     return wrapper;
 }
@@ -66,13 +66,13 @@ auto ModifierTreeBuilder::wrap(WidgetTree node, const Api::ModifierOp& op) -> Wi
 
             if constexpr (std::is_same_v<T, Api::PaddingModifier>)
             {
-                auto wrapper = VirtualWrapper(L"Modifier.Padding", std::move(node));
+                auto wrapper = VirtualWrapper(Api::WidgetTypes::ModifierPadding, std::move(node));
                 wrapper.layout.box.padding = modifier.value;
                 return wrapper;
             }
             else if constexpr (std::is_same_v<T, Api::BackgroundModifier>)
             {
-                return VirtualWrapper(L"Modifier.Background", std::move(node));
+                return VirtualWrapper(Api::WidgetTypes::ModifierBackground, std::move(node));
             }
             else if constexpr (std::is_same_v<T, Api::StateModifiers>)
             {

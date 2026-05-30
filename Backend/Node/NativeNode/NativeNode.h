@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Common/Types.h"
+#include "Common/WidgetType.h"
 #include "WinApi/NativeElement/INativeElement.h"
 
 
@@ -11,7 +12,7 @@ struct NativeNode
 {
     Api::Id id = Api::InvalidId;
 
-    Api::Text type;
+    Api::WidgetType type = Api::WidgetTypes::Unknown;
 
     Api::Id parent = Api::InvalidId;
 
