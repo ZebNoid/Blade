@@ -4,29 +4,39 @@
 #include "Runtime/LayoutEngine/LayoutEngine/LayoutEngine.h"
 
 
-namespace Blade {
+namespace Blade::Layout::Stack {
 
-auto LayoutStack::Measure(LayoutContext& ctx) -> Api::Size
+namespace {
+
+auto MeasureChildren(LayoutNode& node, Api::Size available) -> Api::Size
 {
-    auto& node = *ctx.node;
-
     int maxWidth = 0;
     int maxHeight = 0;
 
     for (auto& child : node.children)
     {
-        LayoutContext childCtx{ .node = &child, .available = ctx.available };
+        LayoutContext childCtx{ .node = &child, .available = available };
         const auto size = LayoutEngine::Measure(childCtx);
 
         maxWidth = max(maxWidth, size.width);
         maxHeight = max(maxHeight, size.height);
     }
 
-    node.desiredSize = Layout::Geometry::Constrain(Layout::Geometry::Inflate({ maxWidth, maxHeight }, node.layout.box.padding), node.layout.box.minSize, node.layout.box.maxSize);
+    return { maxWidth, maxHeight };
+}
+
+} // namespace
+
+auto Measure(LayoutContext& ctx) -> Api::Size
+{
+    auto& node = *ctx.node;
+    const auto children = MeasureChildren(node, ctx.available);
+
+    node.desiredSize = Layout::Geometry::Constrain(Layout::Geometry::Inflate(children, node.layout.box.padding), node.layout.box.minSize, node.layout.box.maxSize);
     return node.desiredSize;
 }
 
-auto LayoutStack::Arrange(LayoutContext& ctx) -> void
+auto Arrange(LayoutContext& ctx) -> void
 {
     auto& node = *ctx.node;
     const auto contentRect = Layout::Geometry::Deflate(ctx.rect, node.layout.box.padding);
@@ -38,4 +48,4 @@ auto LayoutStack::Arrange(LayoutContext& ctx) -> void
     }
 }
 
-} // namespace Blade
+} // namespace Blade::Layout::Stack

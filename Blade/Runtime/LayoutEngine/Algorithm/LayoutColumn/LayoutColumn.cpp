@@ -3,16 +3,16 @@
 #include "Runtime/LayoutEngine/Algorithm/LayoutLinear/LayoutLinear.h"
 
 
-namespace Blade {
+namespace Blade::Layout::Column {
 
-auto LayoutColumn::Measure(LayoutContext& ctx) -> Api::Size
+auto Measure(LayoutContext& ctx) -> Api::Size
 {
-    return LayoutLinear::Measure(ctx, LayoutAxis::Vertical);
+    return Layout::Linear::Measure(ctx, LayoutAxis::Vertical);
 }
 
-auto LayoutColumn::Arrange(LayoutContext& ctx) -> void
+auto Arrange(LayoutContext& ctx) -> void
 {
-    LayoutLinear::Arrange(ctx, LayoutAxis::Vertical);
+    Layout::Linear::Arrange(ctx, LayoutAxis::Vertical);
 }
 
-} // namespace Blade
+} // namespace Blade::Layout::Column

@@ -4,9 +4,9 @@
 #include "Runtime/LayoutEngine/Geometry/LayoutGeometry.h"
 
 
-namespace Blade {
+namespace Blade::Layout::Leaf {
 
-auto LayoutLeaf::Measure(LayoutContext& ctx) -> Api::Size
+auto Measure(LayoutContext& ctx) -> Api::Size
 {
     auto& node = *ctx.node;
 
@@ -28,7 +28,7 @@ auto LayoutLeaf::Measure(LayoutContext& ctx) -> Api::Size
     return node.desiredSize;
 }
 
-auto LayoutLeaf::Arrange(LayoutContext& ctx) -> void
+auto Arrange(LayoutContext& ctx) -> void
 {
     auto& node = *ctx.node;
     const auto contentRect = Layout::Geometry::Deflate(ctx.rect, node.layout.box.padding);
@@ -36,4 +36,4 @@ auto LayoutLeaf::Arrange(LayoutContext& ctx) -> void
     Layout::LeafChildren::Arrange(node, contentRect);
 }
 
-} // namespace Blade
+} // namespace Blade::Layout::Leaf

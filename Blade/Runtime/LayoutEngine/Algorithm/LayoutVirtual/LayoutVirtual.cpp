@@ -3,9 +3,9 @@
 #include "Runtime/LayoutEngine/Geometry/LayoutGeometry.h"
 #include "Runtime/LayoutEngine/LayoutEngine/LayoutEngine.h"
 
-namespace Blade {
+namespace Blade::Layout::Virtual {
 
-auto LayoutVirtual::Measure(LayoutContext& ctx) -> Api::Size
+auto Measure(LayoutContext& ctx) -> Api::Size
 {
     auto& node = *ctx.node;
     node.desiredSize = {};
@@ -24,7 +24,7 @@ auto LayoutVirtual::Measure(LayoutContext& ctx) -> Api::Size
     return node.desiredSize;
 }
 
-auto LayoutVirtual::Arrange(LayoutContext& ctx) -> void
+auto Arrange(LayoutContext& ctx) -> void
 {
     auto& node = *ctx.node;
     const auto contentRect = Layout::Geometry::Deflate(ctx.rect, node.layout.box.padding);
@@ -36,4 +36,4 @@ auto LayoutVirtual::Arrange(LayoutContext& ctx) -> void
     }
 }
 
-} // namespace Blade
+} // namespace Blade::Layout::Virtual

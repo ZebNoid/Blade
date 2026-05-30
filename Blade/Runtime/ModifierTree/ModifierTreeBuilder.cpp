@@ -26,6 +26,11 @@ auto StateBranch(const Api::StateModifiers& states, WidgetTree child) -> WidgetT
 
 auto ModifierTreeBuilder::Expand(WidgetTree tree) -> WidgetTree
 {
+    if (tree.layoutType != LayoutType::None)
+    {
+        return expandNode(std::move(tree));
+    }
+
     expandChildren(tree);
     return tree;
 }

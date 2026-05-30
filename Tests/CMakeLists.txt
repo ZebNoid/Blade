@@ -11,6 +11,12 @@ add_executable(${PROJECT_NAME}
         Layout/LayoutFlexTests.h
         Layout/LayoutPaddingTests.cpp
         Layout/LayoutPaddingTests.h
+        Layout/LayoutRootModifierTests.cpp
+        Layout/LayoutRootModifierTests.h
+        Layout/LayoutSpacingTests.cpp
+        Layout/LayoutSpacingTests.h
+        Layout/LayoutStackTests.cpp
+        Layout/LayoutStackTests.h
 )
 
 target_include_directories(${PROJECT_NAME}

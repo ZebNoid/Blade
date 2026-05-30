@@ -19,20 +19,20 @@ auto LayoutEngine::Measure(
     switch (node.layoutType)
     {
     case LayoutType::Column:
-        return LayoutColumn::Measure(ctx);
+        return Layout::Column::Measure(ctx);
 
     case LayoutType::Row:
-        return LayoutRow::Measure(ctx);
+        return Layout::Row::Measure(ctx);
 
     case LayoutType::Stack:
-        return LayoutStack::Measure(ctx);
+        return Layout::Stack::Measure(ctx);
 
     case LayoutType::Virtual:
-        return LayoutVirtual::Measure(ctx);
+        return Layout::Virtual::Measure(ctx);
 
     case LayoutType::None:
     default:
-        return LayoutLeaf::Measure(ctx);
+        return Layout::Leaf::Measure(ctx);
     }
 }
 
@@ -47,23 +47,23 @@ auto LayoutEngine::Arrange(
     switch (node.layoutType)
     {
     case LayoutType::Column:
-        LayoutColumn::Arrange(ctx);
+        Layout::Column::Arrange(ctx);
         break;
 
     case LayoutType::Row:
-        LayoutRow::Arrange(ctx);
+        Layout::Row::Arrange(ctx);
         break;
 
     case LayoutType::Stack:
-        LayoutStack::Arrange(ctx);
+        Layout::Stack::Arrange(ctx);
         break;
 
     case LayoutType::Virtual:
-        LayoutVirtual::Arrange(ctx);
+        Layout::Virtual::Arrange(ctx);
         break;
 
     default:
-        LayoutLeaf::Arrange(ctx);
+        Layout::Leaf::Arrange(ctx);
         break;
     }
 }

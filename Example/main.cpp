@@ -138,7 +138,7 @@ protected:
                                           .flex(1)
                                           .padding(16)
                                           .size({40, 40})
-                                          .borderRadius(32)
+                                          .borderRadius(32) // TODO fix hit zone
                                           .states({
                                               .normal = Api::Modifier().background(Api::Color::Hex("#1976D2")),
                                               .hover = Api::Modifier().background(Api::Color::Hex("#2196F3")),
@@ -167,6 +167,9 @@ protected:
                             })
                         )
                     )
+                    .background(Api::Color::Hex("#90CAF9")) // TODO fix
+                    .padding(32) // TODO fix
+                    .background(Api::Color::Red())
                     .title(L"Context Menu")
                     .icon(L"app.png")
                     .size({800, 600})

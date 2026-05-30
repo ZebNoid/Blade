@@ -5,13 +5,9 @@
 #include "Runtime/LayoutEngine/Geometry/LayoutAxis.h"
 
 
-namespace Blade {
+namespace Blade::Layout::Linear {
 
-class LayoutLinear
-{
-public:
-    static auto Measure(LayoutContext& ctx, LayoutAxis axis) -> Api::Size;
-    static auto Arrange(LayoutContext& ctx, LayoutAxis axis) -> void;
-};
+auto Measure(LayoutContext& ctx, LayoutAxis axis) -> Api::Size;
+auto Arrange(LayoutContext& ctx, LayoutAxis axis) -> void;
 
-} // namespace Blade
+} // namespace Blade::Layout::Linear

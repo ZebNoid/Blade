@@ -5,37 +5,52 @@
 #include "Runtime/LayoutEngine/LayoutEngine/LayoutEngine.h"
 
 
-namespace Blade {
+namespace Blade::Layout::Linear {
 
-auto LayoutLinear::Measure(LayoutContext& ctx, LayoutAxis axis) -> Api::Size
+namespace {
+
+struct MeasuredChildren
 {
-    auto& node = *ctx.node;
-
     int totalMain = 0;
     int maxCross = 0;
+};
+
+auto MeasureChildren(LayoutNode& node, Api::Size available, LayoutAxis axis) -> MeasuredChildren
+{
+    MeasuredChildren result;
     bool first = true;
 
     for (auto& child : node.children)
     {
-        LayoutContext childCtx{ .node = &child, .available = ctx.available };
+        LayoutContext childCtx{ .node = &child, .available = available };
         const auto size = LayoutEngine::Measure(childCtx);
 
         if (!first)
         {
-            totalMain += node.layout.gap;
+            result.totalMain += node.layout.gap;
         }
 
         first = false;
 
-        totalMain += Layout::Axis::MainSize(axis, size);
-        maxCross = max(maxCross, Layout::Axis::CrossSize(axis, size));
+        result.totalMain += Layout::Axis::MainSize(axis, size);
+        result.maxCross = max(result.maxCross, Layout::Axis::CrossSize(axis, size));
     }
 
-    node.desiredSize = Layout::Geometry::Constrain(Layout::Geometry::Inflate(Layout::Axis::Size(axis, totalMain, maxCross), node.layout.box.padding), node.layout.box.minSize, node.layout.box.maxSize);
+    return result;
+}
+
+} // namespace
+
+auto Measure(LayoutContext& ctx, LayoutAxis axis) -> Api::Size
+{
+    auto& node = *ctx.node;
+    const auto children = MeasureChildren(node, ctx.available, axis);
+
+    node.desiredSize = Layout::Geometry::Constrain(Layout::Geometry::Inflate(Layout::Axis::Size(axis, children.totalMain, children.maxCross), node.layout.box.padding), node.layout.box.minSize, node.layout.box.maxSize);
     return node.desiredSize;
 }
 
-auto LayoutLinear::Arrange(LayoutContext& ctx, LayoutAxis axis) -> void
+auto Arrange(LayoutContext& ctx, LayoutAxis axis) -> void
 {
     auto& node = *ctx.node;
 
@@ -72,4 +87,4 @@ auto LayoutLinear::Arrange(LayoutContext& ctx, LayoutAxis axis) -> void
     }
 }
 
-} // namespace Blade
+} // namespace Blade::Layout::Linear

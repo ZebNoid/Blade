@@ -4,13 +4,9 @@
 #include "Runtime/LayoutEngine/Data/LayoutContext.h"
 
 
-namespace Blade {
+namespace Blade::Layout::Stack {
 
-class LayoutStack
-{
-public:
-    static auto Measure(LayoutContext& ctx) -> Api::Size;
-    static auto Arrange(LayoutContext& ctx) -> void;
-};
+auto Measure(LayoutContext& ctx) -> Api::Size;
+auto Arrange(LayoutContext& ctx) -> void;
 
-} // namespace Blade
+} // namespace Blade::Layout::Stack
