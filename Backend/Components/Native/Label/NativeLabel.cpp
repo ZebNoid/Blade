@@ -1,65 +1,57 @@
 #include "NativeLabel.h"
 
+#include "Components/Window/NativeWindow.h"
+#include "Node/NativeCreateContext/NativeCreateContext.h"
 #include "Property/PropertyReader.h"
 #include "Render/RenderRegistry/RenderRegistry.h"
 #include "Resource/ResourceManager/ResourceManager.h"
+#include "WinApi/HwndApi/HwndApi.h"
 #include "WinApi/Render/GdiPlusRenderApi/GdiPlusRenderApi.h"
 #include "WinApi/Render/RenderApi/RenderApi.h"
 
 namespace Blade::Backend {
 
-namespace {
-
-auto HasBackground(const Api::RenderDefinition& render) -> bool
+auto NativeLabel::create(NativeWindow* parent, Api::Id id, const NativeCreateContext&) -> bool
 {
-    for (const auto& op : render.ops)
-    {
-        if (std::holds_alternative<Api::RenderBackground>(op)) return true;
-    }
+    if (!parent) return false;
 
-    return false;
+    m_parent = parent;
+    m_id = id;
+    m_hwnd = parent->handle();
+    return m_hwnd != nullptr;
 }
-
-auto HasBackground(const Api::RenderStates& render) -> bool
-{
-    return HasBackground(render.normal)
-        || HasBackground(render.hover)
-        || HasBackground(render.focus)
-        || HasBackground(render.pressed)
-        || HasBackground(render.disabled)
-        || HasBackground(render.dragOver);
-}
-
-} // namespace
 
 auto NativeLabel::applyProps(const Api::PropertyMap& propertyMap) -> void
 {
     if (const auto* text = PropertyReader::Get<Api::Text>(propertyMap, Api::Props::Title)) m_text = *text;
-    NativeCustom::applyProps(propertyMap);
+    if (const auto* rect = PropertyReader::Get<Api::Rect>(propertyMap, Api::Props::Rect)) m_rect = *rect;
+    if (const auto* visible = PropertyReader::Get<bool>(propertyMap, Api::Props::Visible)) m_visible = *visible;
+
+    HwndApi::Invalidate(m_hwnd);
 }
 
-auto NativeLabel::onPaint(HDC hdc, const Api::Rect& rect) -> void
+auto NativeLabel::applyEvents(const Api::EventSubscriptions&) -> void
 {
-    auto* resourceManager = resources();
-    if (!resourceManager) return;
-
-    const auto* node = renderNodes() ? renderNodes()->get(id()) : nullptr;
-    if (node) GdiPlusRenderApi::Draw(hdc, rect, node->render.forState(node->state), *resourceManager);
-
-    const auto color = node ? RenderApi::TextColor(node->render.forState(node->state), resourceManager->windowTextColor()) : resourceManager->windowTextColor();
-    RenderApi::Text(hdc, m_text, rect, resourceManager->defaultFont(), color);
 }
 
-auto NativeLabel::hitTest() const -> LRESULT
+auto NativeLabel::isAlive() const -> bool
 {
-    return renderNodes() && renderNodes()->get(id()) ? HTCLIENT : HTTRANSPARENT;
+    return true;
 }
 
-auto NativeLabel::exStyle() const -> DWORD
+auto NativeLabel::attachChild(INativeElement*) -> void
 {
-    const auto* node = renderNodes() ? renderNodes()->get(id()) : nullptr;
-    // TODO change: transparent labels over sibling HWNDs require proper render surfaces/layers.
-    return node && HasBackground(node->render) ? 0 : WS_EX_TRANSPARENT;
+}
+
+auto NativeLabel::paint(HDC hdc, ResourceManager& resources, RenderRegistry& renderNodes) -> void
+{
+    if (!m_visible) return;
+
+    const auto* node = renderNodes.get(m_id);
+    if (node) GdiPlusRenderApi::Draw(hdc, m_rect, node->render.forState(node->state), resources);
+
+    const auto color = node ? RenderApi::TextColor(node->render.forState(node->state), resources.windowTextColor()) : resources.windowTextColor();
+    RenderApi::Text(hdc, m_text, m_rect, resources.defaultFont(), color);
 }
 
 } // namespace Blade::Backend

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <functional>
+
 #include "Common/Types.h"
 #include "Node/NativeNode/NativeNode.h"
 
@@ -19,6 +21,8 @@ public:
     auto clear() -> void;
 
     auto count() const -> size_t;
+
+    auto forEach(const std::function<void(NativeNode&)>& callback) -> void;
 
 private:
     std::unordered_map<Api::Id, NativeNode> m_nodes;

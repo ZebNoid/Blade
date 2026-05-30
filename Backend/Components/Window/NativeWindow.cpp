@@ -131,6 +131,8 @@ auto NativeWindow::attachChild(INativeElement* child) -> void
         return;
     }
 
+    if (child->handle() == m_hwnd) return;
+
     if (HwndApi::SetParent(child->handle(), m_hwnd) == nullptr)
     {
         LOGF_E(L"[Error] NativeWindow::attachChild [%s] %lu", CUSTOM_CLASS, GetLastError());

@@ -114,9 +114,11 @@ auto CommandDispatcher::update(
 
     if (node->parent != Api::InvalidId)
     {
-        HwndApi::BringToFront(
-            node->native->handle()
-        );
+        auto* parent = m_backend->nodes().get(node->parent);
+        if (parent && parent->native && node->native->handle() != parent->native->handle())
+        {
+            HwndApi::BringToFront(node->native->handle());
+        }
     }
 }
 

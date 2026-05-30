@@ -40,4 +40,12 @@ auto NodeRegistry::count() const -> size_t
     return m_nodes.size();
 }
 
+auto NodeRegistry::forEach(const std::function<void(NativeNode&)>& callback) -> void
+{
+    for (auto& [_, node] : m_nodes)
+    {
+        callback(node);
+    }
+}
+
 } // namespace

@@ -8,6 +8,7 @@
 #include "Components/Tray/NativeTray.h"
 #include "UI/UI.h"
 #include "WinApi/HwndApi/HwndApi.h"
+#include "WinApi/Render/RenderApi/RenderApi.h"
 
 
 namespace Blade::Backend {
@@ -98,6 +99,27 @@ auto NativeNodeFactory::createWindow(const Api::ElementCommand& command) -> std:
         [window = nativeWindow.get()](HWND, UINT, WPARAM, LPARAM lParam) -> int
         {
             window->applyMinMax(reinterpret_cast<MINMAXINFO*>(lParam));
+            return 0;
+        }
+    );
+
+    nativeWindow->router().on(
+        WM_PAINT,
+        [this](HWND hwnd, UINT, WPARAM, LPARAM) -> int
+        {
+            PAINTSTRUCT paint{};
+            const auto hdc = BeginPaint(hwnd, &paint);
+            RenderApi::Fill(hdc, HwndApi::GetClientRect(hwnd), m_backend->resources().windowBrush());
+
+            m_backend->nodes().forEach(
+                [this, hdc](NativeNode& node)
+                {
+                    auto* label = dynamic_cast<NativeLabel*>(node.native.get());
+                    if (label) label->paint(hdc, m_backend->resources(), m_backend->renderNodes());
+                }
+            );
+
+            EndPaint(hwnd, &paint);
             return 0;
         }
     );

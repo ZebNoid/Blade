@@ -90,9 +90,9 @@ protected:
                 Column(
                     Button(L"Flex")
                     , Stack(
-                        Button(L"Flex")
-                        , Button(L"Flex").padding(8)
-                        , Label(L"------------ Native Label ------------------------------------")
+                        // Button(L"Flex")
+                         // , Button(L"Flex").padding(8)
+                         Label(L"------------ Native Label ------------------------------------")
                           .padding(16)
                           .borderRadius(16)
                           .states({

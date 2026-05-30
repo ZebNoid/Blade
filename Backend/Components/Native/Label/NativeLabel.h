@@ -1,21 +1,29 @@
 #pragma once
 
-#include "Components/Custom/Surface/NativeCustom.h"
+#include "Geometry/Rect.h"
+#include "WinApi/NativeElement/NativeElement.h"
 
 namespace Blade::Backend {
 
-class NativeLabel : public NativeCustom
+class NativeWindow;
+class RenderRegistry;
+class ResourceManager;
+struct NativeCreateContext;
+
+class NativeLabel : public NativeElement
 {
 public:
+    auto create(NativeWindow* parent, Api::Id id, const NativeCreateContext& context) -> bool;
     auto applyProps(const Api::PropertyMap& propertyMap) -> void override;
-
-protected:
-    auto onPaint(HDC hdc, const Api::Rect& rect) -> void override;
-    auto exStyle() const -> DWORD override;
-    auto hitTest() const -> LRESULT override;
+    auto applyEvents(const Api::EventSubscriptions& events) -> void override;
+    auto isAlive() const -> bool override;
+    auto attachChild(INativeElement* child) -> void override;
+    auto paint(HDC hdc, ResourceManager& resources, RenderRegistry& renderNodes) -> void;
 
 private:
     Api::Text m_text;
+    Api::Rect m_rect{};
+    bool m_visible = true;
 };
 
 } // namespace Blade::Backend
