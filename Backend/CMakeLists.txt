@@ -18,6 +18,8 @@ add_library(${PROJECT_NAME} STATIC
         Render/RenderRegistry/RenderRegistry.h
         Render/RenderCommandDispatcher/RenderCommandDispatcher.cpp
         Render/RenderCommandDispatcher/RenderCommandDispatcher.h
+        Render/WindowSurfaceRuntime/WindowSurfaceRuntime.cpp
+        Render/WindowSurfaceRuntime/WindowSurfaceRuntime.h
 
         WindowHost/WindowHost.cpp
         WindowHost/WindowHost.h

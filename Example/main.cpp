@@ -231,8 +231,6 @@ protected:
                                   })
                                   .borderColor(Api::Color::Black())
                             ).flex(1)
-
-
                         ).flex(1)
                         // Button(L"File").onDrop([](Api::Text files) { LOGF_D(L"Drop Button:\n%s", files.c_str()); })
                         , Menu(

@@ -66,9 +66,11 @@ Render definitions should be stored as flat command sequences per widget state:
 
 - [ ] Introduce a render context so `RenderApi` does not depend on `ResourceManager` directly.
 - [ ] Introduce proper render surfaces/layers.
+- [ ] Support context menus for window-level virtual surfaces and areas.
 - [ ] Make modifier chains like `padding().background().padding().background()` semantically correct.
 - [ ] Move away from sibling child `HWND` composition limitations.
 - [x] Support basic render state switching for custom-based widgets.
+- [x] Move window-level virtual paint and event routing out of `NativeNodeFactory`.
 - [x] Add custom render `Surface`.
 - [x] Cache GDI+ brushes and pens for fallback custom rendering.
 - [x] Add GDI+ fallback custom rendering for anti-aliased shapes.
