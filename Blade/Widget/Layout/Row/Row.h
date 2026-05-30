@@ -37,6 +37,25 @@ public:
         Normalize::PropsMerge(m_tree, props);
         return *this;
     }
+
+    auto gap(int gap) -> Row&
+    {
+        m_tree.layout.gap = gap;
+        return *this;
+    }
+
+    auto flex(int flex) -> Row&
+    {
+        applyFlex(flex);
+        return *this;
+    }
+
+    auto padding(Api::Thickness padding) -> Row&
+    {
+        applyPadding(padding);
+        return *this;
+    }
+
 };
 
 } // namespace Blade

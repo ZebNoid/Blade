@@ -29,6 +29,54 @@ public:
         m_tree.events = Normalize::Events(events);
         return *this;
     }
+
+    auto size(Api::Size size) -> Button&
+    {
+        applySize(size);
+        return *this;
+    }
+
+    auto flex(int flex) -> Button&
+    {
+        applyFlex(flex);
+        return *this;
+    }
+
+    auto padding(Api::Thickness padding) -> Button&
+    {
+        applyPadding(padding);
+        return *this;
+    }
+
+    auto visible(bool visible) -> Button&
+    {
+        applyVisible(visible);
+        return *this;
+    }
+
+    auto defaultButton(bool value = true) -> Button&
+    {
+        m_tree.backend.create[Api::Props::IsDefault] = value;
+        return *this;
+    }
+
+    auto onClick(Api::EventCallback callback) -> Button&
+    {
+        applyEvent(Api::Events::Click, std::move(callback));
+        return *this;
+    }
+
+    auto onFocus(Api::EventCallback callback) -> Button&
+    {
+        applyEvent(Api::Events::Focus, std::move(callback));
+        return *this;
+    }
+
+    auto onDrop(Api::EventCallback callback) -> Button&
+    {
+        applyEvent(Api::Events::Drop, std::move(callback));
+        return *this;
+    }
 };
 
 } // namespace

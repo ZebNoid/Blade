@@ -42,6 +42,18 @@ public:
         m_tree.events = Normalize::Events(events);
         return *this;
     }
+
+    auto shortcut(Api::Shortcut shortcut) -> MenuItem&
+    {
+        m_tree.backend.create[Api::Props::Shortcut] = shortcut;
+        return *this;
+    }
+
+    auto onClick(Api::EventCallback callback) -> MenuItem&
+    {
+        applyEvent(Api::Events::Click, std::move(callback));
+        return *this;
+    }
 };
 
 } // namespace Blade

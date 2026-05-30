@@ -27,6 +27,24 @@ public:
         m_tree.events = Normalize::Events(events);
         return *this;
     }
+
+    auto flex(int flex) -> ContextArea&
+    {
+        applyFlex(flex);
+        return *this;
+    }
+
+    auto padding(Api::Thickness padding) -> ContextArea&
+    {
+        applyPadding(padding);
+        return *this;
+    }
+
+    auto onDrop(Api::EventCallback callback) -> ContextArea&
+    {
+        applyEvent(Api::Events::Drop, std::move(callback));
+        return *this;
+    }
 };
 
 } // namespace Blade

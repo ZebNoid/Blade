@@ -19,7 +19,6 @@ auto LayoutLinear::Measure(LayoutContext& ctx, LayoutAxis axis) -> Api::Size
     {
         LayoutContext childCtx{ .node = &child, .available = ctx.available };
         const auto size = LayoutEngine::Measure(childCtx);
-        const auto marginSize = LayoutGeometry::Inflate(size, child.layout.box.margin);
 
         if (!first)
         {
@@ -28,8 +27,8 @@ auto LayoutLinear::Measure(LayoutContext& ctx, LayoutAxis axis) -> Api::Size
 
         first = false;
 
-        totalMain += LayoutAxisGeometry::MainSize(axis, marginSize);
-        maxCross = max(maxCross, LayoutAxisGeometry::CrossSize(axis, marginSize));
+        totalMain += LayoutAxisGeometry::MainSize(axis, size);
+        maxCross = max(maxCross, LayoutAxisGeometry::CrossSize(axis, size));
     }
 
     node.desiredSize = LayoutGeometry::Inflate(LayoutAxisGeometry::Size(axis, totalMain, maxCross), node.layout.box.padding);
@@ -61,11 +60,8 @@ auto LayoutLinear::Arrange(LayoutContext& ctx, LayoutAxis axis) -> void
 
         first = false;
 
-        const auto& margin = child.layout.box.margin;
         const int childMain = LayoutLinearArrange::ChildMainSize(child, content, axis, flexCursor);
         const auto cross = LayoutLinearArrange::AlignCrossAxis(node, child, contentRect, axis);
-
-        cursor += LayoutAxisGeometry::MainMarginStart(axis, margin);
 
         const auto childRect = LayoutAxisGeometry::Rect(axis, cursor, cross.position, childMain, cross.size);
         LayoutContext childCtx{ .node = &child, .rect = childRect };
@@ -73,7 +69,6 @@ auto LayoutLinear::Arrange(LayoutContext& ctx, LayoutAxis axis) -> void
         LayoutEngine::Arrange(childCtx);
 
         cursor += childMain;
-        cursor += LayoutAxisGeometry::MainMarginEnd(axis, margin);
     }
 }
 

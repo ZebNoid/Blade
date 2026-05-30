@@ -15,10 +15,9 @@ auto LayoutLeafChildren::Measure(LayoutNode& node) -> Api::Size
     {
         LayoutContext childCtx{ .node = &child, .available = node.desiredSize };
         const auto size = LayoutEngine::Measure(childCtx);
-        const auto marginSize = LayoutGeometry::Inflate(size, child.layout.box.margin);
 
-        maxWidth = max(maxWidth, marginSize.width);
-        maxHeight = max(maxHeight, marginSize.height);
+        maxWidth = max(maxWidth, size.width);
+        maxHeight = max(maxHeight, size.height);
     }
 
     return { maxWidth, maxHeight };
@@ -35,13 +34,11 @@ auto LayoutLeafChildren::Arrange(LayoutNode& node, const Api::Rect& contentRect)
 
 auto LayoutLeafChildren::ChildRect(const LayoutNode& child, const Api::Rect& contentRect) -> Api::Rect
 {
-    const auto childContentRect = LayoutGeometry::Deflate(contentRect, child.layout.box.margin);
-
     return {
-        childContentRect.x,
-        childContentRect.y,
-        child.layoutType == LayoutType::None ? child.desiredSize.width : childContentRect.width,
-        child.layoutType == LayoutType::None ? child.desiredSize.height : childContentRect.height
+        contentRect.x,
+        contentRect.y,
+        child.layoutType == LayoutType::None ? child.desiredSize.width : contentRect.width,
+        child.layoutType == LayoutType::None ? child.desiredSize.height : contentRect.height
     };
 }
 

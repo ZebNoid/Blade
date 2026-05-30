@@ -37,6 +37,19 @@ public:
         Normalize::PropsMerge(m_tree, props);
         return *this;
     }
+
+    auto flex(int flex) -> Stack&
+    {
+        applyFlex(flex);
+        return *this;
+    }
+
+    auto padding(Api::Thickness padding) -> Stack&
+    {
+        applyPadding(padding);
+        return *this;
+    }
+
 };
 
 } // namespace Blade

@@ -19,12 +19,9 @@ auto LayoutLinearArrange::MeasureContent(const LayoutNode& node, const Api::Rect
 
         first = false;
 
-        const auto& margin = child.layout.box.margin;
         const int flex = LayoutGeometry::NonNegative(child.layout.box.flex);
 
-        content.size += LayoutAxisGeometry::MainMarginStart(axis, margin);
         content.size += flex > 0 ? 0 : LayoutAxisGeometry::MainSize(axis, child.desiredSize);
-        content.size += LayoutAxisGeometry::MainMarginEnd(axis, margin);
         content.totalFlex += flex;
     }
 
@@ -57,15 +54,10 @@ auto LayoutLinearArrange::ChildMainSize(const LayoutNode& child, const Content& 
 
 auto LayoutLinearArrange::AlignCrossAxis(const LayoutNode& node, const LayoutNode& child, const Api::Rect& contentRect, LayoutAxis axis) -> CrossAxis
 {
-    const auto& margin = child.layout.box.margin;
-    const int available = LayoutGeometry::NonNegative(
-        LayoutAxisGeometry::CrossRectSize(axis, contentRect) -
-        LayoutAxisGeometry::CrossMarginStart(axis, margin) -
-        LayoutAxisGeometry::CrossMarginEnd(axis, margin)
-    );
+    const int available = LayoutGeometry::NonNegative(LayoutAxisGeometry::CrossRectSize(axis, contentRect));
 
     CrossAxis layout{
-        .position = LayoutAxisGeometry::CrossRectPosition(axis, contentRect) + LayoutAxisGeometry::CrossMarginStart(axis, margin),
+        .position = LayoutAxisGeometry::CrossRectPosition(axis, contentRect),
         .size = LayoutAxisGeometry::CrossSize(axis, child.desiredSize)
     };
 
@@ -78,7 +70,6 @@ auto LayoutLinearArrange::AlignCrossAxis(const LayoutNode& node, const LayoutNod
     case CrossAxisAlignment::End:
         layout.position = LayoutAxisGeometry::CrossRectPosition(axis, contentRect) +
             LayoutAxisGeometry::CrossRectSize(axis, contentRect) -
-            LayoutAxisGeometry::CrossMarginEnd(axis, margin) -
             layout.size;
         break;
 

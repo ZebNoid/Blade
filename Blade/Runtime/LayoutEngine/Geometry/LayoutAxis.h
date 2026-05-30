@@ -2,7 +2,6 @@
 
 #include "Common/Rect.h"
 #include "Common/Size.h"
-#include "Common/Thickness.h"
 
 
 namespace Blade {
@@ -44,26 +43,6 @@ public:
     static auto CrossRectPosition(LayoutAxis axis, const Api::Rect& rect) -> int
     {
         return axis == LayoutAxis::Horizontal ? rect.y : rect.x;
-    }
-
-    static auto MainMarginStart(LayoutAxis axis, const Api::Thickness& margin) -> int
-    {
-        return axis == LayoutAxis::Horizontal ? margin.left : margin.top;
-    }
-
-    static auto MainMarginEnd(LayoutAxis axis, const Api::Thickness& margin) -> int
-    {
-        return axis == LayoutAxis::Horizontal ? margin.right : margin.bottom;
-    }
-
-    static auto CrossMarginStart(LayoutAxis axis, const Api::Thickness& margin) -> int
-    {
-        return axis == LayoutAxis::Horizontal ? margin.top : margin.left;
-    }
-
-    static auto CrossMarginEnd(LayoutAxis axis, const Api::Thickness& margin) -> int
-    {
-        return axis == LayoutAxis::Horizontal ? margin.bottom : margin.right;
     }
 
     static auto Size(LayoutAxis axis, int mainSize, int crossSize) -> Api::Size

@@ -17,10 +17,9 @@ auto LayoutStack::Measure(LayoutContext& ctx) -> Api::Size
     {
         LayoutContext childCtx{ .node = &child, .available = ctx.available };
         const auto size = LayoutEngine::Measure(childCtx);
-        const auto marginSize = LayoutGeometry::Inflate(size, child.layout.box.margin);
 
-        maxWidth = max(maxWidth, marginSize.width);
-        maxHeight = max(maxHeight, marginSize.height);
+        maxWidth = max(maxWidth, size.width);
+        maxHeight = max(maxHeight, size.height);
     }
 
     node.desiredSize = LayoutGeometry::Inflate({ maxWidth, maxHeight }, node.layout.box.padding);
@@ -34,7 +33,7 @@ auto LayoutStack::Arrange(LayoutContext& ctx) -> void
 
     for (auto& child : node.children)
     {
-        LayoutContext childCtx{ .node = &child, .rect = LayoutGeometry::Deflate(contentRect, child.layout.box.margin) };
+        LayoutContext childCtx{ .node = &child, .rect = contentRect };
         LayoutEngine::Arrange(childCtx);
     }
 }

@@ -37,6 +37,25 @@ public:
         Normalize::PropsMerge(m_tree, props);
         return *this;
     }
+
+    auto gap(int gap) -> Column&
+    {
+        m_tree.layout.gap = gap;
+        return *this;
+    }
+
+    auto flex(int flex) -> Column&
+    {
+        applyFlex(flex);
+        return *this;
+    }
+
+    auto padding(Api::Thickness padding) -> Column&
+    {
+        applyPadding(padding);
+        return *this;
+    }
+
 };
 
 

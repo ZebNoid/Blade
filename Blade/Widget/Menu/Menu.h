@@ -34,6 +34,12 @@ public:
         Normalize::PropsMerge(m_tree, props);
         return *this;
     }
+
+    auto trigger(Api::MenuTrigger trigger) -> Menu&
+    {
+        m_tree.backend.create[Api::Props::MenuTrigger] = trigger;
+        return *this;
+    }
 };
 
 } // namespace Blade

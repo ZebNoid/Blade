@@ -39,6 +39,30 @@ public:
         m_tree.events = Normalize::Events(events);
         return *this;
     }
+
+    auto title(Api::Text title) -> Tray&
+    {
+        m_tree.backend.create[Api::Props::Title] = std::move(title);
+        return *this;
+    }
+
+    auto icon(Api::Text icon) -> Tray&
+    {
+        m_tree.backend.create[Api::Props::Icon] = std::move(icon);
+        return *this;
+    }
+
+    auto lifetime(Api::Lifetime lifetime) -> Tray&
+    {
+        m_tree.lifetime = lifetime;
+        return *this;
+    }
+
+    auto onClick(Api::EventCallback callback) -> Tray&
+    {
+        applyEvent(Api::Events::Click, std::move(callback));
+        return *this;
+    }
 };
 
 } // namespace Blade
