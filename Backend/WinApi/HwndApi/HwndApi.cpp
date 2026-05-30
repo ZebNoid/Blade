@@ -42,8 +42,8 @@ auto RedrawParent(HWND hwnd, const RECT& oldRect, const RECT& newRect) -> void
     const auto parent = GetParent(hwnd);
     if (!parent) return;
 
-    RedrawWindow(parent, &oldRect, nullptr, RDW_INVALIDATE | RDW_ERASE);
-    RedrawWindow(parent, &newRect, nullptr, RDW_INVALIDATE | RDW_ERASE);
+    RedrawWindow(parent, &oldRect, nullptr, RDW_INVALIDATE);
+    RedrawWindow(parent, &newRect, nullptr, RDW_INVALIDATE);
 }
 
 auto ClampRadius(const Api::Size& size, int radius) -> int
@@ -212,7 +212,7 @@ auto HwndApi::SetVisible(HWND hwnd, bool visible) -> void
 
 auto HwndApi::Invalidate(HWND hwnd) -> void
 {
-    InvalidateRect(hwnd, nullptr, TRUE);
+    InvalidateRect(hwnd, nullptr, FALSE);
 }
 
 auto HwndApi::Update(HWND hwnd) -> void

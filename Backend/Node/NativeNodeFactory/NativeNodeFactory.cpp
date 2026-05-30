@@ -32,6 +32,35 @@ auto ToClientPoint(HWND hwnd, POINT point) -> Api::Point
     return {point.x, point.y};
 }
 
+auto PaintLabels(AppBackend& backend, HDC hdc) -> void
+{
+    backend.nodes().forEach(
+        [&backend, hdc](NativeNode& node)
+        {
+            auto* label = dynamic_cast<NativeLabel*>(node.native.get());
+            if (label) label->paint(hdc, backend.resources(), backend.renderNodes());
+        }
+    );
+}
+
+auto PaintBuffered(HWND hwnd, HDC target, AppBackend& backend) -> void
+{
+    const auto rect = HwndApi::GetClientRect(hwnd);
+    if (rect.width <= 0 || rect.height <= 0) return;
+
+    auto memoryDc = CreateCompatibleDC(target);
+    auto bitmap = CreateCompatibleBitmap(target, rect.width, rect.height);
+    auto oldBitmap = SelectObject(memoryDc, bitmap);
+
+    RenderApi::Fill(memoryDc, rect, backend.resources().windowBrush());
+    PaintLabels(backend, memoryDc);
+    BitBlt(target, 0, 0, rect.width, rect.height, memoryDc, 0, 0, SRCCOPY);
+
+    SelectObject(memoryDc, oldBitmap);
+    DeleteObject(bitmap);
+    DeleteDC(memoryDc);
+}
+
 } // namespace
 
 NativeNodeFactory::NativeNodeFactory(AppBackend* backend)
@@ -125,21 +154,20 @@ auto NativeNodeFactory::createWindow(const Api::ElementCommand& command) -> std:
     );
 
     nativeWindow->router().on(
+        WM_ERASEBKGND,
+        [](HWND, UINT, WPARAM, LPARAM) -> int
+        {
+            return 1;
+        }
+    );
+
+    nativeWindow->router().on(
         WM_PAINT,
         [this](HWND hwnd, UINT, WPARAM, LPARAM) -> int
         {
             PAINTSTRUCT paint{};
             const auto hdc = BeginPaint(hwnd, &paint);
-            RenderApi::Fill(hdc, HwndApi::GetClientRect(hwnd), m_backend->resources().windowBrush());
-
-            m_backend->nodes().forEach(
-                [this, hdc](NativeNode& node)
-                {
-                    auto* label = dynamic_cast<NativeLabel*>(node.native.get());
-                    if (label) label->paint(hdc, m_backend->resources(), m_backend->renderNodes());
-                }
-            );
-
+            PaintBuffered(hwnd, hdc, *m_backend);
             EndPaint(hwnd, &paint);
             return 0;
         }
