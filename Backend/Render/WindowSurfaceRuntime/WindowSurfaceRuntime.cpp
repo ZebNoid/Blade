@@ -1,34 +1,17 @@
 #include "WindowSurfaceRuntime.h"
 
 #include <memory>
-#include <vector>
 #include <windowsx.h>
 
 #include "App/AppBackend.h"
-#include "Components/RenderSurface/RenderSurface.h"
 #include "Components/Window/NativeWindow.h"
-#include "Node/NativeNode/NativeNode.h"
-#include "WinApi/HwndApi/HwndApi.h"
-#include "WinApi/Render/RenderApi/RenderApi.h"
+#include "Render/WindowSurfaceHitTest/WindowSurfaceHitTest.h"
+#include "Render/WindowSurfaceInteraction/WindowSurfaceInteraction.h"
+#include "Render/WindowSurfacePainter/WindowSurfacePainter.h"
 
 namespace Blade::Backend {
 
 namespace {
-
-struct PaintItem
-{
-    int order = 0;
-    Api::Id id = Api::InvalidId;
-    RenderSurface* surface = nullptr;
-};
-
-struct SurfaceHit
-{
-    Api::Id id = Api::InvalidId;
-    RenderSurface* surface = nullptr;
-
-    auto valid() const -> bool { return surface != nullptr; }
-};
 
 auto PointFromLParam(LPARAM lParam) -> Api::Point
 {
@@ -55,109 +38,6 @@ auto ScreenPoint(HWND hwnd, LPARAM lParam) -> POINT
     return point;
 }
 
-auto PaintVirtuals(AppBackend& backend, HDC hdc) -> void
-{
-    std::vector<PaintItem> items;
-
-    backend.nodes().forEach(
-        [&backend, &items](NativeNode& node)
-        {
-            const auto order = node.order;
-
-            if (auto* surface = dynamic_cast<RenderSurface*>(node.native.get())) items.push_back({order, node.id, surface});
-        }
-    );
-
-    std::ranges::sort(
-        items,
-        [](const auto& left, const auto& right)
-        {
-            if (left.order != right.order) return left.order < right.order;
-            return left.id < right.id;
-        }
-    );
-
-    for (const auto& item : items)
-    {
-        item.surface->paint(hdc, backend.resources(), backend.renderNodes());
-    }
-}
-
-auto PaintBuffered(HWND hwnd, HDC target, AppBackend& backend) -> void
-{
-    const auto rect = HwndApi::GetClientRect(hwnd);
-    if (rect.width <= 0 || rect.height <= 0) return;
-
-    auto memoryDc = CreateCompatibleDC(target);
-    auto bitmap = CreateCompatibleBitmap(target, rect.width, rect.height);
-    auto oldBitmap = SelectObject(memoryDc, bitmap);
-
-    RenderApi::Fill(memoryDc, rect, backend.resources().windowBrush());
-    PaintVirtuals(backend, memoryDc);
-    BitBlt(target, 0, 0, rect.width, rect.height, memoryDc, 0, 0, SRCCOPY);
-
-    SelectObject(memoryDc, oldBitmap);
-    DeleteObject(bitmap);
-    DeleteDC(memoryDc);
-}
-
-auto HitSurface(AppBackend& backend, Api::Point point, bool requireDrop = false) -> SurfaceHit
-{
-    SurfaceHit result;
-    int resultOrder = -1;
-
-    backend.nodes().forEach(
-        [&](NativeNode& node)
-        {
-            auto* surface = dynamic_cast<RenderSurface*>(node.native.get());
-            if (!surface || !surface->hitTest(point)) return;
-
-            if (requireDrop && !surface->wantsDrop()) return;
-
-            const auto order = node.order;
-            if (!result.valid() || order > resultOrder || (order == resultOrder && node.id > result.id))
-            {
-                result = {node.id, surface};
-                resultOrder = order;
-            }
-        }
-    );
-
-    return result;
-}
-
-auto HitId(const SurfaceHit& hit) -> Api::Id
-{
-    return hit.valid() ? hit.id : Api::InvalidId;
-}
-
-auto SurfaceById(AppBackend& backend, Api::Id id) -> SurfaceHit
-{
-    const auto* node = backend.nodes().get(id);
-    if (!node) return {};
-
-    auto* surface = dynamic_cast<RenderSurface*>(node->native.get());
-    return {id, surface};
-}
-
-template <typename Apply>
-auto ApplySurfaceState(AppBackend& backend, HWND hwnd, SurfaceHit hit, Apply apply) -> void
-{
-    if (hit.valid() && apply(*hit.surface, backend.renderNodes())) HwndApi::Invalidate(hwnd);
-}
-
-auto ShowContextMenu(AppBackend& backend, HWND hwnd, Api::Point point, POINT screenPoint, Api::MenuTrigger trigger) -> bool
-{
-    const auto hit = HitSurface(backend, point);
-    if (!hit.valid()) return false;
-
-    if (!hit.surface->hasContextMenu(trigger)) return false;
-
-    const auto shown = hit.surface->showContextMenu(trigger, screenPoint);
-    if (shown) HwndApi::Invalidate(hwnd);
-    return shown;
-}
-
 } // namespace
 
 auto WindowSurfaceRuntime::Attach(AppBackend& backend, NativeWindow& window) -> void
@@ -176,7 +56,7 @@ auto WindowSurfaceRuntime::Attach(AppBackend& backend, NativeWindow& window) -> 
         {
             PAINTSTRUCT paint{};
             const auto hdc = BeginPaint(hwnd, &paint);
-            PaintBuffered(hwnd, hdc, backend);
+            WindowSurfacePainter::PaintBuffered(hwnd, hdc, backend);
             EndPaint(hwnd, &paint);
             return 0;
         }
@@ -194,9 +74,9 @@ auto WindowSurfaceRuntime::Attach(AppBackend& backend, NativeWindow& window) -> 
             const auto target = HitId(hit);
             if (*dragOverId == target) return target;
 
-            ApplySurfaceState(backend, window.handle(), SurfaceById(backend, *dragOverId), [](auto& surface, auto& renderNodes) { return surface.dragOver(renderNodes, false); });
+            SetDragOver(backend, window.handle(), SurfaceById(backend, *dragOverId), false);
             *dragOverId = target;
-            ApplySurfaceState(backend, window.handle(), hit, [](auto& surface, auto& renderNodes) { return surface.dragOver(renderNodes, true); });
+            SetDragOver(backend, window.handle(), hit, true);
             return target;
         }
     );
@@ -204,7 +84,7 @@ auto WindowSurfaceRuntime::Attach(AppBackend& backend, NativeWindow& window) -> 
     window.setDropDragLeaveHandler(
         [&backend, &window, dragOverId]
         {
-            ApplySurfaceState(backend, window.handle(), SurfaceById(backend, *dragOverId), [](auto& surface, auto& renderNodes) { return surface.dragOver(renderNodes, false); });
+            SetDragOver(backend, window.handle(), SurfaceById(backend, *dragOverId), false);
             *dragOverId = Api::InvalidId;
         }
     );
@@ -217,9 +97,9 @@ auto WindowSurfaceRuntime::Attach(AppBackend& backend, NativeWindow& window) -> 
             const auto targetId = HitId(hit);
             if (*hoveredId == targetId) return 1;
 
-            ApplySurfaceState(backend, hwnd, SurfaceById(backend, *hoveredId), [](auto& surface, auto& renderNodes) { return surface.hover(renderNodes, false); });
+            SetHover(backend, hwnd, SurfaceById(backend, *hoveredId), false);
             *hoveredId = targetId;
-            ApplySurfaceState(backend, hwnd, hit, [](auto& surface, auto& renderNodes) { return surface.hover(renderNodes, true); });
+            SetHover(backend, hwnd, hit, true);
 
             TRACKMOUSEEVENT event{
                 .cbSize = sizeof(TRACKMOUSEEVENT),
@@ -235,7 +115,7 @@ auto WindowSurfaceRuntime::Attach(AppBackend& backend, NativeWindow& window) -> 
         WM_MOUSELEAVE,
         [&backend, hoveredId](HWND hwnd, UINT, WPARAM, LPARAM) -> int
         {
-            ApplySurfaceState(backend, hwnd, SurfaceById(backend, *hoveredId), [](auto& surface, auto& renderNodes) { return surface.hover(renderNodes, false); });
+            SetHover(backend, hwnd, SurfaceById(backend, *hoveredId), false);
             *hoveredId = Api::InvalidId;
             return 0;
         }
@@ -250,14 +130,14 @@ auto WindowSurfaceRuntime::Attach(AppBackend& backend, NativeWindow& window) -> 
 
             if (*focusedId != HitId(hit))
             {
-                ApplySurfaceState(backend, hwnd, SurfaceById(backend, *focusedId), [](auto& surface, auto& renderNodes) { return surface.focus(renderNodes, false); });
+                SetFocus(backend, hwnd, SurfaceById(backend, *focusedId), false);
                 *focusedId = HitId(hit);
-                ApplySurfaceState(backend, hwnd, hit, [](auto& surface, auto& renderNodes) { return surface.focus(renderNodes, true); });
+                SetFocus(backend, hwnd, hit, true);
             }
 
             *pressedId = HitId(hit);
             SetCapture(hwnd);
-            ApplySurfaceState(backend, hwnd, hit, [](auto& surface, auto& renderNodes) { return surface.mouseDown(renderNodes); });
+            MouseDown(backend, hwnd, hit);
             return 0;
         }
     );
@@ -271,7 +151,7 @@ auto WindowSurfaceRuntime::Attach(AppBackend& backend, NativeWindow& window) -> 
             if (*pressedId != Api::InvalidId)
             {
                 if (GetCapture() == hwnd) ReleaseCapture();
-                ApplySurfaceState(backend, hwnd, SurfaceById(backend, *pressedId), [](auto& surface, auto& renderNodes) { return surface.mouseUp(renderNodes); });
+                MouseUp(backend, hwnd, SurfaceById(backend, *pressedId));
                 *pressedId = Api::InvalidId;
                 return 0;
             }
