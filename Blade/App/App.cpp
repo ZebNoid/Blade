@@ -30,7 +30,7 @@ auto App::Quit() -> void
     Process({ .command = Api::AppCommandType::Quit });
 }
 
-auto App::mountRoot(const RootWidget& rootWidget) -> Api::Id
+auto App::mountRoot(const WidgetNode& rootWidget) -> Api::Id
 {
     auto tree = rootWidget.tree();
 
@@ -40,7 +40,7 @@ auto App::mountRoot(const RootWidget& rootWidget) -> Api::Id
     return root.id;
 }
 
-auto App::MountRoot(const RootWidget& rootWidget) -> Api::Id
+auto App::MountRoot(const WidgetNode& rootWidget) -> Api::Id
 {
     if (!s_current)
     {

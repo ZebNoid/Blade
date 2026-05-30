@@ -8,7 +8,7 @@
 
 namespace Blade {
 
-class Button : public Widget
+class Button : public Widget<Button>
 {
 public:
     explicit Button(Api::Text text)
@@ -27,30 +27,6 @@ public:
     auto on(ButtonEvents events) -> Button&
     {
         m_tree.events = Normalize::Events(events);
-        return *this;
-    }
-
-    auto size(Api::Size size) -> Button&
-    {
-        applySize(size);
-        return *this;
-    }
-
-    auto flex(int flex) -> Button&
-    {
-        applyFlex(flex);
-        return *this;
-    }
-
-    auto padding(Api::Thickness padding) -> Button&
-    {
-        applyPadding(padding);
-        return *this;
-    }
-
-    auto visible(bool visible) -> Button&
-    {
-        applyVisible(visible);
         return *this;
     }
 

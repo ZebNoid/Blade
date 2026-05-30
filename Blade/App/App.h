@@ -9,7 +9,7 @@
 
 namespace Blade {
 
-class RootWidget;
+class WidgetNode;
 class UI;
 
 
@@ -36,13 +36,13 @@ protected:
 protected:
 
 private:
-    auto mountRoot(const RootWidget& rootWidget) -> Api::Id;
+    auto mountRoot(const WidgetNode& rootWidget) -> Api::Id;
 
     auto initBackend() -> int;
 
     auto onBackendMessage(const Api::BackendMessage& message) -> Api::EventResult;
 
-    static auto MountRoot(const RootWidget& rootWidget) -> Api::Id;
+    static auto MountRoot(const WidgetNode& rootWidget) -> Api::Id;
     static auto Process(Api::AppCommand command) -> void;
 
 private:
@@ -54,6 +54,7 @@ private:
     std::unique_ptr<LayoutRuntime> m_layoutRuntime;
     std::unique_ptr<RootLifecycle> m_rootLifecycle;
 
+    template <typename>
     friend class RootWidget;
     friend class UI;
 };

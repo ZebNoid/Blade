@@ -6,7 +6,7 @@
 
 namespace Blade {
 
-class ContextArea : public Widget
+class ContextArea : public Widget<ContextArea>
 {
 public:
     template <typename TContent, typename... TMenus>
@@ -25,18 +25,6 @@ public:
     auto on(ContextAreaEvents events) -> ContextArea&
     {
         m_tree.events = Normalize::Events(events);
-        return *this;
-    }
-
-    auto flex(int flex) -> ContextArea&
-    {
-        applyFlex(flex);
-        return *this;
-    }
-
-    auto padding(Api::Thickness padding) -> ContextArea&
-    {
-        applyPadding(padding);
         return *this;
     }
 

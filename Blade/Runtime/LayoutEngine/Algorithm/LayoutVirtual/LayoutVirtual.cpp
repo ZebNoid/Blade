@@ -1,5 +1,6 @@
 #include "LayoutVirtual.h"
 
+#include "Runtime/LayoutEngine/Geometry/LayoutGeometry.h"
 #include "Runtime/LayoutEngine/LayoutEngine/LayoutEngine.h"
 
 namespace Blade {
@@ -8,23 +9,29 @@ auto LayoutVirtual::Measure(LayoutContext& ctx) -> Api::Size
 {
     auto& node = *ctx.node;
     node.desiredSize = {};
+    const auto available = LayoutGeometry::Deflate({0, 0, ctx.available.width, ctx.available.height}, node.layout.box.padding).size();
 
     for (auto& child : node.children)
     {
-        LayoutContext childCtx{ .node = &child, .available = ctx.available };
+        LayoutContext childCtx{ .node = &child, .available = available };
         node.desiredSize = LayoutEngine::Measure(childCtx);
     }
 
+    if (node.layout.size.width > 0) node.desiredSize.width = node.layout.size.width;
+    if (node.layout.size.height > 0) node.desiredSize.height = node.layout.size.height;
+
+    node.desiredSize = LayoutGeometry::Inflate(node.desiredSize, node.layout.box.padding);
     return node.desiredSize;
 }
 
 auto LayoutVirtual::Arrange(LayoutContext& ctx) -> void
 {
     auto& node = *ctx.node;
+    const auto contentRect = LayoutGeometry::Deflate(ctx.rect, node.layout.box.padding);
 
     for (auto& child : node.children)
     {
-        LayoutContext childCtx{ .node = &child, .rect = ctx.rect };
+        LayoutContext childCtx{ .node = &child, .rect = contentRect };
         LayoutEngine::Arrange(childCtx);
     }
 }

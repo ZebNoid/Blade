@@ -11,6 +11,7 @@ add_library(${PROJECT_NAME} STATIC
         UI/UI.cpp
         UI/UI.h
 
+        Base/WidgetNode.h
         Base/Widget.h
         Base/RootWidget.h
         Base/WidgetTree.h
@@ -76,6 +77,8 @@ add_library(${PROJECT_NAME} STATIC
         Runtime/Normalize/NormalizedProps.h
         Runtime/Normalize/PropsVisitor.h
         Runtime/Normalize/EventVisitor.h
+        Runtime/ModifierTree/ModifierTreeBuilder.cpp
+        Runtime/ModifierTree/ModifierTreeBuilder.h
         Runtime/LayoutEngine/Data/LayoutNode.h
         Runtime/LayoutEngine/Data/LayoutContext.h
         Runtime/LayoutEngine/Algorithm/LayoutLeaf/LayoutLeaf.cpp

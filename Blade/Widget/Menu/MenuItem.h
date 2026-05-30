@@ -6,7 +6,7 @@
 
 namespace Blade {
 
-class MenuItem : public Widget
+class MenuItem : public Widget<MenuItem>
 {
 public:
     explicit MenuItem(Api::Text text)

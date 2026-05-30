@@ -6,7 +6,7 @@
 
 namespace Blade {
 
-class Menu : public Widget
+class Menu : public Widget<Menu>
 {
 public:
     Menu()

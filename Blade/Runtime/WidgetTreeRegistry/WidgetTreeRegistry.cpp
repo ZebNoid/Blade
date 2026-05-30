@@ -1,12 +1,14 @@
 #include "WidgetTreeRegistry.h"
 
 #include "Common/Lifetime.h"
+#include "Runtime/ModifierTree/ModifierTreeBuilder.h"
 
 
 namespace Blade {
 
 auto WidgetTreeRegistry::add(WidgetTree tree) -> WidgetTree&
 {
+    tree = ModifierTreeBuilder::Expand(std::move(tree));
     assignIds(tree);
     const auto rootId = tree.id;
     auto [it, inserted] = m_roots.insert_or_assign(rootId, std::move(tree));

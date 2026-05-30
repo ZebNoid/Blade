@@ -5,6 +5,7 @@
 
 #include "Callbacks.h"
 #include "CaptionProps.h"
+#include "Color.h"
 #include "Events/Events.h"
 #include "Lifetime.h"
 #include "MenuTrigger.h"
@@ -30,6 +31,7 @@ using PropertyValue = std::variant<
     Api::Point,
     Api::Size,
     Api::Rect,
+    Api::Color,
     Api::CaptionProps,
     Api::Lifetime,
     Api::MenuTrigger,

@@ -4,7 +4,7 @@
 
 namespace Blade {
 
-class MenuSeparator : public Widget
+class MenuSeparator : public Widget<MenuSeparator>
 {
 public:
     MenuSeparator()

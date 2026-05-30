@@ -1,13 +1,14 @@
 #pragma once
 
 
+#include "Base/Widget.h"
 #include "ColumnProps.h"
 #include "Runtime/Normalize/Normalize.h"
 
 
 namespace Blade {
 
-class Column : public Widget
+class Column : public Widget<Column>
 {
 public:
     Column()
@@ -41,18 +42,6 @@ public:
     auto gap(int gap) -> Column&
     {
         m_tree.layout.gap = gap;
-        return *this;
-    }
-
-    auto flex(int flex) -> Column&
-    {
-        applyFlex(flex);
-        return *this;
-    }
-
-    auto padding(Api::Thickness padding) -> Column&
-    {
-        applyPadding(padding);
         return *this;
     }
 

@@ -7,7 +7,7 @@
 
 namespace Blade {
 
-class Stack : public Widget
+class Stack : public Widget<Stack>
 {
 public:
     Stack()
@@ -35,18 +35,6 @@ public:
     auto set(StackProps props) -> Stack&
     {
         Normalize::PropsMerge(m_tree, props);
-        return *this;
-    }
-
-    auto flex(int flex) -> Stack&
-    {
-        applyFlex(flex);
-        return *this;
-    }
-
-    auto padding(Api::Thickness padding) -> Stack&
-    {
-        applyPadding(padding);
         return *this;
     }
 

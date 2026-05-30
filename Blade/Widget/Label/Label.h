@@ -6,7 +6,7 @@
 
 namespace Blade {
 
-class Label : public Widget
+class Label : public Widget<Label>
 {
 public:
     explicit Label(Api::Text text)
@@ -28,29 +28,6 @@ public:
         return *this;
     }
 
-    auto size(Api::Size size) -> Label&
-    {
-        applySize(size);
-        return *this;
-    }
-
-    auto flex(int flex) -> Label&
-    {
-        applyFlex(flex);
-        return *this;
-    }
-
-    auto padding(Api::Thickness padding) -> Label&
-    {
-        applyPadding(padding);
-        return *this;
-    }
-
-    auto visible(bool visible) -> Label&
-    {
-        applyVisible(visible);
-        return *this;
-    }
 };
 
 } // namespace Blade

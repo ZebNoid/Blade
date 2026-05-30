@@ -8,7 +8,7 @@
 
 namespace Blade {
 
-class Window : public RootWidget
+class Window : public RootWidget<Window>
 {
 public:
     Window()
@@ -17,7 +17,7 @@ public:
         Normalize::PropsMerge(m_tree, WindowProps{});
     }
 
-    explicit Window(const Widget& child)
+    explicit Window(const WidgetNode& child)
     {
         m_tree.type = L"Window";
         Normalize::PropsMerge(m_tree, WindowProps{});
@@ -51,12 +51,6 @@ public:
         return *this;
     }
 
-    auto size(Api::Size size) -> Window&
-    {
-        m_tree.backend.create[Api::Props::Size] = size;
-        return *this;
-    }
-
     auto placement(Api::WindowPlacementProps placement) -> Window&
     {
         m_tree.backend.create[Api::Props::Placement] = placement;
@@ -66,12 +60,6 @@ public:
     auto lifetime(Api::Lifetime lifetime) -> Window&
     {
         m_tree.lifetime = lifetime;
-        return *this;
-    }
-
-    auto visible(bool visible) -> Window&
-    {
-        applyVisible(visible);
         return *this;
     }
 

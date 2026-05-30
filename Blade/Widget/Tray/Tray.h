@@ -7,7 +7,7 @@
 
 namespace Blade {
 
-class Tray : public RootWidget
+class Tray : public RootWidget<Tray>
 {
 public:
     Tray()

@@ -1,56 +1,69 @@
 #pragma once
 
-#include "Common/Callbacks.h"
-#include "Base/WidgetTree.h"
+#include "Base/WidgetNode.h"
 
 
 namespace Blade {
 
 
-class Widget
+template <typename TSelf>
+class Widget : public WidgetNode
 {
 public:
     Widget() = default;
 
     explicit Widget(WidgetTree tree)
-        : m_tree(std::move(tree))
+        : WidgetNode(std::move(tree))
     {
     }
 
-    auto tree() const -> const WidgetTree&
+    auto modifier(const Api::Modifier& modifier) -> TSelf&
     {
-        return m_tree;
+        this->m_tree.modifier.append(modifier);
+
+        for (const auto& op : modifier.ops())
+        {
+            this->applyModifier(op);
+        }
+
+        return self();
     }
 
-protected:
-    auto applySize(Api::Size size) -> void
+    auto padding(Api::Thickness value) -> TSelf&
     {
-        m_tree.layout.size = size;
-        m_tree.backend.create[Api::Props::Size] = size;
+        return modifier(Api::Modifier().padding(value));
     }
 
-    auto applyFlex(int flex) -> void
+    auto padding(int value) -> TSelf&
     {
-        m_tree.layout.box.flex = flex;
+        return padding(Api::Thickness{value});
     }
 
-    auto applyPadding(Api::Thickness padding) -> void
+    auto background(Api::Color value) -> TSelf&
     {
-        m_tree.layout.box.padding = padding;
+        return modifier(Api::Modifier().background(value));
     }
 
-    auto applyVisible(bool visible) -> void
+    auto size(Api::Size value) -> TSelf&
     {
-        m_tree.backend.create[Api::Props::Visible] = visible;
+        return modifier(Api::Modifier().size(value));
     }
 
-    auto applyEvent(Api::Events event, Api::EventCallback callback) -> void
+    auto flex(int value) -> TSelf&
     {
-        if (callback) m_tree.events[event] = callback.value();
+        return modifier(Api::Modifier().flex(value));
     }
 
-protected:
-    WidgetTree m_tree;
+    auto visible(bool value = true) -> TSelf&
+    {
+        return modifier(Api::Modifier().visible(value));
+    }
+
+private:
+    auto self() -> TSelf&
+    {
+        return static_cast<TSelf&>(*this);
+    }
 };
 
 

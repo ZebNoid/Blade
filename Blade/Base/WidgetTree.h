@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "Common/Lifetime.h"
+#include "Common/Modifier.h"
 #include "Common/Property.h"
 #include "Common/Types.h"
 #include "Runtime/LayoutEngine/Data/LayoutType.h"
@@ -25,6 +26,7 @@ struct WidgetTree
 
     BackendProps backend;
     LayoutData layout;
+    Api::Modifier modifier;
 
     Api::EventMap events;
 

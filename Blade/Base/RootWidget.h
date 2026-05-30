@@ -5,7 +5,8 @@
 
 namespace Blade {
 
-class RootWidget : public Widget
+template <typename TSelf>
+class RootWidget : public Widget<TSelf>
 {
 public:
     auto mount() -> Api::Id

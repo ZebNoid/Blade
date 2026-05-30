@@ -16,7 +16,9 @@ add_library(${PROJECT_NAME} INTERFACE
         Fabric/WindowPlacement.h
 
         Common/Types.h
+        Common/Color.h
         Common/Thickness.h
+        Common/Modifier.h
         Common/LayoutProps.h
         Common/Lifetime.h
         Common/MenuData.h
