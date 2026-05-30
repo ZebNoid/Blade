@@ -2,7 +2,7 @@
 
 #include <windows.h>
 
-#include "Common/CaptionProps.h"
+#include "Window/CaptionProps.h"
 
 namespace Blade::Backend {
 

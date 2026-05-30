@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "Callbacks.h"
-#include "CaptionProps.h"
+#include "Window/CaptionProps.h"
 #include "Color.h"
 #include "Events/Events.h"
 #include "Lifetime.h"
@@ -16,8 +16,8 @@
 #include "Menu/Shortcut.h"
 #include "Size.h"
 #include "Types.h"
-#include "WindowPlacementProps.h"
-#include "WindowState.h"
+#include "Window/WindowPlacementProps.h"
+#include "Window/WindowState.h"
 
 
 namespace Blade::Api {

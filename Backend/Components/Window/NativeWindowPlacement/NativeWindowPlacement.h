@@ -4,7 +4,7 @@
 
 #include "Common/Rect.h"
 #include "Common/Size.h"
-#include "Common/WindowPlacementProps.h"
+#include "Window/WindowPlacementProps.h"
 
 namespace Blade::Backend {
 

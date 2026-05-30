@@ -1,7 +1,6 @@
 #pragma once
 
-#include "Point.h"
-
+#include "Common/Point.h"
 
 namespace Blade::Api {
 

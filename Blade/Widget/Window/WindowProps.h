@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Common/CaptionProps.h"
+#include "Window/CaptionProps.h"
 #include "Common/Lifetime.h"
 #include "Common/Size.h"
 #include "Common/Types.h"
-#include "Common/WindowState.h"
+#include "Window/WindowState.h"
 #include "Fabric/WindowPlacement.h"
 #include "Runtime/Normalize/PropsVisitor.h"
 

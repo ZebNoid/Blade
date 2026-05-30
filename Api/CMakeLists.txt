@@ -22,6 +22,9 @@ add_library(${PROJECT_NAME} INTERFACE
         Fabric/WindowPlacement.h
         Widget/WidgetType.h
         Widget/ComponentType.h
+        Window/CaptionProps.h
+        Window/WindowPlacementProps.h
+        Window/WindowState.h
 
         Common/Types.h
         Common/Color.h
@@ -34,9 +37,6 @@ add_library(${PROJECT_NAME} INTERFACE
         Common/Point.h
         Common/Property.h
         Common/Callbacks.h
-        Common/CaptionProps.h
-        Common/WindowPlacementProps.h
-        Common/WindowState.h
         Common/Props.h
         Common/Logger.h
 

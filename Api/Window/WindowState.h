@@ -1,6 +1,5 @@
 #pragma once
 
-
 namespace Blade::Api {
 
 enum class WindowState

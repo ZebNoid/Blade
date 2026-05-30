@@ -156,3 +156,9 @@ The current WinAPI backend is a fallback/native backend, not the final rendering
 - [x] `Docs/Architecture.md` exists.
 - [x] `Docs/CodeStyleGuide.md` exists.
 - [x] README contains basic examples and supported widgets/properties.
+
+## API Structure
+
+- [ ] Continue moving domain-specific API files out of `Api/Common`.
+- [x] Move menu-related API types from `Api/Common` to `Api/Menu`.
+- [x] Move widget identity API types from `Api/Common` to `Api/Widget`.

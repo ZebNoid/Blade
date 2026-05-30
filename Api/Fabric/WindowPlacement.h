@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Common/WindowPlacementProps.h"
+#include "Window/WindowPlacementProps.h"
 
 
 namespace Blade::Api {
