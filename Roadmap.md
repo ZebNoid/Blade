@@ -4,9 +4,10 @@ This file keeps the project direction visible. It is not a micro-task list.
 
 ## Current Focus
 
-- [ ] Add backend-specific widget bindings.
+- [ ] Reorganize overloaded `Api/Common` into focused API folders.
 - [ ] Add future render backends with proper surfaces/layers.
 - [ ] Move from a simple native-widget wrapper toward a declarative UI runtime.
+- [x] Add backend-specific widget bindings.
 - [x] Use stable API widget identities.
 - [x] Support modifier-based layout and render behavior.
 - [x] Keep the current WinAPI backend as a fallback backend.
@@ -30,16 +31,19 @@ API widget types should not be free-form strings. Blade uses stable `Api::Widget
 Backends may implement the same API widget with different native/custom components.
 
 ```cpp
-Api::WidgetTypes::Button -> Backend::NativeTypes::NativeButton
-Api::WidgetTypes::Button -> Backend::NativeTypes::CustomButton
-Api::WidgetTypes::Label  -> Backend::NativeTypes::CustomLabel
+Api::WidgetTypes::Button -> Api::ComponentTypes::Button
+Api::WidgetTypes::Button -> Backend::UI::ButtonCustom
+Api::WidgetTypes::Label  -> Api::ComponentTypes::Label
 ```
 
-- [ ] Add backend-side `NativeType`.
-- [ ] Add `NativeBindingRegistry`.
-- [ ] Let backend provide default API-widget-to-native-widget bindings.
-- [ ] Allow overriding mappings, such as `Button -> CustomButton`.
 - [ ] Keep debug names separate from runtime ids.
+- [ ] Allow overriding mappings with non-standard backend components, such as `Button -> CustomButton`.
+- [x] Prioritize root component ids before controls, such as `Window`, `Tray`, then `Button`.
+- [x] Add `Api::ComponentType` for backend component identity.
+- [x] Add public `Backend::UI::*` aliases for standard backend component ids.
+- [x] Add default binding and supported component introspection on backend.
+- [x] Let backend provide default API-widget-to-component bindings.
+- [x] Add `NativeBindingRegistry`.
 - [x] Register current backend factories by `Api::WidgetType`.
 - [x] Replace `WidgetTree.type`, `LayoutNode.type`, `ElementCommand.nodeType`, and `NativeNode.type` string routing with `Api::WidgetType`.
 - [x] Add `Api::WidgetType`.

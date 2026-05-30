@@ -122,4 +122,24 @@ auto AppBackend::handle() -> HINSTANCE
     return m_hInstance;
 }
 
+auto AppBackend::bind(Api::WidgetType widget, Api::ComponentType component) -> void
+{
+    m_factory.bind(widget, component);
+}
+
+auto AppBackend::bind(const NativeBindings& bindings) -> void
+{
+    m_factory.bind(bindings);
+}
+
+auto AppBackend::defaultBindings() const -> std::vector<NativeBindingInfo>
+{
+    return m_factory.defaultBindings();
+}
+
+auto AppBackend::supportedComponents() const -> std::vector<ComponentInfo>
+{
+    return m_factory.supportedComponents();
+}
+
 } // namespace

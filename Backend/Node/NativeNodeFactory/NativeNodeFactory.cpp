@@ -24,16 +24,45 @@ NativeNodeFactory::NativeNodeFactory(AppBackend* backend)
 
 auto NativeNodeFactory::create(const Api::ElementCommand& command) -> std::optional<NativeNode>
 {
-    return m_registry.create(command);
+    const auto component = m_bindings.resolve(command.nodeType);
+    return m_registry.create(component, command);
+}
+
+auto NativeNodeFactory::bind(Api::WidgetType widget, Api::ComponentType component) -> void
+{
+    m_bindings.bind(widget, component);
+}
+
+auto NativeNodeFactory::bind(const NativeBindings& bindings) -> void
+{
+    m_bindings.bind(bindings);
+}
+
+auto NativeNodeFactory::defaultBindings() const -> std::vector<NativeBindingInfo>
+{
+    return m_bindings.defaultBindings();
+}
+
+auto NativeNodeFactory::supportedComponents() const -> std::vector<ComponentInfo>
+{
+    return m_bindings.supportedComponents();
 }
 
 auto NativeNodeFactory::registerFactories() -> void
 {
-    m_registry.add(Api::WidgetTypes::Window, [this](const auto& command) { return createWindow(command); });
-    m_registry.add(Api::WidgetTypes::Button, [this](const auto& command) { return createButton(command); });
-    m_registry.add(Api::WidgetTypes::ContextArea, [this](const auto& command) { return createContextArea(command); });
-    m_registry.add(Api::WidgetTypes::Label, [this](const auto& command) { return createLabel(command); });
-    m_registry.add(Api::WidgetTypes::Tray, [this](const auto& command) { return createTray(command); });
+    m_bindings.bind({
+        { Api::WidgetTypes::Window, Api::ComponentTypes::Window },
+        { Api::WidgetTypes::Button, Api::ComponentTypes::Button },
+        { Api::WidgetTypes::Label, Api::ComponentTypes::Label },
+        { Api::WidgetTypes::ContextArea, Api::ComponentTypes::ContextArea },
+        { Api::WidgetTypes::Tray, Api::ComponentTypes::Tray },
+    });
+
+    m_registry.add(Api::ComponentTypes::Window, [this](const auto& command) { return createWindow(command); });
+    m_registry.add(Api::ComponentTypes::Button, [this](const auto& command) { return createButton(command); });
+    m_registry.add(Api::ComponentTypes::ContextArea, [this](const auto& command) { return createContextArea(command); });
+    m_registry.add(Api::ComponentTypes::Label, [this](const auto& command) { return createLabel(command); });
+    m_registry.add(Api::ComponentTypes::Tray, [this](const auto& command) { return createTray(command); });
 }
 
 auto NativeNodeFactory::createWindow(const Api::ElementCommand& command) -> std::optional<NativeNode>

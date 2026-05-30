@@ -20,6 +20,7 @@ add_library(${PROJECT_NAME} INTERFACE
 
         Common/Types.h
         Common/WidgetType.h
+        Common/ComponentType.h
         Common/Color.h
         Common/Thickness.h
         Common/Modifier.h

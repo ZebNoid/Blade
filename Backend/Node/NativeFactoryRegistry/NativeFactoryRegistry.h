@@ -4,6 +4,7 @@
 #include <optional>
 
 #include "Command/ElementCommand.h"
+#include "Common/ComponentType.h"
 #include "Node/NativeNode/NativeNode.h"
 
 
@@ -14,12 +15,12 @@ class NativeFactoryRegistry
 public:
     using Factory = std::function<std::optional<NativeNode>(const Api::ElementCommand&)>;
 
-    auto add(Api::WidgetType type, Factory factory) -> void;
+    auto add(Api::ComponentType type, Factory factory) -> void;
 
-    auto create(const Api::ElementCommand& command) -> std::optional<NativeNode>;
+    auto create(Api::ComponentType type, const Api::ElementCommand& command) -> std::optional<NativeNode>;
 
 private:
-    std::unordered_map<Api::WidgetType, Factory> m_factories;
+    std::unordered_map<Api::ComponentType, Factory> m_factories;
 };
 
 } // namespace Blade::Backend

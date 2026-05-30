@@ -3,6 +3,7 @@
 #include <windows.h>
 
 #include "Api/ApiBackend.h"
+#include "Node/NativeBindingRegistry/NativeBindingRegistry.h"
 #include "Node/NodeRegistry/NodeRegistry.h"
 #include "Render/RenderCommandDispatcher/RenderCommandDispatcher.h"
 #include "Render/RenderRegistry/RenderRegistry.h"
@@ -67,6 +68,14 @@ public:
     auto resources() -> ResourceManager&;
 
     auto handle() -> HINSTANCE;
+
+    auto bind(Api::WidgetType widget, Api::ComponentType component) -> void;
+
+    auto bind(const NativeBindings& bindings) -> void;
+
+    auto defaultBindings() const -> std::vector<NativeBindingInfo>;
+
+    auto supportedComponents() const -> std::vector<ComponentInfo>;
 
 private:
     HINSTANCE m_hInstance;

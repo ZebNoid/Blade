@@ -10,6 +10,7 @@ add_library(${PROJECT_NAME} STATIC
         App/AppBackend.h
         AppCommandDispatcher/AppCommandDispatcher.cpp
         AppCommandDispatcher/AppCommandDispatcher.h
+        UI/UI.h
         Resource/ResourceManager/ResourceManager.cpp
         Resource/ResourceManager/ResourceManager.h
         Render/RenderNode/RenderNode.h
@@ -64,6 +65,8 @@ add_library(${PROJECT_NAME} STATIC
         Node/NativeNode/NativeNode.cpp
         Node/NativeNode/NativeNode.h
         Node/NativeCreateContext/NativeCreateContext.h
+        Node/NativeBindingRegistry/NativeBindingRegistry.cpp
+        Node/NativeBindingRegistry/NativeBindingRegistry.h
         Node/NodeRegistry/NodeRegistry.cpp
         Node/NodeRegistry/NodeRegistry.h
         Node/NativeFactoryRegistry/NativeFactoryRegistry.cpp
