@@ -11,6 +11,7 @@ public:
 
 protected:
     auto onPaint(HDC hdc, const Api::Rect& rect) -> void override;
+    auto exStyle() const -> DWORD override;
     auto hitTest() const -> LRESULT override;
 
 private:

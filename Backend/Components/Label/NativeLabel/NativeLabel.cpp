@@ -30,4 +30,10 @@ auto NativeLabel::hitTest() const -> LRESULT
     return renderNodes() && renderNodes()->get(id()) ? HTCLIENT : HTTRANSPARENT;
 }
 
+auto NativeLabel::exStyle() const -> DWORD
+{
+    // TODO change: use proper render surfaces instead of relying on WinAPI transparent child paint order.
+    return WS_EX_TRANSPARENT;
+}
+
 } // namespace Blade::Backend

@@ -24,6 +24,7 @@ public:
 
 protected:
     virtual auto onPaint(HDC hdc, const Api::Rect& rect) -> void;
+    virtual auto exStyle() const -> DWORD;
     virtual auto hitTest() const -> LRESULT;
     auto resources() const -> ResourceManager*;
     auto renderNodes() const -> RenderRegistry*;

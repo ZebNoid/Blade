@@ -22,6 +22,30 @@ auto ToOuterSize(HWND hwnd, const Api::Size& clientSize) -> Api::Size
     return {rect.right - rect.left, rect.bottom - rect.top};
 }
 
+auto WindowRectInParent(HWND hwnd) -> RECT
+{
+    RECT rect{};
+    if (!GetWindowRect(hwnd, &rect)) return rect;
+
+    const auto parent = GetParent(hwnd);
+    if (!parent) return rect;
+
+    POINT topLeft{rect.left, rect.top};
+    POINT bottomRight{rect.right, rect.bottom};
+    ScreenToClient(parent, &topLeft);
+    ScreenToClient(parent, &bottomRight);
+    return {topLeft.x, topLeft.y, bottomRight.x, bottomRight.y};
+}
+
+auto RedrawParent(HWND hwnd, const RECT& oldRect, const RECT& newRect) -> void
+{
+    const auto parent = GetParent(hwnd);
+    if (!parent) return;
+
+    RedrawWindow(parent, &oldRect, nullptr, RDW_INVALIDATE | RDW_ERASE | RDW_UPDATENOW | RDW_ALLCHILDREN);
+    RedrawWindow(parent, &newRect, nullptr, RDW_INVALIDATE | RDW_ERASE | RDW_UPDATENOW | RDW_ALLCHILDREN);
+}
+
 } // namespace
 
 
@@ -70,7 +94,9 @@ auto HwndApi::ClientToWindowSize(HWND hwnd, const Api::Size& clientSize) -> Api:
 
 auto HwndApi::SetRect(HWND hwnd, const Api::Rect& rect) -> void
 {
+    const auto oldRect = WindowRectInParent(hwnd);
     SetWindowPos(hwnd, nullptr, rect.x, rect.y, rect.width, rect.height, SWP_NOZORDER | SWP_NOACTIVATE);
+    RedrawParent(hwnd, oldRect, {rect.x, rect.y, rect.x + rect.width, rect.y + rect.height});
 }
 
 auto HwndApi::SetClientRect(HWND hwnd, const Api::Rect& rect) -> void

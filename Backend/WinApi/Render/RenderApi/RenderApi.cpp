@@ -11,6 +11,16 @@ auto ToRect(const Api::Rect& rect) -> RECT
     return {rect.x, rect.y, rect.x + rect.width, rect.y + rect.height};
 }
 
+auto Right(const Api::Rect& rect) -> int
+{
+    return rect.x + rect.width;
+}
+
+auto Bottom(const Api::Rect& rect) -> int
+{
+    return rect.y + rect.height;
+}
+
 } // namespace
 
 auto RenderApi::Fill(HDC hdc, const Api::Rect& rect, HBRUSH brush) -> void
@@ -24,14 +34,16 @@ auto RenderApi::Fill(HDC hdc, const Api::Rect& rect, Api::Color color, int radiu
     if (color.a == 0) return;
 
     auto brush = CreateSolidBrush(ToColorRef(color));
+    auto pen = radius > 0 ? CreatePen(PS_SOLID, 1, ToColorRef(color)) : nullptr;
     const auto previousBrush = SelectObject(hdc, brush);
-    const auto previousPen = SelectObject(hdc, GetStockObject(NULL_PEN));
+    const auto previousPen = SelectObject(hdc, pen ? pen : GetStockObject(NULL_PEN));
 
-    if (radius > 0) RoundRect(hdc, rect.x, rect.y, rect.x + rect.width, rect.y + rect.height, radius * 2, radius * 2);
+    if (radius > 0) RoundRect(hdc, rect.x, rect.y, rect.x + rect.width + 1, rect.y + rect.height + 1, radius * 2, radius * 2);
     else Fill(hdc, rect, brush);
 
     SelectObject(hdc, previousPen);
     SelectObject(hdc, previousBrush);
+    if (pen) DeleteObject(pen);
     DeleteObject(brush);
 }
 
@@ -43,8 +55,8 @@ auto RenderApi::Border(HDC hdc, const Api::Rect& rect, Api::Color color, int rad
     const auto previousPen = SelectObject(hdc, pen);
     const auto previousBrush = SelectObject(hdc, GetStockObject(NULL_BRUSH));
 
-    if (radius > 0) RoundRect(hdc, rect.x, rect.y, rect.x + rect.width, rect.y + rect.height, radius * 2, radius * 2);
-    else Rectangle(hdc, rect.x, rect.y, rect.x + rect.width, rect.y + rect.height);
+    if (radius > 0) RoundRect(hdc, rect.x, rect.y, Right(rect), Bottom(rect), radius * 2, radius * 2);
+    else Rectangle(hdc, rect.x, rect.y, Right(rect), Bottom(rect));
 
     SelectObject(hdc, previousBrush);
     SelectObject(hdc, previousPen);

@@ -43,6 +43,7 @@ auto NativeCustom::create(NativeWindow* parent, Api::Id id, const NativeCreateCo
         .className = WindowClass::Get(ClassName),
         .windowName = L"",
         .parent = parent->handle(),
+        .exStyle = exStyle(),
         .style = WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS,
         .menu = reinterpret_cast<HMENU>(static_cast<UINT_PTR>(m_id)),
         .hInstance = context.instance,
@@ -86,6 +87,11 @@ auto NativeCustom::onPaint(HDC hdc, const Api::Rect& rect) -> void
 auto NativeCustom::hitTest() const -> LRESULT
 {
     return HTCLIENT;
+}
+
+auto NativeCustom::exStyle() const -> DWORD
+{
+    return 0;
 }
 
 auto NativeCustom::resources() const -> ResourceManager*
