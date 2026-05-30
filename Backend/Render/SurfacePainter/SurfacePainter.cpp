@@ -1,4 +1,4 @@
-#include "WindowSurfacePainter.h"
+#include "SurfacePainter.h"
 
 #include <algorithm>
 #include <vector>

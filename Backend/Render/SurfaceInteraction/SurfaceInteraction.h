@@ -4,7 +4,7 @@
 
 #include "Geometry/Point.h"
 #include "Menu/MenuTrigger.h"
-#include "Render/WindowSurfaceHitTest/WindowSurfaceHitTest.h"
+#include "Render/SurfaceHitTest/SurfaceHitTest.h"
 
 namespace Blade::Backend {
 

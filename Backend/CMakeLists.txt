@@ -19,12 +19,12 @@ add_library(${PROJECT_NAME} STATIC
         Render/RenderCommandDispatcher/RenderCommandDispatcher.cpp
         Render/RenderCommandDispatcher/RenderCommandDispatcher.h
         Render/SurfaceElementState/SurfaceElementState.h
-        Render/WindowSurfaceHitTest/WindowSurfaceHitTest.cpp
-        Render/WindowSurfaceHitTest/WindowSurfaceHitTest.h
-        Render/WindowSurfaceInteraction/WindowSurfaceInteraction.cpp
-        Render/WindowSurfaceInteraction/WindowSurfaceInteraction.h
-        Render/WindowSurfacePainter/WindowSurfacePainter.cpp
-        Render/WindowSurfacePainter/WindowSurfacePainter.h
+        Render/SurfaceHitTest/SurfaceHitTest.cpp
+        Render/SurfaceHitTest/SurfaceHitTest.h
+        Render/SurfaceInteraction/SurfaceInteraction.cpp
+        Render/SurfaceInteraction/SurfaceInteraction.h
+        Render/SurfacePainter/SurfacePainter.cpp
+        Render/SurfacePainter/SurfacePainter.h
         Render/WindowSurfaceRuntime/WindowSurfaceRuntime.cpp
         Render/WindowSurfaceRuntime/WindowSurfaceRuntime.h
 

@@ -5,9 +5,9 @@
 
 #include "App/AppBackend.h"
 #include "Components/Window/NativeWindow.h"
-#include "Render/WindowSurfaceHitTest/WindowSurfaceHitTest.h"
-#include "Render/WindowSurfaceInteraction/WindowSurfaceInteraction.h"
-#include "Render/WindowSurfacePainter/WindowSurfacePainter.h"
+#include "Render/SurfaceHitTest/SurfaceHitTest.h"
+#include "Render/SurfaceInteraction/SurfaceInteraction.h"
+#include "Render/SurfacePainter/SurfacePainter.h"
 
 namespace Blade::Backend {
 

@@ -1,4 +1,4 @@
-#include "WindowSurfaceInteraction.h"
+#include "SurfaceInteraction.h"
 
 #include "App/AppBackend.h"
 #include "Components/RenderSurface/RenderSurface.h"
