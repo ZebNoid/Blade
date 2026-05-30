@@ -21,7 +21,7 @@ public:
     auto applyEvents(const Api::EventSubscriptions& events) -> void override;
     auto isAlive() const -> bool override;
     auto attachChild(INativeElement* child) -> void override;
-    auto paint(HDC hdc, ResourceManager& resources, RenderRegistry& renderNodes) -> void;
+    virtual auto paint(HDC hdc, ResourceManager& resources, RenderRegistry& renderNodes) -> void;
     auto hitTest(Api::Point point) const -> bool;
     auto wantsDrop() const -> bool;
     auto hasContextMenu(Api::MenuTrigger trigger) const -> bool;
@@ -31,6 +31,10 @@ public:
     auto mouseDown(RenderRegistry& renderNodes) -> bool;
     auto mouseUp(RenderRegistry& renderNodes) -> bool;
     auto focus(RenderRegistry& renderNodes, bool focused) -> bool;
+
+protected:
+    auto rect() const -> Api::Rect;
+    auto visible() const -> bool;
 
 private:
     auto updateState(RenderRegistry& renderNodes) -> bool;

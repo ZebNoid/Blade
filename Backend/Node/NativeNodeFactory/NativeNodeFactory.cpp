@@ -4,6 +4,7 @@
 #include "Logging/Logger.h"
 #include "Components/Native/Button/NativeButton.h"
 #include "Components/Native/Label/NativeLabel.h"
+#include "Components/RenderSurface/LabelSurface/LabelSurface.h"
 #include "Components/RenderSurface/RenderSurface.h"
 #include "Components/Tray/NativeTray.h"
 #include "Render/WindowSurfaceRuntime/WindowSurfaceRuntime.h"
@@ -55,7 +56,7 @@ auto NativeNodeFactory::registerFactories() -> void
     m_bindings.bind({
         { Api::WidgetTypes::Window, Api::ComponentTypes::Window },
         { Api::WidgetTypes::Button, Api::ComponentTypes::Button },
-        { Api::WidgetTypes::Label, Api::ComponentTypes::Label },
+        { Api::WidgetTypes::Label, UI::Label },
         { Api::WidgetTypes::ContextArea, Api::ComponentTypes::Surface },
         { Api::WidgetTypes::Tray, Api::ComponentTypes::Tray },
     });
@@ -63,7 +64,8 @@ auto NativeNodeFactory::registerFactories() -> void
     m_registry.add(Api::ComponentTypes::Window, [this](const auto& command) { return createWindow(command); });
     m_registry.add(Api::ComponentTypes::Button, [this](const auto& command) { return createButton(command); });
     m_registry.add(UI::Surface, [this](const auto& command) { return createSurface(command); });
-    m_registry.add(Api::ComponentTypes::Label, [this](const auto& command) { return createLabel(command); });
+    m_registry.add(UI::Label, [this](const auto& command) { return createLabelSurface(command); });
+    m_registry.add(UI::LabelNative, [this](const auto& command) { return createNativeLabel(command); });
     m_registry.add(Api::ComponentTypes::Tray, [this](const auto& command) { return createTray(command); });
 }
 
@@ -221,13 +223,13 @@ auto NativeNodeFactory::createTray(const Api::ElementCommand& command) -> std::o
     return node;
 }
 
-auto NativeNodeFactory::createLabel(const Api::ElementCommand& command) -> std::optional<NativeNode>
+auto NativeNodeFactory::createLabelSurface(const Api::ElementCommand& command) -> std::optional<NativeNode>
 {
     auto* parent = m_backend->nodes().get(command.parent);
 
     if (!parent)
     {
-        LOG_E(L"[Error] createLabel no parent");
+        LOG_E(L"[Error] createLabelSurface no parent");
         return std::nullopt;
     }
 
@@ -235,7 +237,46 @@ auto NativeNodeFactory::createLabel(const Api::ElementCommand& command) -> std::
 
     if (!parentWindow)
     {
-        LOG_E(L"[Error] createLabel parent is not NativeWindow");
+        LOG_E(L"[Error] createLabelSurface parent is not NativeWindow");
+        return std::nullopt;
+    }
+
+    auto label = std::make_unique<LabelSurface>();
+
+    if (!label->create(parentWindow, command.id, m_context))
+    {
+        LOG_E(L"[Error] createLabelSurface failed");
+        return std::nullopt;
+    }
+
+    label->applyProps(command.props);
+    label->applyEvents(command.events);
+
+    NativeNode node = {
+        .id = command.id,
+        .type = command.nodeType,
+        .parent = command.parent,
+        .native = std::move(label),
+    };
+
+    return node;
+}
+
+auto NativeNodeFactory::createNativeLabel(const Api::ElementCommand& command) -> std::optional<NativeNode>
+{
+    auto* parent = m_backend->nodes().get(command.parent);
+
+    if (!parent)
+    {
+        LOG_E(L"[Error] createNativeLabel no parent");
+        return std::nullopt;
+    }
+
+    auto* parentWindow = dynamic_cast<NativeWindow*>(parent->native.get());
+
+    if (!parentWindow)
+    {
+        LOG_E(L"[Error] createNativeLabel parent is not NativeWindow");
         return std::nullopt;
     }
 
@@ -243,7 +284,7 @@ auto NativeNodeFactory::createLabel(const Api::ElementCommand& command) -> std::
 
     if (!label->create(parentWindow, command.id, m_context))
     {
-        LOG_E(L"[Error] createLabel failed");
+        LOG_E(L"[Error] createNativeLabel failed");
         return std::nullopt;
     }
 

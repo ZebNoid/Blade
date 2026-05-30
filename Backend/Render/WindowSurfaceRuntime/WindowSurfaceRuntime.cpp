@@ -5,7 +5,6 @@
 #include <windowsx.h>
 
 #include "App/AppBackend.h"
-#include "Components/Native/Label/NativeLabel.h"
 #include "Components/RenderSurface/RenderSurface.h"
 #include "Components/Window/NativeWindow.h"
 #include "Node/NativeNode/NativeNode.h"
@@ -57,8 +56,7 @@ auto PaintVirtuals(AppBackend& backend, HDC hdc) -> void
         {
             const auto order = node.order;
 
-            if (auto* surface = dynamic_cast<RenderSurface*>(node.native.get())) items.push_back({order, {node.id, surface, nullptr}});
-            else if (auto* label = dynamic_cast<NativeLabel*>(node.native.get())) items.push_back({order, {node.id, nullptr, label}});
+            if (auto* surface = dynamic_cast<RenderSurface*>(node.native.get())) items.push_back({order, {node.id, surface}});
         }
     );
 
@@ -104,8 +102,7 @@ auto HitVirtual(AppBackend& backend, Api::Point point, bool requireDrop = false)
         [&](NativeNode& node)
         {
             auto* surface = dynamic_cast<RenderSurface*>(node.native.get());
-            auto* label = dynamic_cast<NativeLabel*>(node.native.get());
-            VirtualElement element{node.id, surface, label};
+            VirtualElement element{node.id, surface};
             const auto hit = element.hitTest(point);
             if (!hit) return;
 
@@ -134,8 +131,7 @@ auto VirtualById(AppBackend& backend, Api::Id id) -> VirtualElement
     if (!node) return {};
 
     auto* surface = dynamic_cast<RenderSurface*>(node->native.get());
-    auto* label = dynamic_cast<NativeLabel*>(node->native.get());
-    return {id, surface, label};
+    return {id, surface};
 }
 
 auto ShowContextMenu(AppBackend& backend, HWND hwnd, Api::Point point, POINT screenPoint, Api::MenuTrigger trigger) -> bool

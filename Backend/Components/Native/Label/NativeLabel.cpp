@@ -1,7 +1,8 @@
 #include "NativeLabel.h"
 
+#include <algorithm>
+
 #include "Components/Window/NativeWindow.h"
-#include "Event/EventMapper/EventMapper.h"
 #include "Logging/Logger.h"
 #include "Node/NativeCreateContext/NativeCreateContext.h"
 #include "Property/PropertyMapper/PropertyMapper.h"
@@ -11,6 +12,15 @@
 #include "WinApi/Window/Hwnd/Hwnd.h"
 
 namespace Blade::Backend {
+
+namespace {
+
+auto HasEvent(const Api::EventSubscriptions& events, Api::Events event) -> bool
+{
+    return std::ranges::find(events, event) != events.end();
+}
+
+} // namespace
 
 auto NativeLabel::create(NativeWindow* parent, Api::Id id, const NativeCreateContext& context) -> bool
 {
@@ -51,7 +61,15 @@ auto NativeLabel::applyProps(const Api::PropertyMap& propertyMap) -> void
 
 auto NativeLabel::applyEvents(const Api::EventSubscriptions& events) -> void
 {
-    EventMapper::Apply(*this, events);
+    if (HasEvent(events, Api::Events::Drop)) enableDropTarget();
+
+    auto* parent = dynamic_cast<NativeWindow*>(m_parent);
+    if (!parent) return;
+
+    if (HasEvent(events, Api::Events::Click))
+    {
+        parent->commandRouter().on(m_id, STN_CLICKED, { .type = Api::Events::Click });
+    }
 }
 
 auto NativeLabel::isAlive() const -> bool

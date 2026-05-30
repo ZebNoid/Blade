@@ -23,7 +23,8 @@ auto SupportedComponents() -> std::vector<ComponentInfo>
         { UI::Window, L"Window" },
         { UI::Tray, L"Tray" },
         { UI::Button, L"Button" },
-        { UI::Label, L"Label" },
+        { UI::Label, L"LabelSurface" },
+        { UI::LabelNative, L"LabelNative" },
         { UI::Surface, L"Surface" },
     };
 }

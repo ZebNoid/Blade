@@ -140,6 +140,16 @@ auto RenderSurface::focus(RenderRegistry& renderNodes, bool focused) -> bool
     return changed;
 }
 
+auto RenderSurface::rect() const -> Api::Rect
+{
+    return m_rect;
+}
+
+auto RenderSurface::visible() const -> bool
+{
+    return m_state.visible;
+}
+
 auto RenderSurface::updateState(RenderRegistry& renderNodes) -> bool
 {
     return renderNodes.setState(m_id, VisualState(m_state));

@@ -24,6 +24,7 @@ namespace ComponentTypes {
     inline constexpr ComponentType ContextArea{102};
 
     inline constexpr ComponentType Surface{200};
+    inline constexpr ComponentType LabelSurface{201};
 
     inline constexpr auto Backend(uint32_t value) -> ComponentType
     {

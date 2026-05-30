@@ -124,12 +124,13 @@ Widgets should be declarative API objects. Backend implementation choice should 
 Current native/custom split:
 
 - `NativeButton` uses WinAPI `BUTTON`.
-- `NativeLabel` is temporarily a window-level virtual text renderer for performance testing.
+- `NativeLabel` uses WinAPI `STATIC`.
+- `LabelSurface` renders label text through the window-level surface path.
 - Custom buttons should usually be Blade widgets built on top of `Surface`, modifiers, and events.
 
-- [ ] Move temporary virtual `NativeLabel` rendering into the future `Surface`/render-text path.
-- [ ] Add native common controls, including a real WinAPI `STATIC` label.
+- [ ] Add more native common controls.
 - [ ] Keep fallback native widgets available where useful.
+- [x] Split system `NativeLabel` from custom-rendered `LabelSurface`.
 - [x] Keep `Button` mapped to native/system button by default.
 - [x] Add low-level custom render `Surface`.
 

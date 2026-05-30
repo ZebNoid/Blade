@@ -41,43 +41,43 @@ protected:
 
         // testWindow().mount();
 
-        *trayId = Tray(
-                Menu(
-                    MenuItem(L"Show").onClick([windowId]() -> void
-                    {
-                        UI::Show(*windowId);
-                        LOG(L"Show");
-                    }),
-                    MenuItem(L"Hide").onClick([windowId]() -> void
-                    {
-                        UI::Hide(*windowId);
-                        LOG(L"Hide");
-                    }),
-                    MenuItem(L"Tray Icon",
-                             MenuItem(L"app.png").onClick([trayId, windowId]() -> void
-                             {
-                                 UI::Tray::Icon(*trayId, L"test/app.png");
-                                 LOG(L"PNG");
-                             }),
-                             MenuItem(L"0ad.png").onClick([trayId, windowId]()-> void
-                             {
-                                 UI::Tray::Icon(*trayId, L"test/0ad.png");
-                                 LOG(L"PDF");
-                             })
-                    ),
-                    MenuSeparator(),
-                    MenuItem(L"Exit")
-                    .shortcut(Api::Shortcut::Ctrl(L'Q'))
-                    .onClick([]() -> void { App::Quit(); })
-                ).trigger(Api::MenuTrigger::RightClick)
-            ).title(L"Blade Tray")
-             .icon(L"test/app.ico")
-             .lifetime(Api::Lifetime::Owner)
-             .onClick([windowId]() -> void
-             {
-                 UI::Show(*windowId);
-             })
-             .mount();
+        // *trayId = Tray(
+        //         Menu(
+        //             MenuItem(L"Show").onClick([windowId]() -> void
+        //             {
+        //                 UI::Show(*windowId);
+        //                 LOG(L"Show");
+        //             }),
+        //             MenuItem(L"Hide").onClick([windowId]() -> void
+        //             {
+        //                 UI::Hide(*windowId);
+        //                 LOG(L"Hide");
+        //             }),
+        //             MenuItem(L"Tray Icon",
+        //                      MenuItem(L"app.png").onClick([trayId, windowId]() -> void
+        //                      {
+        //                          UI::Tray::Icon(*trayId, L"test/app.png");
+        //                          LOG(L"PNG");
+        //                      }),
+        //                      MenuItem(L"0ad.png").onClick([trayId, windowId]()-> void
+        //                      {
+        //                          UI::Tray::Icon(*trayId, L"test/0ad.png");
+        //                          LOG(L"PDF");
+        //                      })
+        //             ),
+        //             MenuSeparator(),
+        //             MenuItem(L"Exit")
+        //             .shortcut(Api::Shortcut::Ctrl(L'Q'))
+        //             .onClick([]() -> void { App::Quit(); })
+        //         ).trigger(Api::MenuTrigger::RightClick)
+        //     ).title(L"Blade Tray")
+        //      .icon(L"test/app.ico")
+        //      .lifetime(Api::Lifetime::Owner)
+        //      .onClick([windowId]() -> void
+        //      {
+        //          UI::Show(*windowId);
+        //      })
+        //      .mount();
 
         // Window(
         //     Button(L"Button")
@@ -142,8 +142,15 @@ protected:
                         ).flex(1)
                         // Button(L"File").onDrop([](Api::Text files) { LOGF_D(L"Drop Button:\n%s", files.c_str()); })
                         , Menu(
-                            MenuItem(L"Open").onClick([]() -> void { LOG(L"Menu Open"); }),
-                            MenuItem(L"Close").onClick([]() -> void { LOG(L"Menu Delete"); })
+                            MenuItem(L"Open").onClick([]() -> void
+                            {
+                                LOG(L"Menu Open");
+                            }),
+                            MenuItem(L"Close").onClick([]() -> void
+                            {
+                                LOG(L"Menu Delete");
+                                App::Quit();
+                            })
                         ).trigger(Api::MenuTrigger::RightClick)
                     ).onDrop([](const Api::Text& files) -> void
                     {

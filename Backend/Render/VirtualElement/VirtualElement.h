@@ -8,7 +8,6 @@
 
 namespace Blade::Backend {
 
-class NativeLabel;
 class RenderRegistry;
 class RenderSurface;
 class ResourceManager;
@@ -17,7 +16,6 @@ struct VirtualElement
 {
     Api::Id id = Api::InvalidId;
     RenderSurface* surface = nullptr;
-    NativeLabel* label = nullptr; // TODO why?
 
     auto valid() const -> bool;
     auto paint(HDC hdc, ResourceManager& resources, RenderRegistry& renderNodes) const -> void;
