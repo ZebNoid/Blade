@@ -1,7 +1,7 @@
 #pragma once
 #include "Common/LayoutProps.h"
-#include "Common/Point.h"
-#include "Common/Size.h"
+#include "Geometry/Point.h"
+#include "Geometry/Size.h"
 #include "Props/LayoutProps/CrossAxisAlignment.h"
 #include "Props/LayoutProps/MainAxisAlignment.h"
 

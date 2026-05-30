@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Base/WidgetTree.h"
-#include "Common/Size.h"
+#include "Geometry/Size.h"
 #include "Runtime/LayoutEngine/Data/LayoutNode.h"
 
 

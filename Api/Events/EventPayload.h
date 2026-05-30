@@ -2,7 +2,7 @@
 
 #include <variant>
 
-#include "Common/Size.h"
+#include "Geometry/Size.h"
 #include "Common/Types.h"
 
 

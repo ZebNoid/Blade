@@ -1,4 +1,5 @@
 #pragma once
+
 #include <string>
 
 namespace Blade::Api {
@@ -18,4 +19,4 @@ inline auto to_string(const Size& size) -> std::wstring
         L"]";
 }
 
-} // namespace
+} // namespace Blade::Api

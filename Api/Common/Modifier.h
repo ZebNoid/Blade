@@ -6,8 +6,8 @@
 
 #include "Color.h"
 #include "Logger.h"
-#include "Size.h"
-#include "Thickness.h"
+#include "Geometry/Size.h"
+#include "Geometry/Thickness.h"
 
 namespace Blade::Api {
 

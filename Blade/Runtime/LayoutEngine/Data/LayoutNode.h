@@ -4,8 +4,8 @@
 
 #include "LayoutData.h"
 #include "Common/LayoutProps.h"
-#include "Common/Rect.h"
-#include "Common/Size.h"
+#include "Geometry/Rect.h"
+#include "Geometry/Size.h"
 #include "Common/Types.h"
 #include "Widget/WidgetType.h"
 #include "LayoutType.h"

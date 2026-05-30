@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Common/Size.h"
+#include "Geometry/Size.h"
 #include "Runtime/LayoutEngine/Data/LayoutContext.h"
 
 

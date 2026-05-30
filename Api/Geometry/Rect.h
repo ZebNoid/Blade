@@ -1,8 +1,9 @@
 #pragma once
+
 #include <string>
 
-#include "Point.h"
-#include "Size.h"
+#include "Geometry/Point.h"
+#include "Geometry/Size.h"
 
 namespace Blade::Api {
 
@@ -15,12 +16,7 @@ struct Rect
 
     Rect() = default;
 
-    Rect(
-        int x,
-        int y,
-        int width,
-        int height
-    )
+    Rect(int x, int y, int width, int height)
         : x(x),
           y(y),
           width(width),
@@ -28,10 +24,7 @@ struct Rect
     {
     }
 
-    Rect(
-        const Point& position,
-        const Size& size
-    )
+    Rect(const Point& position, const Size& size)
         : x(position.x),
           y(position.y),
           width(size.width),
@@ -41,18 +34,12 @@ struct Rect
 
     auto position() const -> Point
     {
-        return {
-            x,
-            y
-        };
+        return {x, y};
     }
 
     auto size() const -> Size
     {
-        return {
-            width,
-            height
-        };
+        return {width, height};
     }
 };
 
@@ -69,4 +56,4 @@ inline auto to_string(const Rect& rect) -> std::wstring
         L"]";
 }
 
-} // namespace
+} // namespace Blade::Api

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Common/Rect.h"
-#include "Common/Size.h"
-#include "Common/Thickness.h"
+#include "Geometry/Rect.h"
+#include "Geometry/Size.h"
+#include "Geometry/Thickness.h"
 #include "Props/LayoutProps/MainAxisAlignment.h"
 
 

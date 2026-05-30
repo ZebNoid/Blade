@@ -160,5 +160,7 @@ The current WinAPI backend is a fallback/native backend, not the final rendering
 ## API Structure
 
 - [ ] Continue moving domain-specific API files out of `Api/Common`.
+- [x] Move geometry API types from `Api/Common` to `Api/Geometry`.
+- [x] Move window-specific API types from `Api/Common` to `Api/Window`.
 - [x] Move menu-related API types from `Api/Common` to `Api/Menu`.
 - [x] Move widget identity API types from `Api/Common` to `Api/Widget`.

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Common/Rect.h"
+#include "Geometry/Rect.h"
 #include "Common/Types.h"
 #include "Render/RenderCommandType.h"
 #include "Render/RenderOp.h"

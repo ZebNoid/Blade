@@ -2,9 +2,9 @@
 
 #include <windows.h>
 
-#include "Common/Point.h"
-#include "Common/Rect.h"
-#include "Common/Size.h"
+#include "Geometry/Point.h"
+#include "Geometry/Rect.h"
+#include "Geometry/Size.h"
 #include "Common/Types.h"
 
 

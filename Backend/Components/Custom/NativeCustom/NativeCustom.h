@@ -3,7 +3,7 @@
 #include <optional>
 
 #include "Common/Modifier.h"
-#include "Common/Rect.h"
+#include "Geometry/Rect.h"
 #include "Node/NativeCreateContext/NativeCreateContext.h"
 #include "WinApi/NativeElement/NativeElement.h"
 

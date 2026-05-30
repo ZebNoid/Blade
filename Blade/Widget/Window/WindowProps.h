@@ -2,7 +2,7 @@
 
 #include "Window/CaptionProps.h"
 #include "Common/Lifetime.h"
-#include "Common/Size.h"
+#include "Geometry/Size.h"
 #include "Common/Types.h"
 #include "Window/WindowState.h"
 #include "Fabric/WindowPlacement.h"

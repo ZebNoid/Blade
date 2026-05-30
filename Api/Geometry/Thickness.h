@@ -2,7 +2,6 @@
 
 namespace Blade::Api {
 
-
 struct Thickness
 {
     int left = 0;
@@ -20,10 +19,7 @@ struct Thickness
     {
     }
 
-    Thickness(
-        const int horizontal,
-        const int vertical
-    )
+    Thickness(const int horizontal, const int vertical)
         : left(horizontal),
           top(vertical),
           right(horizontal),
@@ -31,12 +27,7 @@ struct Thickness
     {
     }
 
-    Thickness(
-        const int left,
-        const int top,
-        const int right,
-        const int bottom
-    )
+    Thickness(const int left, const int top, const int right, const int bottom)
         : left(left),
           top(top),
           right(right),
@@ -45,5 +36,4 @@ struct Thickness
     }
 };
 
-
-} // namespace
+} // namespace Blade::Api

@@ -16,6 +16,10 @@ add_library(${PROJECT_NAME} INTERFACE
         Menu/MenuData.h
         Menu/MenuTrigger.h
         Menu/Shortcut.h
+        Geometry/Point.h
+        Geometry/Size.h
+        Geometry/Rect.h
+        Geometry/Thickness.h
         Render/RenderCommand.h
         Render/RenderCommandType.h
         Render/RenderOp.h
@@ -28,13 +32,9 @@ add_library(${PROJECT_NAME} INTERFACE
 
         Common/Types.h
         Common/Color.h
-        Common/Thickness.h
         Common/Modifier.h
         Common/LayoutProps.h
         Common/Lifetime.h
-        Common/Rect.h
-        Common/Size.h
-        Common/Point.h
         Common/Property.h
         Common/Callbacks.h
         Common/Props.h

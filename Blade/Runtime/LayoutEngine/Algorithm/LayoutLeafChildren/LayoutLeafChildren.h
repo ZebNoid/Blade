@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Common/Rect.h"
-#include "Common/Size.h"
+#include "Geometry/Rect.h"
+#include "Geometry/Size.h"
 #include "Runtime/LayoutEngine/Data/LayoutNode.h"
 
 

@@ -2,7 +2,7 @@
 
 #include <variant>
 
-#include "Common/Size.h"
+#include "Geometry/Size.h"
 #include "Events/BackendEvent.h"
 #include "Events/EventResult.h"
 #include "Message/BackendMessageType.h"
