@@ -6,6 +6,8 @@
 
 namespace Blade::Backend {
 
+namespace Surface::Interaction {
+
 namespace {
 
 template <typename Apply>
@@ -43,7 +45,7 @@ auto MouseUp(AppBackend& backend, HWND hwnd, SurfaceHit hit) -> void
 
 auto ShowContextMenu(AppBackend& backend, HWND hwnd, Api::Point point, POINT screenPoint, Api::MenuTrigger trigger) -> bool
 {
-    const auto hit = HitSurface(backend, point);
+    const auto hit = Surface::HitTest::Hit(backend, point);
     if (!hit.valid()) return false;
 
     if (!hit.surface->hasContextMenu(trigger)) return false;
@@ -52,5 +54,7 @@ auto ShowContextMenu(AppBackend& backend, HWND hwnd, Api::Point point, POINT scr
     if (shown) HwndApi::Invalidate(hwnd);
     return shown;
 }
+
+} // namespace Surface::Interaction
 
 } // namespace Blade::Backend

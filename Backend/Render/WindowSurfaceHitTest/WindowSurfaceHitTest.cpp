@@ -6,7 +6,9 @@
 
 namespace Blade::Backend {
 
-auto HitSurface(AppBackend& backend, Api::Point point, bool requireDrop) -> SurfaceHit
+namespace Surface::HitTest {
+
+auto Hit(AppBackend& backend, Api::Point point, bool requireDrop) -> SurfaceHit
 {
     SurfaceHit result;
     int resultOrder = -1;
@@ -31,12 +33,12 @@ auto HitSurface(AppBackend& backend, Api::Point point, bool requireDrop) -> Surf
     return result;
 }
 
-auto HitId(const SurfaceHit& hit) -> Api::Id
+auto Id(const SurfaceHit& hit) -> Api::Id
 {
     return hit.valid() ? hit.id : Api::InvalidId;
 }
 
-auto SurfaceById(AppBackend& backend, Api::Id id) -> SurfaceHit
+auto ById(AppBackend& backend, Api::Id id) -> SurfaceHit
 {
     const auto* node = backend.nodes().get(id);
     if (!node) return {};
@@ -44,5 +46,7 @@ auto SurfaceById(AppBackend& backend, Api::Id id) -> SurfaceHit
     auto* surface = dynamic_cast<RenderSurface*>(node->native.get());
     return {id, surface};
 }
+
+} // namespace Surface::HitTest
 
 } // namespace Blade::Backend

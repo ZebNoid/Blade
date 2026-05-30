@@ -6,10 +6,8 @@ namespace Blade::Backend {
 
 class AppBackend;
 
-class WindowSurfacePainter
-{
-public:
-    static auto PaintBuffered(HWND hwnd, HDC target, AppBackend& backend) -> void;
-};
+namespace Surface::Painter {
+    auto PaintBuffered(HWND hwnd, HDC target, AppBackend& backend) -> void;
+} // namespace Surface::Painter
 
 } // namespace Blade::Backend

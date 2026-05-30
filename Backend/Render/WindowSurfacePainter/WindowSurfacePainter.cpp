@@ -48,7 +48,9 @@ auto PaintVirtuals(AppBackend& backend, HDC hdc) -> void
 
 } // namespace
 
-auto WindowSurfacePainter::PaintBuffered(HWND hwnd, HDC target, AppBackend& backend) -> void
+namespace Surface::Painter {
+
+auto PaintBuffered(HWND hwnd, HDC target, AppBackend& backend) -> void
 {
     const auto rect = HwndApi::GetClientRect(hwnd);
     if (rect.width <= 0 || rect.height <= 0) return;
@@ -65,5 +67,7 @@ auto WindowSurfacePainter::PaintBuffered(HWND hwnd, HDC target, AppBackend& back
     DeleteObject(bitmap);
     DeleteDC(memoryDc);
 }
+
+} // namespace Surface::Painter
 
 } // namespace Blade::Backend

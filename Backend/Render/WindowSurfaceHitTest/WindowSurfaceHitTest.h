@@ -16,8 +16,10 @@ struct SurfaceHit
     auto valid() const -> bool { return surface != nullptr; }
 };
 
-auto HitSurface(AppBackend& backend, Api::Point point, bool requireDrop = false) -> SurfaceHit;
-auto HitId(const SurfaceHit& hit) -> Api::Id;
-auto SurfaceById(AppBackend& backend, Api::Id id) -> SurfaceHit;
+namespace Surface::HitTest {
+    auto Hit(AppBackend& backend, Api::Point point, bool requireDrop = false) -> SurfaceHit;
+    auto Id(const SurfaceHit& hit) -> Api::Id;
+    auto ById(AppBackend& backend, Api::Id id) -> SurfaceHit;
+} // namespace Surface::HitTest
 
 } // namespace Blade::Backend

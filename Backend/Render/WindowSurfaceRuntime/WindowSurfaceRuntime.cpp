@@ -56,7 +56,7 @@ auto WindowSurfaceRuntime::Attach(AppBackend& backend, NativeWindow& window) -> 
         {
             PAINTSTRUCT paint{};
             const auto hdc = BeginPaint(hwnd, &paint);
-            WindowSurfacePainter::PaintBuffered(hwnd, hdc, backend);
+            Surface::Painter::PaintBuffered(hwnd, hdc, backend);
             EndPaint(hwnd, &paint);
             return 0;
         }
@@ -70,13 +70,13 @@ auto WindowSurfaceRuntime::Attach(AppBackend& backend, NativeWindow& window) -> 
     window.setDropTargetResolver(
         [&backend, &window, dragOverId](POINT screenPoint) -> Api::Id
         {
-            const auto hit = HitSurface(backend, ToClientPoint(window.handle(), screenPoint), true);
-            const auto target = HitId(hit);
+            const auto hit = Surface::HitTest::Hit(backend, ToClientPoint(window.handle(), screenPoint), true);
+            const auto target = Surface::HitTest::Id(hit);
             if (*dragOverId == target) return target;
 
-            SetDragOver(backend, window.handle(), SurfaceById(backend, *dragOverId), false);
+            Surface::Interaction::SetDragOver(backend, window.handle(), Surface::HitTest::ById(backend, *dragOverId), false);
             *dragOverId = target;
-            SetDragOver(backend, window.handle(), hit, true);
+            Surface::Interaction::SetDragOver(backend, window.handle(), hit, true);
             return target;
         }
     );
@@ -84,7 +84,7 @@ auto WindowSurfaceRuntime::Attach(AppBackend& backend, NativeWindow& window) -> 
     window.setDropDragLeaveHandler(
         [&backend, &window, dragOverId]
         {
-            SetDragOver(backend, window.handle(), SurfaceById(backend, *dragOverId), false);
+            Surface::Interaction::SetDragOver(backend, window.handle(), Surface::HitTest::ById(backend, *dragOverId), false);
             *dragOverId = Api::InvalidId;
         }
     );
@@ -93,13 +93,13 @@ auto WindowSurfaceRuntime::Attach(AppBackend& backend, NativeWindow& window) -> 
         WM_MOUSEMOVE,
         [&backend, hoveredId](HWND hwnd, UINT, WPARAM, LPARAM lParam) -> int
         {
-            const auto hit = HitSurface(backend, PointFromLParam(lParam));
-            const auto targetId = HitId(hit);
+            const auto hit = Surface::HitTest::Hit(backend, PointFromLParam(lParam));
+            const auto targetId = Surface::HitTest::Id(hit);
             if (*hoveredId == targetId) return 1;
 
-            SetHover(backend, hwnd, SurfaceById(backend, *hoveredId), false);
+            Surface::Interaction::SetHover(backend, hwnd, Surface::HitTest::ById(backend, *hoveredId), false);
             *hoveredId = targetId;
-            SetHover(backend, hwnd, hit, true);
+            Surface::Interaction::SetHover(backend, hwnd, hit, true);
 
             TRACKMOUSEEVENT event{
                 .cbSize = sizeof(TRACKMOUSEEVENT),
@@ -115,7 +115,7 @@ auto WindowSurfaceRuntime::Attach(AppBackend& backend, NativeWindow& window) -> 
         WM_MOUSELEAVE,
         [&backend, hoveredId](HWND hwnd, UINT, WPARAM, LPARAM) -> int
         {
-            SetHover(backend, hwnd, SurfaceById(backend, *hoveredId), false);
+            Surface::Interaction::SetHover(backend, hwnd, Surface::HitTest::ById(backend, *hoveredId), false);
             *hoveredId = Api::InvalidId;
             return 0;
         }
@@ -125,19 +125,19 @@ auto WindowSurfaceRuntime::Attach(AppBackend& backend, NativeWindow& window) -> 
         WM_LBUTTONDOWN,
         [&backend, pressedId, focusedId](HWND hwnd, UINT, WPARAM, LPARAM lParam) -> int
         {
-            const auto hit = HitSurface(backend, PointFromLParam(lParam));
+            const auto hit = Surface::HitTest::Hit(backend, PointFromLParam(lParam));
             if (!hit.valid()) return 1;
 
-            if (*focusedId != HitId(hit))
+            if (*focusedId != Surface::HitTest::Id(hit))
             {
-                SetFocus(backend, hwnd, SurfaceById(backend, *focusedId), false);
-                *focusedId = HitId(hit);
-                SetFocus(backend, hwnd, hit, true);
+                Surface::Interaction::SetFocus(backend, hwnd, Surface::HitTest::ById(backend, *focusedId), false);
+                *focusedId = Surface::HitTest::Id(hit);
+                Surface::Interaction::SetFocus(backend, hwnd, hit, true);
             }
 
-            *pressedId = HitId(hit);
+            *pressedId = Surface::HitTest::Id(hit);
             SetCapture(hwnd);
-            MouseDown(backend, hwnd, hit);
+            Surface::Interaction::MouseDown(backend, hwnd, hit);
             return 0;
         }
     );
@@ -146,12 +146,12 @@ auto WindowSurfaceRuntime::Attach(AppBackend& backend, NativeWindow& window) -> 
         WM_LBUTTONUP,
         [&backend, pressedId](HWND hwnd, UINT, WPARAM, LPARAM lParam) -> int
         {
-            const auto menuShown = ShowContextMenu(backend, hwnd, PointFromLParam(lParam), ScreenPoint(hwnd, lParam), Api::MenuTrigger::LeftClick);
+            const auto menuShown = Surface::Interaction::ShowContextMenu(backend, hwnd, PointFromLParam(lParam), ScreenPoint(hwnd, lParam), Api::MenuTrigger::LeftClick);
 
             if (*pressedId != Api::InvalidId)
             {
                 if (GetCapture() == hwnd) ReleaseCapture();
-                MouseUp(backend, hwnd, SurfaceById(backend, *pressedId));
+                Surface::Interaction::MouseUp(backend, hwnd, Surface::HitTest::ById(backend, *pressedId));
                 *pressedId = Api::InvalidId;
                 return 0;
             }
@@ -164,7 +164,7 @@ auto WindowSurfaceRuntime::Attach(AppBackend& backend, NativeWindow& window) -> 
         WM_MBUTTONUP,
         [&backend](HWND hwnd, UINT, WPARAM, LPARAM lParam) -> int
         {
-            return ShowContextMenu(backend, hwnd, PointFromLParam(lParam), ScreenPoint(hwnd, lParam), Api::MenuTrigger::MiddleClick) ? 0 : 1;
+            return Surface::Interaction::ShowContextMenu(backend, hwnd, PointFromLParam(lParam), ScreenPoint(hwnd, lParam), Api::MenuTrigger::MiddleClick) ? 0 : 1;
         }
     );
 
@@ -178,7 +178,7 @@ auto WindowSurfaceRuntime::Attach(AppBackend& backend, NativeWindow& window) -> 
             };
 
             const auto clientPoint = ToClientPoint(window.handle(), screenPoint);
-            return ShowContextMenu(backend, hwnd, clientPoint, screenPoint, Api::MenuTrigger::RightClick) ? 0 : 1;
+            return Surface::Interaction::ShowContextMenu(backend, hwnd, clientPoint, screenPoint, Api::MenuTrigger::RightClick) ? 0 : 1;
         }
     );
 }

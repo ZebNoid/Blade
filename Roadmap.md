@@ -15,6 +15,7 @@ This file keeps the project direction visible. It is not a micro-task list.
 ## Architecture Direction
 
 - [ ] Keep backend-specific limitations out of the public API unless the feature is explicitly backend-specific.
+- [ ] Prefer namespace-scoped functions over stateless helper wrapper classes where it keeps code simple; migrate existing helpers gradually and only where it reduces noise.
 - [x] Use TODO markers for long-lived transition points:
   - `// TODO deprecated`
   - `// TODO refactor`
