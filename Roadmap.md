@@ -78,7 +78,7 @@ Render definitions should be stored as flat command sequences per widget state:
 - [x] Add GDI+ fallback custom rendering for anti-aliased shapes.
 - [x] Cache GDI resources in `ResourceManager` instead of creating brushes/pens during paint.
 - [x] Support background, border radius, border color, and text color.
-- [x] Let `NativeCustom` and `NativeLabel` consume render definitions.
+- [x] Let `RenderSurface` and `LabelSurface` consume render definitions.
 - [x] Add render commands and backend render registry.
 - [x] Keep the current WinAPI render path as fallback.
 
