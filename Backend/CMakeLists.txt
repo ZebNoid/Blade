@@ -49,6 +49,10 @@ add_library(${PROJECT_NAME} STATIC
         WinApi/Display/DisplayApi/DisplayApi.h
         WinApi/Theme/ThemeApi/ThemeApi.cpp
         WinApi/Theme/ThemeApi/ThemeApi.h
+        WinApi/Render/GdiPlusScope/GdiPlusScope.cpp
+        WinApi/Render/GdiPlusScope/GdiPlusScope.h
+        WinApi/Render/GdiPlusRenderApi/GdiPlusRenderApi.cpp
+        WinApi/Render/GdiPlusRenderApi/GdiPlusRenderApi.h
         WinApi/Render/RenderApi/RenderApi.cpp
         WinApi/Render/RenderApi/RenderApi.h
         WinApi/Resource/ImageLoader/ImageLoader.cpp
@@ -131,6 +135,7 @@ target_link_libraries(${PROJECT_NAME}
         Api # Blade API
         user32
         gdi32
+        gdiplus
         comctl32
         uxtheme #include <uxtheme.h>
         windowscodecs # png

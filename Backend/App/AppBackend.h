@@ -10,6 +10,7 @@
 #include "Resource/ResourceManager/ResourceManager.h"
 #include "WinApi/AppRuntime/AppRuntime.h"
 #include "WinApi/Interop/OleScope/OleScope.h"
+#include "WinApi/Render/GdiPlusScope/GdiPlusScope.h"
 #include "WindowHost/WindowHost.h"
 
 #include "CommandDispatcher/CommandDispatcher.h"
@@ -82,6 +83,7 @@ private:
 
     AppRuntime m_runtime;
     OleScope m_ole;
+    GdiPlusScope m_gdiPlus;
 
     WindowHost m_host;
 

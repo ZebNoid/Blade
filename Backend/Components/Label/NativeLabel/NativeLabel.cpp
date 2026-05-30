@@ -3,6 +3,7 @@
 #include "Property/PropertyReader.h"
 #include "Render/RenderRegistry/RenderRegistry.h"
 #include "Resource/ResourceManager/ResourceManager.h"
+#include "WinApi/Render/GdiPlusRenderApi/GdiPlusRenderApi.h"
 #include "WinApi/Render/RenderApi/RenderApi.h"
 
 namespace Blade::Backend {
@@ -43,7 +44,7 @@ auto NativeLabel::onPaint(HDC hdc, const Api::Rect& rect) -> void
     if (!resourceManager) return;
 
     const auto* node = renderNodes() ? renderNodes()->get(id()) : nullptr;
-    if (node) RenderApi::Draw(hdc, rect, node->render.forState(node->state), *resourceManager);
+    if (node) GdiPlusRenderApi::Draw(hdc, rect, node->render.forState(node->state));
 
     const auto color = node ? RenderApi::TextColor(node->render.forState(node->state), resourceManager->windowTextColor()) : resourceManager->windowTextColor();
     RenderApi::Text(hdc, m_text, rect, resourceManager->defaultFont(), color);

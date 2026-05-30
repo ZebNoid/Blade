@@ -4,6 +4,7 @@
 #include "Property/PropertyMapper/PropertyMapper.h"
 #include "Render/RenderRegistry/RenderRegistry.h"
 #include "Resource/ResourceManager/ResourceManager.h"
+#include "WinApi/Render/GdiPlusRenderApi/GdiPlusRenderApi.h"
 #include "WinApi/HwndApi/HwndApi.h"
 #include "WinApi/Render/RenderApi/RenderApi.h"
 #include "WinApi/Window/Hwnd/Hwnd.h"
@@ -79,7 +80,7 @@ auto NativeCustom::onPaint(HDC hdc, const Api::Rect& rect) -> void
     {
         const auto& render = node->render.forState(node->state);
         updateRegion(rect, RenderApi::BorderRadius(render));
-        if (m_resources) RenderApi::Draw(hdc, rect, render, *m_resources);
+        GdiPlusRenderApi::Draw(hdc, rect, render);
         return;
     }
 

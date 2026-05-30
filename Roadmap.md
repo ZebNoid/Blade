@@ -68,6 +68,7 @@ Render definitions should be stored as flat command sequences per widget state:
 - [ ] Make modifier chains like `padding().background().padding().background()` semantically correct.
 - [ ] Move away from sibling child `HWND` composition limitations.
 - [x] Support basic render state switching for custom-based widgets.
+- [x] Add GDI+ fallback custom rendering for anti-aliased shapes.
 - [x] Cache GDI resources in `ResourceManager` instead of creating brushes/pens during paint.
 - [x] Support background, border radius, border color, and text color.
 - [x] Let `NativeCustom` and `NativeLabel` consume render definitions.
