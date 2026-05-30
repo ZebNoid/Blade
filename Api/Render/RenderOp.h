@@ -54,6 +54,16 @@ struct RenderStates
     Api::RenderDefinition disabled;
     Api::RenderDefinition dragOver;
 
+    auto empty() const -> bool
+    {
+        return normal.empty()
+            && hover.empty()
+            && focus.empty()
+            && pressed.empty()
+            && disabled.empty()
+            && dragOver.empty();
+    }
+
     auto forState(Api::WidgetState state) const -> const Api::RenderDefinition&
     {
         switch (state)

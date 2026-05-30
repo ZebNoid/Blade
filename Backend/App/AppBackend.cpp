@@ -13,6 +13,7 @@ AppBackend::AppBackend()
     : m_hInstance(GetModuleHandle(nullptr))
     , m_dispatcher(this)
     , m_appDispatcher(this)
+    , m_renderDispatcher(this)
     , m_factory(this)
 {
 }
@@ -86,6 +87,11 @@ auto AppBackend::process(const Api::AppCommand& command) -> void
     m_appDispatcher.dispatch(command);
 }
 
+auto AppBackend::process(const Api::RenderCommand& command) -> void
+{
+    m_renderDispatcher.dispatch(command);
+}
+
 auto AppBackend::host() -> WindowHost&
 {
     return m_host;
@@ -94,6 +100,11 @@ auto AppBackend::host() -> WindowHost&
 auto AppBackend::nodes() -> NodeRegistry&
 {
     return m_nodes;
+}
+
+auto AppBackend::renderNodes() -> RenderRegistry&
+{
+    return m_renderNodes;
 }
 
 auto AppBackend::factory() -> NativeNodeFactory&

@@ -12,6 +12,11 @@ add_library(${PROJECT_NAME} STATIC
         AppCommandDispatcher/AppCommandDispatcher.h
         Resource/ResourceManager/ResourceManager.cpp
         Resource/ResourceManager/ResourceManager.h
+        Render/RenderNode/RenderNode.h
+        Render/RenderRegistry/RenderRegistry.cpp
+        Render/RenderRegistry/RenderRegistry.h
+        Render/RenderCommandDispatcher/RenderCommandDispatcher.cpp
+        Render/RenderCommandDispatcher/RenderCommandDispatcher.h
 
         WindowHost/WindowHost.cpp
         WindowHost/WindowHost.h

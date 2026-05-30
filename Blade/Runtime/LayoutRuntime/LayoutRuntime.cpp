@@ -8,6 +8,7 @@ namespace Blade {
 LayoutRuntime::LayoutRuntime(Api::ApiBackend* backend, WidgetTreeRegistry& trees)
     : m_backend(backend)
     , m_trees(trees)
+    , m_renderRuntime(backend)
 {
 }
 
@@ -19,6 +20,7 @@ auto LayoutRuntime::mount(WidgetTree tree) -> WidgetTree&
 
     m_layoutTrees.insert_or_assign(root.id, std::move(layoutTree));
     send(std::move(commands));
+    m_renderRuntime.create(root, m_layoutTrees.at(root.id));
 
     return root;
 }
@@ -33,6 +35,7 @@ auto LayoutRuntime::unmount(Api::Id rootId) -> void
     }
 
     send(Materializer::Remove(*root));
+    m_renderRuntime.remove(*root);
     m_layoutTrees.erase(rootId);
     m_pendingResize.erase(rootId);
     m_trees.remove(rootId);
@@ -66,8 +69,18 @@ auto LayoutRuntime::resizeRoot(Api::Id rootId, const Api::Size& size) -> void
         commands = Materializer::UpdateChanged(*root, previous->second, layoutTree, false);
     }
 
+    if (previous == m_layoutTrees.end())
+    {
+        m_layoutTrees.insert_or_assign(rootId, std::move(layoutTree));
+        send(std::move(commands));
+        m_renderRuntime.create(*root, m_layoutTrees.at(rootId));
+        return;
+    }
+
+    auto previousLayout = previous->second;
     m_layoutTrees.insert_or_assign(rootId, std::move(layoutTree));
     send(std::move(commands));
+    m_renderRuntime.updateChanged(*root, previousLayout, m_layoutTrees.at(rootId));
 }
 
 auto LayoutRuntime::send(std::vector<Api::ElementCommand> commands) -> void

@@ -3,6 +3,7 @@
 #include "Command/AppCommand.h"
 #include "Command/ElementCommand.h"
 #include "Message/BackendMessage.h"
+#include "Render/RenderCommand.h"
 
 
 namespace Blade::Api {
@@ -26,6 +27,10 @@ public:
 
     virtual auto process(
         const Api::AppCommand& command
+    ) -> void = 0;
+
+    virtual auto process(
+        const Api::RenderCommand& command
     ) -> void = 0;
 };
 

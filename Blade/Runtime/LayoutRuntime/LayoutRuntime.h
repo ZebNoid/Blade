@@ -3,6 +3,7 @@
 #include "Api/ApiBackend.h"
 #include "Base/WidgetTree.h"
 #include "Runtime/Materializer/Materializer.h"
+#include "Runtime/RenderRuntime/RenderRuntime.h"
 #include "Runtime/WidgetTreeRegistry/WidgetTreeRegistry.h"
 
 
@@ -27,6 +28,7 @@ private:
 private:
     Api::ApiBackend* m_backend = nullptr;
     WidgetTreeRegistry& m_trees;
+    RenderRuntime m_renderRuntime;
     std::unordered_map<Api::Id, LayoutNode> m_layoutTrees;
     std::unordered_map<Api::Id, Api::Size> m_pendingResize;
     bool m_sending = false;

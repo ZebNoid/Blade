@@ -81,6 +81,8 @@ add_library(${PROJECT_NAME} STATIC
         Runtime/ModifierTree/ModifierTreeBuilder.h
         Runtime/Render/RenderDefinitionBuilder.cpp
         Runtime/Render/RenderDefinitionBuilder.h
+        Runtime/RenderRuntime/RenderRuntime.cpp
+        Runtime/RenderRuntime/RenderRuntime.h
         Runtime/LayoutEngine/Data/LayoutNode.h
         Runtime/LayoutEngine/Data/LayoutContext.h
         Runtime/LayoutEngine/Algorithm/LayoutLeaf/LayoutLeaf.cpp

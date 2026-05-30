@@ -13,6 +13,8 @@ add_library(${PROJECT_NAME} INTERFACE
         Command/ElementCommandType.h
         Message/BackendMessage.h
         Message/BackendMessageType.h
+        Render/RenderCommand.h
+        Render/RenderCommandType.h
         Render/RenderOp.h
         Fabric/WindowPlacement.h
 
