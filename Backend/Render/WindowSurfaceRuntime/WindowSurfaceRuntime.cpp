@@ -140,6 +140,12 @@ auto SurfaceById(AppBackend& backend, Api::Id id) -> SurfaceHit
     return {id, surface};
 }
 
+template <typename Apply>
+auto ApplySurfaceState(AppBackend& backend, HWND hwnd, SurfaceHit hit, Apply apply) -> void
+{
+    if (hit.valid() && apply(*hit.surface, backend.renderNodes())) HwndApi::Invalidate(hwnd);
+}
+
 auto ShowContextMenu(AppBackend& backend, HWND hwnd, Api::Point point, POINT screenPoint, Api::MenuTrigger trigger) -> bool
 {
     const auto hit = HitSurface(backend, point);
@@ -188,10 +194,9 @@ auto WindowSurfaceRuntime::Attach(AppBackend& backend, NativeWindow& window) -> 
             const auto target = HitId(hit);
             if (*dragOverId == target) return target;
 
-            const auto previous = SurfaceById(backend, *dragOverId);
-            if (previous.valid() && previous.surface->dragOver(backend.renderNodes(), false)) HwndApi::Invalidate(window.handle());
+            ApplySurfaceState(backend, window.handle(), SurfaceById(backend, *dragOverId), [](auto& surface, auto& renderNodes) { return surface.dragOver(renderNodes, false); });
             *dragOverId = target;
-            if (hit.valid() && hit.surface->dragOver(backend.renderNodes(), true)) HwndApi::Invalidate(window.handle());
+            ApplySurfaceState(backend, window.handle(), hit, [](auto& surface, auto& renderNodes) { return surface.dragOver(renderNodes, true); });
             return target;
         }
     );
@@ -199,8 +204,7 @@ auto WindowSurfaceRuntime::Attach(AppBackend& backend, NativeWindow& window) -> 
     window.setDropDragLeaveHandler(
         [&backend, &window, dragOverId]
         {
-            const auto previous = SurfaceById(backend, *dragOverId);
-            if (previous.valid() && previous.surface->dragOver(backend.renderNodes(), false)) HwndApi::Invalidate(window.handle());
+            ApplySurfaceState(backend, window.handle(), SurfaceById(backend, *dragOverId), [](auto& surface, auto& renderNodes) { return surface.dragOver(renderNodes, false); });
             *dragOverId = Api::InvalidId;
         }
     );
@@ -213,10 +217,9 @@ auto WindowSurfaceRuntime::Attach(AppBackend& backend, NativeWindow& window) -> 
             const auto targetId = HitId(hit);
             if (*hoveredId == targetId) return 1;
 
-            const auto previous = SurfaceById(backend, *hoveredId);
-            if (previous.valid() && previous.surface->hover(backend.renderNodes(), false)) HwndApi::Invalidate(hwnd);
+            ApplySurfaceState(backend, hwnd, SurfaceById(backend, *hoveredId), [](auto& surface, auto& renderNodes) { return surface.hover(renderNodes, false); });
             *hoveredId = targetId;
-            if (hit.valid() && hit.surface->hover(backend.renderNodes(), true)) HwndApi::Invalidate(hwnd);
+            ApplySurfaceState(backend, hwnd, hit, [](auto& surface, auto& renderNodes) { return surface.hover(renderNodes, true); });
 
             TRACKMOUSEEVENT event{
                 .cbSize = sizeof(TRACKMOUSEEVENT),
@@ -232,8 +235,7 @@ auto WindowSurfaceRuntime::Attach(AppBackend& backend, NativeWindow& window) -> 
         WM_MOUSELEAVE,
         [&backend, hoveredId](HWND hwnd, UINT, WPARAM, LPARAM) -> int
         {
-            const auto previous = SurfaceById(backend, *hoveredId);
-            if (previous.valid() && previous.surface->hover(backend.renderNodes(), false)) HwndApi::Invalidate(hwnd);
+            ApplySurfaceState(backend, hwnd, SurfaceById(backend, *hoveredId), [](auto& surface, auto& renderNodes) { return surface.hover(renderNodes, false); });
             *hoveredId = Api::InvalidId;
             return 0;
         }
@@ -248,15 +250,14 @@ auto WindowSurfaceRuntime::Attach(AppBackend& backend, NativeWindow& window) -> 
 
             if (*focusedId != HitId(hit))
             {
-                const auto previous = SurfaceById(backend, *focusedId);
-                if (previous.valid() && previous.surface->focus(backend.renderNodes(), false)) HwndApi::Invalidate(hwnd);
+                ApplySurfaceState(backend, hwnd, SurfaceById(backend, *focusedId), [](auto& surface, auto& renderNodes) { return surface.focus(renderNodes, false); });
                 *focusedId = HitId(hit);
-                if (hit.surface->focus(backend.renderNodes(), true)) HwndApi::Invalidate(hwnd);
+                ApplySurfaceState(backend, hwnd, hit, [](auto& surface, auto& renderNodes) { return surface.focus(renderNodes, true); });
             }
 
             *pressedId = HitId(hit);
             SetCapture(hwnd);
-            if (hit.surface->mouseDown(backend.renderNodes())) HwndApi::Invalidate(hwnd);
+            ApplySurfaceState(backend, hwnd, hit, [](auto& surface, auto& renderNodes) { return surface.mouseDown(renderNodes); });
             return 0;
         }
     );
@@ -270,8 +271,7 @@ auto WindowSurfaceRuntime::Attach(AppBackend& backend, NativeWindow& window) -> 
             if (*pressedId != Api::InvalidId)
             {
                 if (GetCapture() == hwnd) ReleaseCapture();
-                const auto pressed = SurfaceById(backend, *pressedId);
-                if (pressed.valid() && pressed.surface->mouseUp(backend.renderNodes())) HwndApi::Invalidate(hwnd);
+                ApplySurfaceState(backend, hwnd, SurfaceById(backend, *pressedId), [](auto& surface, auto& renderNodes) { return surface.mouseUp(renderNodes); });
                 *pressedId = Api::InvalidId;
                 return 0;
             }

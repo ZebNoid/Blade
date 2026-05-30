@@ -4,14 +4,14 @@
 
 namespace Blade::Backend {
 
-struct VirtualElementEvents
+struct SurfaceElementEvents
 {
     bool click = false;
     bool focus = false;
     bool drop = false;
 };
 
-struct VirtualElementState
+struct SurfaceElementState
 {
     bool visible = true;
     bool pressed = false;
@@ -20,7 +20,7 @@ struct VirtualElementState
     bool dragOver = false;
 };
 
-inline auto VisualState(const VirtualElementState& state) -> Api::WidgetState
+inline auto VisualState(const SurfaceElementState& state) -> Api::WidgetState
 {
     if (state.dragOver) return Api::WidgetState::DragOver;
     if (state.pressed) return Api::WidgetState::Pressed;

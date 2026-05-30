@@ -4,7 +4,7 @@
 #include "Menu/MenuData.h"
 #include "Node/NativeCreateContext/NativeCreateContext.h"
 #include "Render/RenderOp.h"
-#include "Render/VirtualElementState/VirtualElementState.h"
+#include "Render/SurfaceElementState/SurfaceElementState.h"
 #include "WinApi/NativeElement/NativeElement.h"
 
 namespace Blade::Backend {
@@ -42,8 +42,8 @@ private:
 
 private:
     Api::Rect m_rect{};
-    VirtualElementEvents m_events;
-    VirtualElementState m_state;
+    SurfaceElementEvents m_events;
+    SurfaceElementState m_state;
     Api::ContextMenus m_contextMenus;
 };
 
