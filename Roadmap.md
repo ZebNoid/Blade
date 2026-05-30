@@ -62,13 +62,13 @@ Render definitions should be stored as flat command sequences per widget state:
 - disabled;
 - dragOver.
 
-- [ ] Cache GDI resources in `ResourceManager` instead of creating brushes/pens during paint.
-- [ ] Introduce a render context so `RenderApi` does not create resources directly.
+- [ ] Introduce a render context so `RenderApi` does not depend on `ResourceManager` directly.
 - [ ] Add custom-render widgets such as `CustomButton`.
 - [ ] Introduce proper render surfaces/layers.
 - [ ] Make modifier chains like `padding().background().padding().background()` semantically correct.
 - [ ] Move away from sibling child `HWND` composition limitations.
 - [x] Support basic render state switching for custom-based widgets.
+- [x] Cache GDI resources in `ResourceManager` instead of creating brushes/pens during paint.
 - [x] Support background, border radius, border color, and text color.
 - [x] Let `NativeCustom` and `NativeLabel` consume render definitions.
 - [x] Add render commands and backend render registry.
@@ -134,9 +134,9 @@ Hot paint paths should not repeatedly call:
 - `CreateFontIndirect`;
 - image/icon loading APIs.
 
-- [ ] Add color brush cache.
-- [ ] Add pen cache.
 - [ ] Keep region handling separate because `SetWindowRgn` transfers ownership to WinAPI.
+- [x] Add pen cache.
+- [x] Add color brush cache.
 
 ## Fallback WinAPI Backend Limitations
 

@@ -2,6 +2,8 @@
 
 #include <type_traits>
 
+#include "Resource/ResourceManager/ResourceManager.h"
+
 namespace Blade::Backend {
 
 namespace {
@@ -29,12 +31,12 @@ auto RenderApi::Fill(HDC hdc, const Api::Rect& rect, HBRUSH brush) -> void
     FillRect(hdc, &nativeRect, brush);
 }
 
-auto RenderApi::Fill(HDC hdc, const Api::Rect& rect, Api::Color color, int radius) -> void
+auto RenderApi::Fill(HDC hdc, const Api::Rect& rect, Api::Color color, ResourceManager& resources, int radius) -> void
 {
     if (color.a == 0) return;
 
-    auto brush = CreateSolidBrush(ToColorRef(color));
-    auto pen = radius > 0 ? CreatePen(PS_SOLID, 1, ToColorRef(color)) : nullptr;
+    auto brush = resources.brush(color);
+    auto pen = radius > 0 ? resources.pen(color) : nullptr;
     const auto previousBrush = SelectObject(hdc, brush);
     const auto previousPen = SelectObject(hdc, pen ? pen : GetStockObject(NULL_PEN));
 
@@ -43,15 +45,13 @@ auto RenderApi::Fill(HDC hdc, const Api::Rect& rect, Api::Color color, int radiu
 
     SelectObject(hdc, previousPen);
     SelectObject(hdc, previousBrush);
-    if (pen) DeleteObject(pen);
-    DeleteObject(brush);
 }
 
-auto RenderApi::Border(HDC hdc, const Api::Rect& rect, Api::Color color, int radius) -> void
+auto RenderApi::Border(HDC hdc, const Api::Rect& rect, Api::Color color, ResourceManager& resources, int radius) -> void
 {
     if (color.a == 0) return;
 
-    auto pen = CreatePen(PS_SOLID, 1, ToColorRef(color));
+    auto pen = resources.pen(color);
     const auto previousPen = SelectObject(hdc, pen);
     const auto previousBrush = SelectObject(hdc, GetStockObject(NULL_BRUSH));
 
@@ -60,17 +60,16 @@ auto RenderApi::Border(HDC hdc, const Api::Rect& rect, Api::Color color, int rad
 
     SelectObject(hdc, previousBrush);
     SelectObject(hdc, previousPen);
-    DeleteObject(pen);
 }
 
-auto RenderApi::Draw(HDC hdc, const Api::Rect& rect, const Api::RenderDefinition& render) -> void
+auto RenderApi::Draw(HDC hdc, const Api::Rect& rect, const Api::RenderDefinition& render, ResourceManager& resources) -> void
 {
     int radius = 0;
 
     for (const auto& op : render.ops)
     {
         std::visit(
-            [hdc, &rect, &radius](const auto& value)
+            [hdc, &rect, &resources, &radius](const auto& value)
             {
                 using T = std::decay_t<decltype(value)>;
 
@@ -80,11 +79,11 @@ auto RenderApi::Draw(HDC hdc, const Api::Rect& rect, const Api::RenderDefinition
                 }
                 else if constexpr (std::is_same_v<T, Api::RenderBackground>)
                 {
-                    Fill(hdc, rect, value.color, radius);
+                    Fill(hdc, rect, value.color, resources, radius);
                 }
                 else if constexpr (std::is_same_v<T, Api::RenderBorderColor>)
                 {
-                    Border(hdc, rect, value.color, radius);
+                    Border(hdc, rect, value.color, resources, radius);
                 }
             },
             op

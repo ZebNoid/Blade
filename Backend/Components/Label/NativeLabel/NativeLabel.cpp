@@ -43,7 +43,7 @@ auto NativeLabel::onPaint(HDC hdc, const Api::Rect& rect) -> void
     if (!resourceManager) return;
 
     const auto* node = renderNodes() ? renderNodes()->get(id()) : nullptr;
-    if (node) RenderApi::Draw(hdc, rect, node->render.forState(node->state));
+    if (node) RenderApi::Draw(hdc, rect, node->render.forState(node->state), *resourceManager);
 
     const auto color = node ? RenderApi::TextColor(node->render.forState(node->state), resourceManager->windowTextColor()) : resourceManager->windowTextColor();
     RenderApi::Text(hdc, m_text, rect, resourceManager->defaultFont(), color);
