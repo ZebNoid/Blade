@@ -8,7 +8,7 @@ namespace Blade {
 
 auto WidgetTreeRegistry::add(WidgetTree tree) -> WidgetTree&
 {
-    tree = ModifierTreeBuilder::Expand(std::move(tree));
+    tree = ModifierTree::Builder::Expand(std::move(tree));
     assignIds(tree);
     const auto rootId = tree.id;
     auto [it, inserted] = m_roots.insert_or_assign(rootId, std::move(tree));

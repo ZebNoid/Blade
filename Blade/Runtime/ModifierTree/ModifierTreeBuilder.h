@@ -4,15 +4,10 @@
 
 namespace Blade {
 
-class ModifierTreeBuilder
-{
-public:
-    static auto Expand(WidgetTree tree) -> WidgetTree;
+namespace ModifierTree::Builder {
 
-private:
-    static auto expandChildren(WidgetTree& tree) -> void;
-    static auto expandNode(WidgetTree node) -> WidgetTree;
-    static auto wrap(WidgetTree node, const Api::ModifierOp& op) -> WidgetTree;
-};
+auto Expand(WidgetTree tree) -> WidgetTree;
+
+} // namespace ModifierTree::Builder
 
 } // namespace Blade

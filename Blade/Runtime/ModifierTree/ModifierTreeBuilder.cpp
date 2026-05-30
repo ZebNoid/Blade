@@ -2,7 +2,7 @@
 
 #include <type_traits>
 
-namespace Blade {
+namespace Blade::ModifierTree::Builder {
 
 namespace {
 
@@ -22,47 +22,7 @@ auto StateBranch(const Api::StateModifiers& states, WidgetTree child) -> WidgetT
     return wrapper;
 }
 
-} // namespace
-
-auto ModifierTreeBuilder::Expand(WidgetTree tree) -> WidgetTree
-{
-    if (tree.layoutType != LayoutType::None)
-    {
-        return expandNode(std::move(tree));
-    }
-
-    expandChildren(tree);
-    return tree;
-}
-
-auto ModifierTreeBuilder::expandChildren(WidgetTree& tree) -> void
-{
-    for (auto& child : tree.children)
-    {
-        child = expandNode(std::move(child));
-    }
-
-    for (auto& overlay : tree.overlays)
-    {
-        overlay = expandNode(std::move(overlay));
-    }
-}
-
-auto ModifierTreeBuilder::expandNode(WidgetTree node) -> WidgetTree
-{
-    expandChildren(node);
-
-    auto result = std::move(node);
-    const auto ops = result.modifier.ops();
-    for (const auto& op : ops)
-    {
-        result = wrap(std::move(result), op);
-    }
-
-    return result;
-}
-
-auto ModifierTreeBuilder::wrap(WidgetTree node, const Api::ModifierOp& op) -> WidgetTree
+auto Wrap(WidgetTree node, const Api::ModifierOp& op) -> WidgetTree
 {
     return std::visit(
         [&node](const auto& modifier) mutable -> WidgetTree
@@ -92,4 +52,46 @@ auto ModifierTreeBuilder::wrap(WidgetTree node, const Api::ModifierOp& op) -> Wi
     );
 }
 
-} // namespace Blade
+auto ExpandNode(WidgetTree node) -> WidgetTree;
+
+auto ExpandChildren(WidgetTree& tree) -> void
+{
+    for (auto& child : tree.children)
+    {
+        child = ExpandNode(std::move(child));
+    }
+
+    for (auto& overlay : tree.overlays)
+    {
+        overlay = ExpandNode(std::move(overlay));
+    }
+}
+
+auto ExpandNode(WidgetTree node) -> WidgetTree
+{
+    ExpandChildren(node);
+
+    auto result = std::move(node);
+    const auto ops = result.modifier.ops();
+    for (const auto& op : ops)
+    {
+        result = Wrap(std::move(result), op);
+    }
+
+    return result;
+}
+
+} // namespace
+
+auto Expand(WidgetTree tree) -> WidgetTree
+{
+    if (tree.layoutType != LayoutType::None)
+    {
+        return ExpandNode(std::move(tree));
+    }
+
+    ExpandChildren(tree);
+    return tree;
+}
+
+} // namespace Blade::ModifierTree::Builder
