@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Common/Lifetime.h"
+#include "Lifecycle/Lifetime.h"
 #include "Common/Types.h"
 #include "Runtime/Normalize/PropsVisitor.h"
 

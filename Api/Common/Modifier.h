@@ -4,10 +4,10 @@
 #include <variant>
 #include <vector>
 
-#include "Color.h"
-#include "Logger.h"
+#include "Style/Color.h"
 #include "Geometry/Size.h"
 #include "Geometry/Thickness.h"
+#include "Logging/Logger.h"
 
 namespace Blade::Api {
 

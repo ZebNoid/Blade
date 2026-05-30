@@ -1,7 +1,7 @@
 #include "NativeWindow.h"
 
 #include "Components/Window/NativeWindowProps.h"
-#include "Common/Logger.h"
+#include "Logging/Logger.h"
 #include "Event/EventMapper/EventMapper.h"
 #include "Property/PropertyMapper/PropertyMapper.h"
 #include "WinApi/Window/Hwnd/Hwnd.h"

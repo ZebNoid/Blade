@@ -3,7 +3,7 @@
 #include <commctrl.h>
 #include <windowsx.h>
 
-#include "Common/Logger.h"
+#include "Logging/Logger.h"
 
 namespace Blade::Backend {
 

@@ -1,6 +1,6 @@
 #include "PropertyMapper.h"
 
-#include "Common/Logger.h"
+#include "Logging/Logger.h"
 #include "WinApi/HwndApi/HwndApi.h"
 
 

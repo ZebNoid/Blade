@@ -4,7 +4,6 @@
 #include <iostream>
 #include <windows.h>
 
-
 namespace Blade::Log {
 
 enum class Color
@@ -15,57 +14,34 @@ enum class Color
     Error = FOREGROUND_RED | FOREGROUND_INTENSITY
 };
 
-inline auto Print(
-    Color color,
-    const wchar_t* message
-) -> void
+inline auto Print(Color color, const wchar_t* message) -> void
 {
     const auto handle = GetStdHandle(STD_OUTPUT_HANDLE);
 
     CONSOLE_SCREEN_BUFFER_INFO info{};
     GetConsoleScreenBufferInfo(handle, &info);
 
-    SetConsoleTextAttribute(
-        handle,
-        static_cast<WORD>(color)
-    );
+    SetConsoleTextAttribute(handle, static_cast<WORD>(color));
 
     std::wcout << message << L'\n';
 
-    SetConsoleTextAttribute(
-        handle,
-        info.wAttributes
-    );
+    SetConsoleTextAttribute(handle, info.wAttributes);
 }
 
 template <typename... TArgs>
-inline auto PrintFormat(
-    Color color,
-    const wchar_t* format,
-    TArgs... args
-) -> void
+inline auto PrintFormat(Color color, const wchar_t* format, TArgs... args) -> void
 {
     const auto handle = GetStdHandle(STD_OUTPUT_HANDLE);
 
     CONSOLE_SCREEN_BUFFER_INFO info{};
     GetConsoleScreenBufferInfo(handle, &info);
 
-    SetConsoleTextAttribute(
-        handle,
-        static_cast<WORD>(color)
-    );
+    SetConsoleTextAttribute(handle, static_cast<WORD>(color));
 
-    std::wprintf(
-        format,
-        args...
-    );
-
+    std::wprintf(format, args...);
     std::wprintf(L"\n");
 
-    SetConsoleTextAttribute(
-        handle,
-        info.wAttributes
-    );
+    SetConsoleTextAttribute(handle, info.wAttributes);
 }
 
 } // namespace Blade::Log

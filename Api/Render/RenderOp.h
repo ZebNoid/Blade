@@ -3,7 +3,7 @@
 #include <variant>
 #include <vector>
 
-#include "Common/Color.h"
+#include "Style/Color.h"
 #include "Common/Modifier.h"
 
 namespace Blade::Api {

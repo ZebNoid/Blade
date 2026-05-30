@@ -1,6 +1,6 @@
 #include "Hwnd.h"
 
-#include "Common/Logger.h"
+#include "Logging/Logger.h"
 
 
 namespace Blade::Backend {

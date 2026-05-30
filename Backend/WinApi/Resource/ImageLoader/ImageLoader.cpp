@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-#include "Common/Logger.h"
+#include "Logging/Logger.h"
 #include "WinApi/Resource/IconImageLoader/IconImageLoader.h"
 #include "WinApi/Resource/WicImageLoader/WicImageLoader.h"
 

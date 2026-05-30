@@ -3,7 +3,7 @@
 #include <shlobj.h>
 #include <shellapi.h>
 
-#include "Common/Logger.h"
+#include "Logging/Logger.h"
 
 namespace Blade::Backend {
 

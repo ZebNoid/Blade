@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Window/CaptionProps.h"
-#include "Common/Lifetime.h"
+#include "Lifecycle/Lifetime.h"
 #include "Geometry/Size.h"
 #include "Common/Types.h"
 #include "Window/WindowState.h"

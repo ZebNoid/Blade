@@ -20,6 +20,10 @@ add_library(${PROJECT_NAME} INTERFACE
         Geometry/Size.h
         Geometry/Rect.h
         Geometry/Thickness.h
+        Style/Color.h
+        Logging/Logger.h
+        Callback/Callbacks.h
+        Lifecycle/Lifetime.h
         Render/RenderCommand.h
         Render/RenderCommandType.h
         Render/RenderOp.h
@@ -31,14 +35,10 @@ add_library(${PROJECT_NAME} INTERFACE
         Window/WindowState.h
 
         Common/Types.h
-        Common/Color.h
         Common/Modifier.h
         Common/LayoutProps.h
-        Common/Lifetime.h
         Common/Property.h
-        Common/Callbacks.h
         Common/Props.h
-        Common/Logger.h
 
         Events/Events.h
         Events/EventContext.h

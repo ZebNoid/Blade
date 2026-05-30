@@ -3,11 +3,11 @@
 #include <variant>
 #include <vector>
 
-#include "Callbacks.h"
+#include "Callback/Callbacks.h"
 #include "Window/CaptionProps.h"
-#include "Color.h"
+#include "Style/Color.h"
 #include "Events/Events.h"
-#include "Lifetime.h"
+#include "Lifecycle/Lifetime.h"
 #include "Menu/MenuTrigger.h"
 #include "Menu/MenuData.h"
 #include "Geometry/Point.h"

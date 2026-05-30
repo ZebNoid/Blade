@@ -1,11 +1,12 @@
 #pragma once
+
 #include <functional>
 #include <type_traits>
 #include <variant>
 
+#include "Common/Types.h"
 #include "Events/EventContext.h"
 #include "Events/EventResult.h"
-#include "Types.h"
 
 namespace Blade::Api {
 
@@ -88,5 +89,4 @@ inline EventCallback::operator bool() const
     );
 }
 
-
-} // namespace
+} // namespace Blade::Api

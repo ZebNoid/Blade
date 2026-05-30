@@ -1,7 +1,7 @@
 #include "NativeWindowProps.h"
 
 #include "Components/Window/NativeWindow.h"
-#include "Common/Logger.h"
+#include "Logging/Logger.h"
 #include "NativeWindowApi/NativeWindowApi.h"
 #include "NativeWindowPropsData/NativeWindowPropsData.h"
 #include "NativeWindowStyle/NativeWindowStyle.h"

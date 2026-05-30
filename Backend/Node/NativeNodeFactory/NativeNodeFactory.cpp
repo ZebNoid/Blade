@@ -1,7 +1,7 @@
 #include "NativeNodeFactory.h"
 
 #include "App/AppBackend.h"
-#include "Common/Logger.h"
+#include "Logging/Logger.h"
 #include "Components/Button/NativeButton.h"
 #include "Components/ContextArea/NativeContextArea.h"
 #include "Components/Label/NativeLabel/NativeLabel.h"

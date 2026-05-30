@@ -1,7 +1,7 @@
 #include "AppBackend.h"
 
 #include "CommandDispatcher/CommandDispatcher.h"
-#include "Common/Logger.h"
+#include "Logging/Logger.h"
 #include "WinApi/Window/WindowClass/WindowClass.h"
 #include "WinApi/Display/DisplayApi/DisplayApi.h"
 

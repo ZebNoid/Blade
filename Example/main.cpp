@@ -2,7 +2,7 @@
 
 #include "blade.h"
 #include "App/AppBackend.h"
-#include "Common/Logger.h"
+#include "Logging/Logger.h"
 
 using namespace Blade;
 

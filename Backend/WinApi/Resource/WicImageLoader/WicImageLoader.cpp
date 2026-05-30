@@ -2,7 +2,7 @@
 
 #include <wincodec.h>
 
-#include "Common/Logger.h"
+#include "Logging/Logger.h"
 #include "WinApi/Interop/ComScope/ComScope.h"
 
 namespace Blade::Backend {

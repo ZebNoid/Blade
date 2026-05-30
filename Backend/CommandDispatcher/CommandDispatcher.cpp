@@ -1,7 +1,7 @@
 #include "CommandDispatcher.h"
 
 #include "App/AppBackend.h"
-#include "Common/Logger.h"
+#include "Logging/Logger.h"
 #include "Node/NativeNode/NativeNode.h"
 #include "WinApi/HwndApi/HwndApi.h"
 
