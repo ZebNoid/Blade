@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Components/Custom/NativeCustom/NativeCustom.h"
+#include "Components/Custom/Surface/NativeCustom.h"
 
 namespace Blade::Backend {
 

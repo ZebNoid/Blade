@@ -2,8 +2,8 @@
 
 #include <algorithm>
 
-#include "Components/Button/NativeButtonEvents.h"
-#include "Components/Button/NativeButton.h"
+#include "Components/Native/Button/NativeButtonEvents.h"
+#include "Components/Native/Button/NativeButton.h"
 #include "Components/Window/NativeWindowEvents.h"
 #include "Components/Window/NativeWindow.h"
 

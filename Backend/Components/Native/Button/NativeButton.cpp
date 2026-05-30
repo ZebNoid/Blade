@@ -1,7 +1,7 @@
 #include "NativeButton.h"
 
 #include "Logging/Logger.h"
-#include "Components/Button/NativeButtonProps.h"
+#include "Components/Native/Button/NativeButtonProps.h"
 #include "Event/EventMapper/EventMapper.h"
 #include "Node/NativeCreateContext/NativeCreateContext.h"
 #include "Property/PropertyMapper/PropertyMapper.h"

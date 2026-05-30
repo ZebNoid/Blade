@@ -105,20 +105,20 @@ add_library(${PROJECT_NAME} STATIC
         Components/Tray/NativeTray.h
         Components/Tray/NativeTrayApi/NativeTrayApi.cpp
         Components/Tray/NativeTrayApi/NativeTrayApi.h
-        Components/ContextArea/NativeContextArea.cpp
-        Components/ContextArea/NativeContextArea.h
-        Components/Custom/NativeCustom/NativeCustom.cpp
-        Components/Custom/NativeCustom/NativeCustom.h
-        Components/Label/NativeLabel/NativeLabel.cpp
-        Components/Label/NativeLabel/NativeLabel.h
-        Components/Button/NativeButton.cpp
-        Components/Button/NativeButton.h
-        Components/Button/NativeButtonApi/NativeButtonApi.cpp
-        Components/Button/NativeButtonApi/NativeButtonApi.h
-        Components/Button/NativeButtonProps.cpp
-        Components/Button/NativeButtonProps.h
-        Components/Button/NativeButtonEvents.cpp
-        Components/Button/NativeButtonEvents.h
+        Components/Custom/Surface/NativeCustom.cpp
+        Components/Custom/Surface/NativeCustom.h
+        Components/Native/ContextArea/NativeContextArea.cpp
+        Components/Native/ContextArea/NativeContextArea.h
+        Components/Native/Label/NativeLabel.cpp
+        Components/Native/Label/NativeLabel.h
+        Components/Native/Button/NativeButton.cpp
+        Components/Native/Button/NativeButton.h
+        Components/Native/Button/NativeButtonApi/NativeButtonApi.cpp
+        Components/Native/Button/NativeButtonApi/NativeButtonApi.h
+        Components/Native/Button/NativeButtonProps.cpp
+        Components/Native/Button/NativeButtonProps.h
+        Components/Native/Button/NativeButtonEvents.cpp
+        Components/Native/Button/NativeButtonEvents.h
 )
 
 # use Unicode
