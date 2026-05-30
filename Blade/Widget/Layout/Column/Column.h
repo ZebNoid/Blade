@@ -36,26 +36,16 @@ public:
         return *this;
     }
 
-    auto mainAxisAlignment(MainAxisAlignment alignment) -> Column&
+    auto verticalAlignment(MainAxisAlignment alignment) -> Column&
     {
         m_tree.layout.mainAxisAlignment = alignment;
         return *this;
     }
 
-    auto crossAxisAlignment(CrossAxisAlignment alignment) -> Column&
+    auto horizontalAlignment(CrossAxisAlignment alignment) -> Column&
     {
         m_tree.layout.crossAxisAlignment = alignment;
         return *this;
-    }
-
-    auto verticalAlignment(MainAxisAlignment alignment) -> Column&
-    {
-        return mainAxisAlignment(alignment);
-    }
-
-    auto horizontalAlignment(CrossAxisAlignment alignment) -> Column&
-    {
-        return crossAxisAlignment(alignment);
     }
 
 };
