@@ -27,7 +27,7 @@ auto NativeLabel::onPaint(HDC hdc, const Api::Rect& rect) -> void
 
 auto NativeLabel::hitTest() const -> LRESULT
 {
-    return HTTRANSPARENT;
+    return renderNodes() && renderNodes()->get(id()) ? HTCLIENT : HTTRANSPARENT;
 }
 
 } // namespace Blade::Backend

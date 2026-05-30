@@ -13,6 +13,7 @@ public:
     auto create(const Api::RenderCommand& command) -> void;
     auto update(const Api::RenderCommand& command) -> void;
     auto updateRect(Api::Id id, Api::Rect rect) -> void;
+    auto setState(Api::Id id, Api::WidgetState state) -> bool;
     auto remove(Api::Id id) -> void;
     auto clear() -> void;
     auto get(Api::Id id) -> RenderNode*;

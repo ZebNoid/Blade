@@ -2,6 +2,7 @@
 
 #include <optional>
 
+#include "Common/Modifier.h"
 #include "Common/Rect.h"
 #include "Node/NativeCreateContext/NativeCreateContext.h"
 #include "WinApi/NativeElement/NativeElement.h"
@@ -30,10 +31,17 @@ protected:
 private:
     static auto CALLBACK Proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT;
     auto handle(UINT msg, WPARAM wParam, LPARAM lParam) -> std::optional<LRESULT>;
+    auto trackMouseLeave() -> void;
+    auto updateRenderState(Api::WidgetState state) -> void;
+    auto currentRenderState() const -> Api::WidgetState;
 
 private:
     ResourceManager* m_resources = nullptr;
     RenderRegistry* m_renderNodes = nullptr;
+    bool m_trackingMouse = false;
+    bool m_hovered = false;
+    bool m_pressed = false;
+    bool m_focused = false;
 };
 
 } // namespace Blade::Backend

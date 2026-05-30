@@ -37,6 +37,15 @@ auto RenderRegistry::updateRect(Api::Id id, Api::Rect rect) -> void
     if (auto* node = get(id)) node->rect = rect;
 }
 
+auto RenderRegistry::setState(Api::Id id, Api::WidgetState state) -> bool
+{
+    auto* node = get(id);
+    if (!node || node->state == state) return false;
+
+    node->state = state;
+    return true;
+}
+
 auto RenderRegistry::remove(Api::Id id) -> void
 {
     m_nodes.erase(id);

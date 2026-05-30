@@ -119,6 +119,54 @@ auto NativeCustom::handle(UINT msg, WPARAM, LPARAM) -> std::optional<LRESULT>
 {
     if (msg == WM_ERASEBKGND) return TRUE;
     if (msg == WM_NCHITTEST) return hitTest();
+
+    if (msg == WM_MOUSEMOVE)
+    {
+        m_hovered = true;
+        trackMouseLeave();
+        updateRenderState(currentRenderState());
+        return {};
+    }
+
+    if (msg == WM_MOUSELEAVE)
+    {
+        m_trackingMouse = false;
+        m_hovered = false;
+        m_pressed = false;
+        updateRenderState(currentRenderState());
+        return {};
+    }
+
+    if (msg == WM_LBUTTONDOWN)
+    {
+        m_pressed = true;
+        SetFocus(m_hwnd);
+        updateRenderState(currentRenderState());
+        return {};
+    }
+
+    if (msg == WM_LBUTTONUP)
+    {
+        m_pressed = false;
+        updateRenderState(currentRenderState());
+        return {};
+    }
+
+    if (msg == WM_SETFOCUS)
+    {
+        m_focused = true;
+        updateRenderState(currentRenderState());
+        return {};
+    }
+
+    if (msg == WM_KILLFOCUS)
+    {
+        m_focused = false;
+        m_pressed = false;
+        updateRenderState(currentRenderState());
+        return {};
+    }
+
     if (msg != WM_PAINT) return {};
 
     PAINTSTRUCT paint{};
@@ -126,6 +174,32 @@ auto NativeCustom::handle(UINT msg, WPARAM, LPARAM) -> std::optional<LRESULT>
     onPaint(hdc, HwndApi::GetClientRect(m_hwnd));
     EndPaint(m_hwnd, &paint);
     return 0;
+}
+
+auto NativeCustom::trackMouseLeave() -> void
+{
+    if (m_trackingMouse) return;
+
+    TRACKMOUSEEVENT event{
+        .cbSize = sizeof(TRACKMOUSEEVENT),
+        .dwFlags = TME_LEAVE,
+        .hwndTrack = m_hwnd
+    };
+
+    m_trackingMouse = TrackMouseEvent(&event) == TRUE;
+}
+
+auto NativeCustom::updateRenderState(Api::WidgetState state) -> void
+{
+    if (m_renderNodes && m_renderNodes->setState(m_id, state)) HwndApi::Invalidate(m_hwnd);
+}
+
+auto NativeCustom::currentRenderState() const -> Api::WidgetState
+{
+    if (m_pressed) return Api::WidgetState::Pressed;
+    if (m_hovered) return Api::WidgetState::Hover;
+    if (m_focused) return Api::WidgetState::Focus;
+    return Api::WidgetState::Normal;
 }
 
 } // namespace Blade::Backend
