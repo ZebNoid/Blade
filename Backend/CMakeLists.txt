@@ -107,8 +107,6 @@ add_library(${PROJECT_NAME} STATIC
         Components/Tray/NativeTrayApi/NativeTrayApi.h
         Components/Custom/Surface/NativeCustom.cpp
         Components/Custom/Surface/NativeCustom.h
-        Components/Native/ContextArea/NativeContextArea.cpp
-        Components/Native/ContextArea/NativeContextArea.h
         Components/Native/Label/NativeLabel.cpp
         Components/Native/Label/NativeLabel.h
         Components/Native/Button/NativeButton.cpp

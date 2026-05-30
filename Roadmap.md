@@ -39,6 +39,7 @@ Api::WidgetTypes::Label  -> Api::ComponentTypes::Label
 - [ ] Keep debug names separate from runtime ids.
 - [ ] Allow overriding mappings with non-standard backend components, such as `Button -> Surface`.
 - [x] Organize backend component files into system/root, native controls, and custom surfaces.
+- [x] Map `ContextArea` to universal `Surface` instead of a dedicated backend component.
 - [x] Prioritize root component ids before controls, such as `Window`, `Tray`, then `Button`.
 - [x] Move `WidgetType` and `ComponentType` from `Api/Common` to `Api/Widget`.
 - [x] Add `Api::ComponentType` for backend component identity.

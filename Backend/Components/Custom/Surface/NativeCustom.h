@@ -5,7 +5,9 @@
 #include "Common/Modifier.h"
 #include "Geometry/Rect.h"
 #include "Node/NativeCreateContext/NativeCreateContext.h"
+#include "WinApi/Menu/NativeContextMenu/NativeContextMenu.h"
 #include "WinApi/NativeElement/NativeElement.h"
+#include "WinApi/OleDragDrop/OleDropTarget/OleDropTarget.h"
 
 namespace Blade::Backend {
 
@@ -37,10 +39,14 @@ private:
     auto currentRenderState() const -> Api::WidgetState;
     auto updateRegion(const Api::Rect& rect, int radius) -> void;
     auto emit(Api::Events event, Api::EventPayload payload = {}) -> void;
+    auto enableDropTarget() -> void;
+    auto enableContextMenus(Api::ContextMenus menus) -> void;
 
 private:
     ResourceManager* m_resources = nullptr;
     RenderRegistry* m_renderNodes = nullptr;
+    std::unique_ptr<OleDropTarget> m_dropTarget;
+    std::unique_ptr<NativeContextMenu> m_contextMenu;
     bool m_emitClick = false;
     bool m_emitFocus = false;
     bool m_trackingMouse = false;

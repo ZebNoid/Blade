@@ -4,7 +4,6 @@
 #include "Logging/Logger.h"
 #include "Components/Custom/Surface/NativeCustom.h"
 #include "Components/Native/Button/NativeButton.h"
-#include "Components/Native/ContextArea/NativeContextArea.h"
 #include "Components/Native/Label/NativeLabel.h"
 #include "Components/Tray/NativeTray.h"
 #include "UI/UI.h"
@@ -56,14 +55,13 @@ auto NativeNodeFactory::registerFactories() -> void
         { Api::WidgetTypes::Window, Api::ComponentTypes::Window },
         { Api::WidgetTypes::Button, Api::ComponentTypes::Button },
         { Api::WidgetTypes::Label, Api::ComponentTypes::Label },
-        { Api::WidgetTypes::ContextArea, Api::ComponentTypes::ContextArea },
+        { Api::WidgetTypes::ContextArea, Api::ComponentTypes::Surface },
         { Api::WidgetTypes::Tray, Api::ComponentTypes::Tray },
     });
 
     m_registry.add(Api::ComponentTypes::Window, [this](const auto& command) { return createWindow(command); });
     m_registry.add(Api::ComponentTypes::Button, [this](const auto& command) { return createButton(command); });
     m_registry.add(UI::Surface, [this](const auto& command) { return createSurface(command); });
-    m_registry.add(Api::ComponentTypes::ContextArea, [this](const auto& command) { return createContextArea(command); });
     m_registry.add(Api::ComponentTypes::Label, [this](const auto& command) { return createLabel(command); });
     m_registry.add(Api::ComponentTypes::Tray, [this](const auto& command) { return createTray(command); });
 }
@@ -215,45 +213,6 @@ auto NativeNodeFactory::createTray(const Api::ElementCommand& command) -> std::o
         .type = command.nodeType,
         .parent = command.parent,
         .native = std::move(tray),
-    };
-
-    return node;
-}
-
-auto NativeNodeFactory::createContextArea(const Api::ElementCommand& command) -> std::optional<NativeNode>
-{
-    auto* parent = m_backend->nodes().get(command.parent);
-
-    if (!parent)
-    {
-        LOG_E(L"[Error] createContextArea no parent");
-        return std::nullopt;
-    }
-
-    auto* parentWindow = dynamic_cast<NativeWindow*>(parent->native.get());
-
-    if (!parentWindow)
-    {
-        LOG_E(L"[Error] createContextArea parent is not NativeWindow");
-        return std::nullopt;
-    }
-
-    auto area = std::make_unique<NativeContextArea>();
-
-    if (!area->create(parentWindow, command.id, m_context))
-    {
-        LOG_E(L"[Error] createContextArea failed");
-        return std::nullopt;
-    }
-
-    area->applyProps(command.props);
-    area->applyEvents(command.events);
-
-    NativeNode node = {
-        .id = command.id,
-        .type = command.nodeType,
-        .parent = command.parent,
-        .native = std::move(area),
     };
 
     return node;

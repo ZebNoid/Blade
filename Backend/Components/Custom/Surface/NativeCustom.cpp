@@ -4,6 +4,7 @@
 
 #include "Components/Window/NativeWindow.h"
 #include "Property/PropertyMapper/PropertyMapper.h"
+#include "Property/PropertyReader.h"
 #include "Render/RenderRegistry/RenderRegistry.h"
 #include "Resource/ResourceManager/ResourceManager.h"
 #include "WinApi/Render/GdiPlusRenderApi/GdiPlusRenderApi.h"
@@ -63,6 +64,16 @@ auto NativeCustom::create(NativeWindow* parent, Api::Id id, const NativeCreateCo
 
 auto NativeCustom::applyProps(const Api::PropertyMap& propertyMap) -> void
 {
+    if (const auto* menus = PropertyReader::Get<Api::ContextMenus>(propertyMap, Api::Props::ContextMenus))
+    {
+        enableContextMenus(*menus);
+    }
+
+    if (const auto* dropTarget = PropertyReader::Get<bool>(propertyMap, Api::Props::DropTarget); dropTarget && *dropTarget)
+    {
+        enableDropTarget();
+    }
+
     PropertyMapper::Apply(m_hwnd, propertyMap);
     HwndApi::Invalidate(m_hwnd);
 }
@@ -71,6 +82,7 @@ auto NativeCustom::applyEvents(const Api::EventSubscriptions& events) -> void
 {
     m_emitClick = HasEvent(events, Api::Events::Click);
     m_emitFocus = HasEvent(events, Api::Events::Focus);
+    if (HasEvent(events, Api::Events::Drop)) enableDropTarget();
 }
 
 auto NativeCustom::isAlive() const -> bool
@@ -248,6 +260,28 @@ auto NativeCustom::emit(Api::Events event, Api::EventPayload payload) -> void
         .type = event,
         .payload = std::move(payload)
     });
+}
+
+auto NativeCustom::enableDropTarget() -> void
+{
+    if (m_dropTarget || !m_hwnd) return;
+
+    auto* parentWindow = dynamic_cast<NativeWindow*>(m_parent);
+    if (!parentWindow) return;
+
+    auto dropTarget = std::make_unique<OleDropTarget>(m_id, parentWindow->commandRouter());
+    if (dropTarget->registerHwnd(m_hwnd)) m_dropTarget = std::move(dropTarget);
+}
+
+auto NativeCustom::enableContextMenus(Api::ContextMenus menus) -> void
+{
+    if (m_contextMenu || !m_hwnd || menus.empty()) return;
+
+    auto* parentWindow = dynamic_cast<NativeWindow*>(m_parent);
+    if (!parentWindow) return;
+
+    auto contextMenu = std::make_unique<NativeContextMenu>();
+    if (contextMenu->attach(m_hwnd, m_id, parentWindow->commandRouter(), std::move(menus))) m_contextMenu = std::move(contextMenu);
 }
 
 } // namespace Blade::Backend

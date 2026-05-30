@@ -12,7 +12,7 @@ auto DefaultBindings() -> NativeBindings
         { Api::WidgetTypes::Window, UI::Window },
         { Api::WidgetTypes::Button, UI::Button },
         { Api::WidgetTypes::Label, UI::Label },
-        { Api::WidgetTypes::ContextArea, UI::ContextArea },
+        { Api::WidgetTypes::ContextArea, UI::Surface },
         { Api::WidgetTypes::Tray, UI::Tray },
     };
 }
@@ -24,7 +24,6 @@ auto SupportedComponents() -> std::vector<ComponentInfo>
         { UI::Tray, L"Tray" },
         { UI::Button, L"Button" },
         { UI::Label, L"Label" },
-        { UI::ContextArea, L"ContextArea" },
         { UI::Surface, L"Surface" },
     };
 }
