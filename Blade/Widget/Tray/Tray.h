@@ -1,9 +1,7 @@
 #pragma once
 
 #include "Base/RootWidget.h"
-#include "TrayEvents.h"
-#include "TrayProps.h"
-#include "Runtime/Normalize/Normalize.h"
+#include "Lifecycle/Lifetime.h"
 
 namespace Blade {
 
@@ -13,31 +11,19 @@ public:
     Tray()
     {
         m_tree.type = Api::WidgetTypes::Tray;
-        Normalize::PropsMerge(m_tree, TrayProps{});
+        initDefaults();
     }
 
     template <typename... TMenus>
     explicit Tray(TMenus&&... menus)
     {
         m_tree.type = Api::WidgetTypes::Tray;
-        Normalize::PropsMerge(m_tree, TrayProps{});
+        initDefaults();
 
         (
             m_tree.overlays.push_back(menus.tree()),
             ...
         );
-    }
-
-    auto set(TrayProps props) -> Tray&
-    {
-        Normalize::PropsMerge(m_tree, props);
-        return *this;
-    }
-
-    auto on(TrayEvents events) -> Tray&
-    {
-        m_tree.events = Normalize::Events(events);
-        return *this;
     }
 
     auto title(Api::Text title) -> Tray&
@@ -62,6 +48,14 @@ public:
     {
         applyEvent(Api::Events::Click, std::move(callback));
         return *this;
+    }
+
+private:
+    auto initDefaults() -> void
+    {
+        title(L"Blade");
+        icon({});
+        lifetime(Api::Lifetime::Owner);
     }
 };
 

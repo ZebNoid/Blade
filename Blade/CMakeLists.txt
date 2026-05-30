@@ -17,34 +17,19 @@ add_library(${PROJECT_NAME} STATIC
         Base/WidgetTree.h
 
         Widget/Window/Window.h
-        Widget/Window/WindowProps.h
-        Widget/Window/WindowEvents.h
         Widget/Tray/Tray.h
-        Widget/Tray/TrayProps.h
-        Widget/Tray/TrayEvents.h
 
         Widget/Button/Button.h
-        Widget/Button/ButtonProps.h
-        Widget/Button/ButtonEvents.h
         Widget/Label/Label.h
-        Widget/Label/LabelProps.h
         Widget/Image/Image.h
-        Widget/Image/ImageProps.h
         Widget/ContextArea/ContextArea.h
-        Widget/ContextArea/ContextAreaEvents.h
         Widget/Menu/Menu.h
         Widget/Menu/MenuItem.h
-        Widget/Menu/MenuItemEvents.h
-        Widget/Menu/MenuItemProps.h
         Widget/Menu/MenuSeparator.h
-        Widget/Menu/MenuProps.h
 
         Widget/Layout/Column/Column.h
-        Widget/Layout/Column/ColumnProps.h
         Widget/Layout/Row/Row.h
-        Widget/Layout/Row/RowProps.h
         Widget/Layout/Stack/Stack.h
-        Widget/Layout/Stack/StackProps.h
 
         Runtime/Materializer/Materializer.cpp
         Runtime/Materializer/Materializer.h
@@ -75,10 +60,6 @@ add_library(${PROJECT_NAME} STATIC
         Runtime/LayoutRuntime/LayoutPass/LayoutPass.h
         Runtime/RootLifecycle/RootLifecycle.cpp
         Runtime/RootLifecycle/RootLifecycle.h
-        Runtime/Normalize/Normalize.h
-        Runtime/Normalize/NormalizedProps.h
-        Runtime/Normalize/PropsVisitor.h
-        Runtime/Normalize/EventVisitor.h
         Runtime/ModifierTree/ModifierTreeBuilder.cpp
         Runtime/ModifierTree/ModifierTreeBuilder.h
         Runtime/Render/RenderDefinitionBuilder.cpp
@@ -87,6 +68,7 @@ add_library(${PROJECT_NAME} STATIC
         Runtime/RenderRuntime/RenderRuntime.h
         Runtime/LayoutEngine/Data/LayoutNode.h
         Runtime/LayoutEngine/Data/LayoutContext.h
+        Runtime/LayoutEngine/Data/LayoutBox.h
         Runtime/LayoutEngine/Algorithm/LayoutLeaf/LayoutLeaf.cpp
         Runtime/LayoutEngine/Algorithm/LayoutLeaf/LayoutLeaf.h
         Runtime/LayoutEngine/Algorithm/LayoutLeafChildren/LayoutLeafChildren.cpp

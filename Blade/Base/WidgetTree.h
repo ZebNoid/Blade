@@ -10,11 +10,15 @@
 #include "Widget/WidgetType.h"
 #include "Runtime/LayoutEngine/Data/LayoutType.h"
 #include "Runtime/LayoutEngine/Data/LayoutData.h"
-#include "Runtime/Normalize/NormalizedProps.h"
 
 
 namespace Blade {
 
+
+struct BackendProps
+{
+    Api::PropertyMap create;
+};
 
 struct WidgetTree
 {

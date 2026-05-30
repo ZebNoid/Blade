@@ -1,8 +1,5 @@
 #pragma once
 
-#include "ButtonProps.h"
-#include "ButtonEvents.h"
-#include "Runtime/Normalize/Normalize.h"
 #include "Base/Widget.h"
 
 
@@ -14,20 +11,9 @@ public:
     explicit Button(Api::Text text)
     {
         m_tree.type = Api::WidgetTypes::Button;
-        Normalize::PropsMerge(m_tree, ButtonProps{});
+        size({100, 50});
+        defaultButton(false);
         m_tree.backend.create[Api::Props::Title] = std::move(text);
-    }
-
-    auto set(ButtonProps props) -> Button&
-    {
-        Normalize::PropsMerge(m_tree, props);
-        return *this;
-    }
-
-    auto on(ButtonEvents events) -> Button&
-    {
-        m_tree.events = Normalize::Events(events);
-        return *this;
     }
 
     auto defaultButton(bool value = true) -> Button&
@@ -36,23 +22,6 @@ public:
         return *this;
     }
 
-    auto onClick(Api::EventCallback callback) -> Button&
-    {
-        applyEvent(Api::Events::Click, std::move(callback));
-        return *this;
-    }
-
-    auto onFocus(Api::EventCallback callback) -> Button&
-    {
-        applyEvent(Api::Events::Focus, std::move(callback));
-        return *this;
-    }
-
-    auto onDrop(Api::EventCallback callback) -> Button&
-    {
-        applyEvent(Api::Events::Drop, std::move(callback));
-        return *this;
-    }
 };
 
 } // namespace

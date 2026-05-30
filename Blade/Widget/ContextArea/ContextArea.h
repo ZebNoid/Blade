@@ -1,8 +1,6 @@
 #pragma once
 
 #include "Base/Widget.h"
-#include "ContextAreaEvents.h"
-#include "Runtime/Normalize/Normalize.h"
 
 namespace Blade {
 
@@ -22,17 +20,6 @@ public:
         );
     }
 
-    auto on(ContextAreaEvents events) -> ContextArea&
-    {
-        m_tree.events = Normalize::Events(events);
-        return *this;
-    }
-
-    auto onDrop(Api::EventCallback callback) -> ContextArea&
-    {
-        applyEvent(Api::Events::Drop, std::move(callback));
-        return *this;
-    }
 };
 
 } // namespace Blade

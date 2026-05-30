@@ -1,8 +1,7 @@
 #pragma once
 
 #include "Base/Widget.h"
-#include "MenuItemEvents.h"
-#include "MenuItemProps.h"
+#include "Menu/Shortcut.h"
 
 namespace Blade {
 
@@ -14,7 +13,7 @@ public:
         m_tree.type = Api::WidgetTypes::MenuItem;
         m_tree.layoutType = LayoutType::Virtual;
         m_tree.backend.create[Api::Props::Title] = std::move(text);
-        Normalize::PropsMerge(m_tree, MenuItemProps{});
+        shortcut(Api::Shortcut::None());
     }
 
     template <typename... TChildren>
@@ -23,24 +22,12 @@ public:
         m_tree.type = Api::WidgetTypes::MenuItem;
         m_tree.layoutType = LayoutType::Virtual;
         m_tree.backend.create[Api::Props::Title] = std::move(text);
-        Normalize::PropsMerge(m_tree, MenuItemProps{});
+        shortcut(Api::Shortcut::None());
 
         (
             m_tree.children.push_back(children.tree()),
             ...
         );
-    }
-
-    auto set(MenuItemProps props) -> MenuItem&
-    {
-        Normalize::PropsMerge(m_tree, props);
-        return *this;
-    }
-
-    auto on(MenuItemEvents events) -> MenuItem&
-    {
-        m_tree.events = Normalize::Events(events);
-        return *this;
     }
 
     auto shortcut(Api::Shortcut shortcut) -> MenuItem&
@@ -49,11 +36,6 @@ public:
         return *this;
     }
 
-    auto onClick(Api::EventCallback callback) -> MenuItem&
-    {
-        applyEvent(Api::Events::Click, std::move(callback));
-        return *this;
-    }
 };
 
 } // namespace Blade

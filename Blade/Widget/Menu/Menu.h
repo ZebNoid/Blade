@@ -1,8 +1,7 @@
 #pragma once
 
 #include "Base/Widget.h"
-#include "MenuProps.h"
-#include "Runtime/Normalize/Normalize.h"
+#include "Menu/MenuTrigger.h"
 
 namespace Blade {
 
@@ -13,7 +12,7 @@ public:
     {
         m_tree.type = Api::WidgetTypes::Menu;
         m_tree.layoutType = LayoutType::Virtual;
-        Normalize::PropsMerge(m_tree, MenuProps{});
+        trigger(Api::MenuTrigger::RightClick);
     }
 
     template <typename... TChildren>
@@ -21,18 +20,12 @@ public:
     {
         m_tree.type = Api::WidgetTypes::Menu;
         m_tree.layoutType = LayoutType::Virtual;
-        Normalize::PropsMerge(m_tree, MenuProps{});
+        trigger(Api::MenuTrigger::RightClick);
 
         (
             m_tree.children.push_back(children.tree()),
             ...
         );
-    }
-
-    auto set(MenuProps props) -> Menu&
-    {
-        Normalize::PropsMerge(m_tree, props);
-        return *this;
     }
 
     auto trigger(Api::MenuTrigger trigger) -> Menu&

@@ -26,10 +26,7 @@ enum class Props
     DropTarget,
     MenuTrigger,
     Shortcut,
-    ContextMenus,
-
-    Layout,
-    Gap
+    ContextMenus
 };
 
 inline auto to_string(Props p) -> std::wstring {
@@ -56,9 +53,6 @@ inline auto to_string(Props p) -> std::wstring {
     case Props::MenuTrigger:   return L"MenuTrigger";
     case Props::Shortcut:   return L"Shortcut";
     case Props::ContextMenus:   return L"ContextMenus";
-
-    case Props::Layout:   return L"Layout";
-    case Props::Gap:   return L"Gap";
     default:           return L"Unknown";
     }
 }

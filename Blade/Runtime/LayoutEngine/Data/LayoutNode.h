@@ -3,7 +3,6 @@
 #include <vector>
 
 #include "LayoutData.h"
-#include "Common/LayoutProps.h"
 #include "Geometry/Rect.h"
 #include "Geometry/Size.h"
 #include "Common/Types.h"

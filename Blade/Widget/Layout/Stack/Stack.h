@@ -1,8 +1,6 @@
 #pragma once
 
 #include "Base/Widget.h"
-#include "Runtime/Normalize/Normalize.h"
-#include "StackProps.h"
 
 
 namespace Blade {
@@ -14,7 +12,6 @@ public:
     {
         m_tree.type = Api::WidgetTypes::Stack;
         m_tree.layoutType = LayoutType::Stack;
-        Normalize::PropsMerge(m_tree, StackProps{});
     }
 
     template <typename... TChildren>
@@ -22,7 +19,6 @@ public:
     {
         m_tree.type = Api::WidgetTypes::Stack;
         m_tree.layoutType = LayoutType::Stack;
-        Normalize::PropsMerge(m_tree, StackProps{});
 
         (
             m_tree.children.push_back(
@@ -30,12 +26,6 @@ public:
             ),
             ...
         );
-    }
-
-    auto set(StackProps props) -> Stack&
-    {
-        Normalize::PropsMerge(m_tree, props);
-        return *this;
     }
 
 };

@@ -125,7 +125,13 @@ protected:
                             Label(L" -------------------- ContextArea Label -------------------- ").padding(12).flex(1)
                             , Row(
                                 Button(L"Button").padding(8).flex(1)
-                                , Image(L"test/app.png").size({120, 120}).flex(2)
+                                , Image(L"test/app.png")
+                                .size({120, 120})
+                                .flex(2)
+                                .states({
+                                      // .normal = Api::Modifier().background(Api::Color::Hex("#1976D2")),
+                                      // .hover = Api::Modifier().source(L"test/app.png"),
+                                  })
                                 , Label(L"------------ Label States 2 ------------------------------------")
                                   .flex(1)
                                   .padding(16)

@@ -1,8 +1,6 @@
 #pragma once
 
 #include "Base/Widget.h"
-#include "ImageProps.h"
-#include "Runtime/Normalize/Normalize.h"
 
 namespace Blade {
 
@@ -12,14 +10,8 @@ public:
     explicit Image(Api::Text source)
     {
         m_tree.type = Api::WidgetTypes::Image;
-        Normalize::PropsMerge(m_tree, ImageProps{});
+        size({120, 120});
         m_tree.backend.create[Api::Props::Source] = std::move(source);
-    }
-
-    auto set(ImageProps props) -> Image&
-    {
-        Normalize::PropsMerge(m_tree, props);
-        return *this;
     }
 
     auto source(Api::Text value) -> Image&

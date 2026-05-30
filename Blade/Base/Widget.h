@@ -82,6 +82,24 @@ public:
         return self();
     }
 
+    auto onClick(Api::EventCallback callback) -> TSelf&
+    {
+        this->applyEvent(Api::Events::Click, std::move(callback));
+        return self();
+    }
+
+    auto onFocus(Api::EventCallback callback) -> TSelf&
+    {
+        this->applyEvent(Api::Events::Focus, std::move(callback));
+        return self();
+    }
+
+    auto onDrop(Api::EventCallback callback) -> TSelf&
+    {
+        this->applyEvent(Api::Events::Drop, std::move(callback));
+        return self();
+    }
+
 private:
     auto self() -> TSelf&
     {

@@ -1,9 +1,9 @@
 # Blade 
 
-![code](https://badges.ws/badge/license-MIT-black?&labelColor=00599C)
-![llm](https://badges.ws/badge/use-LLM-black?labelColor=00599C) 
-![code](https://badges.ws/badge/code-C++-black?icon=cplusplus&labelColor=00599C)
-![code](https://badges.ws/badge/ide-Clion-black?icon=clion&labelColor=00599C)
+![code](https://badges.ws/badge/License-MIT-black?&labelColor=00599C)
+![llm](https://badges.ws/badge/LLM-Codex-black?labelColor=00599C) 
+![code](https://badges.ws/badge/Code-C++-black?icon=cplusplus&labelColor=00599C)
+![code](https://badges.ws/badge/Ide-Clion-black?icon=clion&labelColor=00599C)
 
 
 <p align="center">
@@ -41,7 +41,10 @@ protected:
     auto onCreate() -> void override
     {
         Window(
-            Button(L"Quit").onClick([] { App::Quit(); })
+            Button(L"Quit")
+                .onClick([] {
+                    App::Quit();
+                })
         )
             .title(L"Hello Blade")
             .size({400, 200})
@@ -143,8 +146,23 @@ Label(L"Status")
 Root widgets are attached to the app runtime with `.mount()`.
 
 ```c++
-Window(Button(L"Quit")).mount();
-Tray(Menu(MenuItem(L"Exit"))).mount();
+Window(
+    Button(L"Quit")
+        .onClick([] {
+            App::Quit();
+        })
+)
+    .mount();
+
+Tray(
+    Menu(
+        MenuItem(L"Exit")
+            .onClick([] {
+                App::Quit();
+            })
+    )
+)
+    .mount();
 ```
 
 ## Common Modifiers
@@ -176,12 +194,17 @@ Common modifiers are available on widgets through the base fluent chain.
 
 ```c++
 Window(
-    Button(L"Close").onClick([] { App::Quit(); })
+    Button(L"Close")
+        .onClick([] {
+            App::Quit();
+        })
 )
     .title(L"Window")
     .size({800, 600})
     .placement(Api::WindowPlacement::Center())
-    .onClose([] { return true; })
+    .onClose([] {
+        return true;
+    })
     .mount();
 ```
 
@@ -194,6 +217,13 @@ Window(
 | `title(...)` | `Api::Text` | `.title(L"Settings")` |
 | `icon(...)` | `Api::Text` | `.icon(L"app.ico")` or `.icon(L"app.png")` |
 | `placement(...)` | `Api::WindowPlacementProps` | `.placement(Api::WindowPlacement::Center())` |
+| `resizable(...)` | `bool`, default `true` | `.resizable(false)` |
+| `topMost(...)` | `bool`, default `true` | `.topMost()` |
+| `taskbar(...)` | `bool`, default `true` | `.taskbar(false)` |
+| `minSize(...)` | `Api::Size` | `.minSize({320, 240})` |
+| `maxSize(...)` | `Api::Size` | `.maxSize({1920, 1080})` |
+| `caption(...)` | `Api::CaptionProps` | `.caption({ .visible = false })` |
+| `state(...)` | `Api::WindowState` | `.state(Api::WindowState::Maximized)` |
 | `lifetime(...)` | `Api::Lifetime` | `.lifetime(Api::Lifetime::Ignore)` |
 | `onClose(...)` | callback, return `false` to cancel close | `.onClose([] { return true; })` |
 | `onDrop(...)` | dropped file paths callback | `.onDrop([](Api::Text files) { LOG(files); })` |
@@ -229,8 +259,14 @@ Api::WindowPlacement::Center({20, 0}, 1)
 ```c++
 Tray(
     Menu(
-        MenuItem(L"Open").onClick([] { LOG(L"Open"); }),
-        MenuItem(L"Exit").onClick([] { App::Quit(); })
+        MenuItem(L"Open")
+            .onClick([] {
+                LOG(L"Open");
+            }),
+        MenuItem(L"Exit")
+            .onClick([] {
+                App::Quit();
+            })
     ).trigger(Api::MenuTrigger::LeftRight)
 )
     .title(L"Blade")
@@ -259,8 +295,12 @@ Tray(
 Button(L"Run")
     .size({120, 40})
     .defaultButton()
-    .onClick([] { LOG(L"Clicked"); })
-    .onDrop([](Api::Text files) { LOGF_D(L"Drop:\n%s", files.c_str()); })
+    .onClick([] {
+        LOG(L"Clicked");
+    })
+    .onDrop([](Api::Text files) {
+        LOGF_D(L"Drop:\n%s", files.c_str());
+    })
 ```
 
 <a id="button-methods"></a>
@@ -326,12 +366,18 @@ Menus are attached through `ContextArea`, `Tray`, or other widgets that support 
 
 ```c++
 ContextArea(
-    Button(L"File"),
+    Button(L"File")
+        .flex(1),
     Menu(
-        MenuItem(L"Open").onClick([] { LOG(L"Open"); }),
+        MenuItem(L"Open")
+            .onClick([] {
+                LOG(L"Open");
+            }),
         MenuItem(L"Exit")
             .shortcut(Api::Shortcut::Ctrl(L'Q'))
-            .onClick([] { App::Quit(); })
+            .onClick([] {
+                App::Quit();
+            })
     ).trigger(Api::MenuTrigger::RightClick)
 )
 ```
@@ -340,9 +386,15 @@ ContextArea(
 
 ```c++
 Menu(
-    MenuItem(L"Open").onClick([] { LOG(L"Open"); }),
+    MenuItem(L"Open")
+        .onClick([] {
+            LOG(L"Open");
+        }),
     MenuSeparator(),
-    MenuItem(L"Exit").onClick([] { App::Quit(); })
+    MenuItem(L"Exit")
+        .onClick([] {
+            App::Quit();
+        })
 )
 ```
 
@@ -351,8 +403,14 @@ Menu(
 ```c++
 Menu(
     MenuItem(L"Export",
-        MenuItem(L"PNG").onClick([] { LOG(L"PNG"); }),
-        MenuItem(L"PDF").onClick([] { LOG(L"PDF"); })
+        MenuItem(L"PNG")
+            .onClick([] {
+                LOG(L"PNG");
+            }),
+        MenuItem(L"PDF")
+            .onClick([] {
+                LOG(L"PDF");
+            })
     )
 )
 ```
@@ -414,9 +472,15 @@ Currently shortcuts are displayed in the native menu. Keyboard handling is not i
 
 ```c++
 Column(
-    Button(L"Top"),
+    Label(L"Top")
+        .flex(1)
+        .onClick([] {
+            // on click
+        }),
     Button(L"Bottom")
-).gap(8)
+)
+    .gap(8)
+    .flex(1)
 ```
 
 ### Row
@@ -424,8 +488,10 @@ Column(
 ```c++
 Row(
     Button(L"One"),
-    Button(L"Two").flex(1)
-).gap(8)
+    Button(L"Two")
+        .flex(1)
+)
+    .gap(8)
 ```
 
 ### Stack
@@ -444,6 +510,8 @@ Stack(
 | Method | Applies to | Example |
 | --- | --- | --- |
 | `gap(...)` | `Column`, `Row` | `.gap(8)` |
+| `mainAxisAlignment(...)` | `Column`, `Row` | `.mainAxisAlignment(MainAxisAlignment::Center)` |
+| `crossAxisAlignment(...)` | `Column`, `Row` | `.crossAxisAlignment(CrossAxisAlignment::Stretch)` |
 | `flex(...)` | child widgets inside layout | `Button(L"Two").flex(1)` |
 | `padding(...)` | widgets and layout containers | `Column(...).padding(8)` |
 | `size(...)` | widgets and root widgets | `Button(L"Run").size({120, 40})` |

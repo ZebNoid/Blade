@@ -36,7 +36,6 @@ add_library(${PROJECT_NAME} INTERFACE
 
         Common/Types.h
         Common/Modifier.h
-        Common/LayoutProps.h
         Common/Property.h
         Common/Props.h
 
