@@ -42,8 +42,8 @@ auto RedrawParent(HWND hwnd, const RECT& oldRect, const RECT& newRect) -> void
     const auto parent = GetParent(hwnd);
     if (!parent) return;
 
-    RedrawWindow(parent, &oldRect, nullptr, RDW_INVALIDATE | RDW_ERASE | RDW_UPDATENOW | RDW_ALLCHILDREN);
-    RedrawWindow(parent, &newRect, nullptr, RDW_INVALIDATE | RDW_ERASE | RDW_UPDATENOW | RDW_ALLCHILDREN);
+    RedrawWindow(parent, &oldRect, nullptr, RDW_INVALIDATE | RDW_ERASE);
+    RedrawWindow(parent, &newRect, nullptr, RDW_INVALIDATE | RDW_ERASE);
 }
 
 } // namespace
