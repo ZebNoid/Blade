@@ -113,7 +113,7 @@ protected:
                             .flex(1)
                             , Label(L" | -> Top Label Right <- | ")
                               .padding(12)
-                              .background(Api::Color::Hex("#1565C0"))
+                              // .background(Api::Color::Hex("#1565C0"))
                               .flex(1)
                         ).flex(1)
                     )
@@ -122,7 +122,7 @@ protected:
 
                     , ContextArea(
                         Column(
-                            Label(L" -------------------- Label -------------------- ").padding(12).flex(1)
+                            Label(L" -------------------- ContextArea Label -------------------- ").padding(12).flex(1)
                             , Row(
                                 Button(L"Button").padding(8).flex(1)
                                 , Label(L"------------ Label States 2 ------------------------------------")

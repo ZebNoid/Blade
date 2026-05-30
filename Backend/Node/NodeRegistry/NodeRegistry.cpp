@@ -6,6 +6,8 @@ namespace Blade::Backend {
 
 auto NodeRegistry::add(NativeNode node) -> void
 {
+    node.order = m_nextOrder++;
+
     // m_nodes[node.id] = std::move(node);
     m_nodes.emplace(
         node.id,

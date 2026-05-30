@@ -16,6 +16,8 @@ struct NativeNode
 
     Api::Id parent = Api::InvalidId;
 
+    int order = 0;
+
     std::unique_ptr<INativeElement> native;
 };
 

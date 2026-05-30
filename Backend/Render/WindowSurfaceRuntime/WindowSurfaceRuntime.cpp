@@ -65,8 +65,7 @@ auto PaintVirtuals(AppBackend& backend, HDC hdc) -> void
     backend.nodes().forEach(
         [&backend, &items](NativeNode& node)
         {
-            const auto* render = backend.renderNodes().get(node.id);
-            const auto order = render ? render->order : 0;
+            const auto order = node.order;
 
             if (auto* surface = dynamic_cast<NativeCustom*>(node.native.get())) items.push_back({order, node.id, surface, nullptr});
             else if (auto* label = dynamic_cast<NativeLabel*>(node.native.get())) items.push_back({order, node.id, nullptr, label});
@@ -123,8 +122,7 @@ auto HitVirtual(AppBackend& backend, Api::Point point, bool requireDrop = false)
             const auto wantsDrop = surface ? surface->wantsDrop() : label->wantsDrop();
             if (requireDrop && !wantsDrop) return;
 
-            const auto* render = backend.renderNodes().get(node.id);
-            const auto order = render ? render->order : 0;
+            const auto order = node.order;
             if (!result.valid() || order > resultOrder || (order == resultOrder && node.id > result.id))
             {
                 result = {node.id, surface, label};

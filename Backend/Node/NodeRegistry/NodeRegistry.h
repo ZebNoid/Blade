@@ -26,6 +26,7 @@ public:
 
 private:
     std::unordered_map<Api::Id, NativeNode> m_nodes;
+    int m_nextOrder = 0;
 };
 
 
