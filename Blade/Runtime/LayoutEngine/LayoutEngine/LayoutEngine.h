@@ -2,20 +2,9 @@
 #include "Runtime/LayoutEngine/Data/LayoutContext.h"
 
 
-namespace Blade {
+namespace Blade::Layout::Engine {
 
+auto Measure(LayoutContext& ctx) -> Api::Size;
+auto Arrange(LayoutContext& ctx) -> void;
 
-class LayoutEngine
-{
-public:
-    static auto Measure(
-        LayoutContext& ctx
-    ) -> Api::Size;
-
-    static auto Arrange(
-        LayoutContext& ctx
-    ) -> void;
-};
-
-
-} // namespace
+} // namespace Blade::Layout::Engine

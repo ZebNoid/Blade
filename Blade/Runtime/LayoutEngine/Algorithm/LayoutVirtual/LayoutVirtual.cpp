@@ -14,7 +14,7 @@ auto Measure(LayoutContext& ctx) -> Api::Size
     for (auto& child : node.children)
     {
         LayoutContext childCtx{ .node = &child, .available = available };
-        node.desiredSize = LayoutEngine::Measure(childCtx);
+        node.desiredSize = Layout::Engine::Measure(childCtx);
     }
 
     if (node.layout.size.width > 0) node.desiredSize.width = node.layout.size.width;
@@ -32,7 +32,7 @@ auto Arrange(LayoutContext& ctx) -> void
     for (auto& child : node.children)
     {
         LayoutContext childCtx{ .node = &child, .rect = contentRect };
-        LayoutEngine::Arrange(childCtx);
+        Layout::Engine::Arrange(childCtx);
     }
 }
 

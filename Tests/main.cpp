@@ -6,6 +6,7 @@
 #include "Layout/LayoutRootModifierTests.h"
 #include "Layout/LayoutSpacingTests.h"
 #include "Layout/LayoutStackTests.h"
+#include "ModifierTree/ModifierTreeTests.h"
 
 auto main() -> int
 {
@@ -18,6 +19,7 @@ auto main() -> int
     runner.Run("Layout root modifiers", Blade::Tests::RunLayoutRootModifierTests);
     runner.Run("Layout spacing", Blade::Tests::RunLayoutSpacingTests);
     runner.Run("Layout stack", Blade::Tests::RunLayoutStackTests);
+    runner.Run("Modifier tree", Blade::Tests::RunModifierTreeTests);
 
     return runner.Result();
 }

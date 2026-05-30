@@ -9,7 +9,7 @@ namespace {
 auto VirtualWrapper(Api::WidgetType type, WidgetTree child) -> WidgetTree
 {
     WidgetTree wrapper;
-    wrapper.type = std::move(type);
+    wrapper.type = type;
     wrapper.layoutType = LayoutType::Virtual;
     wrapper.children.push_back(std::move(child));
     return wrapper;

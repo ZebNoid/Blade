@@ -7,12 +7,9 @@
 #include "Runtime/LayoutEngine/Algorithm/LayoutVirtual/LayoutVirtual.h"
 
 
-namespace Blade {
+namespace Blade::Layout::Engine {
 
-
-auto LayoutEngine::Measure(
-    LayoutContext& ctx
-) -> Api::Size
+auto Measure(LayoutContext& ctx) -> Api::Size
 {
     auto& node = *ctx.node;
 
@@ -36,9 +33,7 @@ auto LayoutEngine::Measure(
     }
 }
 
-auto LayoutEngine::Arrange(
-    LayoutContext& ctx
-) -> void
+auto Arrange(LayoutContext& ctx) -> void
 {
     auto& node = *ctx.node;
 
@@ -68,4 +63,4 @@ auto LayoutEngine::Arrange(
     }
 }
 
-} // namespace
+} // namespace Blade::Layout::Engine

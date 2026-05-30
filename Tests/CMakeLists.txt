@@ -20,6 +20,8 @@ add_executable(${PROJECT_NAME}
         Layout/LayoutStackTests.cpp
         Layout/LayoutStackTests.h
         Layout/LayoutTestUtils.h
+        ModifierTree/ModifierTreeTests.cpp
+        ModifierTree/ModifierTreeTests.h
 )
 
 target_include_directories(${PROJECT_NAME}

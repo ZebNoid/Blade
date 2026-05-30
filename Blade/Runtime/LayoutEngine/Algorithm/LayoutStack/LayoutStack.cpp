@@ -16,7 +16,7 @@ auto MeasureChildren(LayoutNode& node, Api::Size available) -> Api::Size
     for (auto& child : node.children)
     {
         LayoutContext childCtx{ .node = &child, .available = available };
-        const auto size = LayoutEngine::Measure(childCtx);
+        const auto size = Layout::Engine::Measure(childCtx);
 
         maxWidth = max(maxWidth, size.width);
         maxHeight = max(maxHeight, size.height);
@@ -44,7 +44,7 @@ auto Arrange(LayoutContext& ctx) -> void
     for (auto& child : node.children)
     {
         LayoutContext childCtx{ .node = &child, .rect = contentRect };
-        LayoutEngine::Arrange(childCtx);
+        Layout::Engine::Arrange(childCtx);
     }
 }
 

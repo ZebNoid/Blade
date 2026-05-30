@@ -23,7 +23,7 @@ auto MeasureChildren(LayoutNode& node, Api::Size available, LayoutAxis axis) -> 
     for (auto& child : node.children)
     {
         LayoutContext childCtx{ .node = &child, .available = available };
-        const auto size = LayoutEngine::Measure(childCtx);
+        const auto size = Layout::Engine::Measure(childCtx);
 
         if (!first)
         {
@@ -81,7 +81,7 @@ auto Arrange(LayoutContext& ctx, LayoutAxis axis) -> void
         const auto childRect = Layout::Axis::Rect(axis, cursor, cross.position, childMain, cross.size);
         LayoutContext childCtx{ .node = &child, .rect = childRect };
 
-        LayoutEngine::Arrange(childCtx);
+        Layout::Engine::Arrange(childCtx);
 
         cursor += childMain;
     }

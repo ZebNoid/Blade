@@ -44,12 +44,55 @@ auto RowAlignsHorizontallyAndVertically() -> void
     ExpectEqual(label.rect.height, 24, "row label.rect.height");
 }
 
+auto ColumnAlignsChildToEndHorizontally() -> void
+{
+    auto layout = BuildLayout(
+        Column(Label(L"Text"))
+            .horizontalAlignment(CrossAxisAlignment::End)
+            .tree(),
+        {200, 100}
+    );
+
+    const auto& label = layout.children.at(0);
+    ExpectEqual(label.rect.x, 80, "column end label.rect.x");
+    ExpectEqual(label.rect.width, 120, "column end label.rect.width");
+}
+
+auto RowAlignsChildToEndVertically() -> void
+{
+    auto layout = BuildLayout(
+        Row(Label(L"Text"))
+            .verticalAlignment(CrossAxisAlignment::End)
+            .tree(),
+        {200, 100}
+    );
+
+    const auto& label = layout.children.at(0);
+    ExpectEqual(label.rect.y, 76, "row end label.rect.y");
+    ExpectEqual(label.rect.height, 24, "row end label.rect.height");
+}
+
+auto ColumnStretchesChildHorizontallyByDefault() -> void
+{
+    auto layout = BuildLayout(
+        Column(Label(L"Text")).tree(),
+        {200, 100}
+    );
+
+    const auto& label = layout.children.at(0);
+    ExpectEqual(label.rect.x, 0, "column stretch label.rect.x");
+    ExpectEqual(label.rect.width, 200, "column stretch label.rect.width");
+}
+
 } // namespace
 
 auto RunLayoutAlignmentTests() -> void
 {
     ColumnAlignsVerticallyAndHorizontally();
     RowAlignsHorizontallyAndVertically();
+    ColumnAlignsChildToEndHorizontally();
+    RowAlignsChildToEndVertically();
+    ColumnStretchesChildHorizontallyByDefault();
 }
 
 } // namespace Blade::Tests
