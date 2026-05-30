@@ -5,6 +5,8 @@
 #include "Geometry/Thickness.h"
 #include "Props/LayoutProps/MainAxisAlignment.h"
 
+#include <algorithm>
+
 
 namespace Blade {
 
@@ -12,7 +14,7 @@ namespace Layout::Geometry {
 
     inline auto NonNegative(int value) -> int
     {
-        return max(0, value);
+        return (std::max)(0, value);
     }
 
     inline auto Inflate(const Api::Size& size, const Api::Thickness& thickness) -> Api::Size
@@ -37,10 +39,10 @@ namespace Layout::Geometry {
     {
         auto result = size;
 
-        if (minSize.width > 0) result.width = max(result.width, minSize.width);
-        if (minSize.height > 0) result.height = max(result.height, minSize.height);
-        if (maxSize.width > 0) result.width = min(result.width, maxSize.width);
-        if (maxSize.height > 0) result.height = min(result.height, maxSize.height);
+        if (minSize.width > 0) result.width = (std::max)(result.width, minSize.width);
+        if (minSize.height > 0) result.height = (std::max)(result.height, minSize.height);
+        if (maxSize.width > 0) result.width = (std::min)(result.width, maxSize.width);
+        if (maxSize.height > 0) result.height = (std::min)(result.height, maxSize.height);
 
         return result;
     }

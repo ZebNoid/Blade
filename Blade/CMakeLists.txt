@@ -122,5 +122,5 @@ target_precompile_headers(${PROJECT_NAME}
         pch.h
 )
 
-# TODO fix include
+# TODO to resolve #include
 #target_compile_options(Blade PRIVATE /W4)

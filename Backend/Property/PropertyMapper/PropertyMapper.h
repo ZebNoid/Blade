@@ -11,7 +11,7 @@ class PropertyMapper
 {
 public:
     static auto Apply(
-        HWND hwnd, // TODO NativeComponent
+        HWND hwnd, // TODO NativeComponent?
         const Api::PropertyMap& props
     ) -> void;
 };

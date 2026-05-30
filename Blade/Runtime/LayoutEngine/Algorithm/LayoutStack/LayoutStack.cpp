@@ -3,6 +3,8 @@
 #include "Runtime/LayoutEngine/Geometry/LayoutGeometry.h"
 #include "Runtime/LayoutEngine/LayoutEngine/LayoutEngine.h"
 
+#include <algorithm>
+
 
 namespace Blade::Layout::Stack {
 
@@ -18,8 +20,8 @@ auto MeasureChildren(LayoutNode& node, Api::Size available) -> Api::Size
         LayoutContext childCtx{ .node = &child, .available = available };
         const auto size = Layout::Engine::Measure(childCtx);
 
-        maxWidth = max(maxWidth, size.width);
-        maxHeight = max(maxHeight, size.height);
+        maxWidth = (std::max)(maxWidth, size.width);
+        maxHeight = (std::max)(maxHeight, size.height);
     }
 
     return { maxWidth, maxHeight };

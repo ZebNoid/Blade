@@ -4,6 +4,8 @@
 #include "Runtime/LayoutEngine/Geometry/LayoutGeometry.h"
 #include "Runtime/LayoutEngine/LayoutEngine/LayoutEngine.h"
 
+#include <algorithm>
+
 
 namespace Blade::Layout::Linear {
 
@@ -33,7 +35,7 @@ auto MeasureChildren(LayoutNode& node, Api::Size available, LayoutAxis axis) -> 
         first = false;
 
         result.totalMain += Layout::Axis::MainSize(axis, size);
-        result.maxCross = max(result.maxCross, Layout::Axis::CrossSize(axis, size));
+        result.maxCross = (std::max)(result.maxCross, Layout::Axis::CrossSize(axis, size));
     }
 
     return result;

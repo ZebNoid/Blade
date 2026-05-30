@@ -2,6 +2,7 @@
 #include "Layout/LayoutAlignmentTests.h"
 #include "Layout/LayoutConstraintsTests.h"
 #include "Layout/LayoutFlexTests.h"
+#include "Layout/LayoutGeometryTests.h"
 #include "Layout/LayoutPaddingTests.h"
 #include "Layout/LayoutRootModifierTests.h"
 #include "Layout/LayoutSpacingTests.h"
@@ -15,6 +16,7 @@ auto main() -> int
     runner.Run("Layout alignment", Blade::Tests::RunLayoutAlignmentTests);
     runner.Run("Layout constraints", Blade::Tests::RunLayoutConstraintsTests);
     runner.Run("Layout flex", Blade::Tests::RunLayoutFlexTests);
+    runner.Run("Layout geometry", Blade::Tests::RunLayoutGeometryTests);
     runner.Run("Layout padding", Blade::Tests::RunLayoutPaddingTests);
     runner.Run("Layout root modifiers", Blade::Tests::RunLayoutRootModifierTests);
     runner.Run("Layout spacing", Blade::Tests::RunLayoutSpacingTests);

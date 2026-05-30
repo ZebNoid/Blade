@@ -45,7 +45,6 @@ auto EventMapper::Apply(NativeWindow& window, const Api::EventSubscriptions& eve
     NativeWindowEvents::Apply(window, events);
 }
 
-// TODO not NativeButton but all NativeElements
 auto EventMapper::Apply(NativeButton& button, const Api::EventSubscriptions& events) -> void
 {
     if (HasEvent(events, Api::Events::Drop)) button.enableDropTarget();
