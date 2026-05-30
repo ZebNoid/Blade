@@ -127,6 +127,8 @@ protected:
                                         Button(L"Button").padding(8).flex(1)
                                         , Image(L"app1.png")
                                           .size({120, 120})
+                                          // .maxSize({120, 120}) // TODO fix not working
+                                          // .minSize({120, 120})
                                           .flex(2)
                                           .states({
                                               // .normal = Api::Modifier().background(Api::Color::Hex("#1976D2")),

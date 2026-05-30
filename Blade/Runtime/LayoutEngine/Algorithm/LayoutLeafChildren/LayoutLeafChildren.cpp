@@ -4,9 +4,23 @@
 #include "Runtime/LayoutEngine/LayoutEngine/LayoutEngine.h"
 
 
-namespace Blade {
+namespace Blade::LayoutLeafChildren {
 
-auto LayoutLeafChildren::Measure(LayoutNode& node) -> Api::Size
+namespace {
+
+auto ChildRect(const LayoutNode& child, const Api::Rect& contentRect) -> Api::Rect
+{
+    return {
+        contentRect.x,
+        contentRect.y,
+        child.layoutType == LayoutType::None ? child.desiredSize.width : contentRect.width,
+        child.layoutType == LayoutType::None ? child.desiredSize.height : contentRect.height
+    };
+}
+
+} // namespace
+
+auto Measure(LayoutNode& node) -> Api::Size
 {
     int maxWidth = 0;
     int maxHeight = 0;
@@ -23,7 +37,7 @@ auto LayoutLeafChildren::Measure(LayoutNode& node) -> Api::Size
     return { maxWidth, maxHeight };
 }
 
-auto LayoutLeafChildren::Arrange(LayoutNode& node, const Api::Rect& contentRect) -> void
+auto Arrange(LayoutNode& node, const Api::Rect& contentRect) -> void
 {
     for (auto& child : node.children)
     {
@@ -32,14 +46,4 @@ auto LayoutLeafChildren::Arrange(LayoutNode& node, const Api::Rect& contentRect)
     }
 }
 
-auto LayoutLeafChildren::ChildRect(const LayoutNode& child, const Api::Rect& contentRect) -> Api::Rect
-{
-    return {
-        contentRect.x,
-        contentRect.y,
-        child.layoutType == LayoutType::None ? child.desiredSize.width : contentRect.width,
-        child.layoutType == LayoutType::None ? child.desiredSize.height : contentRect.height
-    };
-}
-
-} // namespace Blade
+} // namespace Blade::LayoutLeafChildren

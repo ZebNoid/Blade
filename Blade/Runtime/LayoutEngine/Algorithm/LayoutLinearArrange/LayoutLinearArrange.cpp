@@ -3,9 +3,9 @@
 #include "Runtime/LayoutEngine/Geometry/LayoutGeometry.h"
 
 
-namespace Blade {
+namespace Blade::LayoutLinearArrange {
 
-auto LayoutLinearArrange::MeasureContent(const LayoutNode& node, const Api::Rect& contentRect, LayoutAxis axis) -> Content
+auto MeasureContent(const LayoutNode& node, const Api::Rect& contentRect, LayoutAxis axis) -> Content
 {
     Content content;
     bool first = true;
@@ -34,7 +34,7 @@ auto LayoutLinearArrange::MeasureContent(const LayoutNode& node, const Api::Rect
     return content;
 }
 
-auto LayoutLinearArrange::ChildMainSize(const LayoutNode& child, const Content& content, LayoutAxis axis, FlexCursor& cursor) -> int
+auto ChildMainSize(const LayoutNode& child, const Content& content, LayoutAxis axis, FlexCursor& cursor) -> int
 {
     const int flex = LayoutGeometry::NonNegative(child.layout.box.flex);
 
@@ -52,7 +52,7 @@ auto LayoutLinearArrange::ChildMainSize(const LayoutNode& child, const Content& 
     return size;
 }
 
-auto LayoutLinearArrange::AlignCrossAxis(const LayoutNode& node, const LayoutNode& child, const Api::Rect& contentRect, LayoutAxis axis) -> CrossAxis
+auto AlignCrossAxis(const LayoutNode& node, const LayoutNode& child, const Api::Rect& contentRect, LayoutAxis axis) -> CrossAxis
 {
     const int available = LayoutGeometry::NonNegative(LayoutAxisGeometry::CrossRectSize(axis, contentRect));
 
@@ -85,4 +85,4 @@ auto LayoutLinearArrange::AlignCrossAxis(const LayoutNode& node, const LayoutNod
     return layout;
 }
 
-} // namespace Blade
+} // namespace Blade::LayoutLinearArrange
