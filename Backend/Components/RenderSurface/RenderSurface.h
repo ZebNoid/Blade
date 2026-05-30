@@ -12,7 +12,7 @@ class NativeWindow;
 class ResourceManager;
 class RenderRegistry;
 
-class NativeCustom : public NativeElement
+class RenderSurface : public NativeElement
 {
 public:
     auto create(NativeWindow* parent, Api::Id id, const NativeCreateContext& context) -> bool;

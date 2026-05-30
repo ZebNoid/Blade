@@ -2,9 +2,9 @@
 
 #include "App/AppBackend.h"
 #include "Logging/Logger.h"
-#include "Components/Custom/Surface/NativeCustom.h"
 #include "Components/Native/Button/NativeButton.h"
 #include "Components/Native/Label/NativeLabel.h"
+#include "Components/RenderSurface/RenderSurface.h"
 #include "Components/Tray/NativeTray.h"
 #include "Render/WindowSurfaceRuntime/WindowSurfaceRuntime.h"
 #include "UI/UI.h"
@@ -177,7 +177,7 @@ auto NativeNodeFactory::createSurface(const Api::ElementCommand& command) -> std
         return std::nullopt;
     }
 
-    auto surface = std::make_unique<NativeCustom>();
+    auto surface = std::make_unique<RenderSurface>();
 
     if (!surface->create(parentWindow, command.id, m_context))
     {

@@ -1,4 +1,4 @@
-#include "NativeCustom.h"
+#include "RenderSurface.h"
 
 #include <algorithm>
 
@@ -22,7 +22,7 @@ auto HasEvent(const Api::EventSubscriptions& events, Api::Events event) -> bool
 
 } // namespace
 
-auto NativeCustom::create(NativeWindow* parent, Api::Id id, const NativeCreateContext& context) -> bool
+auto RenderSurface::create(NativeWindow* parent, Api::Id id, const NativeCreateContext& context) -> bool
 {
     if (!parent) return false;
 
@@ -33,7 +33,7 @@ auto NativeCustom::create(NativeWindow* parent, Api::Id id, const NativeCreateCo
     return m_hwnd != nullptr;
 }
 
-auto NativeCustom::applyProps(const Api::PropertyMap& propertyMap) -> void
+auto RenderSurface::applyProps(const Api::PropertyMap& propertyMap) -> void
 {
     if (const auto* rect = PropertyReader::Get<Api::Rect>(propertyMap, Api::Props::Rect)) m_rect = *rect;
     if (const auto* visible = PropertyReader::Get<bool>(propertyMap, Api::Props::Visible)) m_visible = *visible;
@@ -43,23 +43,23 @@ auto NativeCustom::applyProps(const Api::PropertyMap& propertyMap) -> void
     HwndApi::Invalidate(m_hwnd);
 }
 
-auto NativeCustom::applyEvents(const Api::EventSubscriptions& events) -> void
+auto RenderSurface::applyEvents(const Api::EventSubscriptions& events) -> void
 {
     m_emitClick = HasEvent(events, Api::Events::Click);
     m_emitFocus = HasEvent(events, Api::Events::Focus);
     if (HasEvent(events, Api::Events::Drop)) m_emitDrop = true;
 }
 
-auto NativeCustom::isAlive() const -> bool
+auto RenderSurface::isAlive() const -> bool
 {
     return true;
 }
 
-auto NativeCustom::attachChild(INativeElement*) -> void
+auto RenderSurface::attachChild(INativeElement*) -> void
 {
 }
 
-auto NativeCustom::paint(HDC hdc, ResourceManager& resources, RenderRegistry& renderNodes) -> void
+auto RenderSurface::paint(HDC hdc, ResourceManager& resources, RenderRegistry& renderNodes) -> void
 {
     if (!m_visible) return;
 
@@ -69,7 +69,7 @@ auto NativeCustom::paint(HDC hdc, ResourceManager& resources, RenderRegistry& re
     GdiPlusRenderApi::Draw(hdc, m_rect, node->render.forState(node->state), resources);
 }
 
-auto NativeCustom::hitTest(Api::Point point) const -> bool
+auto RenderSurface::hitTest(Api::Point point) const -> bool
 {
     if (!m_visible) return false;
     return point.x >= m_rect.x
@@ -78,12 +78,12 @@ auto NativeCustom::hitTest(Api::Point point) const -> bool
         && point.y < m_rect.y + m_rect.height;
 }
 
-auto NativeCustom::wantsDrop() const -> bool
+auto RenderSurface::wantsDrop() const -> bool
 {
     return m_emitDrop;
 }
 
-auto NativeCustom::hasContextMenu(Api::MenuTrigger trigger) const -> bool
+auto RenderSurface::hasContextMenu(Api::MenuTrigger trigger) const -> bool
 {
     for (const auto& menu : m_contextMenus)
     {
@@ -93,7 +93,7 @@ auto NativeCustom::hasContextMenu(Api::MenuTrigger trigger) const -> bool
     return false;
 }
 
-auto NativeCustom::showContextMenu(Api::MenuTrigger trigger, POINT screenPoint) -> bool
+auto RenderSurface::showContextMenu(Api::MenuTrigger trigger, POINT screenPoint) -> bool
 {
     auto* parentWindow = dynamic_cast<NativeWindow*>(m_parent);
     if (!parentWindow) return false;
@@ -101,7 +101,7 @@ auto NativeCustom::showContextMenu(Api::MenuTrigger trigger, POINT screenPoint) 
     return NativeContextMenu::Show(parentWindow->handle(), parentWindow->commandRouter(), m_contextMenus, trigger, screenPoint);
 }
 
-auto NativeCustom::currentRenderState() const -> Api::WidgetState
+auto RenderSurface::currentRenderState() const -> Api::WidgetState
 {
     if (m_dragOver) return Api::WidgetState::DragOver;
     if (m_pressed) return Api::WidgetState::Pressed;
@@ -110,27 +110,27 @@ auto NativeCustom::currentRenderState() const -> Api::WidgetState
     return Api::WidgetState::Normal;
 }
 
-auto NativeCustom::hover(RenderRegistry& renderNodes, bool hovered) -> bool
+auto RenderSurface::hover(RenderRegistry& renderNodes, bool hovered) -> bool
 {
     if (m_hovered == hovered) return false;
     m_hovered = hovered;
     return updateState(renderNodes);
 }
 
-auto NativeCustom::dragOver(RenderRegistry& renderNodes, bool active) -> bool
+auto RenderSurface::dragOver(RenderRegistry& renderNodes, bool active) -> bool
 {
     if (m_dragOver == active) return false;
     m_dragOver = active;
     return updateState(renderNodes);
 }
 
-auto NativeCustom::mouseDown(RenderRegistry& renderNodes) -> bool
+auto RenderSurface::mouseDown(RenderRegistry& renderNodes) -> bool
 {
     m_pressed = true;
     return updateState(renderNodes);
 }
 
-auto NativeCustom::mouseUp(RenderRegistry& renderNodes) -> bool
+auto RenderSurface::mouseUp(RenderRegistry& renderNodes) -> bool
 {
     const auto wasPressed = m_pressed;
     m_pressed = false;
@@ -139,7 +139,7 @@ auto NativeCustom::mouseUp(RenderRegistry& renderNodes) -> bool
     return changed;
 }
 
-auto NativeCustom::focus(RenderRegistry& renderNodes, bool focused) -> bool
+auto RenderSurface::focus(RenderRegistry& renderNodes, bool focused) -> bool
 {
     if (m_focused == focused) return false;
 
@@ -149,12 +149,12 @@ auto NativeCustom::focus(RenderRegistry& renderNodes, bool focused) -> bool
     return changed;
 }
 
-auto NativeCustom::updateState(RenderRegistry& renderNodes) -> bool
+auto RenderSurface::updateState(RenderRegistry& renderNodes) -> bool
 {
     return renderNodes.setState(m_id, currentRenderState());
 }
 
-auto NativeCustom::emit(Api::Events event, Api::EventPayload payload) -> void
+auto RenderSurface::emit(Api::Events event, Api::EventPayload payload) -> void
 {
     auto* parentWindow = dynamic_cast<NativeWindow*>(m_parent);
     if (!parentWindow) return;

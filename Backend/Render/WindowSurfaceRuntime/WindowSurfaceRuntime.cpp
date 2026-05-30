@@ -5,8 +5,8 @@
 #include <windowsx.h>
 
 #include "App/AppBackend.h"
-#include "Components/Custom/Surface/NativeCustom.h"
 #include "Components/Native/Label/NativeLabel.h"
+#include "Components/RenderSurface/RenderSurface.h"
 #include "Components/Window/NativeWindow.h"
 #include "Node/NativeNode/NativeNode.h"
 #include "WinApi/HwndApi/HwndApi.h"
@@ -19,7 +19,7 @@ namespace {
 struct VirtualHit
 {
     Api::Id id = Api::InvalidId;
-    NativeCustom* surface = nullptr;
+    RenderSurface* surface = nullptr;
     NativeLabel* label = nullptr;
 
     auto valid() const -> bool { return surface || label; }
@@ -29,7 +29,7 @@ struct PaintItem
 {
     int order = 0;
     Api::Id id = Api::InvalidId;
-    NativeCustom* surface = nullptr;
+    RenderSurface* surface = nullptr;
     NativeLabel* label = nullptr;
 };
 
@@ -67,7 +67,7 @@ auto PaintVirtuals(AppBackend& backend, HDC hdc) -> void
         {
             const auto order = node.order;
 
-            if (auto* surface = dynamic_cast<NativeCustom*>(node.native.get())) items.push_back({order, node.id, surface, nullptr});
+            if (auto* surface = dynamic_cast<RenderSurface*>(node.native.get())) items.push_back({order, node.id, surface, nullptr});
             else if (auto* label = dynamic_cast<NativeLabel*>(node.native.get())) items.push_back({order, node.id, nullptr, label});
         }
     );
@@ -114,7 +114,7 @@ auto HitVirtual(AppBackend& backend, Api::Point point, bool requireDrop = false)
     backend.nodes().forEach(
         [&](NativeNode& node)
         {
-            auto* surface = dynamic_cast<NativeCustom*>(node.native.get());
+            auto* surface = dynamic_cast<RenderSurface*>(node.native.get());
             auto* label = dynamic_cast<NativeLabel*>(node.native.get());
             const auto hit = surface ? surface->hitTest(point) : label && label->hitTest(point);
             if (!hit) return;
@@ -144,7 +144,7 @@ auto VirtualById(AppBackend& backend, Api::Id id) -> VirtualHit
     const auto* node = backend.nodes().get(id);
     if (!node) return {};
 
-    auto* surface = dynamic_cast<NativeCustom*>(node->native.get());
+    auto* surface = dynamic_cast<RenderSurface*>(node->native.get());
     auto* label = dynamic_cast<NativeLabel*>(node->native.get());
     return {id, surface, label};
 }
