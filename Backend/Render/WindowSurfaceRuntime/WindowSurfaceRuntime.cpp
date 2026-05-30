@@ -28,6 +28,7 @@ struct VirtualHit
 struct PaintItem
 {
     int order = 0;
+    Api::Id id = Api::InvalidId;
     NativeCustom* surface = nullptr;
     NativeLabel* label = nullptr;
 };
@@ -67,12 +68,19 @@ auto PaintVirtuals(AppBackend& backend, HDC hdc) -> void
             const auto* render = backend.renderNodes().get(node.id);
             const auto order = render ? render->order : 0;
 
-            if (auto* surface = dynamic_cast<NativeCustom*>(node.native.get())) items.push_back({order, surface, nullptr});
-            else if (auto* label = dynamic_cast<NativeLabel*>(node.native.get())) items.push_back({order, nullptr, label});
+            if (auto* surface = dynamic_cast<NativeCustom*>(node.native.get())) items.push_back({order, node.id, surface, nullptr});
+            else if (auto* label = dynamic_cast<NativeLabel*>(node.native.get())) items.push_back({order, node.id, nullptr, label});
         }
     );
 
-    std::ranges::sort(items, {}, &PaintItem::order);
+    std::ranges::sort(
+        items,
+        [](const auto& left, const auto& right)
+        {
+            if (left.order != right.order) return left.order < right.order;
+            return left.id < right.id;
+        }
+    );
 
     for (const auto& item : items)
     {
@@ -117,7 +125,7 @@ auto HitVirtual(AppBackend& backend, Api::Point point, bool requireDrop = false)
 
             const auto* render = backend.renderNodes().get(node.id);
             const auto order = render ? render->order : 0;
-            if (!result.valid() || order >= resultOrder)
+            if (!result.valid() || order > resultOrder || (order == resultOrder && node.id > result.id))
             {
                 result = {node.id, surface, label};
                 resultOrder = order;

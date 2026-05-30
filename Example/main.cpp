@@ -94,13 +94,13 @@ protected:
                         .padding(16)
                         .borderRadius(0)
                         .states({
-                            .normal = Api::Modifier().background(Api::Color::Green()),
-                            .hover = Api::Modifier().background(Api::Color::Red()),
-                            .focus = Api::Modifier().background(Api::Color::Blue()),
-                            .pressed = Api::Modifier().background(Api::Color::DarkRed()),
-                            .disabled = Api::Modifier().background(Api::Color::Gray()),
+                            .normal = Api::Modifier().background(Api::Color::Hex("#1976D2")),
+                            .hover = Api::Modifier().background(Api::Color::Hex("#2196F3")),
+                            .focus = Api::Modifier().background(Api::Color::Hex("#0D47A1")),
+                            .pressed = Api::Modifier().background(Api::Color::Hex("#1565C0")),
+                            .disabled = Api::Modifier().background(Api::Color::Hex("#90CAF9")),
                         })
-                        .borderColor(Api::Color::Black())
+                        .borderColor(Api::Color::Hex("#2196F3"))
                         .padding(16)
                         .color(Api::Color::White())
                         , Row(
@@ -110,111 +110,112 @@ protected:
                     )
                     , Button(L"Button").padding(8)
 
-
-                    , Label(L"------------ Label States ------------------------------------")
-                      .padding(16)
-                      .size({40, 40})
-                      .borderRadius(8)
-                      .states({
-                          .normal = Api::Modifier().background(Api::Color::Green()),
-                          .hover = Api::Modifier().background(Api::Color::Red()),
-                          .focus = Api::Modifier().background(Api::Color::Blue()),
-                          .pressed = Api::Modifier().background(Api::Color::DarkRed()),
-                          .disabled = Api::Modifier().background(Api::Color::Gray()),
-                      })
-                      .borderColor(Api::Color::Black())
-                      .padding(16)
-                      .color(Api::Color::White())
-
-                    , Row(
-                        Label(L" | | | | | | Native Label").padding(12).flex(1)
-                        , Label(L" | | | | | | Native Label").padding(12).flex(1)
-                    )//.flex(1)
+                    //
+                    // , Label(L"------------ Label States ------------------------------------")
+                    //   .padding(16)
+                    //   .size({40, 40})
+                    //   .borderRadius(8)
+                    //   .states({
+                    //       .normal = Api::Modifier().background(Api::Color::Green()),
+                    //       .hover = Api::Modifier().background(Api::Color::Red()),
+                    //       .focus = Api::Modifier().background(Api::Color::Blue()),
+                    //       .pressed = Api::Modifier().background(Api::Color::DarkRed()),
+                    //       .disabled = Api::Modifier().background(Api::Color::Gray()),
+                    //   })
+                    //   .borderColor(Api::Color::Black())
+                    //   .padding(16)
+                    //   .color(Api::Color::White())
+                    //
+                    // , Row(
+                    //     Label(L" | | | | | | Native Label").padding(12).flex(1)
+                    //     , Label(L" | | | | | | Native Label").padding(12).flex(1)
+                    // )//.flex(1)
 
                     , ContextArea(
                         Column(
-                            Row(
-                                Label(L"Fill Left")
-                                .flex(1)
-                                .borderRadius(8)
-                                .states({
-                                    .normal = Api::Modifier().background(Api::Color::Green()),
-                                    .hover = Api::Modifier().background(Api::Color::Red()),
-                                    .focus = Api::Modifier().background(Api::Color::Blue()),
-                                    .pressed = Api::Modifier().background(Api::Color::DarkRed()),
-                                    .disabled = Api::Modifier().background(Api::Color::Gray()),
-                                })
-                                .flex(1)
-                                .borderRadius(8)
-                                .states({
-                                    .normal = Api::Modifier().background(Api::Color::Green()),
-                                    .hover = Api::Modifier().background(Api::Color::Red()),
-                                    .focus = Api::Modifier().background(Api::Color::Blue()),
-                                    .pressed = Api::Modifier().background(Api::Color::DarkRed()),
-                                    .disabled = Api::Modifier().background(Api::Color::Gray()),
-                                })
-                                , Label(L"Fill Right")
-                                  .flex(1)
-                                  .borderRadius(8)
-                                  .states({
-                                      .normal = Api::Modifier().background(Api::Color::Green()),
-                                      .hover = Api::Modifier().background(Api::Color::Red()),
-                                      .focus = Api::Modifier().background(Api::Color::Blue()),
-                                      .pressed = Api::Modifier().background(Api::Color::DarkRed()),
-                                      .disabled = Api::Modifier().background(Api::Color::Gray()),
-                                  })
-                                  .flex(1)
-                                  .borderRadius(8)
-                                  .states({
-                                      .normal = Api::Modifier().background(Api::Color::Green()),
-                                      .hover = Api::Modifier().background(Api::Color::Red()),
-                                      .focus = Api::Modifier().background(Api::Color::Blue()),
-                                      .pressed = Api::Modifier().background(Api::Color::DarkRed()),
-                                      .disabled = Api::Modifier().background(Api::Color::Gray()),
-                                  })
-                            )
-                            , Row(
-                                Label(L"Fill Left")
-                                .flex(1)
-                                .borderRadius(8)
-                                .states({
-                                    .normal = Api::Modifier().background(Api::Color::Green()),
-                                    .hover = Api::Modifier().background(Api::Color::Red()),
-                                    .focus = Api::Modifier().background(Api::Color::Blue()),
-                                    .pressed = Api::Modifier().background(Api::Color::DarkRed()),
-                                    .disabled = Api::Modifier().background(Api::Color::Gray()),
-                                })
-                                .flex(1)
-                                .borderRadius(8)
-                                .states({
-                                    .normal = Api::Modifier().background(Api::Color::Green()),
-                                    .hover = Api::Modifier().background(Api::Color::Red()),
-                                    .focus = Api::Modifier().background(Api::Color::Blue()),
-                                    .pressed = Api::Modifier().background(Api::Color::DarkRed()),
-                                    .disabled = Api::Modifier().background(Api::Color::Gray()),
-                                })
-                                .borderColor(Api::Color::Red())
-                                , Label(L"Fill Right")
-                                  .flex(1)
-                                  .borderRadius(8)
-                                  .states({
-                                      .normal = Api::Modifier().background(Api::Color::Green()),
-                                      .hover = Api::Modifier().background(Api::Color::Red()),
-                                      .focus = Api::Modifier().background(Api::Color::Blue()),
-                                      .pressed = Api::Modifier().background(Api::Color::DarkRed()),
-                                      .disabled = Api::Modifier().background(Api::Color::Gray()),
-                                  })
-                                  .flex(1)
-                                  .borderRadius(8)
-                                  .states({
-                                      .normal = Api::Modifier().background(Api::Color::Green()),
-                                      .hover = Api::Modifier().background(Api::Color::Red()),
-                                      .focus = Api::Modifier().background(Api::Color::Blue()),
-                                      .pressed = Api::Modifier().background(Api::Color::DarkRed()),
-                                      .disabled = Api::Modifier().background(Api::Color::Gray()),
-                                  })
-                                  .borderColor(Api::Color::Red())
-                            )
+                            Label(L" -------------------- Label -------------------- ").padding(12).flex(1)
+                            // Row(
+                            //     Label(L"Fill Left")
+                            //     .flex(1)
+                            //     .borderRadius(8)
+                            //     .states({
+                            //         .normal = Api::Modifier().background(Api::Color::Green()),
+                            //         .hover = Api::Modifier().background(Api::Color::Red()),
+                            //         .focus = Api::Modifier().background(Api::Color::Blue()),
+                            //         .pressed = Api::Modifier().background(Api::Color::DarkRed()),
+                            //         .disabled = Api::Modifier().background(Api::Color::Gray()),
+                            //     })
+                            //     .flex(1)
+                            //     .borderRadius(8)
+                            //     .states({
+                            //         .normal = Api::Modifier().background(Api::Color::Green()),
+                            //         .hover = Api::Modifier().background(Api::Color::Red()),
+                            //         .focus = Api::Modifier().background(Api::Color::Blue()),
+                            //         .pressed = Api::Modifier().background(Api::Color::DarkRed()),
+                            //         .disabled = Api::Modifier().background(Api::Color::Gray()),
+                            //     })
+                            //     , Label(L"Fill Right")
+                            //       .flex(1)
+                            //       .borderRadius(8)
+                            //       .states({
+                            //           .normal = Api::Modifier().background(Api::Color::Green()),
+                            //           .hover = Api::Modifier().background(Api::Color::Red()),
+                            //           .focus = Api::Modifier().background(Api::Color::Blue()),
+                            //           .pressed = Api::Modifier().background(Api::Color::DarkRed()),
+                            //           .disabled = Api::Modifier().background(Api::Color::Gray()),
+                            //       })
+                            //       .flex(1)
+                            //       .borderRadius(8)
+                            //       .states({
+                            //           .normal = Api::Modifier().background(Api::Color::Green()),
+                            //           .hover = Api::Modifier().background(Api::Color::Red()),
+                            //           .focus = Api::Modifier().background(Api::Color::Blue()),
+                            //           .pressed = Api::Modifier().background(Api::Color::DarkRed()),
+                            //           .disabled = Api::Modifier().background(Api::Color::Gray()),
+                            //       })
+                            // )
+                            // , Row(
+                            //     Label(L"Fill Left")
+                            //     .flex(1)
+                            //     .borderRadius(8)
+                            //     .states({
+                            //         .normal = Api::Modifier().background(Api::Color::Green()),
+                            //         .hover = Api::Modifier().background(Api::Color::Red()),
+                            //         .focus = Api::Modifier().background(Api::Color::Blue()),
+                            //         .pressed = Api::Modifier().background(Api::Color::DarkRed()),
+                            //         .disabled = Api::Modifier().background(Api::Color::Gray()),
+                            //     })
+                            //     .flex(1)
+                            //     .borderRadius(8)
+                            //     .states({
+                            //         .normal = Api::Modifier().background(Api::Color::Green()),
+                            //         .hover = Api::Modifier().background(Api::Color::Red()),
+                            //         .focus = Api::Modifier().background(Api::Color::Blue()),
+                            //         .pressed = Api::Modifier().background(Api::Color::DarkRed()),
+                            //         .disabled = Api::Modifier().background(Api::Color::Gray()),
+                            //     })
+                            //     .borderColor(Api::Color::Red())
+                            //     , Label(L"Fill Right")
+                            //       .flex(1)
+                            //       .borderRadius(8)
+                            //       .states({
+                            //           .normal = Api::Modifier().background(Api::Color::Green()),
+                            //           .hover = Api::Modifier().background(Api::Color::Red()),
+                            //           .focus = Api::Modifier().background(Api::Color::Blue()),
+                            //           .pressed = Api::Modifier().background(Api::Color::DarkRed()),
+                            //           .disabled = Api::Modifier().background(Api::Color::Gray()),
+                            //       })
+                            //       .flex(1)
+                            //       .borderRadius(8)
+                            //       .states({
+                            //           .normal = Api::Modifier().background(Api::Color::Green()),
+                            //           .hover = Api::Modifier().background(Api::Color::Red()),
+                            //           .focus = Api::Modifier().background(Api::Color::Blue()),
+                            //           .pressed = Api::Modifier().background(Api::Color::DarkRed()),
+                            //           .disabled = Api::Modifier().background(Api::Color::Gray()),
+                            //       })
+                            //       .borderColor(Api::Color::Red())
+                            // )
                             , Row(
                                 Button(L"Button").padding(8).flex(1)
                                 , Label(L"------------ Label States 2 ------------------------------------")
@@ -223,13 +224,13 @@ protected:
                                   .size({40, 40})
                                   .borderRadius(32)
                                   .states({
-                                      .normal = Api::Modifier().background(Api::Color::Green()),
-                                      .hover = Api::Modifier().background(Api::Color::Red()),
-                                      .focus = Api::Modifier().background(Api::Color::Blue()),
-                                      .pressed = Api::Modifier().background(Api::Color::DarkRed()),
-                                      .disabled = Api::Modifier().background(Api::Color::Gray()),
+                                      .normal = Api::Modifier().background(Api::Color::Hex("#1976D2")),
+                                      .hover = Api::Modifier().background(Api::Color::Hex("#2196F3")),
+                                      .focus = Api::Modifier().background(Api::Color::Hex("#0D47A1")),
+                                      .pressed = Api::Modifier().background(Api::Color::Hex("#1565C0")),
+                                      .disabled = Api::Modifier().background(Api::Color::Hex("#90CAF9")),
                                   })
-                                  .borderColor(Api::Color::Black())
+                                  .borderColor(Api::Color::Hex("#2196F3"))
                             ).flex(1)
                         ).flex(1)
                         // Button(L"File").onDrop([](Api::Text files) { LOGF_D(L"Drop Button:\n%s", files.c_str()); })
