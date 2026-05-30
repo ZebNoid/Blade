@@ -44,6 +44,20 @@ auto RenderRuntime::remove(const WidgetTree& widgetTree) -> void
     send(commands);
 }
 
+auto RenderRuntime::nativeTarget(const WidgetTree& widget) -> Api::Id
+{
+    // TODO change: virtual render wrappers should become real render surfaces instead of targeting the first native child.
+    if (widget.layoutType == LayoutType::None) return widget.id;
+
+    for (const auto& child : widget.children)
+    {
+        const auto id = nativeTarget(child);
+        if (id != Api::InvalidId) return id;
+    }
+
+    return Api::InvalidId;
+}
+
 auto RenderRuntime::createNode(
     const WidgetTree& widget,
     const LayoutNode& layout,
@@ -58,17 +72,21 @@ auto RenderRuntime::createNode(
 
     if (hasRender)
     {
-        out.push_back({
-            .command = Api::RenderCommandType::Create,
-            .id = widget.id,
-            .root = root,
-            .parent = parent,
-            .order = order++,
-            .rect = layout.rect,
-            .render = render
-        });
+        const auto target = nativeTarget(widget);
+        if (target != Api::InvalidId)
+        {
+            out.push_back({
+                .command = Api::RenderCommandType::Create,
+                .id = target,
+                .root = root,
+                .parent = parent,
+                .order = order++,
+                .rect = layout.rect,
+                .render = render
+            });
 
-        parent = widget.id;
+            parent = target;
+        }
     }
 
     for (size_t i = 0; i < widget.children.size(); ++i)
@@ -87,11 +105,15 @@ auto RenderRuntime::updateChangedNode(
     const auto render = RenderDefinitionBuilder::Build(widget.modifier);
     if (!render.empty() && !SameRect(previousLayout, layout))
     {
-        out.push_back({
-            .command = Api::RenderCommandType::UpdateRect,
-            .id = widget.id,
-            .rect = layout.rect
-        });
+        const auto target = nativeTarget(widget);
+        if (target != Api::InvalidId)
+        {
+            out.push_back({
+                .command = Api::RenderCommandType::UpdateRect,
+                .id = target,
+                .rect = layout.rect
+            });
+        }
     }
 
     for (size_t i = 0; i < widget.children.size(); ++i)
@@ -115,10 +137,14 @@ auto RenderRuntime::removeNode(const WidgetTree& widget, std::vector<Api::Render
 
     if (!RenderDefinitionBuilder::Build(widget.modifier).empty())
     {
-        out.push_back({
-            .command = Api::RenderCommandType::Remove,
-            .id = widget.id
-        });
+        const auto target = nativeTarget(widget);
+        if (target != Api::InvalidId)
+        {
+            out.push_back({
+                .command = Api::RenderCommandType::Remove,
+                .id = target
+            });
+        }
     }
 }
 

@@ -16,6 +16,7 @@ public:
     auto remove(const WidgetTree& widgetTree) -> void;
 
 private:
+    static auto nativeTarget(const WidgetTree& widget) -> Api::Id;
     auto createNode(const WidgetTree& widget, const LayoutNode& layout, std::vector<Api::RenderCommand>& out, Api::Id root, Api::Id parent, int& order) -> void;
     auto updateChangedNode(const WidgetTree& widget, const LayoutNode* previousLayout, const LayoutNode& layout, std::vector<Api::RenderCommand>& out) -> void;
     auto removeNode(const WidgetTree& widget, std::vector<Api::RenderCommand>& out) -> void;

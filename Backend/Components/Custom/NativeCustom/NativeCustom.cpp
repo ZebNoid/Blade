@@ -191,7 +191,10 @@ auto NativeCustom::trackMouseLeave() -> void
 
 auto NativeCustom::updateRenderState(Api::WidgetState state) -> void
 {
-    if (m_renderNodes && m_renderNodes->setState(m_id, state)) HwndApi::Invalidate(m_hwnd);
+    if (!m_renderNodes || !m_renderNodes->setState(m_id, state)) return;
+
+    HwndApi::Invalidate(m_hwnd);
+    HwndApi::Update(m_hwnd);
 }
 
 auto NativeCustom::currentRenderState() const -> Api::WidgetState

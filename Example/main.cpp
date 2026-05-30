@@ -110,7 +110,7 @@ protected:
                     , Button(L"Button").padding(8)
                     , Label(L"------------ Label States ------------------------------------")
                       .padding(16)
-                      .size({40,40})
+                      .size({40, 40})
                       .borderRadius(8)
                       .states({
                           .normal = Api::Modifier().background(Api::Color::Green()),
@@ -124,7 +124,20 @@ protected:
                       .color(Api::Color::White())
                     , Label(L" | | | | | | Native Label").padding(12)
                     , ContextArea(
-                        Column().flex(1)
+                        Column(
+                            Label(L"------------ Label States 2 ------------------------------------")
+                            .flex(1)
+                            .padding(16)
+                            .size({40, 40})
+                            .borderRadius(8)
+                            .states({
+                                .normal = Api::Modifier().background(Api::Color::Green()),
+                                .hover = Api::Modifier().background(Api::Color::Red()),
+                                .focus = Api::Modifier().background(Api::Color::Blue()),
+                                .pressed = Api::Modifier().background(Api::Color::DarkRed()),
+                                .disabled = Api::Modifier().background(Api::Color::Gray()),
+                            })
+                        ).flex(1)
                         // Button(L"File").onDrop([](Api::Text files) { LOGF_D(L"Drop Button:\n%s", files.c_str()); })
                         , Menu(
                             MenuItem(L"Open").onClick([]() -> void { LOG(L"Menu Open"); }),
