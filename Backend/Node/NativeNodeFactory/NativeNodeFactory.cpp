@@ -16,6 +16,7 @@ NativeNodeFactory::NativeNodeFactory(AppBackend* backend)
     , m_context{
           .instance = backend->handle(),
           .resources = &backend->resources(),
+          .renderNodes = &backend->renderNodes(),
       }
 {
     registerFactories();

@@ -10,6 +10,7 @@ namespace Blade::Backend {
 
 class NativeWindow;
 class ResourceManager;
+class RenderRegistry;
 
 class NativeCustom : public NativeElement
 {
@@ -24,6 +25,7 @@ protected:
     virtual auto onPaint(HDC hdc, const Api::Rect& rect) -> void;
     virtual auto hitTest() const -> LRESULT;
     auto resources() const -> ResourceManager*;
+    auto renderNodes() const -> RenderRegistry*;
 
 private:
     static auto CALLBACK Proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT;
@@ -31,6 +33,7 @@ private:
 
 private:
     ResourceManager* m_resources = nullptr;
+    RenderRegistry* m_renderNodes = nullptr;
 };
 
 } // namespace Blade::Backend

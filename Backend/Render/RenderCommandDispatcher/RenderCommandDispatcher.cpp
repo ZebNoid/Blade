@@ -1,6 +1,7 @@
 #include "RenderCommandDispatcher.h"
 
 #include "App/AppBackend.h"
+#include "WinApi/HwndApi/HwndApi.h"
 
 namespace Blade::Backend {
 
@@ -30,6 +31,11 @@ auto RenderCommandDispatcher::dispatch(const Api::RenderCommand& command) -> voi
     case Api::RenderCommandType::Remove:
         m_backend->renderNodes().remove(command.id);
         break;
+    }
+
+    if (auto* node = m_backend->nodes().get(command.id))
+    {
+        HwndApi::Invalidate(node->native->handle());
     }
 }
 

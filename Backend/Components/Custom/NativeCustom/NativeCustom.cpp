@@ -2,6 +2,7 @@
 
 #include "Components/Window/NativeWindow.h"
 #include "Property/PropertyMapper/PropertyMapper.h"
+#include "Render/RenderRegistry/RenderRegistry.h"
 #include "Resource/ResourceManager/ResourceManager.h"
 #include "WinApi/HwndApi/HwndApi.h"
 #include "WinApi/Render/RenderApi/RenderApi.h"
@@ -34,6 +35,7 @@ auto NativeCustom::create(NativeWindow* parent, Api::Id id, const NativeCreateCo
     m_parent = parent;
     m_id = id;
     m_resources = context.resources;
+    m_renderNodes = context.renderNodes;
 
     WindowClass::Register(ClassName, {.proc = Proc, .background = nullptr});
 
@@ -71,6 +73,13 @@ auto NativeCustom::attachChild(INativeElement*) -> void
 
 auto NativeCustom::onPaint(HDC hdc, const Api::Rect& rect) -> void
 {
+    const auto* node = m_renderNodes ? m_renderNodes->get(m_id) : nullptr;
+    if (node)
+    {
+        RenderApi::Draw(hdc, rect, node->render.forState(node->state));
+        return;
+    }
+
     if (m_resources) RenderApi::Fill(hdc, rect, m_resources->windowBrush());
 }
 
@@ -82,6 +91,11 @@ auto NativeCustom::hitTest() const -> LRESULT
 auto NativeCustom::resources() const -> ResourceManager*
 {
     return m_resources;
+}
+
+auto NativeCustom::renderNodes() const -> RenderRegistry*
+{
+    return m_renderNodes;
 }
 
 auto CALLBACK NativeCustom::Proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
