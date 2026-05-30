@@ -48,6 +48,16 @@ public:
         return *this;
     }
 
+    auto horizontalAlignment(MainAxisAlignment alignment) -> Row&
+    {
+        return mainAxisAlignment(alignment);
+    }
+
+    auto verticalAlignment(CrossAxisAlignment alignment) -> Row&
+    {
+        return crossAxisAlignment(alignment);
+    }
+
 };
 
 } // namespace Blade

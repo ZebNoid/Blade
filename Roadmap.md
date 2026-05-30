@@ -112,6 +112,7 @@ Layout runtime should remain responsible only for layout calculation and layout-
 Render and events should stay outside layout runtime except where layout size/position affects them.
 
 - [ ] Revisit virtual wrapper behavior once render surfaces exist.
+- [ ] Add widget `minSize` / `maxSize` modifiers and define how constraints interact with flex, padding, and parent layout.
 - [x] Keep layout engine independent from backend/native concepts.
 - [x] Add virtual layout wrappers for modifier effects.
 - [x] Add flex behavior.

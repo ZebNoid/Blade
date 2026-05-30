@@ -88,13 +88,13 @@ protected:
 
         *windowId = Window(
                 Column(
-                    Button(L"Flex")
+                    Button(L"Button Flex")
                     , Stack(
 
                         Label(L"------------ Bottom Label ------------------------------------")
                         .flex(1)
-                        .padding(16)
-                        .borderRadius(0)
+                        .padding(8)
+                        .borderRadius(8)
                         .states({
                             .normal = Api::Modifier().background(Api::Color::Hex("#1976D2")),
                             .hover = Api::Modifier().background(Api::Color::Hex("#2196F3")),
@@ -102,8 +102,7 @@ protected:
                             .pressed = Api::Modifier().background(Api::Color::Hex("#1565C0")),
                             .disabled = Api::Modifier().background(Api::Color::Hex("#90CAF9")),
                         })
-                        .borderColor(Api::Color::Hex("#2196F3"))
-                        .padding(16)
+                        .borderColor(Api::Color::Black())
                         .color(Api::Color::White())
 
                         , Row(
@@ -117,7 +116,7 @@ protected:
                               .flex(1)
                         ).flex(1)
                     )
-                    , Button(L"Button").padding(8)
+                    , Button(L"Button padding").padding(8)
 
 
                     , ContextArea(
@@ -126,9 +125,9 @@ protected:
                             , Row(
                                 Button(L"Button").padding(8).flex(1)
                                 , Image(L"test/app.png")
-                                .size({120, 120})
-                                .flex(2)
-                                .states({
+                                  .size({120, 120})
+                                  .flex(2)
+                                  .states({
                                       // .normal = Api::Modifier().background(Api::Color::Hex("#1976D2")),
                                       // .hover = Api::Modifier().source(L"test/app.png"),
                                   })

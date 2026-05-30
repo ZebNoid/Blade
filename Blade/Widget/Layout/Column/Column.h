@@ -48,6 +48,16 @@ public:
         return *this;
     }
 
+    auto verticalAlignment(MainAxisAlignment alignment) -> Column&
+    {
+        return mainAxisAlignment(alignment);
+    }
+
+    auto horizontalAlignment(CrossAxisAlignment alignment) -> Column&
+    {
+        return crossAxisAlignment(alignment);
+    }
+
 };
 
 

@@ -510,8 +510,10 @@ Stack(
 | Method | Applies to | Example |
 | --- | --- | --- |
 | `gap(...)` | `Column`, `Row` | `.gap(8)` |
-| `mainAxisAlignment(...)` | `Column`, `Row` | `.mainAxisAlignment(MainAxisAlignment::Center)` |
-| `crossAxisAlignment(...)` | `Column`, `Row` | `.crossAxisAlignment(CrossAxisAlignment::Stretch)` |
+| `verticalAlignment(...)` | `Column` main axis | `.verticalAlignment(MainAxisAlignment::Center)` |
+| `horizontalAlignment(...)` | `Column` cross axis | `.horizontalAlignment(CrossAxisAlignment::Stretch)` |
+| `horizontalAlignment(...)` | `Row` main axis | `.horizontalAlignment(MainAxisAlignment::Center)` |
+| `verticalAlignment(...)` | `Row` cross axis | `.verticalAlignment(CrossAxisAlignment::Stretch)` |
 | `flex(...)` | child widgets inside layout | `Button(L"Two").flex(1)` |
 | `padding(...)` | widgets and layout containers | `Column(...).padding(8)` |
 | `size(...)` | widgets and root widgets | `Button(L"Run").size({120, 40})` |
