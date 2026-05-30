@@ -6,7 +6,6 @@
 #include "Callbacks.h"
 #include "CaptionProps.h"
 #include "Events/Events.h"
-#include "LayoutProps.h"
 #include "Lifetime.h"
 #include "MenuTrigger.h"
 #include "MenuData.h"
@@ -22,19 +21,11 @@
 
 namespace Blade::Api {
 
-using EventsValue = std::variant<
-    CallbackVoid,
-    CallbackResult,
-    CallbackString,
-    CallbackBool
->;
-
 using PropertyValue = std::variant<
     bool,
     int,
     float,
     double,
-    Api::Id,
     Api::Text,
     Api::Point,
     Api::Size,
@@ -45,8 +36,7 @@ using PropertyValue = std::variant<
     Api::Shortcut,
     Api::ContextMenus,
     Api::WindowPlacementProps,
-    Api::WindowState,
-    LayoutProps
+    Api::WindowState
 >;
 
 

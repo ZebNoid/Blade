@@ -27,19 +27,28 @@ auto App::run() -> int
 
 auto App::Quit() -> void
 {
-    if (s_current && s_current->m_backend)
-    {
-        s_current->m_backend->quit();
-    }
+    Process({ .command = Api::AppCommandType::Quit });
 }
 
-auto App::addToTree(const RootWidget& rootWidget) -> void
+auto App::mountRoot(const RootWidget& rootWidget) -> Api::Id
 {
     auto tree = rootWidget.tree();
 
     auto& root = m_layoutRuntime->mount(std::move(tree));
 
     m_eventRuntime.registerTree(root);
+    return root.id;
+}
+
+auto App::MountRoot(const RootWidget& rootWidget) -> Api::Id
+{
+    if (!s_current)
+    {
+        LOG_W(L"RootWidget::mount called without active App");
+        return Api::InvalidId;
+    }
+
+    return s_current->mountRoot(rootWidget);
 }
 
 auto App::initBackend() -> int
@@ -51,6 +60,7 @@ auto App::initBackend() -> int
     }
     m_backend->init();
     m_layoutRuntime = std::make_unique<LayoutRuntime>(m_backend.get(), m_trees);
+    m_rootLifecycle = std::make_unique<RootLifecycle>(m_backend.get(), m_trees, m_eventRuntime, *m_layoutRuntime);
     m_backend->setMessageHandler(
         [this](const Api::BackendMessage& message)
         {
@@ -81,8 +91,36 @@ auto App::onBackendMessage(const Api::BackendMessage& message) -> Api::EventResu
         return event ? m_eventRuntime.dispatch(*event) : Api::EventResult{};
     }
 
+    if (message.type == Api::BackendMessageType::Destroyed)
+    {
+        const auto* destroyed = std::get_if<Api::BackendDestroyed>(&message.payload);
+        if (destroyed && m_rootLifecycle) m_rootLifecycle->destroyRoot(destroyed->target);
+        return {};
+    }
+
     return {};
 }
 
+auto App::Process(Api::AppCommand command) -> void
+{
+    if (!s_current) return;
+
+    if (command.command == Api::AppCommandType::Quit)
+    {
+        if (s_current->m_rootLifecycle) s_current->m_rootLifecycle->quit();
+        return;
+    }
+
+    if (command.command == Api::AppCommandType::UnmountRoot)
+    {
+        if (s_current->m_rootLifecycle) s_current->m_rootLifecycle->destroyRoot(command.target);
+        return;
+    }
+
+    if (s_current && s_current->m_backend)
+    {
+        s_current->m_backend->process(command);
+    }
+}
 
 } // namespace

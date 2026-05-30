@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Command/AppCommand.h"
 #include "Command/ElementCommand.h"
 #include "Message/BackendMessage.h"
 
@@ -15,14 +16,16 @@ public:
 
     virtual auto runApp() -> int = 0;
 
-    virtual auto quit() -> void = 0;
-
     virtual auto setMessageHandler(
         BackendMessageHandler handler
     ) -> void = 0;
 
     virtual auto process(
         const Api::ElementCommand& command
+    ) -> void = 0;
+
+    virtual auto process(
+        const Api::AppCommand& command
     ) -> void = 0;
 };
 

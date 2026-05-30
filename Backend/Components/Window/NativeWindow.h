@@ -33,13 +33,12 @@ public:
     auto commandRouter() -> CommandRouter&;
     auto enableDropTarget() -> void;
     auto enableContextMenus(Api::ContextMenus menus) -> void;
-    auto setLifetime(Api::Lifetime lifetime) -> void;
 
     auto setMinSize(const Api::Size& size) -> void;
     auto setMaxSize(const Api::Size& size) -> void;
     auto applyMinMax(MINMAXINFO* info) const -> void;
 
-    auto destroy() -> void;
+    auto destroy() -> void override;
     auto markDead() -> void;
 
 private:

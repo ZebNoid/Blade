@@ -46,7 +46,7 @@ protected:
             .title = L"Hello Blade",
             .size = {400, 200},
             .placement = Api::WindowPlacement::Center()
-        }).build(this);
+        }).mount();
     }
 };
 
@@ -63,6 +63,7 @@ auto main() -> int
 <summary>Show navigation</summary>
 
 - [Application](#application)
+- [Runtime UI Commands](#runtime-ui-commands)
 - [Syntax](#syntax)
 - [Root Widgets](#root-widgets)
   - [Window](#window)
@@ -97,7 +98,30 @@ auto main() -> int
 
 Blade apps inherit from `Blade::App`. Use `onSetup()` to select a backend and `onCreate()` to create root widgets.
 
-`App::Quit()` stops the application message loop and can be called from callbacks.
+`App` owns application lifecycle. `App::Quit()` stops the application message loop and can be called from callbacks.
+
+## Runtime UI Commands
+
+Use `UI` to send runtime commands to already mounted UI elements by id.
+
+```c++
+auto windowId = Window(...).mount();
+auto trayId = Tray(...).mount();
+
+UI::Show(windowId);
+UI::Hide(windowId);
+UI::Unmount(windowId);
+
+UI::Window::Close(windowId);
+UI::Window::Minimize(windowId);
+UI::Window::Maximize(windowId);
+UI::Window::Restore(windowId);
+
+UI::Tray::Icon(trayId, L"app.ico");
+UI::Tray::Title(trayId, L"Blade");
+```
+
+`Show`, `Hide`, and `Unmount` are generic UI commands. Window-only and tray-only commands live in `UI::Window` and `UI::Tray`.
 
 ## Syntax
 
@@ -117,11 +141,11 @@ Button(L"Quit").on({
 })
 ```
 
-Root widgets start working after `.build(this)`.
+Root widgets are attached to the app runtime with `.mount()`.
 
 ```c++
-Window(Button(L"Quit")).build(this);
-Tray(Menu(MenuItem(L"Exit"))).build(this);
+Window(Button(L"Quit")).mount();
+Tray(Menu(MenuItem(L"Exit"))).mount();
 ```
 
 ## Root Widgets
@@ -138,7 +162,7 @@ Window(
     .minSize = {320, 240}
 }).on({
     .close = [] { return true; }
-}).build(this);
+}).mount();
 ```
 
 <a id="window-properties"></a>
@@ -209,7 +233,7 @@ Tray(
 ).set({
     .title = L"Blade",
     .icon = L"app.ico"
-}).build(this);
+}).mount();
 ```
 
 <a id="tray-properties"></a>

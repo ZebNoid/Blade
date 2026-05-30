@@ -15,10 +15,27 @@ auto LayoutRuntime::mount(WidgetTree tree) -> WidgetTree&
 {
     auto& root = m_trees.add(std::move(tree));
     auto layoutTree = LayoutPass::Compute(root, root.layout.size);
+    auto commands = Materializer::Create(root, layoutTree);
 
-    send(m_materializer.create(root, layoutTree));
+    m_layoutTrees.insert_or_assign(root.id, std::move(layoutTree));
+    send(std::move(commands));
 
     return root;
+}
+
+auto LayoutRuntime::unmount(Api::Id rootId) -> void
+{
+    auto* root = m_trees.root(rootId);
+
+    if (!root)
+    {
+        return;
+    }
+
+    send(Materializer::Remove(*root));
+    m_layoutTrees.erase(rootId);
+    m_pendingResize.erase(rootId);
+    m_trees.remove(rootId);
 }
 
 auto LayoutRuntime::resizeRoot(Api::Id rootId, const Api::Size& size) -> void
@@ -37,8 +54,20 @@ auto LayoutRuntime::resizeRoot(Api::Id rootId, const Api::Size& size) -> void
     }
 
     auto layoutTree = LayoutPass::Compute(*root, size);
+    const auto previous = m_layoutTrees.find(rootId);
+    std::vector<Api::ElementCommand> commands;
 
-    send(m_materializer.update(*root, layoutTree, false));
+    if (previous == m_layoutTrees.end())
+    {
+        commands = Materializer::Update(*root, layoutTree, false);
+    }
+    else
+    {
+        commands = Materializer::UpdateChanged(*root, previous->second, layoutTree, false);
+    }
+
+    m_layoutTrees.insert_or_assign(rootId, std::move(layoutTree));
+    send(std::move(commands));
 }
 
 auto LayoutRuntime::send(std::vector<Api::ElementCommand> commands) -> void

@@ -11,13 +11,12 @@ public:
     auto handle() const -> HWND override;
     auto id() const -> Api::Id;
     auto parent() const -> NativeElement*;
-    auto isLifetimeOwner() const -> bool override;
+    auto destroy() -> void override;
 
 protected:
     HWND m_hwnd = nullptr;
     Api::Id m_id = Api::InvalidId;
     NativeElement* m_parent = nullptr;
-    bool m_lifetimeOwner = false;
 };
 
 } // namespace Blade::Backend

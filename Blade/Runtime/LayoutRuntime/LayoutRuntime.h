@@ -15,6 +15,8 @@ public:
 
     auto mount(WidgetTree tree) -> WidgetTree&;
 
+    auto unmount(Api::Id rootId) -> void;
+
     auto resizeRoot(Api::Id rootId, const Api::Size& size) -> void;
 
 private:
@@ -25,7 +27,7 @@ private:
 private:
     Api::ApiBackend* m_backend = nullptr;
     WidgetTreeRegistry& m_trees;
-    Materializer m_materializer;
+    std::unordered_map<Api::Id, LayoutNode> m_layoutTrees;
     std::unordered_map<Api::Id, Api::Size> m_pendingResize;
     bool m_sending = false;
 };

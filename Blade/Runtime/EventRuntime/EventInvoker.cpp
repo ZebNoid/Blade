@@ -61,9 +61,30 @@ auto InvokeCallback(const Api::CallbackBool& callback, const Api::BackendEvent& 
     return {};
 }
 
+auto InvokeCallback(const Api::CallbackContext& callback, Api::EventContext& context) -> Api::EventResult
+{
+    if (!callback)
+    {
+        return {};
+    }
+
+    callback(context);
+    return {};
+}
+
+auto InvokeCallback(const Api::CallbackContextResult& callback, Api::EventContext& context) -> Api::EventResult
+{
+    if (!callback)
+    {
+        return {};
+    }
+
+    return callback(context);
+}
+
 } // namespace
 
-auto InvokeEvent(const Api::EventsValue& callback, const Api::BackendEvent& event) -> Api::EventResult
+auto InvokeEvent(const Api::EventsValue& callback, const Api::BackendEvent& event, Api::EventContext& context) -> Api::EventResult
 {
     if (const auto* value = std::get_if<Api::CallbackVoid>(&callback))
     {
@@ -83,6 +104,16 @@ auto InvokeEvent(const Api::EventsValue& callback, const Api::BackendEvent& even
     if (const auto* value = std::get_if<Api::CallbackBool>(&callback))
     {
         return InvokeCallback(*value, event);
+    }
+
+    if (const auto* value = std::get_if<Api::CallbackContext>(&callback))
+    {
+        return InvokeCallback(*value, context);
+    }
+
+    if (const auto* value = std::get_if<Api::CallbackContextResult>(&callback))
+    {
+        return InvokeCallback(*value, context);
     }
 
     return {};

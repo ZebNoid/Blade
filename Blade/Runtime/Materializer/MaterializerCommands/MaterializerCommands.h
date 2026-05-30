@@ -13,6 +13,7 @@ public:
     static auto Create(const WidgetTree& widget, Api::Id parent) -> Api::ElementCommand;
     static auto Create(const WidgetTree& widget, Api::Id parent, const Api::ContextMenus& menus) -> Api::ElementCommand;
     static auto Attach(const WidgetTree& widget, Api::Id parent) -> Api::ElementCommand;
+    static auto Remove(const WidgetTree& widget) -> Api::ElementCommand;
     static auto Update(const LayoutNode& layout, const WidgetTree& widget, Api::Id parent) -> Api::ElementCommand;
     static auto Visible(const WidgetTree& widget) -> Api::ElementCommand;
 

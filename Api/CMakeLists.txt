@@ -6,8 +6,9 @@ if (NOT PROJECT_IS_TOP_LEVEL)
 endif ()
 
 add_library(${PROJECT_NAME} INTERFACE
-        Api/ApiWidget.h
         Api/ApiBackend.h
+        Command/AppCommand.h
+        Command/AppCommandType.h
         Command/ElementCommand.h
         Command/ElementCommandType.h
         Message/BackendMessage.h
@@ -33,6 +34,7 @@ add_library(${PROJECT_NAME} INTERFACE
         Common/Logger.h
 
         Events/Events.h
+        Events/EventContext.h
         Events/EventPayload.h
         Events/EventResult.h
         Events/BackendEvent.h

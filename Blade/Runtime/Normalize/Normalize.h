@@ -28,6 +28,7 @@ public:
     {
         auto normalized = Props(src);
         target.backend.merge(std::move(normalized.backend));
+        if (normalized.hasLifetime) target.lifetime = normalized.lifetime;
         normalized.applyTo(target.layout);
     }
 

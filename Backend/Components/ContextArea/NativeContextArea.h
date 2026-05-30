@@ -7,11 +7,12 @@
 namespace Blade::Backend {
 
 class NativeWindow;
+struct NativeCreateContext;
 
 class NativeContextArea : public NativeElement
 {
 public:
-    auto create(NativeWindow* parent, Api::Id id) -> bool;
+    auto create(NativeWindow* parent, Api::Id id, const NativeCreateContext& context) -> bool;
     auto applyProps(const Api::PropertyMap& propertyMap) -> void override;
     auto applyEvents(const Api::EventSubscriptions& events) -> void override;
     auto isAlive() const -> bool override;
@@ -19,7 +20,6 @@ public:
 
 private:
     auto enableDropTarget() -> void;
-    auto enableDropTarget(Api::Id targetId) -> void;
     auto enableContextMenus(Api::ContextMenus menus) -> void;
 
 private:

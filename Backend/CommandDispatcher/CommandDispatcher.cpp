@@ -80,6 +80,11 @@ auto CommandDispatcher::attach(const Api::ElementCommand& command) -> void
 
 auto CommandDispatcher::remove(const Api::ElementCommand& command) -> void
 {
+    if (auto* node = m_backend->nodes().get(command.id); node && node->native)
+    {
+        node->native->destroy();
+    }
+
     m_backend->nodes().remove(
         command.id
     );

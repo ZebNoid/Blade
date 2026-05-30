@@ -1,4 +1,4 @@
-project(Blade VERSION 0.4.0)
+project(Blade VERSION 0.4.1)
 
 # Use the names to logic check
 if (NOT PROJECT_IS_TOP_LEVEL)
@@ -8,6 +8,8 @@ endif ()
 add_library(${PROJECT_NAME} STATIC
         App/App.cpp
         App/App.h
+        UI/UI.cpp
+        UI/UI.h
 
         Base/Widget.h
         Base/RootWidget.h
@@ -18,10 +20,13 @@ add_library(${PROJECT_NAME} STATIC
         Widget/Window/WindowEvents.h
         Widget/Tray/Tray.h
         Widget/Tray/TrayProps.h
+        Widget/Tray/TrayEvents.h
 
         Widget/Button/Button.h
         Widget/Button/ButtonProps.h
         Widget/Button/ButtonEvents.h
+        Widget/Label/Label.h
+        Widget/Label/LabelProps.h
         Widget/ContextArea/ContextArea.h
         Widget/ContextArea/ContextAreaEvents.h
         Widget/Menu/Menu.h
@@ -40,8 +45,17 @@ add_library(${PROJECT_NAME} STATIC
 
         Runtime/Materializer/Materializer.cpp
         Runtime/Materializer/Materializer.h
+        Runtime/Materializer/MaterializerState.h
+        Runtime/Materializer/MaterializerCreate/MaterializerCreate.cpp
+        Runtime/Materializer/MaterializerCreate/MaterializerCreate.h
         Runtime/Materializer/MaterializerCommands/MaterializerCommands.cpp
         Runtime/Materializer/MaterializerCommands/MaterializerCommands.h
+        Runtime/Materializer/MaterializerRules/MaterializerRules.cpp
+        Runtime/Materializer/MaterializerRules/MaterializerRules.h
+        Runtime/Materializer/MaterializerRemove/MaterializerRemove.cpp
+        Runtime/Materializer/MaterializerRemove/MaterializerRemove.h
+        Runtime/Materializer/MaterializerUpdate/MaterializerUpdate.cpp
+        Runtime/Materializer/MaterializerUpdate/MaterializerUpdate.h
         Runtime/Materializer/MenuMaterializer/MenuMaterializer.cpp
         Runtime/Materializer/MenuMaterializer/MenuMaterializer.h
         Runtime/WidgetTreeRegistry/WidgetTreeRegistry.cpp
@@ -56,6 +70,8 @@ add_library(${PROJECT_NAME} STATIC
         Runtime/LayoutRuntime/LayoutRuntime.h
         Runtime/LayoutRuntime/LayoutPass/LayoutPass.cpp
         Runtime/LayoutRuntime/LayoutPass/LayoutPass.h
+        Runtime/RootLifecycle/RootLifecycle.cpp
+        Runtime/RootLifecycle/RootLifecycle.h
         Runtime/Normalize/Normalize.h
         Runtime/Normalize/NormalizedProps.h
         Runtime/Normalize/PropsVisitor.h

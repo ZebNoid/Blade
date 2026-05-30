@@ -1,17 +1,11 @@
 #include "NativeWindowPlacement.h"
 
 #include "WinApi/Display/DisplayApi/DisplayApi.h"
+#include "WinApi/HwndApi/HwndApi.h"
 
 namespace Blade::Backend {
 
 namespace {
-
-auto GetWindowSize(HWND hwnd) -> Api::Size
-{
-    RECT rect{};
-    GetWindowRect(hwnd, &rect);
-    return {rect.right - rect.left, rect.bottom - rect.top};
-}
 
 auto FillSize(const Api::WindowPlacementProps& placement, Api::Rect screen, Api::Size size) -> Api::Size
 {
@@ -97,7 +91,7 @@ auto Y(const Api::WindowPlacementProps& placement, Api::Rect screen, Api::Size s
 
 auto NativeWindowPlacement::ToRect(HWND hwnd, const Api::WindowPlacementProps& placement) -> Api::Rect
 {
-    return ToRect(placement, GetWindowSize(hwnd));
+    return ToRect(placement, HwndApi::GetSize(hwnd));
 }
 
 auto NativeWindowPlacement::ToRect(const Api::WindowPlacementProps& placement, Api::Size size) -> Api::Rect

@@ -69,11 +69,6 @@ auto NativeWindow::enableContextMenus(Api::ContextMenus menus) -> void
     if (contextMenu->attach(m_hwnd, m_id, m_commandRouter, std::move(menus))) m_contextMenu = std::move(contextMenu);
 }
 
-auto NativeWindow::setLifetime(Api::Lifetime lifetime) -> void
-{
-    m_lifetimeOwner = lifetime == Api::Lifetime::Owner;
-}
-
 auto NativeWindow::setMinSize(const Api::Size& size) -> void
 {
     m_minSize = size;
@@ -120,6 +115,7 @@ auto NativeWindow::destroy() -> void
 auto NativeWindow::markDead() -> void
 {
     m_alive = false;
+    m_hwnd = nullptr;
 }
 
 auto NativeWindow::isAlive() const -> bool

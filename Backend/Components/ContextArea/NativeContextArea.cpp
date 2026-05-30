@@ -3,6 +3,7 @@
 #include <algorithm>
 
 #include "Components/Window/NativeWindow.h"
+#include "Node/NativeCreateContext/NativeCreateContext.h"
 #include "Property/PropertyMapper/PropertyMapper.h"
 #include "Property/PropertyReader.h"
 #include "WinApi/Window/Hwnd/Hwnd.h"
@@ -18,7 +19,7 @@ auto HasEvent(const Api::EventSubscriptions& events, Api::Events event) -> bool
 
 } // namespace
 
-auto NativeContextArea::create(NativeWindow* parent, Api::Id id) -> bool
+auto NativeContextArea::create(NativeWindow* parent, Api::Id id, const NativeCreateContext& context) -> bool
 {
     if (!parent) return false;
 
@@ -31,7 +32,7 @@ auto NativeContextArea::create(NativeWindow* parent, Api::Id id) -> bool
         .parent = parent->handle(),
         .style = WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | SS_NOTIFY,
         .menu = reinterpret_cast<HMENU>(static_cast<UINT_PTR>(m_id)),
-        .hInstance = GetModuleHandle(nullptr),
+        .hInstance = context.instance,
     });
 
     return m_hwnd != nullptr;
@@ -44,9 +45,9 @@ auto NativeContextArea::applyProps(const Api::PropertyMap& propertyMap) -> void
         enableContextMenus(*menus);
     }
 
-    if (const auto* target = PropertyReader::Get<Api::Id>(propertyMap, Api::Props::DropTarget))
+    if (const auto* dropTarget = PropertyReader::Get<bool>(propertyMap, Api::Props::DropTarget); dropTarget && *dropTarget)
     {
-        enableDropTarget(*target);
+        enableDropTarget();
     }
 
     PropertyMapper::Apply(m_hwnd, propertyMap);
@@ -79,17 +80,12 @@ auto NativeContextArea::enableContextMenus(Api::ContextMenus menus) -> void
 
 auto NativeContextArea::enableDropTarget() -> void
 {
-    enableDropTarget(m_id);
-}
-
-auto NativeContextArea::enableDropTarget(Api::Id targetId) -> void
-{
     if (m_dropTarget || !m_hwnd) return;
 
     auto* parent = dynamic_cast<NativeWindow*>(m_parent);
     if (!parent) return;
 
-    auto dropTarget = std::make_unique<OleDropTarget>(targetId, parent->commandRouter());
+    auto dropTarget = std::make_unique<OleDropTarget>(m_id, parent->commandRouter());
     if (dropTarget->registerHwnd(m_hwnd)) m_dropTarget = std::move(dropTarget);
 }
 

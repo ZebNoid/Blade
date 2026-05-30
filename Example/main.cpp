@@ -16,27 +16,84 @@ protected:
         use<Backend::AppBackend>();
     }
 
+    auto testButton() -> auto
+    {
+        return Button(L"testButton");
+    }
+
+    auto testWindow() -> auto
+    {
+        return Window(
+            Column(
+                Button(L"Button"),
+                testButton().set({
+                    .layout = {.flex = 1,}
+                })
+            )
+        ).set({
+            .title = L"Test",
+            .size = {800, 600},
+            .placement = Api::WindowPlacement::BottomRight({-50, -50}, 1),
+        });
+    }
+
+
     auto onCreate() -> void override
     {
-        Tray(
+        auto trayId = std::make_shared<Api::Id>(Api::InvalidId);
+        auto windowId = std::make_shared<Api::Id>(Api::InvalidId);
+
+        // testWindow().mount();
+
+        *trayId = Tray(
             Menu(
-                MenuItem(L"Open").on({.click = [] { LOG(L"Open"); }}),
-                MenuItem(L"Export",
-                         MenuItem(L"PNG").on({.click = [] { LOG(L"PNG"); }}),
-                         MenuItem(L"PDF").on({.click = [] { LOG(L"PDF"); }})
+                MenuItem(L"Show").on({
+                    .click = [windowId]() -> void
+                    {
+                        UI::Show(*windowId);
+                        LOG(L"Show");
+                    }
+                }),
+                MenuItem(L"Hide").on({
+                    .click = [windowId]() -> void
+                    {
+                        UI::Hide(*windowId);
+                        LOG(L"Hide");
+                    }
+                }),
+                MenuItem(L"Tray Icon",
+                         MenuItem(L"app.png").on({
+                             .click = [trayId, windowId]() -> void
+                             {
+                                 UI::Tray::Icon(*trayId, L"test/app.png");
+                                 LOG(L"PNG");
+                             }
+                         }),
+                         MenuItem(L"0ad.png").on({
+                             .click = [trayId, windowId]()-> void
+                             {
+                                 UI::Tray::Icon(*trayId, L"test/0ad.png");
+                                 LOG(L"PDF");
+                             }
+                         })
                 ),
                 MenuSeparator(),
                 MenuItem(L"Exit").set({
                     .shortcut = Api::Shortcut::Ctrl(L'Q')
-                }).on({.click = [] { App::Quit(); }})
+                }).on({.click = []() -> void { App::Quit(); }})
             ).set({
-                .trigger = Api::MenuTrigger::LeftRight,
+                .trigger = Api::MenuTrigger::RightClick,
             })
         ).set({
             .title = L"Blade Tray",
             .icon = L"test/app.ico",
-            // .lifetime = Api::Lifetime::Ignore,
-        }).build(this);
+            .lifetime = Api::Lifetime::Owner,
+        }).on({
+            .click = [windowId]() -> void
+            {
+                UI::Show(*windowId);
+            },
+        }).mount();
 
         // Window(
         //     Button(L"Button")
@@ -44,11 +101,17 @@ protected:
         //     .title = L"Test",
         //     .size = {800, 600},
         //     .placement = Api::WindowPlacement::Manual({3300, 400}),
-        // }).build(this);
+        // }).mount();
 
-        Window(
+        *windowId = Window(
             Column(
                 Button(L"Flex") //.set({.layout = {.flex = 1,},})
+                , Stack(
+                    Button(L"Flex")
+                    ,Button(L"Flex").set({.layout = {.margin = 8, }})
+                    , Label(L"------------ Native Label ------------------------------------").set({.layout = {.margin = 16, }})
+                    , Label(L" | | | | | | Native Label").set({.layout = {.margin = 12, }})
+                )
                 , ContextArea(
                     Column().set({.layout = {.flex = 1,},})
                     // Button(L"File") //.set({.layout = {.flex = 1,},})
@@ -59,31 +122,34 @@ protected:
                     //     }
                     // })
                     , Menu(
-                        MenuItem(L"Open").on({.click = [] { LOG(L"Menu Open"); }}),
-                        MenuItem(L"Close").on({.click = [] { LOG(L"Menu Delete"); }})
+                        MenuItem(L"Open").on({.click = []() -> void { LOG(L"Menu Open"); }}),
+                        MenuItem(L"Close").on({.click = []() -> void { LOG(L"Menu Delete"); }})
                     ).set({.trigger = Api::MenuTrigger::RightClick})
                 ).on({
-                .drop = [](Api::Text files)
-                {
-                    LOGF_D(L"Drop ContextArea:\n%s", files.c_str());
-                },
+                    .drop = [](const Api::Text& files) -> void
+                    {
+                        LOGF_D(L"Drop ContextArea:\n%s", files.c_str());
+                    },
                 })
             )
         ).set({
             .title = L"Context Menu",
             .size = {800, 600},
             .placement = Api::WindowPlacement::Center({0, 0}, 1),
+            .lifetime = Api::Lifetime::Ignore,
         }).on({
-            .close = []()
+            .close = [windowId]() -> bool
             {
-                App::Quit();
-                return true;
+                UI::Hide(*windowId);
+                App::Quit(); // TODO dev only
+                LOGF_D(L"Close Window");
+                return false;
             },
-            .drop = [](Api::Text files)
+            .drop = [](const Api::Text& files) -> void
             {
                 LOGF_D(L"Drop Window:\n%s", files.c_str());
             }
-        }).build(this);
+        }).mount();
     }
 };
 

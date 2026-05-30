@@ -26,7 +26,7 @@ def collect_files(folders, extensions):
         folder_path = Path(folder)
 
         if not folder_path.exists():
-            print(f"Папка не найдена: {folder}")
+            print(f"Folder not found: {folder}")
             continue
 
         for file_path in folder_path.rglob("*"):
@@ -56,8 +56,8 @@ def merge_files(files, output_file):
 if __name__ == "__main__":
     files = collect_files(FOLDERS, EXTENSIONS)
 
-    print(f"Найдено файлов: {len(files)}")
+    print(f"Found files: {len(files)}")
 
     merge_files(files, OUTPUT_FILE)
 
-    print(f"Готово: {OUTPUT_FILE}")
+    print(f"Complete: {OUTPUT_FILE}")

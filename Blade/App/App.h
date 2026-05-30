@@ -3,12 +3,14 @@
 #include "Api/ApiBackend.h"
 #include "Runtime/EventRuntime/EventRuntime.h"
 #include "Runtime/LayoutRuntime/LayoutRuntime.h"
+#include "Runtime/RootLifecycle/RootLifecycle.h"
 #include "Runtime/WidgetTreeRegistry/WidgetTreeRegistry.h"
 
 
 namespace Blade {
 
 class RootWidget;
+class UI;
 
 
 class App
@@ -34,11 +36,14 @@ protected:
 protected:
 
 private:
-    auto addToTree(const RootWidget& rootWidget) -> void;
+    auto mountRoot(const RootWidget& rootWidget) -> Api::Id;
 
     auto initBackend() -> int;
 
     auto onBackendMessage(const Api::BackendMessage& message) -> Api::EventResult;
+
+    static auto MountRoot(const RootWidget& rootWidget) -> Api::Id;
+    static auto Process(Api::AppCommand command) -> void;
 
 private:
     static App* s_current;
@@ -47,8 +52,10 @@ private:
     WidgetTreeRegistry m_trees;
     EventRuntime m_eventRuntime;
     std::unique_ptr<LayoutRuntime> m_layoutRuntime;
+    std::unique_ptr<RootLifecycle> m_rootLifecycle;
 
     friend class RootWidget;
+    friend class UI;
 };
 
 

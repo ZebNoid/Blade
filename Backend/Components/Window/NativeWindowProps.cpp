@@ -24,7 +24,6 @@ auto ApplySettings(NativeWindow& window, const NativeWindowPropsData& props) -> 
     if (props.minSize) window.setMinSize(*props.minSize);
     if (props.maxSize) window.setMaxSize(*props.maxSize);
     if (props.contextMenus) window.enableContextMenus(*props.contextMenus);
-    if (props.lifetime) window.setLifetime(*props.lifetime);
 }
 
 auto ApplyBounds(HWND hwnd, const NativeWindowPropsData& props) -> void

@@ -16,10 +16,16 @@ struct BackendResize
     Api::Size size{};
 };
 
+struct BackendDestroyed
+{
+    Api::Id target = Api::InvalidId;
+};
+
 using BackendMessagePayload = std::variant<
     std::monostate,
     Api::BackendResize,
-    Api::BackendEvent
+    Api::BackendEvent,
+    Api::BackendDestroyed
 >;
 
 struct BackendMessage

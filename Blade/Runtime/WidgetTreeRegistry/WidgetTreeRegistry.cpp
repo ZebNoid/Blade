@@ -1,5 +1,7 @@
 #include "WidgetTreeRegistry.h"
 
+#include "Common/Lifetime.h"
+
 
 namespace Blade {
 
@@ -28,6 +30,44 @@ auto WidgetTreeRegistry::find(Api::Id widgetId) -> WidgetTree*
     }
 
     return nullptr;
+}
+
+auto WidgetTreeRegistry::rootIds() const -> std::vector<Api::Id>
+{
+    std::vector<Api::Id> ids;
+    ids.reserve(m_roots.size());
+
+    for (const auto& [rootId, _] : m_roots)
+    {
+        ids.push_back(rootId);
+    }
+
+    return ids;
+}
+
+auto WidgetTreeRegistry::remove(Api::Id rootId) -> void
+{
+    m_roots.erase(rootId);
+}
+
+auto WidgetTreeRegistry::clear() -> void
+{
+    m_roots.clear();
+}
+
+auto WidgetTreeRegistry::ownerCount() const -> size_t
+{
+    size_t count = 0;
+
+    for (const auto& [rootId, tree] : m_roots)
+    {
+        if (tree.lifetime == Api::Lifetime::Owner)
+        {
+            ++count;
+        }
+    }
+
+    return count;
 }
 
 auto WidgetTreeRegistry::assignIds(WidgetTree& tree) -> void

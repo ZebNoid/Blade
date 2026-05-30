@@ -1,10 +1,12 @@
 #include "NativeTray.h"
 
+#include <algorithm>
 #include <commctrl.h>
 
-#include "Common/Logger.h"
+#include "Components/Tray/NativeTrayApi/NativeTrayApi.h"
 #include "Property/PropertyReader.h"
 #include "WinApi/Resource/ImageLoader/ImageLoader.h"
+#include "WinApi/HwndApi/HwndApi.h"
 #include "WinApi/Window/Hwnd/Hwnd.h"
 
 namespace Blade::Backend {
@@ -12,8 +14,6 @@ namespace Blade::Backend {
 namespace {
 
 constexpr UINT TrayCallback = WM_APP + 1;
-constexpr UINT_PTR SubclassId = 1;
-
 auto CopyTip(NOTIFYICONDATAW& data, const Api::Text& title) -> void
 {
     wcsncpy_s(data.szTip, title.c_str(), _TRUNCATE);
@@ -23,14 +23,9 @@ auto CopyTip(NOTIFYICONDATAW& data, const Api::Text& title) -> void
 
 NativeTray::~NativeTray()
 {
-    if (m_hwnd)
-    {
-        Shell_NotifyIconW(NIM_DELETE, &m_data);
-        RemoveWindowSubclass(m_hwnd, Proc, SubclassId);
-        DestroyWindow(m_hwnd);
-    }
+    destroy();
 
-    if (m_icon) DestroyIcon(m_icon);
+    NativeTrayApi::DestroyIcon(m_icon);
 }
 
 auto NativeTray::create(HINSTANCE hInstance, Api::Id id, Api::BackendMessageHandler* handler) -> bool
@@ -47,7 +42,7 @@ auto NativeTray::create(HINSTANCE hInstance, Api::Id id, Api::BackendMessageHand
 
     if (!m_hwnd) return false;
 
-    SetWindowSubclass(m_hwnd, Proc, SubclassId, reinterpret_cast<DWORD_PTR>(this));
+    NativeTrayApi::SetSubclass(m_hwnd, Proc, reinterpret_cast<DWORD_PTR>(this));
 
     m_data.cbSize = sizeof(NOTIFYICONDATAW);
     m_data.hWnd = m_hwnd;
@@ -74,21 +69,29 @@ auto CALLBACK NativeTray::Proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam
 
 auto NativeTray::handle(UINT msg, WPARAM, LPARAM lParam) -> std::optional<LRESULT>
 {
-    if (msg != TrayCallback || !m_contextMenu) return {};
+    if (msg != TrayCallback) return {};
+
+    bool handled = false;
 
     switch (lParam)
     {
     case WM_RBUTTONUP:
-        m_contextMenu->showAtCursor(Api::MenuTrigger::RightClick);
-        return 0;
+        handled = m_contextMenu && m_contextMenu->showAtCursor(Api::MenuTrigger::RightClick);
+        return handled ? std::optional<LRESULT>{0} : std::nullopt;
 
     case WM_MBUTTONUP:
-        m_contextMenu->showAtCursor(Api::MenuTrigger::MiddleClick);
-        return 0;
+        handled = m_contextMenu && m_contextMenu->showAtCursor(Api::MenuTrigger::MiddleClick);
+        return handled ? std::optional<LRESULT>{0} : std::nullopt;
 
     case WM_LBUTTONUP:
-        m_contextMenu->showAtCursor(Api::MenuTrigger::LeftClick);
-        return 0;
+        if (m_hasClick)
+        {
+            emitClick();
+            handled = true;
+        }
+
+        if (m_contextMenu && m_contextMenu->showAtCursor(Api::MenuTrigger::LeftClick)) handled = true;
+        return handled ? std::optional<LRESULT>{0} : std::nullopt;
 
     default:
         return {};
@@ -99,12 +102,12 @@ auto NativeTray::applyProps(const Api::PropertyMap& propertyMap) -> void
 {
     if (const auto* title = PropertyReader::Get<Api::Text>(propertyMap, Api::Props::Title))
     {
-        updateTitle(*title);
+        setTitle(*title);
     }
 
     if (const auto* icon = PropertyReader::Get<Api::Text>(propertyMap, Api::Props::Icon))
     {
-        updateIcon(*icon);
+        setIcon(*icon);
     }
 
     if (const auto* menus = PropertyReader::Get<Api::ContextMenus>(propertyMap, Api::Props::ContextMenus))
@@ -112,14 +115,22 @@ auto NativeTray::applyProps(const Api::PropertyMap& propertyMap) -> void
         updateContextMenus(*menus);
     }
 
-    if (const auto* lifetime = PropertyReader::Get<Api::Lifetime>(propertyMap, Api::Props::Lifetime))
-    {
-        updateLifetime(*lifetime);
-    }
 }
 
-auto NativeTray::applyEvents(const Api::EventSubscriptions&) -> void
+auto NativeTray::applyEvents(const Api::EventSubscriptions& events) -> void
 {
+    m_hasClick = std::ranges::find(events, Api::Events::Click) != events.end();
+}
+
+auto NativeTray::destroy() -> void
+{
+    if (!m_hwnd) return;
+
+    notify(NIM_DELETE);
+    NativeTrayApi::RemoveSubclass(m_hwnd, Proc);
+    HwndApi::Destroy(m_hwnd);
+    m_hwnd = nullptr;
+    m_alive = false;
 }
 
 auto NativeTray::isAlive() const -> bool
@@ -131,11 +142,11 @@ auto NativeTray::attachChild(INativeElement*) -> void
 {
 }
 
-auto NativeTray::updateIcon(const Api::Text& path) -> void
+auto NativeTray::setIcon(const Api::Text& path) -> void
 {
     if (m_icon)
     {
-        DestroyIcon(m_icon);
+        NativeTrayApi::DestroyIcon(m_icon);
         m_icon = nullptr;
     }
 
@@ -149,7 +160,7 @@ auto NativeTray::updateIcon(const Api::Text& path) -> void
     }
 }
 
-auto NativeTray::updateTitle(const Api::Text& title) -> void
+auto NativeTray::setTitle(const Api::Text& title) -> void
 {
     CopyTip(m_data, title);
     notify(NIM_MODIFY);
@@ -163,17 +174,17 @@ auto NativeTray::updateContextMenus(const Api::ContextMenus& menus) -> void
     if (contextMenu->attach(m_hwnd, m_id, m_commandRouter, menus)) m_contextMenu = std::move(contextMenu);
 }
 
-auto NativeTray::updateLifetime(Api::Lifetime lifetime) -> void
+auto NativeTray::emitClick() -> void
 {
-    m_lifetimeOwner = lifetime == Api::Lifetime::Owner;
+    m_commandRouter.emit({
+        .target = m_id,
+        .type = Api::Events::Click
+    });
 }
 
 auto NativeTray::notify(DWORD message) -> bool
 {
-    if (Shell_NotifyIconW(message, &m_data)) return true;
-
-    LOGF_E(L"[Error] NativeTray::Shell_NotifyIcon failed id=%d message=%lu [%lu]", m_id, message, GetLastError());
-    return false;
+    return NativeTrayApi::Notify(message, m_data, m_id);
 }
 
 } // namespace Blade::Backend

@@ -8,8 +8,8 @@ namespace Blade {
 
 struct WindowEvents
 {
-    Api::CallbackResult close = nullptr;
-    Api::CallbackString drop = nullptr;
+    Api::EventCallback close;
+    Api::EventCallback drop;
 
     auto visit(EventVisitor& v) const -> void
     {

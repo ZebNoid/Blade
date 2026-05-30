@@ -33,6 +33,14 @@ auto MaterializerCommands::Attach(const WidgetTree& widget, Api::Id parent) -> A
     };
 }
 
+auto MaterializerCommands::Remove(const WidgetTree& widget) -> Api::ElementCommand
+{
+    return {
+        .command = Api::ElementCommandType::Remove,
+        .id = widget.id
+    };
+}
+
 auto MaterializerCommands::Update(const LayoutNode& layout, const WidgetTree& widget, Api::Id parent) -> Api::ElementCommand
 {
     return {

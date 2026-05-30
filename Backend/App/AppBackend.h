@@ -4,11 +4,13 @@
 
 #include "Api/ApiBackend.h"
 #include "Node/NodeRegistry/NodeRegistry.h"
+#include "Resource/ResourceManager/ResourceManager.h"
 #include "WinApi/AppRuntime/AppRuntime.h"
 #include "WinApi/Interop/OleScope/OleScope.h"
 #include "WindowHost/WindowHost.h"
 
 #include "CommandDispatcher/CommandDispatcher.h"
+#include "AppCommandDispatcher/AppCommandDispatcher.h"
 #include "Node/NativeNodeFactory/NativeNodeFactory.h"
 
 
@@ -36,7 +38,7 @@ public:
 
     auto runApp() -> int override;
 
-    auto quit() -> void override;
+    auto quit() -> void;
 
     auto setMessageHandler(Api::BackendMessageHandler handler) -> void override;
 
@@ -48,11 +50,15 @@ public:
 
     auto process(const Api::ElementCommand& command) -> void override;
 
+    auto process(const Api::AppCommand& command) -> void override;
+
     auto host() -> WindowHost&;
 
     auto nodes() -> NodeRegistry&;
 
     auto factory() -> NativeNodeFactory&;
+
+    auto resources() -> ResourceManager&;
 
     auto handle() -> HINSTANCE;
 
@@ -65,8 +71,11 @@ private:
     WindowHost m_host;
 
     NodeRegistry m_nodes;
+    ResourceManager m_resources;
 
     CommandDispatcher m_dispatcher;
+
+    AppCommandDispatcher m_appDispatcher;
 
     NativeNodeFactory m_factory;
 

@@ -12,6 +12,7 @@ namespace Blade::Backend {
 AppBackend::AppBackend()
     : m_hInstance(GetModuleHandle(nullptr))
     , m_dispatcher(this)
+    , m_appDispatcher(this)
     , m_factory(this)
 {
 }
@@ -29,13 +30,6 @@ auto AppBackend::runApp() -> int
         [&]
         {
             m_host.destroyClosedWindows();
-            m_nodes.collectGarbage();
-
-            if (m_nodes.ownerCount() == 0)
-            {
-                LOG_D(L"AppBackend::ownerCount 0 -> quit");
-                quit();
-            }
         }
     );
 }
@@ -87,6 +81,11 @@ auto AppBackend::process(const Api::ElementCommand& command) -> void
     m_dispatcher.dispatch(command); // With Error !
 }
 
+auto AppBackend::process(const Api::AppCommand& command) -> void
+{
+    m_appDispatcher.dispatch(command);
+}
+
 auto AppBackend::host() -> WindowHost&
 {
     return m_host;
@@ -100,6 +99,11 @@ auto AppBackend::nodes() -> NodeRegistry&
 auto AppBackend::factory() -> NativeNodeFactory&
 {
     return m_factory;
+}
+
+auto AppBackend::resources() -> ResourceManager&
+{
+    return m_resources;
 }
 
 auto AppBackend::handle() -> HINSTANCE
